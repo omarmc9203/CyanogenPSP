@@ -1,0 +1,39 @@
+# To generate .S file:
+#    psp-build-exports -s file.exp
+# Define the exports for the prx
+PSP_BEGIN_EXPORTS
+
+# These four lines are mandatory (although you can add other functions like module_stop)
+# syslib is a psynonym for the single mandatory export.
+PSP_EXPORT_START(syslib, 0, 0x8000)
+PSP_EXPORT_FUNC_HASH(module_start)
+PSP_EXPORT_VAR_HASH(module_info)
+PSP_EXPORT_END
+
+# Export our function
+PSP_EXPORT_START(supportlib, 0, 0x4001)
+PSP_EXPORT_FUNC(getBrightness)
+PSP_EXPORT_FUNC(setBrightness)
+PSP_EXPORT_FUNC(imposeSetBrightness)
+PSP_EXPORT_FUNC(imposeGetBrightness)
+PSP_EXPORT_FUNC(displayEnable)
+PSP_EXPORT_FUNC(displayDisable)
+PSP_EXPORT_FUNC(imposeGetVolume)
+PSP_EXPORT_FUNC(imposeSetVolume)
+PSP_EXPORT_FUNC(readButtons)
+PSP_EXPORT_FUNC(MEEnable)
+PSP_EXPORT_FUNC(MEDisable)
+PSP_EXPORT_FUNC(imposeGetMute)
+PSP_EXPORT_FUNC(imposeSetMute)
+PSP_EXPORT_FUNC(imposeSetHomePopup)
+PSP_EXPORT_FUNC(imposeGetEqualizer)
+PSP_EXPORT_FUNC(imposeSetEqualizer)
+PSP_EXPORT_FUNC(getModelKernel)
+PSP_EXPORT_FUNC(setKernelBusClock)
+PSP_EXPORT_FUNC(setKernelCpuClock)
+
+PSP_EXPORT_FUNC(getModuleListID)
+PSP_EXPORT_FUNC(stopUnloadModule)
+PSP_EXPORT_END
+
+PSP_END_EXPORTS

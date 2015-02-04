@@ -1,0 +1,31 @@
+# Define the exports for the prx
+PSP_BEGIN_EXPORTS
+
+# These four lines are mandatory (although you can add other functions like module_stop)
+# syslib is a psynonym for the single mandatory export.
+PSP_EXPORT_START(syslib, 0, 0x8000)
+PSP_EXPORT_FUNC_HASH(module_start)
+PSP_EXPORT_VAR_HASH(module_info)
+PSP_EXPORT_END
+
+PSP_EXPORT_START(Checker_Lib, 0, 0x4001)
+PSP_EXPORT_FUNC_HASH(chGetIplAttribute)
+PSP_EXPORT_FUNC_HASH(chGetVersions)
+PSP_EXPORT_FUNC_HASH(chGetKirk)
+PSP_EXPORT_FUNC_HASH(chGetSpock)
+PSP_EXPORT_FUNC_HASH(chGetPSPHackable)
+PSP_EXPORT_FUNC_HASH(chGetPSPCreatePandora)
+PSP_EXPORT_FUNC_HASH(chGetCpuSpeed)
+PSP_EXPORT_FUNC_HASH(chGetFakeName)
+PSP_EXPORT_FUNC_HASH(chHideMACAddress)
+PSP_EXPORT_FUNC_HASH(chGetMACAddress)
+PSP_EXPORT_FUNC_HASH(chGetRegion)
+PSP_EXPORT_FUNC_HASH(chInitColor)
+PSP_EXPORT_FUNC_HASH(chGetScramble)
+PSP_EXPORT_FUNC_HASH(chDetectModel)
+PSP_EXPORT_FUNC_HASH(chDetectOFW)
+PSP_EXPORT_FUNC_HASH(chDetectCFW)
+PSP_EXPORT_FUNC_HASH(chDetectMotherboard)
+PSP_EXPORT_END
+
+PSP_END_EXPORTS

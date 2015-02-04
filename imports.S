@@ -1,0 +1,28 @@
+	.set noreorder
+
+#include "pspstub.s"
+
+	STUB_START "Checker_Lib",0x40090000,0x00110005
+	STUB_FUNC  0xE48A1F54,chGetIplAttribute
+	STUB_FUNC  0x25D723B3,chGetVersions
+	STUB_FUNC  0x83B3146A,chGetKirk
+	STUB_FUNC  0xBB20EEC7,chGetSpock
+	STUB_FUNC  0x3FAEA363,chGetPSPHackable
+	STUB_FUNC  0xCAF3F606,chGetPSPCreatePandora
+	STUB_FUNC  0x87D692F5,chGetCpuSpeed
+	STUB_FUNC  0x1519A1CE,chGetFakeName
+	STUB_FUNC  0x9A97769B,chHideMACAddress
+	STUB_FUNC  0xD3DF8DB8,chGetMACAddress
+	STUB_FUNC  0xC25B5A00,chGetRegion
+	STUB_FUNC  0x533426E5,chInitColor
+	STUB_FUNC  0x1B046160,chGetScramble
+	STUB_FUNC  0xA37CB1D1,chDetectModel
+	STUB_FUNC  0x5C08DC6A,chDetectOFW
+	STUB_FUNC  0x577B5D20,chDetectCFW
+	STUB_FUNC  0xA8F52A2D,chDetectMotherboard
+	STUB_END
+	
+	STUB_START "CheckerBat_Lib",0x40090000,0x00020005
+	STUB_FUNC  0x5DCA520D,chReadSerial
+	STUB_FUNC  0x5CE709BC,chWriteSerial
+	STUB_END
