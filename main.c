@@ -1028,9 +1028,21 @@ int main()
 	//Loads our touch tones
 	tone = oslLoadSoundFile("system/media/audio/ui/KeypressStandard.wav", OSL_FMT_NONE);
 
+	FILE * backgroundPathTXT;
+
+	if (!(fileExists("system/framework/framework-res/res/background.txt")))
+	{
+		backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "w");
+		fprintf(backgroundPathTXT, "system/framework/framework-res/res/background.png");
+		fclose(backgroundPathTXT);
+	}
+	
+	backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "r");
+	fscanf(backgroundPathTXT,"%s",backgroundPath);
+
 	//Loads our images into memory
 	loadIcons();
-	background = oslLoadImageFilePNG("system/framework/framework-res/res/background.png", OSL_IN_RAM, OSL_PF_8888);
+	background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
 	cursor = oslLoadImageFilePNG("system/cursor/cursor.png", OSL_IN_VRAM, OSL_PF_8888);
 	navbar = oslLoadImageFile("system/home/icons/nav.png", OSL_IN_VRAM, OSL_PF_8888);
 	navbar2 = oslLoadImageFile("system/home/icons/nav2.png", OSL_IN_RAM, OSL_PF_8888);
@@ -1080,6 +1092,8 @@ int main()
 	deleteUpdateFile(); //Delete update.zip
 	
 	SceUID modid = pspSdkLoadStartModule("modules/brightness.prx", PSP_MEMORY_PARTITION_KERNEL);
+	
+	fclose(backgroundPathTXT);
 	
 	//Main loop to run the program
 	while (!osl_quit)

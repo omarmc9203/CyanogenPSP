@@ -21,6 +21,8 @@
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
+#include "include/pgeZip.h"
+#include "settingsmenu.h"
 #include "screenshot.h"
 #include "prx/iso loader/systemctrl_se.h"  
 #include "include/utils.h"
@@ -290,16 +292,16 @@ void OptionMenu()
 	{
 		oslStartDrawing();	
 		oslDrawImageXY(action, 98,47);
-		oslDrawStringf(120,105,"Press X");
-		oslDrawStringf(120,115,"to Copy");
-		oslDrawStringf(260,105,"Press Triangle");
-		oslDrawStringf(260,115,"to Cut");
+		oslDrawStringf(120,115,"Press X");
+		oslDrawStringf(120,125,"to Copy");
+		oslDrawStringf(260,115,"Press Triangle");
+		oslDrawStringf(260,125,"to Cut");
 	
-		oslDrawStringf(120,150,"Press Square");
-		oslDrawStringf(120,160,"to Delete");
-		oslDrawStringf(260,150,"Press Circle");
-		oslDrawStringf(260,160,"to Rename");
-		oslDrawStringf(165,200,"Press Select to Cancel");
+		oslDrawStringf(120,160,"Press Square");
+		oslDrawStringf(120,170,"to Delete");
+		oslDrawStringf(260,160,"Press Circle");
+		oslDrawStringf(260,170,"to Rename");
+		oslDrawStringf(170,215,"Press Select to Cancel");
 	
 		oslReadKeys();
 	
@@ -755,6 +757,42 @@ int launch_eboot()
 	return sctrlKernelLoadExecVSHWithApitype(0x141, path, &param);
 }
 
+int launchEbootMs0(const char *path[])
+{
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+
+	// Configure Parameters
+	param.size = sizeof(param);
+	param.args = strlen(path) + 1;
+	param.argp = (void *)path;
+	param.key = "game";
+
+	// Trigger Reboot
+	return sctrlKernelLoadExecVSHWithApitype(0x141, path, &param);
+}
+
+int launchEbootEf0(const char *path[])
+{
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+
+	// Configure Parameters
+	param.size = sizeof(param);
+	param.args = strlen(path) + 1;
+	param.argp = (void *)path;
+	param.key = "game";
+
+	// Trigger Reboot
+	return sctrlKernelLoadExecVSHWithApitype(0x152, path, &param);
+}
+
 void launchISO(char* file)
 {
 	SceUID modid = pspSdkLoadStartModule("modules/ISOLoader.prx", PSP_MEMORY_PARTITION_KERNEL);
@@ -832,10 +870,23 @@ void dirControls() //Controls
 		showImage(folderIcons[current].filePath);
 	}
 	
-	if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || ((strcmp(ext ,".pbp") == 0))) && (osl_keys->pressed.cross))
+	if (((ext) != NULL) && ((strcmp(ext ,".ZIP") == 0) || (strcmp(ext ,".zip") == 0)) && (osl_keys->pressed.cross))
 	{
-		launch_eboot(folderIcons[current].filePath);
-		return 0;
+		pgeZip* zipFiles = pgeZipOpen(folderIcons[current].filePath);
+		chdir("..");
+		pgeZipExtract(zipFiles, NULL);
+		pgeZipClose(zipFiles);
+		oslSyncFrame();
+		sceKernelDelayThread(3*1000000);
+		refresh();
+	}
+	
+	if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
+	{
+		if (kuKernelGetModel() == 4)
+			launchEbootEf0(folderIcons[current].filePath);
+		else
+			launchEbootMs0;
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))

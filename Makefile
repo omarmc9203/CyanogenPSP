@@ -17,12 +17,11 @@ ASFLAGS = $(CFLAGS)
 LIBDIR =
 
 MYLIBS=
-STDLIBS= -losl -lpng -lz \
+STDLIBS= -losl -lpng -lz -lpspsystemctrl_user \
          -lpsphprm -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgu -lpspgum  -lpspaudiolib -lpspaudio -lpsphttp -lpspssl -lpspwlan \
          -lpspnet_adhocmatching -lpspnet_adhoc -lpspnet_adhocctl -lm -ljpeg \
 		 -lpspvram -lpsputility -lpspkubridge -lpspreg \
 		 -lpspusb -lpspusbstor -lpspusbdevice -lpspmp3 -lmad -lpspaudiocodec -lpspsystemctrl_kernel -lpspvshctrl -lpsprtc_driver -lpspreg_driver \
-		 -lpspsystemctrl_user
 		 
 LIBS=$(STDLIBS) $(MYLIBS)
 

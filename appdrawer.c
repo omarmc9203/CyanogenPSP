@@ -62,7 +62,7 @@ int appdrawer()
 	int gallery_text_x = 29;
 	int gmail_x = 95;
 	int gmail_text_x = 98;
-	int game_icon = 157;
+	int game_icon = 155;
 	int game_text_icon = 163;
 	int messenger_x = 217;
 	int messenger_text_x = 211; 
@@ -111,7 +111,7 @@ int appdrawer()
 		oslDrawString(gallery_text_x,175,"Gallery");
 		oslDrawImageXY(gmail, gmail_x, 120);
 		oslDrawString(gmail_text_x,175,"Gmail");
-		oslDrawImageXY(isoloadericon, game_icon, 120);
+		oslDrawImageXY(isoloadericon, game_icon, 121);
 		oslDrawString(game_text_icon,175,"Game");
 		oslDrawImageXY(messengericon, messenger_x, 120);
 		oslDrawString(messenger_text_x,175,"Messages");
@@ -377,23 +377,25 @@ int appdrawer()
 			pspclock();
 		}
 		
-		if (cursor->x >= 18 && cursor->x <= 65 && cursor->y >= 25 && cursor->y <= 70 && osl_keys->pressed.cross)
-		{
-			appdrawer_deleteImages();
-			mp3player();
-		}
+		
 		if (cursor->x >= 210 && cursor->x <= 268 && cursor->y >= 118 && cursor->y <= 170 && osl_keys->pressed.cross)
 		{
 			appdrawer_deleteImages();
 			messenger();
 		}
+		*/
+		
+		if (cursor->x >= 18 && cursor->x <= 65 && cursor->y >= 25 && cursor->y <= 70 && osl_keys->pressed.cross)
+		{
+			appdrawer_deleteImages();
+			mp3player();
+		}
 		
 		if (cursor->x >= 147 && cursor->x <= 191 && cursor->y >= 112 && cursor->y <= 154 && osl_keys->pressed.cross)
 		{
 			appdrawer_deleteImages();
-			gamemenu();
+			gameApp();
 		}
-		*/
 		
 		if (cursor->x >= 387 && cursor->x <= 432 && cursor->y >= 25 && cursor->y <= 70 && osl_keys->pressed.cross)
 		{

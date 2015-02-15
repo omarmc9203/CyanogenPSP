@@ -2,6 +2,7 @@
 #define Address "www.google.com"
 #define MAX 8
 
+char backgroundPath[100];
 int benchmarkDebugActivate;
 void onlineUpdater();
 void switchStatus(int n);

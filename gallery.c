@@ -59,7 +59,7 @@ void galleryDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) {
 			
-			oslDrawStringf(GALLERY_DISPLAY_Y, (i - curScroll)*55+GALLERY_DISPLAY_Y, folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
+			oslDrawStringf(GALLERY_DISPLAY_X, (i - curScroll)*55+GALLERY_DISPLAY_Y, folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
 }
