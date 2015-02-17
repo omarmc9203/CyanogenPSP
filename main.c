@@ -466,16 +466,6 @@ void androidQuickSettings()
 	
 	sceCtrlReadBufferPositive(&pad, 1);
 	
-	if (pad.Buttons & PSP_CTRL_UP) 
-	{
-		setBrightness(getBrightness() + 1);
-	}
-	
-	if (pad.Buttons & PSP_CTRL_DOWN) 
-	{
-		setBrightness(getBrightness() - 1);
-	}
-	
 	notif_enabled = 0;
 	
 	if (osl_pad.held.cross && cursor->x >= 0 && cursor->x <= 480 && cursor->y >= 0 && cursor->y <= 1) 
@@ -491,11 +481,13 @@ void androidQuickSettings()
 		if (osl_keys->held.up)
 		{
 			controlX += 4;
+			setBrightness(getBrightness() + 1);
 		}
 		
 		if (osl_keys->held.down)
 		{
 			controlX -= 4;
+			setBrightness(getBrightness() - 1);
 		}
 		
 		if (controlX <= llimit)
@@ -507,9 +499,10 @@ void androidQuickSettings()
 		{
 			controlX = rlimit;
 		}	
-	
+			
 	if (notif_down == 1)
 	{				
+	
 		if (osl_pad.held.cross && osl_keys->analogY >= 50)
 		{
 			notif_y = notif_y+6;
@@ -1075,6 +1068,10 @@ int main()
 	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	DroidSans = oslLoadIntraFontFile("system/fonts/DroidSans.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	
+	SceUID modid;
+	
+	modid = pspSdkLoadStartModule("modules/brightness.prx", PSP_MEMORY_PARTITION_KERNEL);
 
 	//Debugger - Displays an error message if the following resources are missing.
 	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !wificon || !music || !gmail || !messengericon || !browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon)
@@ -1090,8 +1087,6 @@ int main()
 	
 	makeDownloadDir(); //Created Download directory if there isn't any - PSP/Game/CyanogenMod/Downloads
 	deleteUpdateFile(); //Delete update.zip
-	
-	SceUID modid = pspSdkLoadStartModule("modules/brightness.prx", PSP_MEMORY_PARTITION_KERNEL);
 	
 	fclose(backgroundPathTXT);
 	
