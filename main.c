@@ -308,7 +308,6 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		oslDrawStringf(384, 4,"%d%%",batteryLife);
 	}
  
- 
 	if (batteryLife == 100)
 		oslDrawImageXY(batt100,batx,baty);
 	else if (batteryLife >80 && batteryLife <= 100) 
@@ -400,9 +399,10 @@ void androidQuickSettings()
 	int rlimit = 420;
 	
 	oslDrawImageXY(quickSettings,0,notif_y);
-		
+	
+	battery(373,yPos2-2,2);
 	getDayOfWeek(15,yPos2+5);
-	getMonthOfYear(65,yPos2+5);
+	getMonthOfYear(85,yPos2+5);
 
 	oslDrawStringf(137,yLine1, "Wi-Fi");
 	oslDrawStringf(340,yPos2, "%d%%",scePowerGetBatteryLifePercent());
@@ -464,7 +464,14 @@ void androidQuickSettings()
 		setBrightness(90);
 	}
 	
-	sceCtrlReadBufferPositive(&pad, 1);
+	if (controlX <= llimit)
+	{
+		controlX = llimit;
+	}
+	else if (controlX >= rlimit)
+	{
+		controlX = rlimit;
+	}
 	
 	notif_enabled = 0;
 	
@@ -477,32 +484,9 @@ void androidQuickSettings()
 	{
 		notif_up = 1;
 	}
-	
-		if (osl_keys->held.up)
-		{
-			controlX += 4;
-			setBrightness(getBrightness() + 1);
-		}
-		
-		if (osl_keys->held.down)
-		{
-			controlX -= 4;
-			setBrightness(getBrightness() - 1);
-		}
-		
-		if (controlX <= llimit)
-		{
-			controlX = llimit;
-		}
-		
-		else if (controlX >= rlimit)
-		{
-			controlX = rlimit;
-		}	
 			
 	if (notif_down == 1)
 	{				
-	
 		if (osl_pad.held.cross && osl_keys->analogY >= 50)
 		{
 			notif_y = notif_y+6;
@@ -511,78 +495,77 @@ void androidQuickSettings()
 			yLine1 = yLine1+6;
 			yLine2 = yLine2+6;
 		}
-			if (notif_y >= 0)
-			{
-				notif_y = 0;
-			}
-			
-			if (yPos1 >= 10)
-			{
-				yPos1 = 10;
-			}
-			if (yPos2 >= 20)
-			{
-				yPos2 = 20;
-			}
-			if (yLine1 >= 180)
-			{
-				yLine1 = 180;
-			}
-			if (yLine2 >= 245)
-			{
-				yLine2 = 245;
-			}
-
-			if (yLine2 == 200)
-			{
-				notif_enabled = 1;
-			}
-	}
-
-	if (notif_enabled ==1)
-			{
-			
-				if (cursor->x >= 80 && cursor->x <= 158 && cursor->y >= 41 && cursor->y <= 135 && osl_keys->pressed.cross)
-				{	
-					notif_y = notif_y-272;
-					yPos1 = yPos1-272;
-					yPos2 = yPos2-272;
-					yLine1 = yLine1-272;
-					yLine2 = yLine2-272;
-					settingsMenu();
-				}
 		
-				if (cursor->x >= 162 && cursor->x <= 239 && cursor->y >= 41 && cursor->y <= 135 && osl_keys->pressed.cross)
-				{	
-					notif_y = notif_y-272;
-					yPos1 = yPos1-272;
-					yPos2 = yPos2-272;
-					yLine1 = yLine1-272;
-					yLine2 = yLine2-272;
-					wifiMenu();
-				}
-				
-				if (cursor->x >= 445 && cursor->x <= 473 && cursor->y >= 9 && cursor->y <= 33 && osl_keys->pressed.cross && notif_down == 1)
-				{	
-					notif_y = notif_y-272;
-					yPos1 = yPos1-272;
-					yPos2 = yPos2-272;
-					yLine1 = yLine1-272;
-					yLine2 = yLine2-272;
-					deviceStandby();
-				}
- 		
-				if (cursor->x >= 1 && cursor->x <= 78 && cursor->y >= 138 && cursor->y <= 232 && osl_keys->pressed.cross)
-				{	
-					notif_y = notif_y-272;
-					yPos1 = yPos1-272;
-					yPos2 = yPos2-272;
-					yLine1 = yLine1-272;
-					yLine2 = yLine2-272;
-					lockscreen();
-				}
-			}
-			
+		if (notif_y >= 0)
+		{
+			notif_y = 0;
+		}
+		
+		if (yPos1 >= 10)
+		{
+			yPos1 = 10;
+		}
+		if (yPos2 >= 20)
+		{
+			yPos2 = 20;
+		}
+		if (yLine1 >= 180)
+		{
+			yLine1 = 180;
+		}
+		if (yLine2 >= 245)
+		{
+			yLine2 = 245;
+		}
+		if (yLine2 >= 200)
+		{
+			notif_enabled = 1;
+		}
+	}
+	
+	if (notif_enabled ==1)
+		{
+		if (osl_keys->held.up)
+		{
+			controlX += 4;
+			setBrightness(getBrightness() + 1);
+		}
+		if (osl_keys->held.down)
+		{
+			controlX -= 4;
+			setBrightness(getBrightness() - 1);
+		}	
+		
+		if (cursor->x >= 386 && cursor->x <= 414 && cursor->y >= 12 && cursor->y <= 38 && osl_keys->pressed.cross)
+		{	
+			notif_y = notif_y-272;
+			yPos1 = yPos1-272;
+			yPos2 = yPos2-272;
+			yLine1 = yLine1-272;
+			yLine2 = yLine2-272;
+			settingsMenu();
+		}
+	
+		if (cursor->x >= 96 && cursor->x <= 206 && cursor->y >= 126 && cursor->y <= 192 && osl_keys->pressed.cross)
+		{	
+			notif_y = notif_y-272;
+			yPos1 = yPos1-272;
+			yPos2 = yPos2-272;
+			yLine1 = yLine1-272;
+			yLine2 = yLine2-272;
+			wifiMenu();
+		}
+		
+		if (cursor->x >= 198 && cursor->x <= 272 && cursor->y >= 204 && cursor->y <= 258 && osl_keys->pressed.cross)
+		{	
+			notif_y = notif_y-272;
+			yPos1 = yPos1-272;
+			yPos2 = yPos2-272;
+			yLine1 = yLine1-272;
+			yLine2 = yLine2-272;
+			lockscreen();
+		}
+	}
 	if (notif_down == 1 && osl_keys->pressed.circle)
 	{
 		notif_y = notif_y-272;
