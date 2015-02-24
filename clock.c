@@ -1,16 +1,8 @@
-#include <pspkernel.h>
-#include <pspdebug.h>
-#include <oslib/oslib.h>
-#include <pspctrl.h>
-#include <psprtc.h>
 #include "clock.h"
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
-
-OSL_IMAGE *clockbg, *cursor, *stop_watch,  *backicon, *homeicon, *multicon;
-OSL_FONT *clockFont;
 
 int hour = 0;
 int minute = 0;
@@ -68,7 +60,7 @@ void getDayOfWeek(int x, int y) //Outputs the Day of the Week
 		oslDrawStringf(x,y,"FRIDAY");
 	}
 	else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==6)
-	{
+	{	
 		oslDrawStringf(x,y,"SATURDAY");
 	}
 	else
@@ -81,7 +73,7 @@ void getMonthOfYear(int x, int y) //Outputs the Month of the Year
 { 
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
-
+	
 	if (time.month == 1)
 	{
 		oslDrawStringf(x,y,"%d JANUARY", time.day);
@@ -127,7 +119,7 @@ void getMonthOfYear(int x, int y) //Outputs the Month of the Year
 		oslDrawStringf(x,y,"%d NOVEMBER", time.day);
 	}
 	else
-	oslDrawStringf(x,y,"%d DECEMBER", time.day);
+	oslDrawStringf(x,y,"%d DECEMBER", time.day);	
 }
 
 /*Default x = 420, x2 = 458  
@@ -226,10 +218,10 @@ void stopWatch()
 		
 		oslDrawImageXY(stop_watch, 0, 19);
 
+		digitaltime(386,4,424);
 		battery(337,2,0);
-		navbarButtons(1);
+		navbarButtons(2);
 		androidQuickSettings();
-		digitaltime(420,4,458);
 		oslDrawImage(cursor);
 
 		if (osl_keys->pressed.square)
@@ -307,9 +299,33 @@ void stopWatch()
 
 int pspclock()
 {
-	clockbg = oslLoadImageFilePNG("system/app/clock/clockbg.png", OSL_IN_RAM, OSL_PF_8888);
+	pspTime time;
+	sceRtcGetCurrentClockLocalTime(&time);
+
+	clockBg = oslLoadImageFilePNG("system/app/clock/clockBg.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	if (!clockbg)
+	if (time.hour >= 0.00  && time.hour <= 11.59)
+	{
+		timeBg = oslLoadImageFilePNG("system/app/clock/timeBg5.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+	else if (time.hour >= 12.00  && time.hour <= 14.59)
+	{
+		timeBg = oslLoadImageFilePNG("system/app/clock/timeBg1.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+	else if (time.hour >= 15.00 && time.hour <= 17.59)
+	{
+		timeBg = oslLoadImageFilePNG("system/app/clock/timeBg2.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+	else if (time.hour >= 18.00  && time.hour <= 20.59)
+	{
+		timeBg = oslLoadImageFilePNG("system/app/clock/timeBg3.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+	else if (time.hour >= 21.00  && time.hour <= 23.59)
+	{
+		timeBg = oslLoadImageFilePNG("system/app/clock/timeBg4.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+	
+	if (!clockBg || !timeBg)
 		debugDisplay();
 	
 	setfont();
@@ -324,12 +340,13 @@ int pspclock()
 		
 		controls();	
 		
-		oslDrawImageXY(clockbg, 0, 19);
+		oslDrawImageXY(timeBg, 0, 0);
+		oslDrawImageXY(clockBg, 0, 0);
 
+		digitaltime(386,4,424);
 		battery(337,2,0);
-		navbarButtons(1);
+		navbarButtons(2);
 		androidQuickSettings();
-		digitaltime(420,4,458);
 		oslDrawImage(cursor);
 
 		if (osl_keys->pressed.square)
@@ -344,19 +361,19 @@ int pspclock()
 		
 		if (osl_keys->pressed.circle)
 		{
-			oslDeleteImage(clockbg);
+			oslDeleteImage(clockBg);
 			appdrawer();
 		}
 
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{	
-			oslDeleteImage(clockbg);
+			oslDeleteImage(clockBg);
 			appdrawer();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
-			oslDeleteImage(clockbg);
+			oslDeleteImage(clockBg);
 			home();
 		}
 
@@ -367,7 +384,7 @@ int pspclock()
 		
 		if (cursor->x >= 285 && cursor->x <= 332  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
 		{
-			oslDeleteImage(clockbg);
+			oslDeleteImage(clockBg);
 			stopWatch();
 		}
 		

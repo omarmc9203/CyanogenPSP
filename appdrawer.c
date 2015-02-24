@@ -369,15 +369,13 @@ int appdrawer()
 			mp3player();
 		}
 		
-		/* Clock, MP3 Player Messenger and Game Menu
-		
 		if (cursor->x >= 266 && cursor->x <= 311 && cursor->y >= 25 && cursor->y <= 70 && osl_keys->pressed.cross)
 		{
 			appdrawer_deleteImages();
 			pspclock();
 		}
 		
-		
+		/* Messenger WIP
 		if (cursor->x >= 210 && cursor->x <= 268 && cursor->y >= 118 && cursor->y <= 170 && osl_keys->pressed.cross)
 		{
 			appdrawer_deleteImages();
