@@ -290,6 +290,7 @@ void aboutMenu()
 		debugDisplay();
 
 	int n = 0;
+	u8 *macAddress = oslAdhocGetMacAddress();
 
 	while (!osl_quit)
 	{
@@ -306,8 +307,8 @@ void aboutMenu()
 		oslDrawString(20,78,"CyanogenPSP Updates");
 		oslDrawString(20,92,"Click for, view or install available updates");
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"CyanogenPSP: %s",Version);
-		oslDrawString(20,157,"Build Date - Mon Dec 8 3:10 PM EST 2014");
+		oslDrawStringf(20,129,"CyanogenPSP: %s 20150224-OFFICIAL",Version);
+		oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawString(20,185,"Kernel Version");
 		oslDrawString(20,199,"Undefined-pspsdk_oslib");
 		oslDrawString(20,213,"joellovesanna@psp #1");
@@ -326,8 +327,8 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"CyanogenPSP: %s",Version);
-			oslDrawString(20,157,"Build Date - Mon Dec 8 3:10 PM EST 2014");
+			oslDrawStringf(20,129,"CyanogenPSP: %s 20150224-OFFICIAL",Version);
+			oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
 		navbarButtons(2);
