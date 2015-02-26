@@ -1,19 +1,4 @@
-#include <pspsdk.h>
-#include <pspkernel.h>
-#include <string.h>
-#include <systemctrl.h>
-#include <psppower.h>
-#include <pspdebug.h>
-#include <pspdisplay.h>
-#include <pspctrl.h>
-#include <stdio.h>
-#include <pspsdk.h>
-#include <unistd.h>
-#include <pspiofilemgr.h>
-#include <stdlib.h>
-#include <oslib/oslib.h>
-#include <psploadexec.h>
-#include <psploadexec_kernel.h>
+#include "home.h"
 #include "apollo.h"
 #include "fm.h"
 #include "clock.h"
@@ -26,11 +11,6 @@
 #include "screenshot.h"
 #include "prx/iso loader/systemctrl_se.h"  
 #include "include/utils.h"
-
-OSL_IMAGE 	*filemanagerbg, *diricon, *imageicon, *mp3icon, *txticon, *unknownicon, *documenticon, *binaryicon, *videoicon, *archiveicon, *bar, 
-			*deletion, *action, *textview,  *gallerybar;
-
-OSL_FONT *pgfFont;
 
 //Functions imported from PRX
 void startISO(char* file,int driver);
@@ -280,7 +260,113 @@ int sceIoCopyDirectory(const char * sourcepath, const char * destpath, int * ove
 	return 1;
  
 }
- 
+
+ /*
+// Copy File or Folder
+void copy(int flag, File * path)
+{	
+	// Not found
+	if(path == NULL) return;
+	
+	// Copy File Source
+	strcpy(copysource, cwd);
+	strcpy(copysource + strlen(copysource), folderIcons[current].name);
+	
+	// Add Recursive Folder Flag
+	if(dirExists(path)) flag |= COPY_FOLDER_RECURSIVE;
+	
+	// Set Copy Flags
+	copymode = flag;
+} 
+
+int paste(void)
+{
+	// No Copy Source
+	if(copymode == NOTHING_TO_COPY) return -1;
+	
+	// Source and Target Folder are identical
+	char * lastslash = NULL; int i = 0; for(; i < strlen(copysource); i++) if(copysource[i] == '/') lastslash = copysource + i;
+	char backup = lastslash[1];
+	lastslash[1] = 0;
+	int identical = strcmp(copysource, cwd) == 0;
+	lastslash[1] = backup;
+	if(identical) return -2;
+	
+	// Source Filename
+	char * filename = lastslash + 1;
+	
+	// Required Target Path Buffer Size
+	int requiredlength = strlen(cwd) + strlen(filename) + 1;
+	
+	// Allocate Target Path Buffer
+	char * copytarget = (char *)malloc(requiredlength);
+	
+	// Puzzle Target Path
+	strcpy(copytarget, cwd);
+	strcpy(copytarget + strlen(copytarget), filename);
+	
+	// Return Result
+	int result = -3;
+	
+	// Recursive Folder Copy
+	if((copymode & COPY_FOLDER_RECURSIVE) == COPY_FOLDER_RECURSIVE)
+	{
+		// Check Files in current Folder
+		File * node = files; for(; node != NULL; node = node->next)
+		{
+			// Found a file matching the name (folder = ok, file = not)
+			if(strcmp(filename, node->name) == 0 && !dirExists(node)) //
+			{
+				// Error out
+				return -4;
+			}
+		}
+		
+		// Copy Folder recursively
+		result = copy_folder_recursive(copysource, copytarget);
+		
+		// Source Delete
+		if(result == 0 && (copymode & COPY_DELETE_ON_FINISH) == COPY_DELETE_ON_FINISH)
+		{
+			// Append Trailing Slash (for recursion to work)
+			copysource[strlen(copysource) + 1] = 0;
+			copysource[strlen(copysource)] = '/';
+			
+			// Delete Source
+			delete_folder_recursive(copysource);
+		}
+	}
+	
+	// Simple File Copy
+	else
+	{
+		// Copy File
+		result = copy_file(copysource, copytarget);
+		
+		// Source Delete
+		if(result == 0 && (copymode & COPY_DELETE_ON_FINISH) == COPY_DELETE_ON_FINISH)
+		{
+			// Delete File
+			sceIoRemove(copysource);
+		}
+	}
+	
+	// Paste Success
+	if(result == 0)
+	{
+		// Erase Cache Data
+		memset(copysource, 0, sizeof(copysource));
+		copymode = NOTHING_TO_COPY;
+	}
+	
+	// Free Target Path Buffer
+	free(copytarget);
+	
+	// Return Result
+	return result;
+}
+*/
+
 void OptionMenu()
 {
 	action = oslLoadImageFilePNG("system/app/filemanager/actions.png", OSL_IN_RAM, OSL_PF_8888);
@@ -793,15 +879,50 @@ int launchEbootEf0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x152, path, &param);
 }
 
-void launchISO(char* file)
+void launchISO()
 {
-	SceUID modid = pspSdkLoadStartModule("modules/ISOLoader.prx", PSP_MEMORY_PARTITION_KERNEL);
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
 	
-	while (1)
-	{
-		startISO(file, MODE_INFERNO);
-	}
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
 	
+	// Set Common Parameters
+	param.size = sizeof(param);
+	
+	// Boot Path Buffer
+	char bootpath[1024];
+	
+	// Create Boot Path
+	strcpy(bootpath, cwd);
+	strcpy(bootpath + strlen(bootpath), folderIcons[current].name);
+	sctrlSESetBootConfFileIndex(MODE_INFERNO);
+
+		// EBOOT Path
+		char * ebootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
+		
+		// Prepare ISO Reboot
+		param.args = strlen(ebootpath) + 1;
+		param.argp = ebootpath;
+		param.key = "umdemu";
+		
+		// PSN EBOOT Support
+		if(strlen(bootpath) >= strlen(START_PATH "EBOOT.PBP") && strcmp(bootpath + strlen(bootpath) - strlen("EBOOT.PBP"), "EBOOT.PBP") == 0)
+		{
+			// Switch to Galaxy
+			sctrlSESetBootConfFileIndex(MODE_NP9660);
+			// Disable Galaxy ISO Emulator Patch
+			sctrlSESetUmdFile("");
+		}
+		
+		// Normal ISO
+		else
+		{
+			// Enable Galaxy ISO Emulator Patch
+			sctrlSESetUmdFile(bootpath);
+		}
+	
+	sctrlKernelLoadExecVSHWithApitype(0x123, bootpath, &param);
 }
 
 void dirControls() //Controls
@@ -901,7 +1022,7 @@ void dirControls() //Controls
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".iso") == 0) || ((strcmp(ext ,".ISO") == 0))) && (osl_keys->held.cross))
 	{
-		launchISO(folderIcons[current].filePath);
+		launchISO();
 	}
 	
 	if (osl_keys->pressed.square)
@@ -1010,7 +1131,7 @@ int filemanage(int argc, char *argv[])
 	videoicon = oslLoadImageFilePNG("system/app/filemanager/videoicon.png", OSL_IN_RAM, OSL_PF_8888);
 	archiveicon = oslLoadImageFilePNG("system/app/filemanager/archiveicon.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	pgfFont = oslLoadFontFile("system/fonts/DroidSans.pgf");
+	pgfFont = oslLoadFontFile("system/fonts/Roboto.pgf");
 	oslIntraFontSetStyle(pgfFont, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	oslSetFont(pgfFont);
 

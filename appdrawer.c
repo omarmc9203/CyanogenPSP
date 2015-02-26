@@ -1,18 +1,12 @@
-#include <pspkernel.h>
-#include <oslib/oslib.h>
-#include <pspumd.h> 
-#include <string.h>
-#include <psploadexec.h> 
-#include <psploadexec_kernel.h> 
+#include "appdrawer.h"
 #include "clock.h"
+#include "home.h"
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
 #include "gallery.h"
 #include "screenshot.h"
-
-OSL_IMAGE *background, *cursor, *music, *gmail, *messengericon, *browser, *google, *calc, *clockx, *email, *people, *calendar, *umd, 
-		  *gallery, *fb, *settings,*pointer, *pointer1, *isoloadericon, *backicon, *homeicon, *multicon, *backdrop;
+#include "include/utils.h"
 
 void appdrawer_loadImages()
 {
@@ -42,6 +36,7 @@ void appdrawer_deleteImages()
 	oslDeleteImage(people);
 	oslDeleteImage(isoloadericon);
 	oslDeleteImage(backdrop);
+	oslDeleteFont(Roboto);
 }
 
 int appdrawer()
@@ -75,12 +70,14 @@ int appdrawer()
 
 	//loads appdrawer icons
 	appdrawer_loadImages();
-	setfont();
 
 	int highlight = 0;
 	
 	if (!clockx || !settings || !email || !gallery || !calc || !umd || !calendar || !people || !fb || !isoloadericon || !backdrop)
 		debugDisplay();
+		
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
 		
 	while (!osl_quit)
 	{
@@ -89,6 +86,8 @@ int appdrawer()
 		oslStartDrawing();
 
 		controls();	
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
 		oslDrawImage(background);
 		oslDrawImageXY(backdrop, 0, 15);
@@ -121,9 +120,7 @@ int appdrawer()
 		oslDrawString(settings_test_x,175,"Settings");
 		oslDrawImageXY(umd, umd_x, 122);
 		oslDrawString(umd_text_x,175,"UMD");
-		
-		digitaltime(420,4,458);
-		battery(370,2,1);
+
 		navbarButtons(1);
 		
 		if (umd_x <= -10 && fm_x <= -10)
@@ -145,6 +142,10 @@ int appdrawer()
 			oslDrawImageXY(pointer1, 243, 223);
 		}
 		
+		digitaltime(420,4,458);
+		battery(370,2,1);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,0);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 			

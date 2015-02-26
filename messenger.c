@@ -1,3 +1,4 @@
+#include "home.h"
 #include "power_menu.h"
 #include "lock.h"
 #include "clock.h"
@@ -6,9 +7,6 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
-
-OSL_IMAGE *messengerbg, *new_message, *cursor;
-OSL_FONT *pgfFont;
 
 //Prints some info:
 void printInfo()

@@ -1,4 +1,5 @@
 #include "apollo.h"
+#include "home.h"
 #include "clock.h"
 #include "fm.h"
 #include "lock.h"
@@ -201,10 +202,12 @@ void getMP3METagInfo(char *filename, struct fileInfo *targetInfo){
 void MP3Play(char * path)
 {	
 	nowplaying = oslLoadImageFilePNG("system/app/apollo/nowplaying.png", OSL_IN_RAM, OSL_PF_8888);
-	mp3playicon = oslLoadImageFilePNG("system/app/apollo/play.png", OSL_IN_RAM, OSL_PF_8888);
-	mp3pauseicon = oslLoadImageFilePNG("system/app/apollo/pause.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	DroidSans = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslIntraFontSetStyle(DroidSans, 0.5f,BLACK,0,0);
+	oslSetFont(DroidSans);
 
-	if (!nowplaying || !mp3playicon || !mp3pauseicon)
+	if (!nowplaying)
 		debugDisplay();
 	
 	scePowerSetClockFrequency(333, 333, 166);
@@ -215,8 +218,6 @@ void MP3Play(char * path)
 	MP3_Init(1);
 	MP3_Load(path);
 	MP3_Play();
-	
-	setfont();
 	
 	while (!osl_quit)
 	{
@@ -238,8 +239,7 @@ void MP3Play(char * path)
 		if(osl_keys->pressed.select) 
 		{
 			oslDeleteImage(nowplaying);
-			oslDeleteImage(mp3pauseicon);
-			oslDeleteImage(mp3playicon);
+			oslDeleteFont(DroidSans);
 			return;
 		}
 		
@@ -265,8 +265,7 @@ void MP3Play(char * path)
 			MP3_End();
 			releaseAudioCh();
 			oslDeleteImage(nowplaying);
-			oslDeleteImage(mp3pauseicon);
-			oslDeleteImage(mp3playicon);
+			oslDeleteFont(DroidSans);
 			return;
 		}
 		
@@ -373,30 +372,37 @@ void mp3Controls() //Controls
 			{
 				oslDeleteImage(mp3bg);
 				oslDeleteImage(mp3_select);
+				oslDeleteFont(DroidSans);
 				appdrawer();
 			}
 			if(!strcmp("ms0:/PSP/MUSIC", lastDir)) 
 			{
 				oslDeleteImage(mp3bg);
 				oslDeleteImage(mp3_select);
+				oslDeleteFont(DroidSans);
 				appdrawer();
 			}
 			if(!strcmp("ms0:/PSP/GAME/CyanogenMod/downloads", lastDir)) 
 			{
 				oslDeleteImage(mp3bg);
 				oslDeleteImage(mp3_select);
+				oslDeleteFont(DroidSans);
 				appdrawer();
 			}
 			else
 			{
 				oslDeleteImage(mp3bg);
 				oslDeleteImage(mp3_select);
+				oslDeleteFont(DroidSans);
 				mp3player();
 			}		
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))
 	{
+		oslDeleteImage(mp3bg);
+		oslDeleteImage(mp3_select);
+		oslDeleteFont(DroidSans);
 		MP3Play(folderIcons[current].filePath);
 	}
 	
@@ -466,6 +472,10 @@ void mp3View(char * browseDirectory)
 {	
 	mp3bg = oslLoadImageFilePNG("system/app/apollo/mp3bg.png", OSL_IN_RAM, OSL_PF_8888);
 	mp3_select = oslLoadImageFilePNG("system/app/apollo/mp3_select.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	DroidSans = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslIntraFontSetStyle(DroidSans, 0.5f,BLACK,0,0);
+	oslSetFont(DroidSans);
 
 	char * Directory = mp3Browse(browseDirectory);
 
@@ -493,7 +503,9 @@ int mp3player()
 	if (!mp3bg || !mp3_select)
 		debugDisplay();
 		
-	setfont();
+	DroidSans = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslIntraFontSetStyle(DroidSans, 0.5f,BLACK,0,0);
+	oslSetFont(DroidSans);
 	
 	int MenuSelection = 1; // Pretty obvious
 	int selector_x = 8; //The x position of the first selection
@@ -510,6 +522,7 @@ int mp3player()
 		oslStartDrawing();
 		oslReadKeys();
 		oslClearScreen(RGB(0,0,0));	
+		
 		oslDrawImageXY(mp3bg, 0, 0);
 		oslDrawImage(mp3_select);
 		
@@ -536,18 +549,21 @@ int mp3player()
         {	
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
+			oslDeleteFont(DroidSans);
 			mp3View("ms0:/MUSIC");
         }
 		if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
+			oslDeleteFont(DroidSans);
 			mp3View("ms0:/PSP/MUSIC");
         }
 		if (MenuSelection == 3 && osl_keys->pressed.cross)
         {			
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
+			oslDeleteFont(DroidSans);
 			mp3View("ms0:/PSP/GAME/CyanogenMod/downloads");
         }
 		
@@ -555,6 +571,7 @@ int mp3player()
 		{
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
+			oslDeleteFont(DroidSans);
 			appdrawer();
 		}
 		

@@ -1,3 +1,21 @@
+#include <pspsdk.h>
+#include <pspkernel.h>
+#include <string.h>
+#include <stdio.h>
+#include <systemctrl.h>
+#include <psppower.h>
+#include <pspdebug.h>
+#include <pspdisplay.h>
+#include <pspctrl.h>
+#include <pspsdk.h>
+#include <unistd.h>
+#include <pspiofilemgr.h>
+#include <pspinit.h>
+#include <stdlib.h>
+#include <oslib/oslib.h>
+#include <psploadexec.h>
+#include <psploadexec_kernel.h>
+
 #define rootdir "ms0:/"
 
 #define MAX_FILES			256 // max amount of files needed to load.
@@ -7,6 +25,23 @@
 #define ICON_DISPLAY_Y      56 
 #define CURR_DISPLAY_Y     	52
 #define MP3DISPLAY_X        20
+
+// Copy Flags
+#define COPY_FOLDER_RECURSIVE 2
+#define COPY_DELETE_ON_FINISH 1
+#define COPY_KEEP_ON_FINISH 0
+#define NOTHING_TO_COPY -1
+
+// Default Start Path
+#define START_PATH "ms0:/PSP/SAVEDATA/"
+
+OSL_IMAGE 	*filemanagerbg, *diricon, *imageicon, *mp3icon, *txticon, *unknownicon, *documenticon, *binaryicon, *videoicon, *archiveicon, *bar, 
+			*deletion, *action, *textview,  *gallerybar;
+
+OSL_FONT *pgfFont;
+
+// Current Path
+static char cwd[1024];
 
 /* Globals */
 
@@ -39,7 +74,6 @@ typedef struct File {
 
 File dirScan[MAX_FILES];
 
-
 SceIoDirent g_dir;
 
 char *file;
@@ -50,6 +84,15 @@ char lastDir[512];
 int timer;
 char returnMe[512];
 SceCtrlData pad, oldpad;
+
+/*
+// Copy Move Origin
+static char copysource[1024];
+int copymode = NOTHING_TO_COPY
+
+// File List
+File * files = NULL;
+*/
 
 int folderScan(const char* path);
 int runFile(const char* path, char* type );

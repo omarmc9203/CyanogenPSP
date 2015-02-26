@@ -1,6 +1,20 @@
+#include <pspkernel.h>  
+#include <pspdebug.h> 
+#include <pspctrl.h>
+#include <psppower.h>
+#include <stdio.h>
+#include <oslib/oslib.h>
+
+#include <kubridge.h>
+
+#define Version "flash0:/vsh/etc/version.txt"
 #define PWD "password.TXT"
 #define selector_xDistance 0 //The distance between the X axis of the two selections
 #define selector_yDistance 10 //The distance between the Y axis of the two selections
+
+OSL_IMAGE *recoverybg, *Selector;
+
+OSL_FONT *roboto;
 
 int selector_image_x; //Determines the starting x position of the selection
 int selector_image_y; //Determines the starting y position of the selection

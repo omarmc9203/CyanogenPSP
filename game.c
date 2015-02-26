@@ -1,12 +1,4 @@
-#include <pspsdk.h>
-#include <pspkernel.h>
-#include <pspdebug.h>
-#include <pspctrl.h>
-#include <pspdisplay.h>
-#include <psppower.h>
-#include <string.h>
-#include <stdio.h>
-#include <oslib/oslib.h>
+#include "home.h"
 #include "game.h"
 #include "clock.h"
 #include "fm.h"
@@ -187,6 +179,7 @@ void gameUnload()
 {
 	oslDeleteImage(gamebg);
 	oslDeleteImage(gameSelection);
+	oslDeleteFont(Roboto);
 }
 
 void getIcon0(char* filename){
@@ -222,6 +215,10 @@ void gameView(char * browseDirectory)
 {	
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	Roboto = oslLoadFontFile("system/fonts/Roboto.pgf");
+	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+	oslSetFont(Roboto);
 
 	char * Directory = gameBrowse(browseDirectory);
 
@@ -246,9 +243,9 @@ int gameApp()
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
 		
-	pgfFont = oslLoadFontFile("system/fonts/DroidSans.pgf");
-	oslIntraFontSetStyle(pgfFont, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-	oslSetFont(pgfFont);
+	Roboto = oslLoadFontFile("system/fonts/Roboto.pgf");
+	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+	oslSetFont(Roboto);
 	
 	if (!gamebg || !gameSelection)
 		debugDisplay();

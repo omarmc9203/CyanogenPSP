@@ -3,16 +3,6 @@
 // Thanks Yoti for his libpspident.a
 // Thanks Hellcat for his hc menu lib.
 // Thanks Raing3 for his psppower lib.
-
-#include <pspkernel.h>  
-#include <pspdebug.h> 
-#include <pspctrl.h>
-#include <psppower.h>
-#include <stdio.h>
-#include <oslib/oslib.h>
-
-#include <kubridge.h>
-
 #include "recoverymenu.h"
 #include "modules/ipl_update.h"
 #include "modules/batman.h"
@@ -23,13 +13,7 @@
 #include "systemctrl_se.h"
 #include "settingsmenu.h"
 
-#define Version "flash0:/vsh/etc/version.txt"
-
 extern void CheckerPrintf(char *fmt, ...);
-
-OSL_IMAGE *recoverybg, *Selector;
-
-OSL_FONT *roboto;
 
 SceCtrlData pad;
 

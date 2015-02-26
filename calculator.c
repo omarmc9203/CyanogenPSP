@@ -1,15 +1,11 @@
-#include <pspkernel.h>
-#include <oslib/oslib.h>
+#include "calculator.h"
 #include "fm.h"
+#include "home.h"
 #include "clock.h"
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
-
-OSL_IMAGE *cursor, *calcbackground;
-
-OSL_FONT *pgfFont;
 
 OSL_COLOR black = RGB(0,0,0), red = RGB(255,0,0), white = RGB(255,255,255);
 
@@ -78,9 +74,9 @@ int calculator()
 		{
 		
 		for(variable=0;variable<4;variable++) {
-			oslPrintTextDiffColors(40,variable*42+77,x1[variable],white);
+			oslDrawStringf(40,variable*42+77,x1[variable]);
 		}
-		oslPrintTextDiffColors(40,selection*42+77,x1[selection],red);
+		oslDrawStringf(40,selection*42+77,x1[selection]);
 		
 		if ((osl_keys->pressed.up) && (selection > 0))
 			selection--;
@@ -92,9 +88,9 @@ int calculator()
 		{
 		
 		for(variable=0;variable<5;variable++) {
-			oslPrintTextDiffColors(94,variable*42+77,x2[variable],white);
+			oslDrawStringf(94,variable*42+77,x2[variable]);
 		}
-		oslPrintTextDiffColors(94,selection*42+77,x2[selection],red);
+		oslDrawStringf(94,selection*42+77,x2[selection]);
 		
 		if ((osl_keys->pressed.up) && (selection > 0))
 			selection--;

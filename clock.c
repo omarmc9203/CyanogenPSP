@@ -1,8 +1,10 @@
 #include "clock.h"
+#include "home.h"
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
+#include "include/utils.h"
 
 int hour = 0;
 int minute = 0;
@@ -18,57 +20,76 @@ char ssecond[2];
 char smilisec[2];
 char stimer[10];
 
-void centerclock()
-{
-	clockFont = oslLoadIntraFontFile("system/fonts/DroidSans.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslIntraFontSetStyle(clockFont, 0.9f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-	oslSetFont(clockFont);
-	
-	pspTime time;
-	sceRtcGetCurrentClockLocalTime(&time);
-	
-	if (time.hour > 12)
-		time.hour -= 12;
-	
-	oslDrawStringf(240,136,"%02d:%02d", time.hour, time.minutes);
-	
-}
-
-void getDayOfWeek(int x, int y) //Outputs the Day of the Week
+void getDayOfWeek(int x, int y, int n) //Outputs the Day of the Week
 {
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
 	
-	if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==1)
-	{
-		oslDrawStringf(x,y,"MONDAY");
-	}
-	else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==2)
-	{
-		oslDrawStringf(x,y,"TUESDAY");
-	}
-	else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==3)
-	{
-		oslDrawStringf(x,y,"WEDNESDAY");
-	}
-	else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==4)
-	{
-		oslDrawStringf(x,y,"THURSDAY");
-	}
-	else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==5)
-	{
-		oslDrawStringf(x,y,"FRIDAY");
-	}
-	else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==6)
+	if (n == 1)
 	{	
-		oslDrawStringf(x,y,"SATURDAY");
+		if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==1)
+		{
+			oslDrawStringf(x,y,"Monday,");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==2)
+		{
+			oslDrawStringf(x,y,"Tuesday,");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==3)
+		{
+			oslDrawStringf(x,y,"Wednesday,");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==4)
+		{
+			oslDrawStringf(x,y,"Thursday,");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==5)
+		{
+			oslDrawStringf(x,y,"Friday,");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==6)
+		{	
+			oslDrawStringf(x,y,"Saturday,");
+		}
+		else
+		{
+			oslDrawStringf(x,y,"Sunday,");
+		}
 	}
-	else
-	{
-		oslDrawStringf(x,y,"SUNDAY");
+	
+	if (n == 2)
+	{	
+		if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==1)
+		{
+			oslDrawStringf(x,y,"Mon");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==2)
+		{
+			oslDrawStringf(x,y,"Tue");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==3)
+		{
+			oslDrawStringf(x,y,"Wed");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==4)
+		{
+			oslDrawStringf(x,y,"Thu");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==5)
+		{
+			oslDrawStringf(x,y,"Fri");
+		}
+		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==6)
+		{	
+			oslDrawStringf(x,y,"Sat");
+		}
+		else
+		{
+			oslDrawStringf(x,y,"Sun");
+		}
 	}
 }
-
+	
 void getMonthOfYear(int x, int y) //Outputs the Month of the Year
 { 
 	pspTime time;
@@ -76,50 +97,50 @@ void getMonthOfYear(int x, int y) //Outputs the Month of the Year
 	
 	if (time.month == 1)
 	{
-		oslDrawStringf(x,y,"%d JANUARY", time.day);
+		oslDrawStringf(x,y,"%d January", time.day);
 	}
 	else if (time.month == 2)
 	{
-		oslDrawStringf(x,y,"%d FEBRUARY", time.day);
+		oslDrawStringf(x,y,"%d February", time.day);
 	}
 	else if (time.month == 3)
 	{
-		oslDrawStringf(x,y,"%d MARCH", time.day);
+		oslDrawStringf(x,y,"%d March", time.day);
 	}
 	else if (time.month == 4)
 	{
-		oslDrawStringf(x,y,"%d APRIL", time.day);
+		oslDrawStringf(x,y,"%d April", time.day);
 	}
 	else if (time.month == 5)
 	{
-		oslDrawStringf(x,y,"%d MAY", time.day);
+		oslDrawStringf(x,y,"%d Ma", time.day);
 	}
 	else if (time.month == 6)
 	{
-		oslDrawStringf(x,y,"%d JUNE", time.day);
+		oslDrawStringf(x,y,"%d June", time.day);
 	}
 	else if (time.month == 7)
 	{
-		oslDrawStringf(x,y,"%d JULY", time.day);
+		oslDrawStringf(x,y,"%d July", time.day);
 	}
 	else if (time.month == 8)
 	{
-		oslDrawStringf(x,y,"%d AUGUST", time.day);
+		oslDrawStringf(x,y,"%d August", time.day);
 	}
 	else if (time.month == 9)
 	{
-		oslDrawStringf(x,y,"%d SEPTEMBER", time.day);
+		oslDrawStringf(x,y,"%d September", time.day);
 	}
 	else if (time.month == 10)
 	{
-		oslDrawStringf(x,y,"%d OCTOBER", time.day);
+		oslDrawStringf(x,y,"%d October", time.day);
 	}
 	else if (time.month == 11)
 	{
-		oslDrawStringf(x,y,"%d NOVEMBER", time.day);
+		oslDrawStringf(x,y,"%d November", time.day);
 	}
 	else
-	oslDrawStringf(x,y,"%d DECEMBER", time.day);	
+	oslDrawStringf(x,y,"%d December", time.day);	
 }
 
 /*Default x = 420, x2 = 458  
@@ -201,7 +222,8 @@ void stopWatch()
 	if (!stop_watch)
 		debugDisplay();
 	
-	setfont();
+	clockFont = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(clockFont);
 	
 	SceCtrlData newPad, oldPad;
 	sceCtrlReadBufferPositive(&oldPad, 1);
@@ -237,18 +259,21 @@ void stopWatch()
 		if (osl_keys->pressed.circle)
 		{
 			oslDeleteImage(stop_watch);
+			oslDeleteFont(clockFont);
 			appdrawer();
 		}
 
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{	
 			oslDeleteImage(stop_watch);
+			oslDeleteFont(clockFont);
 			appdrawer();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
 			oslDeleteImage(stop_watch);
+			oslDeleteFont(clockFont);
 			home();
 		}
 
@@ -260,6 +285,7 @@ void stopWatch()
 		if (cursor->x >= 114 && cursor->x <= 150  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
 		{
 			oslDeleteImage(stop_watch);
+			oslDeleteFont(clockFont);
 			pspclock();
 		}
 		
@@ -328,7 +354,8 @@ int pspclock()
 	if (!clockBg || !timeBg)
 		debugDisplay();
 	
-	setfont();
+	clockFont = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(clockFont);
 	
 	while (!osl_quit)
 	{		
@@ -342,6 +369,26 @@ int pspclock()
 		
 		oslDrawImageXY(timeBg, 0, 0);
 		oslDrawImageXY(clockBg, 0, 0);
+		
+		if (time.hour > 12)
+			time.hour -= 12;
+	
+		if (time.hour == 00)
+			time.hour = 12;
+		
+        oslIntraFontSetStyle(clockFont, 1.8f,WHITE,0,INTRAFONT_ALIGN_CENTER);
+		oslDrawStringf(222,136,"%2d:%02d", time.hour, time.minutes);
+		
+		oslIntraFontSetStyle(clockFont, 0.6f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
+		if(time.hour <= 12) 
+		oslDrawString(300,136,"PM"); 
+		else if (time.hour >= 12) 
+		oslDrawString(300,136,"AM");  
+		
+		getDayOfWeek(190,156,2);
+		getMonthOfYear(265,156);
+		
+        oslIntraFontSetStyle(clockFont, 0.5f,WHITE,BLACK,0);
 
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -362,31 +409,41 @@ int pspclock()
 		if (osl_keys->pressed.circle)
 		{
 			oslDeleteImage(clockBg);
+			oslDeleteImage(timeBg);
+			oslDeleteFont(clockFont);
 			appdrawer();
 		}
 
-		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
-		{	
-			oslDeleteImage(clockBg);
-			appdrawer();
-		}
-		
-		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
-		{
-			oslDeleteImage(clockBg);
-			home();
-		}
-
-		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{
 			multitask();
 		}
+	
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{
+			oslDeleteImage(clockBg);
+			oslDeleteImage(timeBg);
+			oslDeleteFont(clockFont);
+			appdrawer();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslDeleteImage(clockBg);
+			oslDeleteImage(timeBg);
+			oslDeleteFont(clockFont);
+			home();
+		}
 		
+		/*
 		if (cursor->x >= 285 && cursor->x <= 332  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
 		{
 			oslDeleteImage(clockBg);
+			oslDeleteImage(timeBg);
+			oslDeleteFont(clockFont);
 			stopWatch();
 		}
+		*/
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
 		{

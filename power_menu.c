@@ -1,8 +1,7 @@
+#include "home.h"
 #include "power_menu.h"
 #include "lock.h"
 //#include <scepower.h>
-
-OSL_IMAGE *background, *cursor, *power, *music, *gmail, *messengericon, *browser, *pointer, *powerOff, *power1, *recovery1, *screenshot1;
 
 void powermenu()
 {	

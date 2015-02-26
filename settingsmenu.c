@@ -1,29 +1,9 @@
-#include <pspkernel.h>
-#include <pspctrl.h>
-#include <pspumd.h>
-
-//PSP Net Stuff
-#include <pspnet.h>
-#include <pspnet_inet.h>
-#include <pspnet_apctl.h>
-
-//OSLib
-#include <oslib/oslib.h>
-
-//File Management
-#include <pspiofilemgr.h>
-#include <pspiofilemgr_kernel.h>
-#include <pspiofilemgr_dirent.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdint.h> 
-#include <stdlib.h> 
-
+#include "settingsmenu.h"
 #include "include/pgeZip.h"
 #include "include/ram.h"
 #include "include/utils.h"
+#include "home.h"
 #include "fm.h"
-#include "settingsmenu.h"
 #include "clock.h"
 #include "lock.h"
 #include "multi.h"
@@ -31,20 +11,9 @@
 #include "recoverymenu.h"
 #include "screenshot.h"
 
-//declaration
-OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *themebg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
-		  *developeroptions, *themes, *wifi, *processorbg, *background, *appicon1, *appicon2, *navbar, *apollo, *gmail, *messengericon, *browser, *cpuset, 
-		  *check, *backicon, *homeicon, *multicon, *calc, *clockx, *email, *people, *calendar, *phone, *gallery, *isoloadericon, *fb, *settings, *updatesbg, 
-		  *performance, *recoverybg, *easterEggImg, *security;
-
-//definition of our sounds
-OSL_SOUND *tone;
-
-OSL_FONT *Roboto;
-
 char name;
 int setclock;
-char Version[10] = "4.0";
+char version[10] = "4.0";
 char lang[12] = "Uk English";
 static char Settings_message[100] = "";
 
@@ -169,7 +138,7 @@ ro.build.user = Joel16\r\n\
 ro.product.cpu.frequency =  %d\r\n\
 ro.product.bus.frequency =  %d\r\n\
 ro.build.date = Fri Oct 31 11:20 PM EST 2014",
-	Version, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
+	version, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
 	fclose(configtxt);	
 }
 
@@ -286,6 +255,9 @@ void aboutMenu()
 	aboutbg = oslLoadImageFilePNG("system/settings/aboutbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
+	
 	if (!aboutbg || !highlight)
 		debugDisplay();
 
@@ -303,19 +275,18 @@ void aboutMenu()
 		controls();	
 
 		oslDrawImageXY(aboutbg, 0, 0);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
 		oslDrawString(20,78,"CyanogenPSP Updates");
 		oslDrawString(20,92,"Click for, view or install available updates");
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"CyanogenPSP: %s 20150224-OFFICIAL",Version);
+		oslDrawStringf(20,129,"CyanogenPSP: %s-20150224-OFFICIAL",version);
 		oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawString(20,185,"Kernel Version");
 		oslDrawString(20,199,"Undefined-pspsdk_oslib");
 		oslDrawString(20,213,"joellovesanna@psp #1");
-		
-		digitaltime(386,4,424);
-		battery(337,2,0);
-		
+
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
 		{
 			oslDrawImageXY(highlight, 0, 63);
@@ -327,10 +298,14 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"CyanogenPSP: %s 20150224-OFFICIAL",Version);
+			oslDrawStringf(20,129,"CyanogenPSP: %s-20150224-OFFICIAL",version);
 			oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
+		digitaltime(386,4,424);
+		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -349,6 +324,7 @@ void aboutMenu()
 		{	
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			settingsMenu();	
 		}
 
@@ -356,6 +332,7 @@ void aboutMenu()
 		{	
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			settingsMenu();	
 		}
 		
@@ -363,6 +340,7 @@ void aboutMenu()
 		{	
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			home();	
 		}
 
@@ -375,6 +353,7 @@ void aboutMenu()
 		{
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			updatesMenu();
 		}
 		
@@ -386,6 +365,7 @@ void aboutMenu()
 			{
 				oslDeleteImage(aboutbg);
 				oslDeleteImage(highlight);
+				oslDeleteFont(Roboto);
 				easterEgg();
 			}
 		}
@@ -442,6 +422,9 @@ void updatesMenu()
 {		    
 	updatesbg = oslLoadImageFilePNG("system/settings/updatesbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
 
 	if (!updatesbg || !highlight)
 		debugDisplay();
@@ -458,11 +441,10 @@ void updatesMenu()
 
 		oslDrawImageXY(updatesbg, 0, 0);
 		
-		oslDrawString(20,93,"Check for Updates");
-				
-		digitaltime(386,4,424);
-		battery(337,2,0);
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
+		oslDrawString(20,93,"Check for Updates");
+
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 63 && cursor->y <= 113)
 		{
 			oslDrawImageXY(highlight, 0, 70);
@@ -474,6 +456,10 @@ void updatesMenu()
 			onlineUpdater();
 		}
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
+		digitaltime(386,4,424);
+		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -492,6 +478,7 @@ void updatesMenu()
 		{
 			oslDeleteImage(updatesbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			aboutMenu();
 		}
 
@@ -499,6 +486,7 @@ void updatesMenu()
 		{
 			oslDeleteImage(updatesbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			aboutMenu();
 		}
 		
@@ -506,6 +494,7 @@ void updatesMenu()
 		{
 			oslDeleteImage(updatesbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -529,6 +518,9 @@ void performanceMenu()
 {	
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
 
 	if (!performancebg || !highlight)
 		debugDisplay();
@@ -544,13 +536,12 @@ void performanceMenu()
 		controls();	
 
 		oslDrawImageXY(performancebg, 0, 0);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
 		oslDrawString(15,103,"Processor");
 		oslDrawString(15,166,"Ram Management");
 		oslDrawString(15,240,"Memory Management");
-		
-		digitaltime(386,4,424);
-		battery(337,2,0);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 75 && cursor->y <= 133)
 		{
@@ -564,6 +555,10 @@ void performanceMenu()
 			oslDrawString(15,166,"Ram Management");
 		}
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
+		digitaltime(386,4,424);
+		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -582,6 +577,7 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 
@@ -589,6 +585,7 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
@@ -596,6 +593,7 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
 			home();
 		}
 		
@@ -603,6 +601,7 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
 			processorMenu();
 		}
 
@@ -610,6 +609,7 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
 			ramMenu();
 		}
 		
@@ -672,6 +672,9 @@ void processorMenu()
 	processorbg = oslLoadImageFilePNG("system/settings/processorbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
+	
 	if (!processorbg || !highlight)
 		debugDisplay();
 	
@@ -692,15 +695,14 @@ void processorMenu()
 		
 		oslDrawImageXY(processorbg, 0, 0);
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		
 		oslDrawString(20,76,"Current CPU Frequency");
 		oslDrawString(20,128,"CPU Overclock");
 		oslDrawString(20,189,"Minimum CPU Frequency");
 		oslDrawString(20,202,"20 MHz");
 		oslDrawString(20,241,"Maximum CPU Frequency");
 		oslDrawString(20,254,"333 MHz");
-		
-		digitaltime(386,4,424);
-		battery(337,2,0);
 		
 		if (cursor->x >= 16 && cursor->x <= 480 && cursor->y >= 118 && cursor->y <= 174)
 		{
@@ -736,6 +738,10 @@ void processorMenu()
 		
 		oslDrawStringf(20,87,"%d/%d",cpu_list[current],bus_list[current]);
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
+		digitaltime(386,4,424);
+		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -749,6 +755,7 @@ void processorMenu()
 		{
 			oslDeleteImage(processorbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 
@@ -756,6 +763,7 @@ void processorMenu()
 		{	
 			oslDeleteImage(processorbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 		
@@ -763,6 +771,7 @@ void processorMenu()
 		{
 			oslDeleteImage(processorbg);
 			oslDeleteImage(highlight);
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -786,6 +795,9 @@ void ramMenu()
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
+	
 	if (!performancebg || !highlight)
 		debugDisplay();
 	
@@ -803,11 +815,15 @@ void ramMenu()
 		
 		oslDrawImageXY(performancebg, 0, 0);
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		
 		oslDrawStringf(20,98,"RAM Available: %d MB Available\n",oslGetRamStatus().maxAvailable/1000000); 
 	
-		navbarButtons(2);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
 		digitaltime(386,4,424);
 		battery(337,2,0);
+		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -820,6 +836,7 @@ void ramMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 
@@ -827,6 +844,7 @@ void ramMenu()
 		{	
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 		
@@ -834,6 +852,7 @@ void ramMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1003,6 +1022,9 @@ void SetZipName()
 void displayMenu()
 {	
 	themebg = oslLoadImageFilePNG("system/settings/themebg.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
 
 	if (!themebg)
 		debugDisplay();
@@ -1016,6 +1038,8 @@ void displayMenu()
 		oslClearScreen(RGB(0,0,0));
 		
 		controls();	
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(themebg, 0, 0);
 
@@ -1024,8 +1048,9 @@ void displayMenu()
 		oslDrawString(65,184,"Icons");
 		oslDrawString(65,236,"Fonts");
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
 		digitaltime(386,4,424);
-
 		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1044,18 +1069,21 @@ void displayMenu()
 		if (osl_keys->pressed.circle)
 		{
 			oslDeleteImage(themebg);
+			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
 			oslDeleteImage(themebg);
+			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
 			oslDeleteImage(themebg);
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1079,6 +1107,9 @@ void wifiMenu()
 	wifibg = oslLoadImageFilePNG("system/settings/wifibg.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
 
 	if (!wifibg)
 		debugDisplay();
@@ -1113,6 +1144,8 @@ void wifiMenu()
 		controls();	
 
 		oslDrawImageXY(wifibg, 0, 0);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
 		if (enabled)
 		{
@@ -1124,8 +1157,10 @@ void wifiMenu()
 		oslDrawString(30, 200, Settings_message);
 		
 		switchStatus(2);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
 		digitaltime(386,4,424);
-
 		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1161,7 +1196,8 @@ void wifiMenu()
 		{	
 			oslDeleteImage(wifibg);	
 			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);	
+			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 
@@ -1170,6 +1206,7 @@ void wifiMenu()
 			oslDeleteImage(wifibg);	
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
@@ -1178,6 +1215,7 @@ void wifiMenu()
 			oslDeleteImage(wifibg);	
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1293,6 +1331,9 @@ void dumpMenu()
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
+	
 	if (!developerbg || !highlight)
 		debugDisplay();
 
@@ -1308,13 +1349,12 @@ void dumpMenu()
 
 		oslDrawImageXY(developerbg, 0, 0);
 		switchStatus(2);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
 		oslDrawString(20,123,"Dump Flash 0");
 		oslDrawString(20,181,"Dump Flash 1");
 		oslDrawString(20,236,"More");
-			
-		digitaltime(386,4,424);
-		battery(337,2,0);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155)
 		{
@@ -1334,6 +1374,10 @@ void dumpMenu()
 			oslDrawString(20,236,"More");
 		}
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
+		digitaltime(386,4,424);
+		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -1354,6 +1398,7 @@ void dumpMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			developerMenu();
 		}
 		
@@ -1363,6 +1408,7 @@ void dumpMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			developerMenu();
 		}
 		
@@ -1372,6 +1418,7 @@ void dumpMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1413,6 +1460,9 @@ void dumpMenuMore()
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
+	
 	if (!developerbg || !highlight)
 		debugDisplay();
 
@@ -1428,12 +1478,11 @@ void dumpMenuMore()
 
 		oslDrawImageXY(developerbg, 0, 0);
 		switchStatus(2);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
 		oslDrawString(20,123,"Dump UMD boot.bin");
 		oslDrawString(20,181,"Dump Memory");
-			
-		digitaltime(386,4,424);
-		battery(337,2,0);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155)
 		{
@@ -1447,6 +1496,10 @@ void dumpMenuMore()
 			oslDrawString(20,181,"Dump Memory");
 		}
 
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
+		digitaltime(386,4,424);
+		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -1467,6 +1520,7 @@ void dumpMenuMore()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			dumpMenu();
 		}
 		
@@ -1476,6 +1530,7 @@ void dumpMenuMore()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			dumpMenu();
 		}
 		
@@ -1485,6 +1540,7 @@ void dumpMenuMore()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1524,6 +1580,9 @@ void developerMenu()
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
+	
 	if (!developerbg || !highlight)
 		debugDisplay();
 
@@ -1541,15 +1600,14 @@ void developerMenu()
 		
 		switchStatus(2);
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		
 		oslDrawString(10,107,"Toggle Remote Joy Lite");
 		oslDrawString(10,121,"Displays your PSP screen on your computer via USB.");
 		oslDrawString(10,135,"Press Triangle to disable or it may cause the program to crash");
 		oslDrawString(10,168,"Toggle USB Debugging");
 		oslDrawString(10,182,"Press Triangle to disable or it may cause the program to crash");
 		oslDrawString(10,236,"Dumping Tools");
-			
-		digitaltime(386,4,424);
-		battery(337,2,0);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 154)
 		{
@@ -1572,6 +1630,10 @@ void developerMenu()
 			oslDrawString(10,236,"Dumping Tools");
 		}
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		
+		digitaltime(386,4,424);
+		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -1592,6 +1654,7 @@ void developerMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);	
+			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
@@ -1600,7 +1663,8 @@ void developerMenu()
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);	
+			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
@@ -1610,6 +1674,7 @@ void developerMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);	
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1649,6 +1714,7 @@ void developerMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);	
+			oslDeleteFont(Roboto);
 			dumpMenu();
 		}
 		
@@ -1704,17 +1770,14 @@ void settingsDeleteResources()
 	oslDeleteImage(themes);
 	oslDeleteImage(developeroptions);
 	oslDeleteImage(wifi);
-	oslDeleteImage(offswitch);
-	oslDeleteImage(onswitch);
 	oslDeleteImage(performance);
 	oslDeleteImage(security);
+	oslDeleteFont(Roboto);
 }
 
 void settingsMenu()
 {
 	settingsbg = oslLoadImageFilePNG("system/settings/settingsbg.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	about = oslLoadImageFilePNG("system/settings/about.png", OSL_IN_RAM, OSL_PF_8888);
 	themes = oslLoadImageFilePNG("system/settings/themes.png", OSL_IN_RAM, OSL_PF_8888);
 	developeroptions = oslLoadImageFilePNG("system/settings/developeroptions.png", OSL_IN_RAM, OSL_PF_8888);
@@ -1723,10 +1786,9 @@ void settingsMenu()
 	performance = oslLoadImageFilePNG("system/settings/performance.png", OSL_IN_RAM, OSL_PF_8888);
 		
 	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	oslSetFont(Roboto);
 
-	if (!settingsbg || !onswitch || !offswitch || !about || !developeroptions || !wifi || !themes || !performance || !security)
+	if (!settingsbg || !about || !developeroptions || !wifi || !themes || !performance || !security)
 		debugDisplay();
 
 	while (!osl_quit)
@@ -1740,6 +1802,8 @@ void settingsMenu()
 		controls();	
 
 		oslDrawImageXY(settingsbg, 0, 0);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
 		oslDrawString(50,177,"Themes");
 		oslDrawString(50,120,"Wi-Fi");
@@ -1749,6 +1813,8 @@ void settingsMenu()
 		oslDrawString(280,234,"About");
 		
 		settingsHighlight();
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);

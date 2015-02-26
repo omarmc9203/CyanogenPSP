@@ -1,14 +1,8 @@
-#include <pspkernel.h>
-#include <pspctrl.h>
-#include <pspdebug.h>
-#include <pspaudio.h>
-#include <pspaudiolib.h>
-#include <psppower.h>
-#include <pspiofilemgr.h>
-#include <oslib/oslib.h>
+#include "home.h"
 #include "gallery.h"
 #include "appdrawer.h"
 #include "fm.h"
+#include "include/utils.h"
 
 void galleryUp()
 {
@@ -30,7 +24,7 @@ void galleryDisplay()
 {	
 	oslDrawImageXY(gallerybg, 0, 0);
 	oslDrawImageXY(gallerySelection,15,(current - curScroll)*56+GALLERY_CURR_DISPLAY_Y);
-	oslDrawStringf(56,32,"Photo");
+	oslDrawStringf(25,18,"Album");
 	
 	battery(370,2,1);
 	digitaltime(420,4,458);
@@ -70,6 +64,10 @@ void showImage(const char * path)
 
 	OSL_IMAGE * image = oslLoadImageFile(path, OSL_IN_RAM, OSL_PF_8888);
 	OSL_IMAGE * galleryBar = oslLoadImageFilePNG("system/app/gallery/galleryBar.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+	oslSetFont(Roboto);
 	 
 	if(!image)
 		return 0;
@@ -112,6 +110,7 @@ void showImage(const char * path)
 		{
 			oslDeleteImage(image);
 			oslDeleteImage(galleryBar);
+			oslDeleteFont(Roboto);
 			return;
 		}
 		
@@ -243,6 +242,7 @@ void galleryUnload()
 	oslDeleteImage(gallerybg);
 	oslDeleteImage(gallerySelection);
 	oslDeleteImage(galleryThumbnail);
+	oslDeleteFont(Roboto);
 }
 
 void galleryView(char * browseDirectory)
@@ -250,6 +250,10 @@ void galleryView(char * browseDirectory)
 	gallerybg = oslLoadImageFilePNG("system/app/gallery/gallerybg.png", OSL_IN_RAM, OSL_PF_8888);
 	gallerySelection = oslLoadImageFilePNG("system/app/gallery/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+	oslSetFont(Roboto);
 
 	char * Directory = galleryBrowse(browseDirectory);
 
@@ -339,7 +343,6 @@ int galleryApp()
 		if (osl_keys->pressed.circle)
 		{
 			galleryUnload();
-			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 		

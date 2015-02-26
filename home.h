@@ -1,2 +1,32 @@
+#include <pspkernel.h>
+#include <pspdebug.h>
+#include <pspdisplay.h>
+#include <pspsdk.h>
+#include <pspctrl.h>
+#include <pspsysmem.h>
+#include <string.h>
+#include <malloc.h> 
+#include <oslib/oslib.h>
+#include <psprtc.h>
+
+OSL_IMAGE *background, *cursor, *ic_allapps, *ic_allapps_pressed, *music, *gmail, *messengericon, *browser, *google, *pointer, *pointer1, 
+		  *notif, *batt100, *batt80, *batt60, *batt40, *batt20, *batt10, *batt0, *battcharge, *backicon, *homeicon, *multicon, *transbackground,
+		  *notif2, *debug, *brightness, *control, *navbar2, *backicon2, *homeicon2, *multicon2, *welcome, *quickSettings, *playing, *navbar;
+		  
+//definition of our sounds
+OSL_SOUND *tone;
+OSL_FONT *Roboto;
+
+void debugDisplay();
+void controls();
+void battery(int batx, int baty, int n);
+void appDrawerIcon();
+void navbarButtons(int n);
+void androidQuickSettings();
+void notif_2();
+void firstBootMessage();
+void loadIcons();
+void unloadIcons();
+void LowMemExit();
 void homeUnloadResources();
 void home();

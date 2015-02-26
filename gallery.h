@@ -1,3 +1,12 @@
+#include <pspkernel.h>
+#include <pspctrl.h>
+#include <pspdebug.h>
+#include <pspaudio.h>
+#include <pspaudiolib.h>
+#include <psppower.h>
+#include <pspiofilemgr.h>
+#include <oslib/oslib.h>
+
 #define MAX_GALLERY_DISPLAY			3 // max amount of files displayed on-screen.
 #define GALLERY_DISPLAY_X			78 // X value of where the filebrowser is displayed.
 #define GALLERY_DISPLAY_Y			82 // Y value of the filebrowser is displayed.
