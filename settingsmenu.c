@@ -1439,6 +1439,11 @@ void dumpMenu()
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 212 && cursor->y <= 268 && osl_keys->pressed.cross)
 		{
+			oslDeleteImage(developerbg);
+			oslDeleteImage(highlight);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);	
+			oslDeleteFont(Roboto);
 			dumpMenuMore();
 		}
 		
@@ -1663,7 +1668,7 @@ void developerMenu()
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
+			oslDeleteImage(onswitch);	
 			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
@@ -1717,7 +1722,6 @@ void developerMenu()
 			oslDeleteFont(Roboto);
 			dumpMenu();
 		}
-		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	

@@ -16,7 +16,7 @@
 #define galley_xSelection 0 //The distance between the X axis of the two selections
 #define galley_ySelection 56 //The distance between the Y axis of the two selections
 
-OSL_IMAGE *gallerybg, *gallerySelection, *galleryThumbnail, *galleryBar;
+OSL_IMAGE *gallerybg, *gallerySelection, *galleryThumbnail, *galleryBar, *wallpaper;
 OSL_FONT *Roboto;
 
 SceCtrlData pad, oldpad;
@@ -24,6 +24,7 @@ SceCtrlData pad, oldpad;
 void galleryUp();
 void galleryDown();
 void galleryDisplay();
+int changeWallpaper();
 void showImage(const char * path);
 void galleryControls();
 char * galleryBrowse(const char * path);

@@ -58,16 +58,52 @@ void galleryDisplay()
 	}
 }
 
+int changeWallpaper()
+{
+	wallpaper = oslLoadImageFilePNG("system/app/gallery/wallpaper.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	if (!wallpaper)
+		debugDisplay();
+
+	while (!osl_quit) {
+	
+	oslStartDrawing();
+
+	controls();	
+	
+	oslIntraFontSetStyle(Roboto, 0.5f, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+	
+	oslDrawImageXY(wallpaper, 65, 67);
+	oslDrawStringf(110,95,"Set picture as wallpaper?");
+	oslDrawStringf(110,115,"Press (X) to accept or (O) to cancel.");
+	
+	if (osl_keys->pressed.cross) 
+	{
+		FILE * backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "w");
+		fprintf(backgroundPathTXT,"%s", folderIcons[current].filePath);
+		fclose(backgroundPathTXT);
+		oslDeleteImage(wallpaper);
+		return;
+	}
+		
+	if (osl_keys->pressed.circle) 
+	{
+		oslDeleteImage(wallpaper);
+		return;
+	}
+		
+	oslEndDrawing(); 
+	oslEndFrame(); 
+	oslSyncFrame();
+	}
+}
+
 void showImage(const char * path)
 {
 	int zoomIn = 0, zoomOut = 0;
 
 	OSL_IMAGE * image = oslLoadImageFile(path, OSL_IN_RAM, OSL_PF_8888);
 	OSL_IMAGE * galleryBar = oslLoadImageFilePNG("system/app/gallery/galleryBar.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-	oslSetFont(Roboto);
 	 
 	if(!image)
 		return 0;
@@ -106,11 +142,15 @@ void showImage(const char * path)
 			image->stretchY = image->sizeY * zoomOut--;
 		}
 		
+		if (osl_keys->pressed.square) 
+		{
+			changeWallpaper();
+		}
+		
 		if (osl_keys->pressed.circle) 
 		{
 			oslDeleteImage(image);
 			oslDeleteImage(galleryBar);
-			oslDeleteFont(Roboto);
 			return;
 		}
 		

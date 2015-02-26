@@ -202,10 +202,6 @@ void getMP3METagInfo(char *filename, struct fileInfo *targetInfo){
 void MP3Play(char * path)
 {	
 	nowplaying = oslLoadImageFilePNG("system/app/apollo/nowplaying.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	DroidSans = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslIntraFontSetStyle(DroidSans, 0.5f,BLACK,0,0);
-	oslSetFont(DroidSans);
 
 	if (!nowplaying)
 		debugDisplay();
@@ -239,7 +235,6 @@ void MP3Play(char * path)
 		if(osl_keys->pressed.select) 
 		{
 			oslDeleteImage(nowplaying);
-			oslDeleteFont(DroidSans);
 			return;
 		}
 		
@@ -257,6 +252,8 @@ void MP3Play(char * path)
 			pspAudioEnd();
 			MP3_Stop();
 			releaseAudioCh();
+			current++;
+			MP3Play(folderIcons[current].filePath);
 		}
 		
 		if(osl_keys->pressed.circle)
@@ -265,7 +262,6 @@ void MP3Play(char * path)
 			MP3_End();
 			releaseAudioCh();
 			oslDeleteImage(nowplaying);
-			oslDeleteFont(DroidSans);
 			return;
 		}
 		
@@ -400,9 +396,6 @@ void mp3Controls() //Controls
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))
 	{
-		oslDeleteImage(mp3bg);
-		oslDeleteImage(mp3_select);
-		oslDeleteFont(DroidSans);
 		MP3Play(folderIcons[current].filePath);
 	}
 	

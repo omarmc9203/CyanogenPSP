@@ -730,7 +730,7 @@ void dirDownx5()
 }
 
 void oslPrintText(int x, int y, float size, char * text, OSL_COLOR color) {
-   oslIntraFontSetStyle(pgfFont, size, color, RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+   oslIntraFontSetStyle(Roboto, size, color, RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
    oslDrawStringf(x,y,text);
 }
 
@@ -821,26 +821,6 @@ void dirDisplay()
 			oslDrawStringf(DISPLAY_X, (i - curScroll)*44+DISPLAY_Y, folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
-}
-
-int launch_eboot()
-{
-	// Load Execute Parameter
-	struct SceKernelLoadExecVSHParam param;
-	
-	char path = folderIcons[current].filePath;
-
-	// Clear Memory
-	memset(&param, 0, sizeof(param));
-
-	// Configure Parameters
-	param.size = sizeof(param);
-	param.args = strlen(path) + 1;
-	param.argp = (void *)path;
-	param.key = "game";
-
-	// Trigger Reboot
-	return sctrlKernelLoadExecVSHWithApitype(0x141, path, &param);
 }
 
 int launchEbootMs0(const char *path[])
@@ -1007,7 +987,7 @@ void dirControls() //Controls
 		if (kuKernelGetModel() == 4)
 			launchEbootEf0(folderIcons[current].filePath);
 		else
-			launchEbootMs0;
+			launchEbootMs0(folderIcons[current].filePath);
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))
@@ -1114,7 +1094,7 @@ void filemanager_unload()
 	oslDeleteImage(binaryicon);
 	oslDeleteImage(videoicon);
 	oslDeleteImage(archiveicon);
-	oslDeleteFont(pgfFont);
+	oslDeleteFont(Roboto);
 }
 
 int filemanage(int argc, char *argv[])
@@ -1131,9 +1111,9 @@ int filemanage(int argc, char *argv[])
 	videoicon = oslLoadImageFilePNG("system/app/filemanager/videoicon.png", OSL_IN_RAM, OSL_PF_8888);
 	archiveicon = oslLoadImageFilePNG("system/app/filemanager/archiveicon.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	pgfFont = oslLoadFontFile("system/fonts/Roboto.pgf");
-	oslIntraFontSetStyle(pgfFont, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-	oslSetFont(pgfFont);
+	Roboto = oslLoadFontFile("system/fonts/Roboto.pgf");
+	oslIntraFontSetStyle(Roboto, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+	oslSetFont(Roboto);
 
 	if (!filemanagerbg || !diricon || !imageicon || !mp3icon || !txticon || !unknownicon || !bar || !documenticon || !binaryicon || !videoicon || !archiveicon)
 		debugDisplay();
