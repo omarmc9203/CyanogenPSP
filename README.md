@@ -1,4 +1,4 @@
-CyanoPSP Beta
+CyanogenPSP Beta
 =================
 
 This is a program that allows you to do everything a PSP can do with a little more handy features, but with a whole different UI. This isn't a port of cyanogenmod from android, it's a project created from scratch. It's purpose is similar to that of "iR Shell", but has a UI inspired by CyanogenMod, Android. It will never allow you to run android apps, the psp system doesn't have the hardware capabilities to run android. If developers are intrested, feel free to contact me through my email: sauskethunderkid@gmail.com 
