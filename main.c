@@ -412,9 +412,7 @@ int main()
 		oslDrawImageXY(browser, 276, 190);
 		oslDrawImageXY(gmail, 331, 190);
 		oslDrawImageXY(messengericon, 160, 190);
-		oslDrawImageXY(pointer, 232, 180);
-		
-		digitaltime(420,4,458); //Draws digital time (based on your local psp time) on the top right corner. 
+		oslDrawImageXY(pointer, 232, 180); 
 
 		//Sets the transparency color (black)
 		oslSetTransparentColor(RGB(0,0,0));
@@ -424,10 +422,13 @@ int main()
 		//Disables the transparent color
 		oslDisableTransparentColor();
 		
-		battery(370,2,1);
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+		
 		navbarButtons(1);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,0);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		digitaltime(420,4,458); //Draws digital time (based on your local psp time) on the top right corner.
+		battery(370,2,1);
 		androidQuickSettings();
 		firstBootMessage();
 		oslDrawImage(cursor);

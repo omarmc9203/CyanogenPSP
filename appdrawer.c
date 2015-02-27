@@ -142,10 +142,9 @@ int appdrawer()
 			oslDrawImageXY(pointer1, 243, 223);
 		}
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		digitaltime(420,4,458);
 		battery(370,2,1);
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,0);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 			

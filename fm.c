@@ -736,6 +736,8 @@ void oslPrintText(int x, int y, float size, char * text, OSL_COLOR color) {
 
 void dirDisplay()
 {	
+	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+
 	oslDrawImageXY(filemanagerbg, 0, 0);
 	oslDrawStringf(86, 30, lastDir,RGB(0,0,0)); // Displays the current directory.
 	oslDrawImageXY(bar,0,(current - curScroll)*44+CURR_DISPLAY_Y);
@@ -993,6 +995,11 @@ void dirControls() //Controls
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))
 	{
 		MP3Play(folderIcons[current].filePath);
+	}
+	
+	if (((ext) != NULL) && ((strcmp(ext ,".wav") == 0) || ((strcmp(ext ,".WAV") == 0)) || ((strcmp(ext ,".BGM") == 0)) || ((strcmp(ext ,".bgm") == 0)) || ((strcmp(ext ,".MOD") == 0)) || ((strcmp(ext ,".mod") == 0)) || ((strcmp(ext ,".AT3") == 0)) || ((strcmp(ext ,".at3") == 0))) && (osl_keys->pressed.cross))
+	{
+		soundPlay(folderIcons[current].filePath);
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".txt") == 0) || ((strcmp(ext ,".TXT") == 0)) || ((strcmp(ext ,".c") == 0)) || ((strcmp(ext ,".h") == 0)) || ((strcmp(ext ,".cpp") == 0))) && (osl_keys->pressed.cross))

@@ -4,11 +4,7 @@
 #include "screenshot.h"
 
 int lockscreen()
-{		
-	pgfFont = oslLoadIntraFontFile("system/fonts/DroidSans.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslIntraFontSetStyle(pgfFont, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-	oslSetFont(pgfFont);
-	
+{			
 	lockscreenBg = oslLoadImageFilePNG("system/lockscreen/lockscreenBg.png", OSL_IN_RAM, OSL_PF_8888);
 
 	if (!lockscreenBg)
@@ -36,7 +32,6 @@ int lockscreen()
 			if (osl_pad.held.cross && osl_keys->analogY <= -50)
 			{
 				oslDeleteImage(lockscreenBg);
-				oslDeleteFont(pgfFont);
 				home();
 			}
 		}

@@ -218,8 +218,8 @@ void androidQuickSettings()
 	
 	oslDrawImageXY(quickSettings,0,notif_y);
 	
-	battery(373,yPos2-2,2);
-	getDayOfWeek(15,yPos2+5,1);
+	battery(374,yPos2-2,2);
+	getDayOfWeek(10,yPos2+5,1);
 	getMonthOfYear(85,yPos2+5);
 
 	oslDrawStringf(137,yLine1, "Wi-Fi");
@@ -554,12 +554,12 @@ void home()
 		oslDrawImageXY(pointer, 232, 180);
 				
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
-		digitaltime(420,4,458);
 		appDrawerIcon();
-		battery(370,2,1);
 		navbarButtons(1);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,0);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		digitaltime(420,4,458);
+		battery(370,2,1);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 			
@@ -586,11 +586,13 @@ void home()
 			mp3player();
 		}
 		
+		/*
 		if (cursor->x >= 155 && cursor->x <= 210 && cursor->y >= 195 && cursor->y <= 240 && osl_keys->pressed.cross)
 		{
 			homeUnloadResources();
 			messenger();
 		}
+		*/
 			
 		if (cursor->x >= 215 && cursor->x <= 243 && cursor->y >= 195 && cursor->y <= 230 && osl_keys->pressed.cross)
 		{

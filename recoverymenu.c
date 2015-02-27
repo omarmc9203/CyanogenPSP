@@ -349,12 +349,29 @@ void ShowPage2()
 	}
 }
 
+typedef struct
+{
+	unsigned int major;
+	unsigned int minor;
+} fw_version;
+
+fw_version getFwVersion(fw_version *v)
+{
+		long int a = sceKernelDevkitVersion();
+		v->major = (*((char *)&a+3));
+		v->minor = (*((char *)&a+2)*10) + (*((char *)&a+1));
+		return *v;
+}
+
 void ShowPage1()
 {
     int baryon, pommel, tachyon, fuseid, fusecfg, mb, model, type, region;
 	char *unk_minor = "-";
 	
 	recoverybg = oslLoadImageFilePNG("android_bootable_recovery/res/images/recoverybg.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	fw_version version;
+	getFwVersion(&version);
 	
 	while (!osl_quit)
 	{
@@ -376,8 +393,8 @@ void ShowPage1()
 		model = chDetectModel();	
 		type = chDetectOFW();
 		region = chGetRegion();		
-
-		oslDrawStringf(10,20,"Kernel Version: %s (0x%08X)\n\n", FWs[type], sceKernelDevkitVersion());
+		
+		oslDrawStringf(10,20,"Kernel Version: %d.%d (0x%08X)\n\n", version.major, version.minor, sceKernelDevkitVersion());
 		pspGetModel(10,30);
 		oslDrawStringf(10,60,"Module:         %s\n", Modules[model]);      
 		oslDrawStringf(10,70,"Motherboard:    %s\n\n", MBs[mb]);
@@ -1163,7 +1180,7 @@ int mainRecoveryMenu()
 		
 		oslDrawImageXY(recoverybg, 0, 0);
 		oslDrawImage(Selector);
-		oslDrawStringf(10,5,"CWM-based Recovery v1.1\n");
+		oslDrawStringf(10,5,"CWM-based Recovery v1.2\n");
 		
 		oslDrawStringf(10,20,"- toggle USB");
 		oslDrawStringf(10,30,"- system information");

@@ -250,12 +250,18 @@ void pspGetModel(int x, int y)
 	}
 }
 
+typedef struct
+{
+	unsigned int major;
+	unsigned int minor;
+} fw_version;
+
 void aboutMenu()
 {	
 	aboutbg = oslLoadImageFilePNG("system/settings/aboutbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
 	if (!aboutbg || !highlight)
@@ -263,6 +269,9 @@ void aboutMenu()
 
 	int n = 0;
 	u8 *macAddress = oslAdhocGetMacAddress();
+	
+	fw_version version;
+	getFwVersion(&version);
 
 	while (!osl_quit)
 	{
@@ -281,10 +290,10 @@ void aboutMenu()
 		oslDrawString(20,78,"CyanogenPSP Updates");
 		oslDrawString(20,92,"Click for, view or install available updates");
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"CyanogenPSP: %s-20150224-OFFICIAL",version);
+		oslDrawStringf(20,129,"CyanogenPSP: %s-20150227-OFFICIAL",version);
 		oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
-		oslDrawString(20,185,"Kernel Version");
-		oslDrawString(20,199,"Undefined-pspsdk_oslib");
+		oslDrawStringf(20,185,"Kernel Version: %d.%d", version.major, version.minor);
+		oslDrawStringf(20,199,"OSLib Version: %s",OSL_VERSION);
 		oslDrawString(20,213,"joellovesanna@psp #1");
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
@@ -298,11 +307,11 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"CyanogenPSP: %s-20150224-OFFICIAL",version);
+			oslDrawStringf(20,129,"CyanogenPSP: %s-20150227-OFFICIAL",version);
 			oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -423,7 +432,7 @@ void updatesMenu()
 	updatesbg = oslLoadImageFilePNG("system/settings/updatesbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 
 	if (!updatesbg || !highlight)
@@ -456,7 +465,7 @@ void updatesMenu()
 			onlineUpdater();
 		}
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -519,7 +528,7 @@ void performanceMenu()
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 
 	if (!performancebg || !highlight)
@@ -555,7 +564,7 @@ void performanceMenu()
 			oslDrawString(15,166,"Ram Management");
 		}
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -672,7 +681,7 @@ void processorMenu()
 	processorbg = oslLoadImageFilePNG("system/settings/processorbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
 	if (!processorbg || !highlight)
@@ -738,7 +747,7 @@ void processorMenu()
 		
 		oslDrawStringf(20,87,"%d/%d",cpu_list[current],bus_list[current]);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -795,7 +804,7 @@ void ramMenu()
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
 	if (!performancebg || !highlight)
@@ -819,7 +828,7 @@ void ramMenu()
 		
 		oslDrawStringf(20,98,"RAM Available: %d MB Available\n",oslGetRamStatus().maxAvailable/1000000); 
 	
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -1023,7 +1032,7 @@ void displayMenu()
 {	
 	themebg = oslLoadImageFilePNG("system/settings/themebg.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 
 	if (!themebg)
@@ -1048,7 +1057,7 @@ void displayMenu()
 		oslDrawString(65,184,"Icons");
 		oslDrawString(65,236,"Fonts");
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -1108,7 +1117,7 @@ void wifiMenu()
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 
 	if (!wifibg)
@@ -1158,7 +1167,7 @@ void wifiMenu()
 		
 		switchStatus(2);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -1331,7 +1340,7 @@ void dumpMenu()
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
 	if (!developerbg || !highlight)
@@ -1374,7 +1383,7 @@ void dumpMenu()
 			oslDrawString(20,236,"More");
 		}
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -1465,7 +1474,7 @@ void dumpMenuMore()
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
 	if (!developerbg || !highlight)
@@ -1501,7 +1510,7 @@ void dumpMenuMore()
 			oslDrawString(20,181,"Dump Memory");
 		}
 
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -1585,7 +1594,7 @@ void developerMenu()
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
 	if (!developerbg || !highlight)
@@ -1635,7 +1644,7 @@ void developerMenu()
 			oslDrawString(10,236,"Dumping Tools");
 		}
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -1789,7 +1798,7 @@ void settingsMenu()
 	security = oslLoadImageFilePNG("system/settings/security.png", OSL_IN_RAM, OSL_PF_8888);
 	performance = oslLoadImageFilePNG("system/settings/performance.png", OSL_IN_RAM, OSL_PF_8888);
 		
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 
 	if (!settingsbg || !about || !developeroptions || !wifi || !themes || !performance || !security)
@@ -1818,7 +1827,7 @@ void settingsMenu()
 		
 		settingsHighlight();
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(386,4,424);
 		battery(337,2,0);

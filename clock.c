@@ -222,8 +222,8 @@ void stopWatch()
 	if (!stop_watch)
 		debugDisplay();
 	
-	clockFont = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslSetFont(clockFont);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
 	
 	SceCtrlData newPad, oldPad;
 	sceCtrlReadBufferPositive(&oldPad, 1);
@@ -259,21 +259,21 @@ void stopWatch()
 		if (osl_keys->pressed.circle)
 		{
 			oslDeleteImage(stop_watch);
-			oslDeleteFont(clockFont);
+			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{	
 			oslDeleteImage(stop_watch);
-			oslDeleteFont(clockFont);
+			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
 			oslDeleteImage(stop_watch);
-			oslDeleteFont(clockFont);
+			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -285,7 +285,7 @@ void stopWatch()
 		if (cursor->x >= 114 && cursor->x <= 150  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
 		{
 			oslDeleteImage(stop_watch);
-			oslDeleteFont(clockFont);
+			oslDeleteFont(Roboto);
 			pspclock();
 		}
 		
@@ -354,8 +354,8 @@ int pspclock()
 	if (!clockBg || !timeBg)
 		debugDisplay();
 	
-	clockFont = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslSetFont(clockFont);
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
 	
 	while (!osl_quit)
 	{		
@@ -376,10 +376,10 @@ int pspclock()
 		if (time.hour == 00)
 			time.hour = 12;
 		
-        oslIntraFontSetStyle(clockFont, 1.8f,WHITE,0,INTRAFONT_ALIGN_CENTER);
+        oslIntraFontSetStyle(Roboto, 1.8f,WHITE,0,INTRAFONT_ALIGN_CENTER);
 		oslDrawStringf(222,136,"%2d:%02d", time.hour, time.minutes);
 		
-		oslIntraFontSetStyle(clockFont, 0.6f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
+		oslIntraFontSetStyle(Roboto, 0.6f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
 		if(time.hour <= 12) 
 		oslDrawString(300,136,"PM"); 
 		else if (time.hour >= 12) 
@@ -388,7 +388,7 @@ int pspclock()
 		getDayOfWeek(190,156,2);
 		getMonthOfYear(265,156);
 		
-        oslIntraFontSetStyle(clockFont, 0.5f,WHITE,BLACK,0);
+        oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
 		digitaltime(386,4,424);
 		battery(337,2,0);
@@ -410,7 +410,7 @@ int pspclock()
 		{
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			oslDeleteFont(clockFont);
+			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 
@@ -423,7 +423,7 @@ int pspclock()
 		{
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			oslDeleteFont(clockFont);
+			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 
@@ -431,7 +431,7 @@ int pspclock()
 		{
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			oslDeleteFont(clockFont);
+			oslDeleteFont(Roboto);
 			home();
 		}
 		
@@ -440,7 +440,7 @@ int pspclock()
 		{
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			oslDeleteFont(clockFont);
+			oslDeleteFont(Roboto);
 			stopWatch();
 		}
 		*/
