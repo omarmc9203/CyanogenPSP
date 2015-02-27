@@ -137,7 +137,7 @@ ro.product.locale.language = %s\r\n\
 ro.build.user = Joel16\r\n\
 ro.product.cpu.frequency =  %d\r\n\
 ro.product.bus.frequency =  %d\r\n\
-ro.build.date = Fri Oct 31 11:20 PM EST 2014",
+ro.build.date = Fri Feb 27 12:40 PM EST 2014",
 	version, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
 	fclose(configtxt);	
 }

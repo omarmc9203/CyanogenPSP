@@ -607,7 +607,7 @@ int mp3player()
 		
 		oslDrawStringf(20,108,"MUSIC");
 		oslDrawStringf(20,163,"PSP/MUSIC");
-		oslDrawStringf(20,218,"PSP/GAME/CyanogenMod/Downloads");
+		oslDrawStringf(20,218,"PSP/GAME/CyanogenPSP/Downloads");
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
@@ -645,7 +645,7 @@ int mp3player()
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
 			oslDeleteFont(Roboto);
-			mp3View("ms0:/PSP/GAME/CyanogenMod/downloads");
+			mp3View("ms0:/PSP/GAME/CyanogenPSP/downloads");
         }
 		
 		if (osl_keys->pressed.circle)

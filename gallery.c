@@ -347,7 +347,7 @@ int galleryApp()
 		
 		oslDrawStringf(25,89,"PICTURE");
 		oslDrawStringf(25,145,"PSP/PHOTO");
-		oslDrawStringf(25,201,"PSP/GAME/CyanogenMod/screenshot");
+		oslDrawStringf(25,201,"PSP/GAME/CyanogenPSP/screenshots");
 		
 		battery(370,2,1);
 		digitaltime(420,4,458);
@@ -377,7 +377,7 @@ int galleryApp()
 		if (MenuSelection == 3 && osl_keys->pressed.cross)
         {			
 			galleryUnload();
-			galleryView("ms0:/PSP/GAME/CyanogenMod/screenshots");
+			galleryView("ms0:/PSP/GAME/CyanogenPSP/screenshots");
         }
 		
 		if (osl_keys->pressed.circle)
