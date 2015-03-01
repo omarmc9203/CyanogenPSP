@@ -20,6 +20,22 @@ void galleryDown()
 	}
 }
 
+void galleryUpx5()
+{
+	current -= 5;  // Subtract a value from current so the ">" goes up
+	if ((current <= curScroll-1) && (curScroll > 1)) {
+		curScroll -= 5;  // To do with how it scrolls
+	}
+}
+
+void galleryDownx5()
+{
+	if (folderIcons[current+1].active) current += 5; // Add a value onto current so the ">" goes down
+	if (current >= (MAX_DISPLAY+curScroll)) {
+		curScroll += 5; // To do with how it scrolls
+	}
+}
+
 void galleryDisplay()
 {	
 	oslDrawImageXY(gallerybg, 0, 0);
@@ -177,6 +193,16 @@ void galleryControls() //Controls
 			galleryUp();
 			timer = 0;
 		}
+		
+		if ((pad.Buttons & PSP_CTRL_RIGHT) && (!(oldpad.Buttons & PSP_CTRL_RIGHT))) {
+			galleryDownx5();
+			timer = 0;
+		}
+		else if ((pad.Buttons & PSP_CTRL_LEFT) && (!(oldpad.Buttons & PSP_CTRL_LEFT))) {
+			galleryUpx5();	
+			timer = 0;
+		}
+		
 		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) {
 			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
 				curScroll = 1;

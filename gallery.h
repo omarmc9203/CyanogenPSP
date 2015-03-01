@@ -23,6 +23,8 @@ SceCtrlData pad, oldpad;
 
 void galleryUp();
 void galleryDown();
+void galleryUpx5();
+void galleryDownx5();
 void galleryDisplay();
 int changeWallpaper();
 void showImage(const char * path);
