@@ -1,4 +1,5 @@
 #include "home.h"
+#include "game.h"
 #include "apollo.h"
 #include "fm.h"
 #include "clock.h"
@@ -9,7 +10,6 @@
 #include "include/pgeZip.h"
 #include "settingsmenu.h"
 #include "screenshot.h"
-#include "prx/iso loader/systemctrl_se.h"  
 #include "include/utils.h"
 
 //Functions imported from PRX
@@ -825,88 +825,6 @@ void dirDisplay()
 	}
 }
 
-int launchEbootMs0(const char *path[])
-{
-	// Load Execute Parameter
-	struct SceKernelLoadExecVSHParam param;
-
-	// Clear Memory
-	memset(&param, 0, sizeof(param));
-
-	// Configure Parameters
-	param.size = sizeof(param);
-	param.args = strlen(path) + 1;
-	param.argp = (void *)path;
-	param.key = "game";
-
-	// Trigger Reboot
-	return sctrlKernelLoadExecVSHWithApitype(0x141, path, &param);
-}
-
-int launchEbootEf0(const char *path[])
-{
-	// Load Execute Parameter
-	struct SceKernelLoadExecVSHParam param;
-
-	// Clear Memory
-	memset(&param, 0, sizeof(param));
-
-	// Configure Parameters
-	param.size = sizeof(param);
-	param.args = strlen(path) + 1;
-	param.argp = (void *)path;
-	param.key = "game";
-
-	// Trigger Reboot
-	return sctrlKernelLoadExecVSHWithApitype(0x152, path, &param);
-}
-
-void launchISO()
-{
-	// Load Execute Parameter
-	struct SceKernelLoadExecVSHParam param;
-	
-	// Clear Memory
-	memset(&param, 0, sizeof(param));
-	
-	// Set Common Parameters
-	param.size = sizeof(param);
-	
-	// Boot Path Buffer
-	char bootpath[1024];
-	
-	// Create Boot Path
-	strcpy(bootpath, cwd);
-	strcpy(bootpath + strlen(bootpath), folderIcons[current].name);
-	sctrlSESetBootConfFileIndex(MODE_INFERNO);
-
-		// EBOOT Path
-		char * ebootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
-		
-		// Prepare ISO Reboot
-		param.args = strlen(ebootpath) + 1;
-		param.argp = ebootpath;
-		param.key = "umdemu";
-		
-		// PSN EBOOT Support
-		if(strlen(bootpath) >= strlen(START_PATH "EBOOT.PBP") && strcmp(bootpath + strlen(bootpath) - strlen("EBOOT.PBP"), "EBOOT.PBP") == 0)
-		{
-			// Switch to Galaxy
-			sctrlSESetBootConfFileIndex(MODE_NP9660);
-			// Disable Galaxy ISO Emulator Patch
-			sctrlSESetUmdFile("");
-		}
-		
-		// Normal ISO
-		else
-		{
-			// Enable Galaxy ISO Emulator Patch
-			sctrlSESetUmdFile(bootpath);
-		}
-	
-	sctrlKernelLoadExecVSHWithApitype(0x123, bootpath, &param);
-}
-
 void dirControls() //Controls
 {
 	oslReadKeys();	
@@ -1009,7 +927,7 @@ void dirControls() //Controls
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".iso") == 0) || ((strcmp(ext ,".ISO") == 0))) && (osl_keys->held.cross))
 	{
-		launchISO();
+		launchISO(folderIcons[current].filePath);
 	}
 	
 	if (osl_keys->pressed.square)

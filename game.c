@@ -6,6 +6,7 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
+#include "prx/iso loader/systemctrl_se.h"  
 
 void gameUp()
 {
@@ -21,6 +22,122 @@ void gameDown()
 	if (current >= (MAX_GAME_DISPLAY+curScroll)) {
 		curScroll++; // To do with how it scrolls
 	}
+}
+
+void gameUpx5()
+{
+	current -= 5;  // Subtract a value from current so the ">" goes up
+	if ((current <= curScroll-1) && (curScroll > 1)) {
+		curScroll -= 5;  // To do with how it scrolls
+	}
+}
+
+void gameDownx5()
+{
+	if (folderIcons[current+1].active) current += 5; // Add a value onto current so the ">" goes down
+	if (current >= (MAX_DISPLAY+curScroll)) {
+		curScroll += 5; // To do with how it scrolls
+	}
+}
+
+int launchEbootMs0(const char *path[])
+{
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+
+	// Configure Parameters
+	param.size = sizeof(param);
+	param.args = strlen(path) + 1;
+	param.argp = (void *)path;
+	param.key = "game";
+
+	// Trigger Reboot
+	return sctrlKernelLoadExecVSHWithApitype(0x141, path, &param);
+}
+
+int launchEbootEf0(const char *path[])
+{
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+
+	// Configure Parameters
+	param.size = sizeof(param);
+	param.args = strlen(path) + 1;
+	param.argp = (void *)path;
+	param.key = "game";
+
+	// Trigger Reboot
+	return sctrlKernelLoadExecVSHWithApitype(0x152, path, &param);
+}
+
+int launchPOPsMs0(const char *path[])
+{
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+
+	// Configure Parameters
+	param.size = sizeof(param);
+	param.args = strlen(path) + 1;
+    param.argp = (void *)path;
+    param.key = "pops";
+
+	// Trigger Reboot
+	return sctrlKernelLoadExecVSHWithApitype(0x144, path, &param);
+}
+
+int launchPOPsEf0(const char *path[])
+{
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+
+	// Configure Parameters
+	param.size = sizeof(param);
+	param.args = strlen(path) + 1;
+    param.argp = (void *)path;
+    param.key = "pops";
+
+	// Trigger Reboot
+	return sctrlKernelLoadExecVSHWithApitype(0x155, path, &param);
+}
+
+int launchISO(const char *path[])
+{
+	char* bootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
+
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+	
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+	
+	// Set Common Parameters
+	param.size = sizeof(param);
+	
+	// EBOOT Path
+    char * ebootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
+               
+    // Prepare ISO Reboot
+    param.args = strlen(ebootpath) + 1;
+    param.argp = ebootpath;
+    param.key = "umdemu";
+               
+	// Enable Galaxy ISO Emulator Patch
+    sctrlSESetBootConfFileIndex(MODE_INFERNO);
+    sctrlSESetUmdFile(path);
+	
+	return sctrlKernelLoadExecVSHWithApitype(0x125, path, &param);
 }
 
 void gameDisplay()
@@ -63,7 +180,7 @@ void gameDisplay()
 	}
 }
 
-void gameControls() //Controls
+void gameControls(int n) //Controls
 {
 	oslReadKeys();	
 
@@ -77,6 +194,16 @@ void gameControls() //Controls
 			gameUp();
 			timer = 0;
 		}
+		
+		if ((pad.Buttons & PSP_CTRL_RIGHT) && (!(oldpad.Buttons & PSP_CTRL_RIGHT))) {
+			gameDownx5();
+			timer = 0;
+		}
+		else if ((pad.Buttons & PSP_CTRL_LEFT) && (!(oldpad.Buttons & PSP_CTRL_LEFT))) {
+			gameUpx5();	
+			timer = 0;
+		}
+		
 		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) {
 			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
 				curScroll = 1;
@@ -90,12 +217,31 @@ void gameControls() //Controls
 	
 	char * ext = strrchr(folderIcons[current].filePath, '.');
 	
-	if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
+	if (n==0) //For regular eboots
 	{
-		if (kuKernelGetModel() == 4)
-			launchEbootEf0(folderIcons[current].filePath);
-		else
-			launchEbootMs0;
+		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
+		{
+			if (kuKernelGetModel() == 4)
+				launchEbootEf0(folderIcons[current].filePath);
+			else
+				launchEbootMs0(folderIcons[current].filePath);
+		}
+	}
+	
+	else if (n==1) //For POPS
+	{
+		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
+		{
+			if (kuKernelGetModel() == 4)
+				launchPOPsEf0(folderIcons[current].filePath);
+			else
+				launchPOPsMs0(folderIcons[current].filePath);
+		}
+	}
+	
+	if (((ext) != NULL) && ((strcmp(ext ,".iso") == 0) || ((strcmp(ext ,".ISO") == 0))) && (osl_keys->held.cross))
+	{
+		launchISO(folderIcons[current].filePath);
 	}
 	
 	if (osl_keys->pressed.circle)
@@ -161,7 +307,37 @@ char * gameBrowse(const char * path)
 		oldpad = pad;
 		sceCtrlReadBufferPositive(&pad, 1);
 		gameDisplay();
-		gameControls();
+		gameControls(0);
+		
+		sceDisplayWaitVblankStart();
+		
+		if (strlen(returnMe) > 4) {
+			break;
+		}
+		oslEndDrawing(); 
+        oslEndFrame(); 
+		oslSyncFrame();	
+	}
+	return returnMe;
+}
+
+char * popsBrowse(const char * path)
+{
+	folderScan(path);
+	dirVars();
+
+	
+	while (!osl_quit)
+	{		
+		LowMemExit();
+	
+		oslStartDrawing();
+		
+		oslClearScreen(RGB(0,0,0));	
+		oldpad = pad;
+		sceCtrlReadBufferPositive(&pad, 1);
+		gameDisplay();
+		gameControls(1);
 		
 		sceDisplayWaitVblankStart();
 		
@@ -211,8 +387,10 @@ void getIcon0(char* filename){
     sceIoClose(fd);
 }
 
-void gameView(char * browseDirectory)
+void gameView(char * browseDirectory, int type)
 {	
+	char * Directory;
+
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -220,8 +398,16 @@ void gameView(char * browseDirectory)
 	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	oslSetFont(Roboto);
 
-	char * Directory = gameBrowse(browseDirectory);
-
+	if (type == 0)
+	{
+		Directory = gameBrowse(browseDirectory); //For PSP Eboots
+	}
+	
+	else if (type == 1)
+	{
+		Directory = popsBrowse(browseDirectory); //For POPS Eboots
+	}
+	
 	while (!osl_quit)
 	{		
 		LowMemExit();
@@ -255,7 +441,7 @@ int gameApp()
 	int selector_y = 45; //The y position of the first selection
 	int selector_image_x; //Determines the starting x position of the selection
 	int selector_image_y = 0; //Determines the starting y position of the selection
-	int numMenuItems = 2; //Amount of items in the menu
+	int numMenuItems = 3; //Amount of items in the menu
 	int selection = 0;
 
 	while (!osl_quit)
@@ -271,6 +457,7 @@ int gameApp()
 		
 		oslDrawStringf(10,79,"GAME");
 		oslDrawStringf(10,108,"ISO/CSO");
+		oslDrawStringf(10,137,"POPS");
 		
 		gameSelection->x = selector_image_x; //Sets the selection coordinates
         gameSelection->y = selector_image_y; //Sets the selection coordinates
@@ -287,12 +474,17 @@ int gameApp()
 		if (MenuSelection == 1 && osl_keys->pressed.cross)
         {		
 			gameUnload();
-			gameView("ms0:/PSP/GAME");
+			gameView("ms0:/PSP/GAME", 0); //PSP Homebrew
         }
 		if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
 			gameUnload();
-			gameView("ms0:/ISO");
+			gameView("ms0:/ISO", 0); //ISO backups
+        }
+		if (MenuSelection == 3 && osl_keys->pressed.cross)
+        {		
+			gameUnload();
+			gameView("ms0:/PSP/GAME", 1); //POPS
         }
 
 		if (osl_keys->pressed.circle)

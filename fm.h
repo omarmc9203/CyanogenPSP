@@ -117,8 +117,6 @@ void dirVars();
 void dirBack();
 void dirUp();
 void dirDown();
-int launchEbootMs0(const char *path[]);
-int launchEbootEf0(const char *path[]);
 void dirControls();
 char * dirBrowse(const char * path);
 void filemanager_unload();
