@@ -647,11 +647,15 @@ void displayTextFromFile()
 		
 		oslClearScreen(RGB(0,0,0));
 		oslDrawImageXY(textview,0,19);
-		battery(370,2,1);
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		battery(370,2,1);
+		digitaltime(420,4,458);	
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		if(checkTextFile(folderIcons[current].filePath) == -1)
 			oslDrawStringf(40,33,"Unable to Open");
-
+			
 		oslDrawStringf(40,33,folderIcons[current].name);	
 		oslDrawStringf(10,55," \n%s", getTextFromFile());	
 

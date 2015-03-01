@@ -36,7 +36,8 @@ typedef struct fw_version;
 
 char backgroundPath[100];
 int widgetActivator;
-int benchmarkDebugActivate;
+int RJL;
+int PSPDebug;
 void onlineUpdater();
 void switchStatus(int n);
 void loadConfig();

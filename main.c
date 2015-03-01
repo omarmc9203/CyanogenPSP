@@ -18,7 +18,7 @@
 #include "include/ram.h"
 #include "include/utils.h"
 
-PSP_MODULE_INFO("CyanogenPSP",  1, 4, 0);
+PSP_MODULE_INFO("CyanogenPSP",  1, 4, 1);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU); 
 PSP_HEAP_SIZE_KB(24000);
 
@@ -320,6 +320,80 @@ int bootMenu()
 }
 */
 
+//First Boot Message
+void firstBootMessage()
+{	
+	int firstBoot;
+
+	FILE * firstBootTxt = fopen("system/firstBoot.txt", "r");
+	
+	if (fileExists("system/firstBoot.txt"))
+	{
+		fscanf(firstBootTxt,"%d",&firstBoot);
+		fclose(firstBootTxt);
+	}
+	else
+	{
+		firstBootTxt = fopen("system/firstBoot.txt", "w");
+		fprintf(firstBootTxt, "1", firstBoot);
+		fclose(firstBootTxt);
+	}
+
+	if (firstBoot!= 0)
+	{
+		fclose(firstBootTxt);
+	
+		while (!osl_quit)
+		{		
+			oslStartDrawing();
+
+			controls();
+
+			oslDrawImage(background);		
+			oslDrawImageXY(music, 105, 190);
+			oslDrawImageXY(browser, 276, 190);
+			oslDrawImageXY(gmail, 331, 190);
+			oslDrawImageXY(messengericon, 160, 190);
+			oslDrawImageXY(pointer, 230, 180);
+		
+			digitaltime(420,4,458); 
+		
+			oslSetTransparentColor(RGB(0,0,0));
+			appDrawerIcon();
+			oslDisableTransparentColor();
+		
+			battery(370,2,1);
+			navbarButtons(1);
+		
+			oslDrawImageXY(transbackground, 0, 0);
+			oslDrawImageXY(welcome, 0, 0);
+			oslDrawImage(cursor);
+	
+			if (cursor->x >= 366 && cursor->x <= 442 && cursor->y >= 80 && cursor->y <= 116 && osl_keys->pressed.cross)
+			{
+				firstBootTxt = fopen("system/firstBoot.txt", "w"); 
+				fprintf(firstBootTxt, "0", firstBoot);
+				fclose(firstBootTxt);
+				oslDeleteImage(welcome);
+				oslDeleteImage(transbackground);
+				unloadIcons();
+				home();
+			}
+		oslEndDrawing(); 
+        oslEndFrame(); 
+		oslSyncFrame();	
+		}
+	}
+		
+	if (firstBoot == 0)
+	{
+		oslDeleteImage(welcome);
+		oslDeleteImage(transbackground);
+		unloadIcons();
+		home();
+	}
+}
+
 int main()
 {
 	SetupCallbacks(); //Setup callbacks
@@ -330,7 +404,7 @@ int main()
 	tone = oslLoadSoundFile("system/media/audio/ui/KeypressStandard.wav", OSL_FMT_NONE);
 
 	FILE * backgroundPathTXT;
-
+	
 	if (!(fileExists("system/framework/framework-res/res/background.txt")))
 	{
 		backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "w");
@@ -340,6 +414,7 @@ int main()
 	
 	backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "r");
 	fscanf(backgroundPathTXT,"%s",backgroundPath);
+	fclose(backgroundPathTXT);
 
 	//Loads our images into memory
 	loadIcons();
@@ -395,11 +470,11 @@ int main()
 	makeDownloadDir(); //Created Download directory if there isn't any - PSP/Game/CyanogenMod/Downloads
 	deleteUpdateFile(); //Delete update.zip
 	
-	fclose(backgroundPathTXT);
-	
 	//Main loop to run the program
 	while (!osl_quit)
 	{		
+		firstBootMessage();
+	
 		//Draws images onto the screen
 		oslStartDrawing();
 		
@@ -421,16 +496,12 @@ int main()
 		
 		//Disables the transparent color
 		oslDisableTransparentColor();
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
-		
+
 		navbarButtons(1);
-		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		digitaltime(420,4,458); //Draws digital time (based on your local psp time) on the top right corner.
 		battery(370,2,1);
 		androidQuickSettings();
-		firstBootMessage();
 		oslDrawImage(cursor);
 
 		if (osl_keys->pressed.square) //Opens the power menu

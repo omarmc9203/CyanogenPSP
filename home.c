@@ -511,7 +511,7 @@ void home()
 	oslSetFont(Roboto);
 	
 	checkWidgetActivation();
-
+	
 	while (!osl_quit)
 	{
 		LowMemExit();

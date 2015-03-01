@@ -108,10 +108,29 @@ void switchStatus(int n)
 	else if (n == 2)
 	{
 		if (sceWlanGetSwitchState() == 0)
+		{
 			oslDrawImageXY(offswitch, 392, 68);
+		}
 		
 		else
+		{
 			oslDrawImageXY(onswitch, 392, 68);
+		}
+	}
+	
+	else if (n == 3)
+	{
+		if (sceWlanGetSwitchState() == 0)
+		{
+			oslDrawImageXY(offswitch, 392, 68);
+			oslDrawString(58,74,"Off");
+		}
+		
+		else
+		{
+			oslDrawImageXY(onswitch, 392, 68);
+			oslDrawString(58,74,"On");
+		}
 	}
 }
 
@@ -1020,7 +1039,7 @@ void wifiMenu()
 		
 	int enabled = 1;
     int selectedConfig = 0;
-	int wifi_y = 50;
+	int wifi_y = 95;
 	static char buffer[100] = "";
 	
 	//Get connections list:
@@ -1054,16 +1073,15 @@ void wifiMenu()
 		if (enabled)
 		{
 			sprintf(buffer, "%s", configs[selectedConfig].name);
-    		oslDrawString(30, wifi_y+28, configs[selectedConfig].name);
-			oslDrawString(30, 190, "Press up or down to navigate through your Wifi configurations.");
+    		oslDrawString(10, wifi_y+28, configs[selectedConfig].name);
+			oslDrawString(10, 206, "Press up or down to navigate through your Wifi configurations.");
         }
 		
-		oslDrawString(30, 215, Settings_message);
-		
-		switchStatus(2);
+		oslDrawString(10, 220, Settings_message);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
+		switchStatus(3);
 		digitaltime(386,4,424);
 		battery(337,2,0);
 		navbarButtons(2);
@@ -1481,9 +1499,6 @@ void dumpMenuMore()
 
 void developerMenu()
 {
-	int RJL;
-	int PSPDebug;
-	
 	developerbg = oslLoadImageFilePNG("system/settings/developerbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
