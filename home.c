@@ -3,6 +3,7 @@
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
+#include "settingsmenu.h"
 #include "screenshot.h"
 #include "include/utils.h"
 
@@ -429,80 +430,6 @@ void notif_2()
 	}
 }
 
-//First Boot Message
-void firstBootMessage()
-{	
-	int firstBoot;
-
-	FILE * firstBootTxt = fopen("system/firstBoot.txt", "r");
-	
-	if (fileExists("system/firstBoot.txt"))
-	{
-		fscanf(firstBootTxt,"%d",&firstBoot);
-		fclose(firstBootTxt);
-	}
-	else
-	{
-		firstBootTxt = fopen("system/firstBoot.txt", "w");
-		fprintf(firstBootTxt, "1", firstBoot);
-		fclose(firstBootTxt);
-	}
-
-	if (firstBoot!= 0)
-	{
-		fclose(firstBootTxt);
-	
-		while (!osl_quit)
-		{		
-			oslStartDrawing();
-
-			controls();
-
-			oslDrawImage(background);		
-			oslDrawImageXY(music, 105, 190);
-			oslDrawImageXY(browser, 276, 190);
-			oslDrawImageXY(gmail, 331, 190);
-			oslDrawImageXY(messengericon, 160, 190);
-			oslDrawImageXY(pointer, 230, 180);
-		
-			digitaltime(420,4,458); 
-		
-			oslSetTransparentColor(RGB(0,0,0));
-			appDrawerIcon();
-			oslDisableTransparentColor();
-		
-			battery(370,2,1);
-			navbarButtons(1);
-		
-			oslDrawImageXY(transbackground, 0, 0);
-			oslDrawImageXY(welcome, 0, 0);
-			oslDrawImage(cursor);
-	
-			if (cursor->x >= 366 && cursor->x <= 442 && cursor->y >= 80 && cursor->y <= 116 && osl_keys->pressed.cross)
-			{
-				firstBootTxt = fopen("system/firstBoot.txt", "w"); 
-				fprintf(firstBootTxt, "0", firstBoot);
-				fclose(firstBootTxt);
-				oslDeleteImage(welcome);
-				oslDeleteImage(transbackground);
-				unloadIcons();
-				home();
-			}
-		oslEndDrawing(); 
-        oslEndFrame(); 
-		oslSyncFrame();	
-		}
-	}
-		
-	if (firstBoot == 0)
-	{
-		oslDeleteImage(welcome);
-		oslDeleteImage(transbackground);
-		unloadIcons();
-		home();
-	}
-}
-
 void loadIcons() // Loading the app drawer icons.
 {
 	ic_allapps = oslLoadImageFilePNG("system/framework/framework-res/res/drawable-hdpi/ic_allapps.png", OSL_IN_RAM, OSL_PF_8888);
@@ -524,19 +451,66 @@ void LowMemExit() //This is temporary until I come up with a solution. It exits 
 	}
 }
 
+void dayNightCycleWidget()
+{
+	pspTime time;
+	sceRtcGetCurrentClockLocalTime(&time);
+	
+	if (time.hour > 12)
+		time.hour -= 12;
+	
+	if (time.hour == 00)
+		time.hour = 12;
+		
+    oslIntraFontSetStyle(Roboto, 1.7f,WHITE,0,INTRAFONT_ALIGN_CENTER);
+	oslDrawStringf(235,70,"%2d:%02d", time.hour, time.minutes);
+		
+	oslIntraFontSetStyle(Roboto, 0.4f,WHITE,0,INTRAFONT_ALIGN_CENTER);
+	getMonthOfYear(302,102);
+	getDayOfWeek(196,102,2);
+	
+	if (time.hour < 6)
+	oslDrawImageXY(wDay, 210, 82);
+	
+	else
+	oslDrawImageXY(wNight, 205, 82);
+}
+
+void checkWidgetActivation()
+{
+	FILE * widgetActivation;
+
+	if (!(fileExists("system/widget/widgetactivator.txt")))
+	{
+		widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
+		fprintf(widgetActivation, "1");
+		fclose(widgetActivation);
+	}
+
+	widgetActivation = fopen("system/widget/widgetactivator.txt", "r");
+	fscanf(widgetActivation,"%d",&widgetActivator);
+	fclose(widgetActivation);
+}
+
 void homeUnloadResources()
 {
 	oslDeleteImage(ic_allapps);
 	oslDeleteImage(ic_allapps_pressed);
+	oslDeleteImage(wDay);
+	oslDeleteImage(wNight);
 	oslDeleteFont(Roboto);
 }
 
 void home()
 {	
 	loadIcons();
+	wDay = oslLoadImageFilePNG("system/widget/Day.png", OSL_IN_RAM, OSL_PF_8888);
+	wNight = oslLoadImageFile("system/widget/Night.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
+	
+	checkWidgetActivation();
 
 	while (!osl_quit)
 	{
@@ -552,10 +526,11 @@ void home()
 		oslDrawImageXY(gmail, 331, 190);
 		oslDrawImageXY(messengericon, 160, 190);
 		oslDrawImageXY(pointer, 232, 180);
-				
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+		
 		appDrawerIcon();
 		navbarButtons(1);
+		if (widgetActivator == 1)
+		dayNightCycleWidget();
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		digitaltime(420,4,458);

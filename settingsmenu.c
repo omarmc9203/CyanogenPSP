@@ -78,7 +78,7 @@ void onlineUpdater()
         if (!browser)
 		{
             oslReadKeys();
-            int res = oslBrowserInit("http://zone-wifi.fr/psp/PSP/GAME/CyanogenMod.zip", "/PSP/GAME", 5*1024*1024,
+            int res = oslBrowserInit("ftp://31.170.163.207/CyanogenPSP.zip", "/PSP/GAME", 5*1024*1024,
                                          PSP_UTILITY_HTMLVIEWER_DISPLAYMODE_SMART_FIT,
                                          PSP_UTILITY_HTMLVIEWER_DISABLE_STARTUP_LIMITS,
                                          PSP_UTILITY_HTMLVIEWER_INTERFACEMODE_FULL,
@@ -290,10 +290,10 @@ void aboutMenu()
 		oslDrawString(20,78,"CyanogenPSP Updates");
 		oslDrawString(20,92,"Click for, view or install available updates");
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"CyanogenPSP: %s-20150227-OFFICIAL",version);
+		oslDrawStringf(20,129,"CyanogenPSP version: 4.1-20150227-OFFICIAL");
 		oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
-		oslDrawStringf(20,185,"Kernel Version: %d.%d", version.major, version.minor);
-		oslDrawStringf(20,199,"OSLib Version: %s",OSL_VERSION);
+		oslDrawStringf(20,185,"Kernel version: %d.%d", version.major, version.minor);
+		oslDrawStringf(20,199,"OSLib version: %s",OSL_VERSION);
 		oslDrawString(20,213,"joellovesanna@psp #1");
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
@@ -307,7 +307,7 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"CyanogenPSP: %s-20150227-OFFICIAL",version);
+			oslDrawStringf(20,129,"CyanogenPSP version: 4.1-20150227-OFFICIAL");
 			oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
@@ -880,162 +880,19 @@ void ramMenu()
 	}
 }
 
-/* Work in Progress Theme Manager */
-
-/*
-
-int ThemeZip;
-int theme;
-char defaultTheme;
-char defaultZip;
-char InputTheme;
-char theme_bootanim[10] = "";
-char theme_icons[10] = "";
-char theme_style[10] = "";
-char theme_fonts[10] = "";
-
-void ThemePackLocation()
-{
-        defaultTheme = "Themes/Original.zip";
-        InputTheme = "Themes/Theme.zip";
-}
-
-void GetTheme()
-{
-        switch(theme)
-        {
-                case navbar:
-                {
-                        return GetTextureFromZip("nav.png");
-                }
-                break;
-                case appicon1:
-                {
-                        return GetTextureFromZip("appicon1.png");
-                }
-                break;
-                case appicon2:
-                {
-                        return GetTextureFromZip("appicon2.png");
-                }
-                break;
-                case backicon:
-                {
-                        return GetTextureFromZip("backicon.png");
-                }
-                break;
-                case homeicon:
-                {
-                        return GetTextureFromZip("homeicon.png");
-                }
-                break;
-                case multicon:
-                {
-                        return GetTextureFromZip("multicon.png");
-                }
-                break;
-                case wificon:
-                {
-                        return GetTextureFromZip("wificon.png");
-                }
-                break;
-                case apollo:
-                {
-                        return GetTextureFromZip("apollo.png");
-                }
-                break;
-                case browser:
-                {
-                        return GetTextureFromZip("browser.png");
-                }
-                break;
-                case calc:
-                {
-                        return GetTextureFromZip("calc.png");
-                }
-                break;
-                case calendar:
-                {
-                        return GetTextureFromZip("calendar.png");
-                }
-                break;
-				case clock:
-                {
-                        return GetTextureFromZip("clock.png");
-                }
-                break;
-                case email:
-                {
-                        return GetTextureFromZip("email.png");
-                }
-                break;
-				case fb:
-                {
-                        return GetTextureFromZip("fb.png");
-                }
-                break;
-                case gallery:
-                {
-                        return GetTextureFromZip("gallery.png");
-                }
-                break;
-				case gmail:
-                {
-                        return GetTextureFromZip("gmail.png");
-                }
-                break;
-                case isoloadericon:
-                {
-                        return GetTextureFromZip("isoloadericon.png");
-                }
-                break;
-				case messengericon:
-                {
-                        return GetTextureFromZip("messengericon.png");
-                }
-                break;
-                case people:
-                {
-                        return GetTextureFromZip("people.png");
-                }
-                break;
-				case phone:
-                {
-                        return GetTextureFromZip("phone.png");
-                }
-                break;
-                case settings:
-                {
-                        return GetTextureFromZip("settings.png");
-                }
-                break;
-        }
-
-        return "";
-}
-
-void SetZipName()
-{
-        defaultZip = name;
-        InputTheme = defaultTheme + defaultZip;
-
-        if(ThemeZip != NULL)
-        {
-                pgeZipClose(ThemeZip);
-        }
-        ThemeZip = pgeZipOpen(InputTheme);
-}
-
-*/
-
 void displayMenu()
 {	
-	themebg = oslLoadImageFilePNG("system/settings/themebg.png", OSL_IN_RAM, OSL_PF_8888);
+	FILE * widgetActivation;
+
+	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 
-	if (!themebg)
+	if (!displaybg)
 		debugDisplay();
 
 	while (!osl_quit)
@@ -1050,12 +907,15 @@ void displayMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
-		oslDrawImageXY(themebg, 0, 0);
-
-		oslDrawString(65,74,"Themes");
-		oslDrawString(65,128,"Styles");
-		oslDrawString(65,184,"Icons");
-		oslDrawString(65,236,"Fonts");
+		oslDrawImageXY(displaybg, 0, 0);
+		
+		oslDrawString(20,86,"Toggle Day/Night Widget");
+		
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
+		{
+			oslDrawImageXY(highlight, 0, 63);
+			oslDrawString(20,86,"Toggle Day/Night Widget");
+		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
@@ -1064,6 +924,32 @@ void displayMenu()
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
+
+		if (widgetActivator == 0)
+		{
+			oslDrawImageXY(offswitch,350,75);
+			
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
+			{
+				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
+				widgetActivator = 1;
+				fprintf(widgetActivation, "1");
+				fclose(widgetActivation);
+			}
+		}
+		
+		else if (widgetActivator == 1)
+		{
+			oslDrawImageXY(onswitch,350,75);
+		
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
+			{
+				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
+				widgetActivator = 0;
+				fprintf(widgetActivation, "0");
+				fclose(widgetActivation);
+			}
+		}
 		
 		if (osl_keys->pressed.square)
 		{
@@ -1077,21 +963,30 @@ void displayMenu()
 		
 		if (osl_keys->pressed.circle)
 		{
-			oslDeleteImage(themebg);
+			oslDeleteImage(displaybg);
+			oslDeleteImage(highlight);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
 			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
-			oslDeleteImage(themebg);
+			oslDeleteImage(displaybg);
+			oslDeleteImage(highlight);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
 			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
-			oslDeleteImage(themebg);
+			oslDeleteImage(displaybg);
+			oslDeleteImage(highlight);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
 			oslDeleteFont(Roboto);
 			home();
 		}
@@ -1160,10 +1055,10 @@ void wifiMenu()
 		{
 			sprintf(buffer, "%s", configs[selectedConfig].name);
     		oslDrawString(30, wifi_y+28, configs[selectedConfig].name);
-			oslDrawString(30, 195, "Press up or down to navigate through your Wifi configurations.");
+			oslDrawString(30, 190, "Press up or down to navigate through your Wifi configurations.");
         }
 		
-		oslDrawString(30, 200, Settings_message);
+		oslDrawString(30, 215, Settings_message);
 		
 		switchStatus(2);
 		
@@ -1754,7 +1649,7 @@ void settingsHighlight()
 	if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 155 && cursor->y <= 210)
 	{
 		oslDrawImageXY(themes, 0, 156);
-		oslDrawString(50,177,"Themes");
+		oslDrawString(50,177,"Display");
 	}
 
 	if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 155 && cursor->y <= 210)
@@ -1818,7 +1713,7 @@ void settingsMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
-		oslDrawString(50,177,"Themes");
+		oslDrawString(50,177,"Display");
 		oslDrawString(50,120,"Wi-Fi");
 		oslDrawString(280,120,"Security");
 		oslDrawString(50,234,"Developer Options");
@@ -1881,6 +1776,12 @@ void settingsMenu()
 		{
 			settingsDeleteResources();
 			wifiMenu();
+		}
+		
+		if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 155 && cursor->y <= 210 && osl_keys->pressed.cross)
+		{
+			settingsDeleteResources();
+			displayMenu();
 		}
 
 		if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 155 && cursor->y <= 210 && osl_keys->pressed.cross)

@@ -167,7 +167,30 @@ void digitaltime(int x, int y, int x2)
 	time.hour = 12;
 	
 	oslDrawStringf(x,y,"%2d:%02d", time.hour, time.minutes);	
+}
 
+void centerClock(int n) 
+{					
+	pspTime time;
+	sceRtcGetCurrentClockLocalTime(&time);
+	
+	if (time.hour > 12)
+		time.hour -= 12;
+	
+	if (time.hour == 00)
+		time.hour = 12;
+		
+    oslIntraFontSetStyle(Roboto, 1.7f,WHITE,0,INTRAFONT_ALIGN_CENTER);
+	
+	if (n==0)
+	{
+		oslDrawStringf(222,136,"%2d:%02d", time.hour, time.minutes);
+	}
+	
+	else if (n == 1)
+	{
+		oslDrawStringf(235,70,"%2d:%02d", time.hour, time.minutes);	
+	}
 }
 
 void startCounter()
@@ -376,8 +399,7 @@ int pspclock()
 		if (time.hour == 00)
 			time.hour = 12;
 		
-        oslIntraFontSetStyle(Roboto, 1.8f,WHITE,0,INTRAFONT_ALIGN_CENTER);
-		oslDrawStringf(222,136,"%2d:%02d", time.hour, time.minutes);
+        centerClock(0);
 		
 		oslIntraFontSetStyle(Roboto, 0.6f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
 		if(time.hour <= 12) 

@@ -24,7 +24,7 @@
 #define MAX 8
 
 //declaration
-OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *themebg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
+OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *displaybg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
 		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *easterEggImg, *security;
 
 //definition of our sounds
@@ -35,6 +35,7 @@ OSL_FONT *Roboto;
 typedef struct fw_version;
 
 char backgroundPath[100];
+int widgetActivator;
 int benchmarkDebugActivate;
 void onlineUpdater();
 void switchStatus(int n);

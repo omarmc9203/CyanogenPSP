@@ -2,6 +2,7 @@
 #include "home.h"
 #include "lock.h"
 #include "screenshot.h"
+#include "include/utils.h"
 
 int lockscreen()
 {			
@@ -20,7 +21,15 @@ int lockscreen()
 		controls();	
 
 		oslDrawImage(background);	
-		oslDrawImage(lockscreenBg);	
+		oslDrawImage(lockscreenBg);
+		
+		centerClock(1);
+		
+		oslIntraFontSetStyle(Roboto, 0.4f,WHITE,0,0);
+		getDayOfWeek(180,90,1);
+		getMonthOfYear(250,90);
+
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
 		digitaltime(420,4,458);
