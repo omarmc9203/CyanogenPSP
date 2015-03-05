@@ -23,6 +23,11 @@
 #define Address "www.google.com"
 #define MAX 8
 
+#define stateOff 0
+#define stateNoClock 1
+#define stateOverClock 2
+#define stateUnderClock 3
+
 //declaration
 OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *displaybg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
 		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *easterEggImg, *security;
@@ -42,18 +47,13 @@ void onlineUpdater();
 void switchStatus(int n);
 void loadConfig();
 void saveConfig();
-void changer(int set);
 int getCpuClock();
 int getBusClock();
-void pspGetCpuBus();
 void pspGetModel(int x, int y);
 void aboutMenu();
 void easterEgg();
 void updatesMenu();
 void performanceMenu();
-void wait_release(unsigned int buttons);
-unsigned int wait_press(unsigned int buttons);
-void set_cpu_clock(int n);
 void processorMenu();
 void ramMenu();
 void displayMenu();
@@ -67,4 +67,3 @@ void developerMenu();
 void settingsHighlight();
 void settingsDeleteResources();
 void settingsMenu();
-

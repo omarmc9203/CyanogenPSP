@@ -17,10 +17,6 @@ char version[10] = "4.0";
 char lang[12] = "Uk English";
 static char Settings_message[100] = "";
 
-const int cpu_list[] = { 20, 75, 100, 133, 166, 222, 266, 300, 333 };
-const int bus_list[] = { 10, 37, 50, 66, 83, 111, 133, 150, 166 };
-int current = 0;
-
 void onlineUpdater()
 {
 	int skip = 0;
@@ -161,16 +157,6 @@ ro.build.date = Fri Feb 27 12:40 PM EST 2014",
 	fclose(configtxt);	
 }
 
-void changer(int set) 
-{
-	switch (set) 
-	{
-		case 0:
-		scePowerSetClockFrequency(cpu_list[set], cpu_list[set], bus_list[set]);
-		break;
-	}
-}
-
 int getCpuClock()
 {
     return scePowerGetCpuClockFrequency();
@@ -179,59 +165,6 @@ int getCpuClock()
 int getBusClock()
 {
     return scePowerGetBusClockFrequency();
-}
-
-void pspGetCpuBus()
-{	
-	if(getCpuClock() == 20 && getBusClock() == 10)
-	{
-		oslDrawString(35,87,"20/10");
-	}
-   
-	else if(getCpuClock() == 75 && getBusClock() == 37)
-	{
-		oslDrawString(35,87,"75/37");
-	}
-		
-	else if(getCpuClock() == 100 && getBusClock() == 50)
-	{
-		oslDrawString(35,87,"100/50");
-	}
-		
-	else if(getCpuClock() == 133 && getBusClock() == 66)
-	{
-		oslDrawString(35,87,"133/66");
-	}
-		
-	else if(getCpuClock() == 166 && getBusClock() == 83)
-	{
-		oslDrawString(35,87,"166/83");
-	}
-		
-	else if(getCpuClock() == 200 && getBusClock() == 100)
-	{
-		oslDrawString(35,87,"200/100");
-	}
-		
-	else if(getCpuClock() == 222 && getBusClock() == 111)
-	{
-		oslDrawString(35,87,"222/111");
-	}
-		
-	else if(getCpuClock() == 266 && getBusClock() == 133)
-	{
-		oslDrawString(35,87,"266/133");
-	}
-		
-	else if(getCpuClock() == 300 && getBusClock() == 150)
-	{
-		oslDrawString(35,87,"300/150");
-	}
-		
-	else if(getCpuClock() == 333 && getBusClock() == 166)
-	{
-		oslDrawString(35,87,"333/166");
-	}
 }
 
 void pspGetModel(int x, int y)
@@ -656,46 +589,10 @@ void performanceMenu()
 	}
 }
 
-void wait_release(unsigned int buttons) 
-{ 
-    SceCtrlData pad; 
-    sceCtrlReadBufferPositive(&pad, 1); 
-	
-    while (pad.Buttons & buttons) 
-    { 
-        sceKernelDelayThread(100000); 
-        sceCtrlReadBufferPositive(&pad, 1); 
-    } 
-} 
-
-unsigned int wait_press(unsigned int buttons) 
-{ 
-    SceCtrlData pad; 
-	sceCtrlReadBufferPositive(&pad, 1); 
-    
-	while (1) 
-    { 
-        if (pad.Buttons & buttons) 
-            return pad.Buttons & buttons; 
-        sceKernelDelayThread(100000); 
-        sceCtrlReadBufferPositive(&pad, 1); 
-    } 
-    return 0;   /* never reaches here, again, just to suppress warning */ 
-} 
-
-void set_cpu_clock(int n)
-{
-	if(n==0)
-		scePowerSetClockFrequency(222,222,111);
-	else if(n==1)
-		scePowerSetClockFrequency(266,266,133);
-	else if(n==2)
-		scePowerSetClockFrequency(333,333,166);
-}
-
 void processorMenu()
 {	
-	int timer;
+	int currentState = stateOff;
+	int cpufreq, cpu, bus;
 
 	processorbg = oslLoadImageFilePNG("system/settings/processorbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
@@ -704,10 +601,7 @@ void processorMenu()
 	oslSetFont(Roboto);
 	
 	if (!processorbg || !highlight)
-		debugDisplay();
-	
-	sceCtrlSetSamplingCycle(0); 
-    sceCtrlSetSamplingMode(PSP_CTRL_MODE_DIGITAL); 
+		debugDisplay(); 
 	
 	while (!osl_quit)
 	{
@@ -719,52 +613,112 @@ void processorMenu()
 		
 		controls();	
 		
-		sceCtrlPeekBufferPositive(&pad, 1);
-		
 		oslDrawImageXY(processorbg, 0, 0);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawString(20,76,"Current CPU Frequency");
 		oslDrawString(20,128,"CPU Overclock");
-		oslDrawString(20,189,"Minimum CPU Frequency");
-		oslDrawString(20,202,"20 MHz");
-		oslDrawString(20,241,"Maximum CPU Frequency");
-		oslDrawString(20,254,"333 MHz");
 		
 		if (cursor->x >= 16 && cursor->x <= 480 && cursor->y >= 118 && cursor->y <= 174)
 		{
 			oslDrawImageXY(highlight, 0, 121);
 			oslDrawString(20,128,"CPU Overclock");
-			oslDrawString(20,142,"Press R to increase frequency and L to decrease frequency");
-			oslDrawString(20,156,"Press triangle to reset to default, 222/111");
-		}
-
-		if (osl_keys->pressed.triangle)
-		{
-		 setclock = 6;
-		 scePowerSetClockFrequency(222, 222, 111);
-		}
-				
-		if (current < 0)
-		{
-			current = MAX;
-		}
-		if (current > MAX)
-		{
-			current = 0;
+			oslDrawString(20,145,"Press R to increase frequency and L to decrease frequency");
 		}
 		
 		if (osl_keys->pressed.L)
 		{
-		set_cpu_clock(1);
+			currentState = stateUnderClock;
 		}
-		if (osl_keys->pressed.R)
+		else if (osl_keys->pressed.R)
 		{
-		set_cpu_clock(2);
+			currentState = stateOverClock;
 		}
 		
-		oslDrawStringf(20,87,"%d/%d",cpu_list[current],bus_list[current]);
+		if (currentState == stateOverClock)
+		{
+			cpufreq = scePowerGetCpuClockFrequency();
+			
+			if (cpufreq <18)
+			{
+				scePowerSetClockFrequency(20, 20, 10);
+			}
+			else if (cpufreq <70)
+			{
+		        scePowerSetClockFrequency(75, 75, 37);	
+			}
+			else if (cpufreq <95)
+			{
+				scePowerSetClockFrequency(100, 100, 50);
+			}
+			else if (cpufreq <125)
+			{
+				scePowerSetClockFrequency(133, 133, 66);
+			}
+			else if (cpufreq <215)
+			{
+				scePowerSetClockFrequency(222, 222, 111);
+			}
+			else if (cpufreq <260)
+			{
+			scePowerSetClockFrequency(266, 266, 133);
+			}
+			else if (cpufreq <290)
+			{
+				scePowerSetClockFrequency(300, 300, 150);
+			}
+			else if (cpufreq <325)
+			{
+				scePowerSetClockFrequency(333, 333, 166);
+			}
+			
+			currentState = stateNoClock;
+		}
+		
+		if (currentState == stateUnderClock)
+		{
+			cpufreq = scePowerGetCpuClockFrequency();
+			if (cpufreq> 300)
+			{
+				scePowerSetClockFrequency(300, 300, 150);
+			}
+			else if (cpufreq> 266)
+			{
+				scePowerSetClockFrequency(266, 266, 133);
+			}
+			else if (cpufreq> 222)
+			{
+				scePowerSetClockFrequency(222, 222, 111);
+			}
+			else if (cpufreq> 133)
+			{
+				scePowerSetClockFrequency(133, 133, 66);
+			}
+			else if (cpufreq> 100)
+			{
+				scePowerSetClockFrequency(100, 100, 50);
+			}
+			else if (cpufreq> 75)
+		    {
+				scePowerSetClockFrequency(75, 75, 37);
+			}
+			else if (cpufreq> 20)
+			{
+				scePowerSetClockFrequency(20, 20, 10);
+			}
+			
+			currentState = stateNoClock; // This state allows the frequency to not climb on each cycle.
+		}
+		
+		cpu = getCpuClock(); 
+		bus = getBusClock(); 
+		
+		oslDrawStringf(20,87,"%d/%d",cpu, bus);
+		oslDrawString(20,189,"Current CPU Frequency");
+		oslDrawStringf(20,202,"%d MHz", cpu);
+		oslDrawString(20,241,"Current BUS Frequency");
+		oslDrawStringf(20,254,"%d MHz", bus);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
@@ -838,8 +792,6 @@ void ramMenu()
 		oslClearScreen(RGB(0,0,0));
 		
 		controls();	
-		
-		sceCtrlPeekBufferPositive(&pad, 1);
 		
 		oslDrawImageXY(performancebg, 0, 0);
 		
