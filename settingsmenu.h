@@ -40,7 +40,7 @@ OSL_FONT *Roboto;
 typedef struct fw_version;
 
 char backgroundPath[100];
-int widgetActivator;
+int widgetActivator, eDesktopActivator;
 int RJL;
 int PSPDebug;
 void onlineUpdater();

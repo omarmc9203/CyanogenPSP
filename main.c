@@ -449,6 +449,8 @@ int main()
 	transbackground = oslLoadImageFilePNG("system/home/icons/transbackground.png", OSL_IN_RAM, OSL_PF_8888);
 	playing = oslLoadImageFilePNG("system/home/icons/playing.png", OSL_IN_VRAM, OSL_PF_8888);
 	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_RAM, OSL_PF_8888);
+	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
+	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);

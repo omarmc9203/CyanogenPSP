@@ -18,7 +18,8 @@
 //declaration
 OSL_IMAGE *background, *cursor, *ic_allapps, *ic_allapps_pressed, *navbar, *wificon, *music, *gmail, *messengericon, *browser, *google, *notif, *batt100, 
 		  *batt80, *batt60, *batt40, *batt20, *batt10, *batt0, *battcharge, *pointer, *pointer1, *backicon, *homeicon, *multicon, *usbdebug, *quickSettings,
-		  *recoverybg, *welcome, *transbackground, *notif2 , *wifibg, *playing, *debug, *brightness, *control, *navbar2, *backicon2, *homeicon2, *multicon2;
+		  *recoverybg, *welcome, *transbackground, *notif2 , *wifibg, *playing, *debug, *brightness, *control, *navbar2, *backicon2, *homeicon2, *multicon2, 
+		  *layerA, *layerB;
 		  
 OSL_FONT *Roboto;
 

@@ -12,7 +12,7 @@
 OSL_IMAGE *background, *cursor, *ic_allapps, *ic_allapps_pressed, *music, *gmail, *messengericon, *browser, *google, *pointer, *pointer1, 
 		  *notif, *batt100, *batt80, *batt60, *batt40, *batt20, *batt10, *batt0, *battcharge, *backicon, *homeicon, *multicon, *transbackground,
 		  *notif2, *debug, *brightness, *control, *navbar2, *backicon2, *homeicon2, *multicon2, *welcome, *quickSettings, *playing, *navbar,
-		  *wDay, *wNight;
+		  *wDay, *wNight, *layerA, *layerB;
 		  
 //definition of our sounds
 OSL_SOUND *tone;

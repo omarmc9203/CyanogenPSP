@@ -104,7 +104,7 @@ void controls() //Main controller function - allows cursor movement
 
 void battery(int batx, int baty, int n) // Draws the battery icon depending on its percentage. 
 {
-	int batteryLife;
+	int batteryLife, y;
 	
 	batteryLife = scePowerGetBatteryLifePercent(); //Gets battery percentage
 	
@@ -129,7 +129,33 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	{
 		oslDrawStringf(384, 4,"%d%%",batteryLife);
 	}
- 
+	
+	if (n == 3)
+	{
+		if ((cursor->y <= 16) || (cursor->y >= 226))
+		{
+			oslDrawImageXY(layerA, 0, 0);
+			y+=2;
+		}
+		
+		else if (cursor->y >= 16 && cursor->y <= 226)
+		{
+			y-=17;
+		}
+		
+		if (batteryLife <= 99)
+		{
+			batx = 375;
+			baty = y;
+			oslDrawStringf(392, y+2,"%d%%",batteryLife);
+		}
+		else  if (batteryLife > 99)
+		{
+			baty = y;
+			oslDrawStringf(384, y+2,"%d%%",batteryLife);
+		}
+	}
+	
 	if (batteryLife == 100)
 		oslDrawImageXY(batt100,batx,baty);
 	else if (batteryLife >80 && batteryLife <= 100) 
@@ -160,7 +186,9 @@ void appDrawerIcon() //Draws the app drawer icon. Draws a different icon of the 
 
 void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on androids.
 {		
-	if (n == 1)
+	int y = 272, ulimit = 237, dlimit = 272;
+
+	if (n == 0)
 	{
 		oslDrawImageXY(navbar, 109, 237);
 		
@@ -181,9 +209,52 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 	
 		else
 			oslDrawImageXY(navbar,109, 237);
-		}
+	}
 	
-	else if (n == 2)
+	if (n == 1)
+	{
+		if ((cursor->y >= 226) || (cursor->y <= 16) )
+		{
+			oslDrawImageXY(layerB, 0, 237);
+			y-=35;
+			
+			if (y <= ulimit)
+			{	
+				y = ulimit;
+			}
+	
+			oslDrawImageXY(navbar, 109, y);
+		
+			if (cursor->x  >= 144 && cursor->x  <= 204 && cursor->y >= 226 && cursor->y <= 271)
+				oslDrawImageXY(backicon,109, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+	
+			else
+				oslDrawImageXY(navbar,109, y);
+		
+			if (cursor->x  >= 205 && cursor->x  <= 271 && cursor->y >= 226 && cursor->y <= 271)
+				oslDrawImageXY(homeicon,109, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+	
+			else
+				oslDrawImageXY(navbar,109, y);
+		
+			if (cursor->x  >= 272 && cursor->x  <= 332 && cursor->y >= 226 && cursor->y <= 271)
+				oslDrawImageXY(multicon,109, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
+	
+			else
+				oslDrawImageXY(navbar,109, y);
+		}
+		else if (cursor->y >= 16 && cursor->y <= 226)
+		{
+			y+=35;
+			
+			if (y >= dlimit)
+			{	
+				y = dlimit;
+			}
+		}
+	}
+	
+	if (n == 2)
 	{
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75))
 		{
@@ -343,7 +414,7 @@ void androidQuickSettings()
 	}
 	
 	if (notif_enabled ==1)
-		{
+	{
 		if (osl_keys->held.up)
 		{
 			controlX += 4;
@@ -492,6 +563,22 @@ void checkWidgetActivation()
 	fclose(widgetActivation);
 }
 
+void checkEDesktopActivation()
+{
+	FILE * eDesktopActivation;
+
+	if (!(fileExists("system/home/eDesktopActivator.txt")))
+	{
+		eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
+		fprintf(eDesktopActivation, "0");
+		fclose(eDesktopActivation);
+	}
+
+	eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "r");
+	fscanf(eDesktopActivation,"%d",&eDesktopActivator);
+	fclose(eDesktopActivation);
+}
+
 void homeUnloadResources()
 {
 	oslDeleteImage(ic_allapps);
@@ -511,6 +598,7 @@ void home()
 	oslSetFont(Roboto);
 	
 	checkWidgetActivation();
+	checkEDesktopActivation();
 	
 	while (!osl_quit)
 	{
@@ -520,7 +608,7 @@ void home()
 
 		controls();	
 		
-		oslDrawImage(background);	
+		oslDrawImage(background);		
 		oslDrawImageXY(music, 105, 190);
 		oslDrawImageXY(browser, 276, 190);
 		oslDrawImageXY(gmail, 331, 190);
@@ -528,13 +616,32 @@ void home()
 		oslDrawImageXY(pointer, 232, 180);
 		
 		appDrawerIcon();
-		navbarButtons(1);
+		
 		if (widgetActivator == 1)
 		dayNightCycleWidget();
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-		digitaltime(420,4,458);
-		battery(370,2,1);
+		
+		if (eDesktopActivator == 1)
+		{
+			navbarButtons(1);
+			battery(370,2,3);
+			if ((cursor->y <= 16) || (cursor->y >= 226))
+			{
+				digitaltime(420,4,458);
+			}
+			else if (cursor->y >= 16 && cursor->y <= 226)
+			{
+				digitaltime(420,-10,458);
+			}	
+		}
+		else if (eDesktopActivator == 0)
+		{
+			digitaltime(420,4,458);
+			navbarButtons(0);
+			battery(370,2,1);
+		}
+		
 		androidQuickSettings();
 		oslDrawImage(cursor);
 			

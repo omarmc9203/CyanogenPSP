@@ -1,4 +1,5 @@
 #include "appdrawer.h"
+#include "settingsmenu.h"
 #include "clock.h"
 #include "home.h"
 #include "lock.h"
@@ -87,9 +88,33 @@ int appdrawer()
 
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+		androidQuickSettings();
 
 		oslDrawImage(background);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		
+		if (eDesktopActivator == 1)
+		{
+			navbarButtons(1);
+			battery(370,2,3);
+			if ((cursor->y <= 16) || (cursor->y >= 226))
+			{
+				digitaltime(420,4,458);
+			}
+			else if (cursor->y >= 16 && cursor->y <= 226)
+			{
+				digitaltime(420,-10,458);
+			}	
+		}
+		else if (eDesktopActivator == 0)
+		{
+			digitaltime(420,4,458);
+			navbarButtons(0);
+			battery(370,2,1);
+		}
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		oslDrawImageXY(backdrop, 0, 15);
 		oslDrawImageXY(music, music_x, 35);
 		oslDrawString(music_x,85,"Music");
@@ -120,8 +145,6 @@ int appdrawer()
 		oslDrawString(settings_test_x,175,"Settings");
 		oslDrawImageXY(umd, umd_x, 122);
 		oslDrawString(umd_text_x,175,"UMD");
-
-		navbarButtons(1);
 		
 		if (umd_x <= -10 && fm_x <= -10)
 		{
@@ -142,10 +165,6 @@ int appdrawer()
 			oslDrawImageXY(pointer1, 243, 223);
 		}
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-		digitaltime(420,4,458);
-		battery(370,2,1);
-		androidQuickSettings();
 		oslDrawImage(cursor);
 			
 		if (osl_pad.held.left && (osl_pad.held.cross))

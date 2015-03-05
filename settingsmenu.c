@@ -854,6 +854,7 @@ void ramMenu()
 void displayMenu()
 {	
 	FILE * widgetActivation;
+	FILE * eDesktopActivation;
 
 	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
@@ -880,12 +881,20 @@ void displayMenu()
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
-		oslDrawString(20,86,"Toggle Day/Night Widget");
+		oslDrawString(20,86,"Toggle day/night widget");
+		
+		oslDrawString(20,140,"Toggle expanded desktop");
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
 		{
 			oslDrawImageXY(highlight, 0, 63);
-			oslDrawString(20,86,"Toggle Day/Night Widget");
+			oslDrawString(20,86,"Toggle day/night widget");
+		}
+		
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179)
+		{
+			oslDrawImageXY(highlight, 0, 122);
+			oslDrawString(20,140,"Toggle expanded desktop");
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -919,6 +928,32 @@ void displayMenu()
 				widgetActivator = 0;
 				fprintf(widgetActivation, "0");
 				fclose(widgetActivation);
+			}
+		}
+		
+		if (eDesktopActivator == 0)
+		{
+			oslDrawImageXY(offswitch,350,128);
+			
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
+			{
+				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
+				eDesktopActivator = 1;
+				fprintf(eDesktopActivation, "1");
+				fclose(eDesktopActivation);
+			}
+		}
+		
+		else if (eDesktopActivator == 1)
+		{
+			oslDrawImageXY(onswitch,350,128);
+		
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
+			{
+				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
+				eDesktopActivator = 0;
+				fprintf(eDesktopActivation, "0");
+				fclose(eDesktopActivation);
 			}
 		}
 		
