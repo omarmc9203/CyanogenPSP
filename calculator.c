@@ -1,4 +1,5 @@
 #include "calculator.h"
+#include "include/utils.h"
 #include "fm.h"
 #include "home.h"
 #include "clock.h"
@@ -6,8 +7,6 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
-
-OSL_COLOR black = RGB(0,0,0), red = RGB(255,0,0), white = RGB(255,255,255);
 
 char x1[4][20] = {
 	{"sin"},
@@ -35,9 +34,6 @@ int variable, selection;
  
 int calculator()
 {
-	pgfFont = oslLoadFontFile("flash0:/font/ltn0.pgf");
-    oslSetFont(pgfFont);
-
 	int result;
 	int x;
 	int y;
@@ -48,6 +44,9 @@ int calculator()
 
 	calcbackground = oslLoadImageFile("system/app/calculator/calcbg.png", OSL_IN_RAM, OSL_PF_8888);
 
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
+	
 	if (!calcbackground)
 		debugDisplay();
 		
@@ -61,42 +60,160 @@ int calculator()
 		
 		controls();	
 
-		oslDrawImageXY(calcbackground, 0, 19);
+		oslDrawImageXY(calcbackground, 0, 0);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		
+		digitaltime(420,4,458);
+		battery(370,2,1);
+		
+		oslIntraFontSetStyle(Roboto, 0.8f,WHITE,0,0);
+
+		oslDrawString(35,120,"7");
+		oslDrawString(90,120,"8");
+		oslDrawString(145,120,"9");
+		oslDrawString(35,160,"4");
+		oslDrawString(90,160,"5");
+		oslDrawString(145,160,"6");
+		oslDrawString(35,200,"1");
+		oslDrawString(90,200,"2");
+		oslDrawString(145,200,"3");
+		oslDrawString(90,240,"0");
+
+		oslDrawString(218,120,"/");
+		oslDrawString(218,160,"x");
+		oslDrawString(218,200,"-");
+		oslDrawString(218,240,"+");
+		oslIntraFontSetStyle(Roboto, 0.6f,WHITE,0,0);
+		oslDrawString(260,120,"DEL");
+
+		oslDrawString(326,120,"sin");
+		oslDrawString(366,120,"cos");
+		oslDrawString(406,120,"tan");
+		oslDrawString(446,120,"ln");
+	
+		if (osl_keys->pressed.left)
+		x = x++;
+		if (x == 0)
+		x = 8;
+
+		if (osl_keys->pressed.right)
+		x = x++;
+		if (x == 10)
+		x = 1;
+
+		if (osl_keys->pressed.up)
+		y = y--;
+		if (y == 0)
+		y = 4;
+
+		if (osl_keys->pressed.down)
+		y = y++;
+		if (y == 5)
+		y = 1;
 		
 		x = 1;
-		
-		if (osl_keys->pressed.right)
-		{
-		x+=1;
-		}
-		
-		if (x == 1)
-		{
-		
-		for(variable=0;variable<4;variable++) {
-			oslDrawStringf(40,variable*42+77,x1[variable]);
-		}
-		oslDrawStringf(40,selection*42+77,x1[selection]);
-		
-		if ((osl_keys->pressed.up) && (selection > 0))
-			selection--;
-		if ((osl_keys->pressed.down) && (selection < 3))
-			selection++;
-		}
-		
-		if (x == 2)
-		{
-		
-		for(variable=0;variable<5;variable++) {
-			oslDrawStringf(94,variable*42+77,x2[variable]);
-		}
-		oslDrawStringf(94,selection*42+77,x2[selection]);
-		
-		if ((osl_keys->pressed.up) && (selection > 0))
-			selection--;
-		if ((osl_keys->pressed.down) && (selection < 4))
-			selection++;
-		}
+		y = 1;
+
+			
+			if (y == 1 && x ==1)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(35,120,"7");
+			}
+			else if (y == 1 && x == 2)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(90,120,"8");
+			}
+			else if (y == 1 && x  == 3) 
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(145,120,"9");
+			}
+			else if (y == 1 && x == 4)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(218,120,"/");
+			}
+			else if (y == 1 && x == 5)
+			{
+				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslDrawString(260,120,"DEL");
+			}
+			else if (y == 1 && x  == 6) 
+			{
+				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslDrawString(326,120,"sin");
+			}
+			else if (y == 1 && x  == 7)
+			{
+				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslDrawString(366,120,"cos");
+			}
+			else if (y == 1 && x  == 8)
+			{
+				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslDrawString(406,120,"tan");
+			}
+			else if (y == 1 && x  == 9)
+			{
+				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslDrawString(446,120,"ln");
+			}
+			
+			if (y == 2 && x == 1)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(35,160,"4");
+			}
+			else if (y == 2 && x == 2) 
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(90,160,"5");
+			}
+			else if (y == 2 && x == 3)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(145,160,"6");
+			}
+			else if (y == 2 && x == 4) 
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(218,160,"x");
+			}
+
+			if (y == 3 && x == 1)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(35,200,"1");
+			}
+			else if (y == 3 && x == 2)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(90,200,"2");
+			}
+			else if (y == 3 && x == 3)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(145,200,"3");
+			}
+			else if (y == 3 && x == 4)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(218,200,"-");
+			}	
+
+			if (y == 4 && x == 1)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(90,240,"0");
+			}
+			else if (y == 4 && x == 2)
+			{
+				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslDrawString(218,240,"+");
+			}
 		
 		if (osl_keys->pressed.square)
 		{
