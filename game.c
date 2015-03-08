@@ -112,7 +112,35 @@ int launchPOPsEf0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x155, path, &param);
 }
 
-int launchISO(const char *path[])
+int launchISOMs0(const char *path[])
+{
+	char* bootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
+
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+	
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+	
+	// Set Common Parameters
+	param.size = sizeof(param);
+	
+	// EBOOT Path
+    char * ebootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
+               
+    // Prepare ISO Reboot
+    param.args = strlen(ebootpath) + 1;
+    param.argp = ebootpath;
+    param.key = "umdemu";
+               
+	// Enable Galaxy ISO Emulator Patch
+    sctrlSESetBootConfFileIndex(MODE_INFERNO);
+    sctrlSESetUmdFile(path);
+	
+	return sctrlKernelLoadExecVSHWithApitype(0x123, path, &param);
+}
+
+int launchISOEf0(const char *path[])
 {
 	char* bootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
 
@@ -163,13 +191,14 @@ void gameDisplay()
 		if (current <= curScroll-1) {
 			current = curScroll-1;
 			break;
-		}
-		
+		}                     
+
 		/*
-		if(((ext) != NULL) && ((strcmp(ext ,".PBP") == 0)) && (dirScan[i].directory == 0)) 
-		{
-			//
-		}
+			getIcon0(folderIcons[i].name);			 
+			if(icon0!=NULL)
+			{
+				oslDrawImageXY(icon0, 327,100);
+			}
 		*/
 		
 		// If the currently selected item is active, then display the name
@@ -239,9 +268,12 @@ void gameControls(int n) //Controls
 		}
 	}
 	
-	if (((ext) != NULL) && ((strcmp(ext ,".iso") == 0) || ((strcmp(ext ,".ISO") == 0))) && (osl_keys->held.cross))
+	if (((ext) != NULL) && ((strcmp(ext ,".iso") == 0) || ((strcmp(ext ,".ISO") == 0)) || ((strcmp(ext ,".cso") == 0)) || ((strcmp(ext ,".CSO") == 0))) && (osl_keys->held.cross))
 	{
-		launchISO(folderIcons[current].filePath);
+		if (kuKernelGetModel() == 4)
+			launchISOEf0(folderIcons[current].filePath);
+		else
+			launchISOMs0(folderIcons[current].filePath);
 	}
 	
 	if (osl_keys->pressed.circle)
@@ -357,6 +389,10 @@ void gameUnload()
 	oslDeleteImage(gameSelection);
 	oslDeleteFont(Roboto);
 }
+
+const OSL_VIRTUALFILENAME __image_ram_files[] = {
+	{"ram:/Media/icon0.png", (void*)icon0_png, sizeof(icon0_png), &VF_MEMORY}
+};
 
 void getIcon0(char* filename){
     //unsigned char _header[40];

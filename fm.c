@@ -929,11 +929,6 @@ void dirControls() //Controls
 		displayTextFromFile(folderIcons[current].filePath);
 	}
 	
-	if (((ext) != NULL) && ((strcmp(ext ,".iso") == 0) || ((strcmp(ext ,".ISO") == 0))) && (osl_keys->held.cross))
-	{
-		launchISO(folderIcons[current].filePath);
-	}
-	
 	if (osl_keys->pressed.square)
 	{
 		powermenu();
