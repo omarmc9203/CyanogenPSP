@@ -11,11 +11,11 @@ What's working
 - Cursor (analog buttons)
 - Home Menu
 - Touch tones, when pressing the cross button on an app/widget.
-- App drawer highlighting effect. 
+- App drawer highlighting effect.
 - Menu buttons Highlighting effects.
 - Battery functions. (Displays the battery percentage, by using icons.)
 - App Drawer
-- CWM Based PSP Recovery Menu 1.0 (Merged) - Press square to open power menu, then select recovery.
+- Recovery menu (Merged) - Can be launched from the power menu.
 - Lockscreen
 - Notification Slider
 - Navbar functions, for returning home or back to the previous menu.
@@ -27,10 +27,7 @@ What's working
 - Revamped Settings menu, making it much similar to Cyanogenmod's.
 - Added screenshots feature. Use R + X to take a screenshot.
 - Integrated RemoteJoyLite. Pressing select in Settings->about, powers it on and off.
-- Added the following options in recovery menu:
-[] Usb toggle
-[] Shutdown Device
-[] Standby
+- Added the following options in recovery menu: [] Usb toggle [] Shutdown Device [] Standby
 - Apollo music player
 - App drawer pane navigation
 - Quick toggles
@@ -39,15 +36,19 @@ What's working
 - OTA Updates - Settings>About>CyanoPSP Updates (WiFi only obviously)
 - Gallery App
 - Gmail app - uses the browser and loads up the mobile version of gmail for now.
+- Dumping Menu - Dump UMD boot.bin, flash 0, flash 1 and memory.
+- Expanded desktop
+- Homebrew Loading
+- POPS support
+- ISO/CSO loading
 
 What's yet to work
 =================
 - Fully functional calculator
 - Boot animation (I'll use a set of 20 images in a zip file probably - These images can be replaced by using another zip with the same file names and format)
-- Game (Homebrew and Backups) Launcher
-- More settings and tweaks.
 - Theme Manager
-- Contacts storing application. (People App)
+- Contacts storing application - May never make it
+- Adhoc Messenger
 
 What's not working
 =================
@@ -65,10 +66,11 @@ This method only allows you to compile on Windows. I'm not sure how you'd go abo
    ;C:\pspsdk\bin
    
 3. Install OsLib Mod v2 from here https://github.com/dogo/oslibmodv2 - Instructions included.
-4. Dowwnload and install the headers and libs from the M33 SDK - Required for compiling the recovery menu.
+4. Dowwnload and install the headers and libs from the M33 SDK - Required for compiling the recovery menu. Overwrite the M33 SDK with the following from PRO SDK(libs and headers): https://www.mediafire.com/?t2rxvifbfbtudhu
 5. Run compile.bat
 6. Hit 1 on your keyboard, and press enter to start compiling.
 
+PM me for any assistance at sasukethunder@gmail.com
 
 License can be found here https://github.com/joel16/CyanogenMod-PSP-C/blob/master/License
 
