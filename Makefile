@@ -9,7 +9,7 @@ OBJS = main.o appdrawer.o home.o calculator.o lock.o settingsmenu.o clock.o reco
 BUILD_PRX = 1
 PSP_LARGE_MEMORY = 1
 
-VERSION	= 4.0
+VERSION	= 5.0
 
 CFLAGS = -O2 -g -G0 -Wall
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
@@ -27,7 +27,7 @@ LIBS=$(STDLIBS) $(MYLIBS)
 
 LDFLAGS =
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = CyanogenPSP Beta $(VERSION)
+PSP_EBOOT_TITLE = CyanogenPSP Stable v$(VERSION)
 PSP_EBOOT_ICON = ICON0.png
 
 PSPSDK=$(shell psp-config --pspsdk-path)

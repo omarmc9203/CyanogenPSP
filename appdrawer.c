@@ -88,8 +88,6 @@ int appdrawer()
 
 		controls();	
 		
-		androidQuickSettings();
-
 		oslDrawImage(background);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
@@ -165,6 +163,8 @@ int appdrawer()
 			oslDrawImageXY(pointer1, 243, 223);
 		}
 		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		androidQuickSettings();
 		oslDrawImage(cursor);
 			
 		if (osl_pad.held.left && (osl_pad.held.cross))

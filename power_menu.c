@@ -29,7 +29,7 @@ void powermenu()
 		oslDrawImageXY(gmail, 331, 190);
 		oslDrawImageXY(messengericon, 160, 190);
 		oslDrawImageXY(pointer, 231, 180);
-		navbarButtons(1);
+		navbarButtons(0);
 		oslDrawImageXY(power, 102, 41);		
 		
 		digitaltime(420,4,458);

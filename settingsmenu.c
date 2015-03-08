@@ -13,7 +13,7 @@
 
 char name;
 int setclock;
-char version[10] = "4.0";
+char cyanogenpspversion[5] = "5.0";
 char lang[12] = "Uk English";
 static char Settings_message[100] = "";
 
@@ -152,8 +152,8 @@ ro.product.locale.language = %s\r\n\
 ro.build.user = Joel16\r\n\
 ro.product.cpu.frequency =  %d\r\n\
 ro.product.bus.frequency =  %d\r\n\
-ro.build.date = Fri Feb 27 12:40 PM EST 2014",
-	version, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
+ro.build.date = Sat Mar 08 9:31 AM EST 2015",
+	cyanogenpspversion, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
 	fclose(configtxt);	
 }
 
@@ -242,7 +242,7 @@ void aboutMenu()
 		oslDrawString(20,78,"CyanogenPSP Updates");
 		oslDrawString(20,92,"Click for, view or install available updates");
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"CyanogenPSP version: 4.1-20150227-OFFICIAL");
+		oslDrawStringf(20,129,"CyanogenPSP version: %s-20150308-OFFICIAL",cyanogenpspversion);
 		oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawStringf(20,185,"Kernel version: %d.%d", version.major, version.minor);
 		oslDrawStringf(20,199,"OSLib version: %s",OSL_VERSION);
@@ -259,7 +259,7 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"CyanogenPSP version: 4.1-20150227-OFFICIAL");
+			oslDrawStringf(20,129,"CyanogenPSP version: %s-20150308-OFFICIAL",cyanogenpspversion);
 			oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
@@ -329,16 +329,6 @@ void aboutMenu()
 				oslDeleteFont(Roboto);
 				easterEgg();
 			}
-		}
-		
-		if(osl_keys->pressed.select)
-		{
-			enableUsb();
-		}
-		
-		else if(osl_keys->pressed.select)
-		{	
-			disableUsb();
 		}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
@@ -502,7 +492,7 @@ void performanceMenu()
 
 		oslDrawString(15,103,"Processor");
 		oslDrawString(15,166,"Ram Management");
-		oslDrawString(15,240,"Memory Management");
+		oslDrawString(15,240,"Storage Management");
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 75 && cursor->y <= 133)
 		{
@@ -514,6 +504,12 @@ void performanceMenu()
 		{
 			oslDrawImageXY(highlight, 0, 144);
 			oslDrawString(15,166,"Ram Management");
+		}
+		
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272)
+		{
+			oslDrawImageXY(highlight, 0, 229);
+			oslDrawString(15,240,"Storage Management");
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -574,6 +570,14 @@ void performanceMenu()
 			ramMenu();
 		}
 		
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
+		{
+			oslDeleteImage(highlight);
+			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
+			storageMenu();
+		}
+		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
 			multitask();
@@ -622,7 +626,7 @@ void processorMenu()
 		
 		if (cursor->x >= 16 && cursor->x <= 480 && cursor->y >= 118 && cursor->y <= 174)
 		{
-			oslDrawImageXY(highlight, 0, 121);
+			oslDrawImageXY(highlight, 0, 122);
 			oslDrawString(20,128,"CPU Overclock");
 			oslDrawString(20,145,"Press R to increase frequency and L to decrease frequency");
 		}
@@ -832,6 +836,105 @@ void ramMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
+			oslDeleteFont(Roboto);
+			home();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+		{	
+			multitask();
+		}
+		
+		if (osl_pad.held.R && osl_keys->pressed.triangle)
+		{
+			screenshot();
+		}
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();	
+	}
+}
+
+void storageMenu()
+{	
+	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	oslSetFont(Roboto);
+	
+	if (!performancebg || !highlight)
+		debugDisplay();
+	
+	while (!osl_quit)
+	{
+		LowMemExit();
+		
+		oslStartDrawing();
+		
+		oslClearScreen(RGB(0,0,0));
+		
+		controls();	
+		
+		oslDrawImageXY(performancebg, 0, 0);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		
+		oslDrawStringf(20,98,"Press Select to toggle USB mass storage"); 
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_CENTER);
+		
+		if (osl_keys->pressed.select)
+		{
+			enableUsb();
+		}
+		
+		else if (osl_keys->pressed.select)
+		{
+			disableUsb();
+		}
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+
+		digitaltime(386,4,424);
+		battery(337,2,0);
+		navbarButtons(2);
+		androidQuickSettings();
+		oslDrawImage(cursor);
+		
+		if (osl_keys->pressed.square)
+		{
+			powermenu();
+		}
+		
+		if (osl_keys->pressed.circle)
+		{
+			oslDeleteImage(highlight);
+			oslDeleteImage(performancebg);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
+			performanceMenu();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{	
+			oslDeleteImage(highlight);
+			oslDeleteImage(performancebg);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
+			oslDeleteFont(Roboto);
+			performanceMenu();
+		}
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslDeleteImage(highlight);
+			oslDeleteImage(performancebg);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
 			oslDeleteFont(Roboto);
 			home();
 		}
@@ -1741,15 +1844,6 @@ void settingsMenu()
 		{
 			lockscreen();
         }
-		
-		if (osl_keys->pressed.select)
-		{
-			enableUsb();
-		}
-		else if (osl_keys->pressed.select)
-		{
-			disableUsb();
-		}
 		
 		if (osl_keys->pressed.circle)
 		{	

@@ -18,7 +18,7 @@
 #include "include/ram.h"
 #include "include/utils.h"
 
-PSP_MODULE_INFO("CyanogenPSP",  1, 4, 1);
+PSP_MODULE_INFO("CyanogenPSP",  1, 5, 0);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU); 
 PSP_HEAP_SIZE_KB(24000);
 
