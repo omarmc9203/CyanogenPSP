@@ -20,86 +20,34 @@ char ssecond[2];
 char smilisec[2];
 char stimer[10];
 
-void getDayOfWeek(int x, int y, int n) //Outputs the Day of the Week
+void getDayOfWeek(int x, int y, int n)
 {
 	pspTime time;
-	sceRtcGetCurrentClockLocalTime(&time);
-	
-	if (n == 1)
-	{	
-		if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==1)
-		{
-			oslDrawStringf(x,y,"Monday,");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==2)
-		{
-			oslDrawStringf(x,y,"Tuesday,");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==3)
-		{
-			oslDrawStringf(x,y,"Wednesday,");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==4)
-		{
-			oslDrawStringf(x,y,"Thursday,");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==5)
-		{
-			oslDrawStringf(x,y,"Friday,");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==6)
-		{	
-			oslDrawStringf(x,y,"Saturday,");
-		}
-		else
-		{
-			oslDrawStringf(x,y,"Sunday,");
-		}
-	}
-	
-	if (n == 2)
-	{	
-		if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==1)
-		{
-			oslDrawStringf(x,y,"Mon");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==2)
-		{
-			oslDrawStringf(x,y,"Tue");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==3)
-		{
-			oslDrawStringf(x,y,"Wed");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==4)
-		{
-			oslDrawStringf(x,y,"Thu");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==5)
-		{
-			oslDrawStringf(x,y,"Fri");
-		}
-		else if (sceRtcGetDayOfWeek(time.year, time.month, time.day)==6)
-		{	
-			oslDrawStringf(x,y,"Sat");
-		}
-		else
-		{
-			oslDrawStringf(x,y,"Sun");
-		}
-	}
+    sceRtcGetCurrentClockLocalTime(&time);
+
+	int day = sceRtcGetDayOfWeek(time.year, time.month, time.day);
+
+    static const char days[7][16] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    
+    char buffer[16];
+	sprintf(buffer, "%s", days[day]);
+    
+    if(n == 2)
+        buffer[3] = 0;
+        
+    oslDrawStringf(x,y,"%s", buffer);
 }
 	
 void getMonthOfYear(int x, int y)
 {
-        static const char months[][16] =
-        {
-                "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-        };
+	static const char months[12][16] =
+	{
+		"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+	};
        
-        pspTime time;
-        sceRtcGetCurrentClockLocalTime(&time);
-        oslDrawStringf(x,y,"%d %s", time.day, months[time.month - 1]);
+    pspTime time;
+    sceRtcGetCurrentClockLocalTime(&time);
+    oslDrawStringf(x,y,"%d %s", time.day, months[time.month - 1]);
 }
 
 /*Default x = 420, x2 = 458  

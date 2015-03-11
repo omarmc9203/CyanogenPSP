@@ -291,8 +291,8 @@ void androidQuickSettings()
 	oslDrawImageXY(quickSettings,0,notif_y);
 	
 	battery(374,yPos2-2,2);
-	getDayOfWeek(10,yPos2+5,1);
-	getMonthOfYear(85,yPos2+5);
+	getDayOfWeek(15,yPos2+5,1);
+	getMonthOfYear(88,yPos2+5);
 
 	oslDrawStringf(137,yLine1, "Wi-Fi");
 	oslDrawStringf(340,yPos2, "%d%%",scePowerGetBatteryLifePercent());
