@@ -415,12 +415,12 @@ void androidQuickSettings()
 	
 	if (notif_enabled ==1)
 	{
-		if (osl_keys->held.up)
+		if (osl_keys->held.right)
 		{
 			controlX += 4;
 			setBrightness(getBrightness() + 1);
 		}
-		if (osl_keys->held.down)
+		if (osl_keys->held.left)
 		{
 			controlX -= 4;
 			setBrightness(getBrightness() - 1);
@@ -611,7 +611,7 @@ void home()
 		oslDrawImage(background);		
 		oslDrawImageXY(music, 105, 190);
 		oslDrawImageXY(browser, 276, 190);
-		oslDrawImageXY(gmail, 331, 190);
+		oslDrawImageXY(settings, 331, 190);
 		oslDrawImageXY(messengericon, 160, 190);
 		oslDrawImageXY(pointer, 232, 180);
 		

@@ -5,8 +5,7 @@
 #include <psploadexec.h> 
 #include <psploadexec_kernel.h> 
 
-OSL_IMAGE *background, *cursor, *music, *gmail, *messengericon, *browser, *google, *calc, *clockx, *email, *people, *calendar, *umd, 
-		  *gallery, *fb, *settings,*pointer, *pointer1, *isoloadericon, *backicon, *homeicon, *multicon, *backdrop;
+OSL_IMAGE *calc, *clockx, *umd, *gallery, *fb, *isoloadericon, *backdrop;
 		  
 OSL_FONT *Roboto;
 

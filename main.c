@@ -18,9 +18,9 @@
 #include "include/ram.h"
 #include "include/utils.h"
 
-PSP_MODULE_INFO("CyanogenPSP",  1, 5, 0);
+PSP_MODULE_INFO("CyanogenPSP",  1, 5, 1);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU); 
-PSP_HEAP_SIZE_KB(24000);
+PSP_HEAP_SIZE_KB(53248); //This line will be altered for slims. Right now us (20480) when building for PSP 1000s, and (53248) for testing on PPSSPP. Using heap_max breaks the browser so don't use it.
 
 int initOSLib() //Intialize OsLib
 {
@@ -190,49 +190,6 @@ void internet() //Draws the browser
 		{
             oslReadKeys();
             int res = oslBrowserInit("http://www.google.com", "/PSP/GAME/CyanogenPSP/downloads", 5*1024*1024, //Downloads will be saved into this directory
-                                         PSP_UTILITY_HTMLVIEWER_DISPLAYMODE_SMART_FIT,
-                                         PSP_UTILITY_HTMLVIEWER_DISABLE_STARTUP_LIMITS,
-                                         PSP_UTILITY_HTMLVIEWER_INTERFACEMODE_FULL,
-                                         PSP_UTILITY_HTMLVIEWER_CONNECTMODE_MANUAL_ALL);
-			memset(message, 0, sizeof(message));
-
-        }
-    }
-	oslNetTerm();
-}
-
-void openGmail() //Opens GMAIL in the browser.
-{
-	int skip = 0;
-    int browser = 0;
-	
-	oslNetInit();
-
-    while(!osl_quit)
-	{
-        browser = oslBrowserIsActive();
-		if (!skip)
-		{
-            oslStartDrawing();
-
-            if (browser)
-			{
-                oslDrawBrowser();
-                if (oslGetBrowserStatus() == PSP_UTILITY_DIALOG_NONE)
-				{
-                    oslEndBrowser();
-					home();
-                }
-            }
-            oslEndDrawing();
-		}
-		oslEndFrame();
-		skip = oslSyncFrame();
-
-        if (!browser)
-		{
-            oslReadKeys();
-            int res = oslBrowserInit("https://mail.google.com/mail/x/", "/PSP/GAME/CyanogenPSP/downloads", 5*1024*1024,
                                          PSP_UTILITY_HTMLVIEWER_DISPLAYMODE_SMART_FIT,
                                          PSP_UTILITY_HTMLVIEWER_DISABLE_STARTUP_LIMITS,
                                          PSP_UTILITY_HTMLVIEWER_INTERFACEMODE_FULL,
@@ -422,9 +379,7 @@ int main()
 	cursor = oslLoadImageFilePNG("system/cursor/cursor.png", OSL_IN_VRAM, OSL_PF_8888);
 	navbar = oslLoadImageFile("system/home/icons/nav.png", OSL_IN_VRAM, OSL_PF_8888);
 	navbar2 = oslLoadImageFile("system/home/icons/nav2.png", OSL_IN_RAM, OSL_PF_8888);
-	wificon = oslLoadImageFile("system/home/icons/wificon.png", OSL_IN_VRAM, OSL_PF_8888);
 	music = oslLoadImageFilePNG("system/home/icons/apollo.png", OSL_IN_RAM, OSL_PF_8888);
-	gmail = oslLoadImageFilePNG("system/home/icons/gmail.png", OSL_IN_RAM, OSL_PF_8888);
 	messengericon = oslLoadImageFilePNG("system/home/icons/message.png", OSL_IN_RAM, OSL_PF_8888);
 	browser = oslLoadImageFile("system/home/icons/browser.png", OSL_IN_RAM, OSL_PF_8888);
 	quickSettings = oslLoadImageFile("system/home/menu/quickSettings.png", OSL_IN_VRAM, OSL_PF_8888);
@@ -447,8 +402,14 @@ int main()
 	multicon2 = oslLoadImageFilePNG("system/home/icons/multicon2.png", OSL_IN_RAM, OSL_PF_8888);
 	welcome = oslLoadImageFilePNG("system/home/icons/welcome.png", OSL_IN_RAM, OSL_PF_8888);
 	transbackground = oslLoadImageFilePNG("system/home/icons/transbackground.png", OSL_IN_RAM, OSL_PF_8888);
-	playing = oslLoadImageFilePNG("system/home/icons/playing.png", OSL_IN_VRAM, OSL_PF_8888);
-	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_RAM, OSL_PF_8888);
+	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_VRAM, OSL_PF_8888);
+	clockx = oslLoadImageFilePNG("system/home/icons/clock.png", OSL_IN_RAM, OSL_PF_8888);
+	fb = oslLoadImageFilePNG("system/home/icons/fb.png", OSL_IN_RAM, OSL_PF_8888);
+	settings = oslLoadImageFilePNG("system/home/icons/settings.png", OSL_IN_RAM, OSL_PF_8888);
+	gallery = oslLoadImageFilePNG("system/home/icons/gallery.png", OSL_IN_RAM, OSL_PF_8888);
+	umd = oslLoadImageFilePNG("system/home/icons/umd.png", OSL_IN_RAM, OSL_PF_8888);
+	calc = oslLoadImageFilePNG("system/home/icons/calc.png", OSL_IN_RAM, OSL_PF_8888);
+	isoloadericon = oslLoadImageFilePNG("system/home/icons/isoloadericon.png", OSL_IN_RAM, OSL_PF_8888);
 	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
 	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -460,7 +421,7 @@ int main()
 	modid = pspSdkLoadStartModule("modules/brightness.prx", PSP_MEMORY_PARTITION_KERNEL);
 
 	//Debugger - Displays an error message if the following resources are missing.
-	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !wificon || !music || !gmail || !messengericon || !browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon)
+	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !music || !settings || !messengericon || !browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon)
 		debugDisplay();
 	
 	loadConfig();
@@ -487,7 +448,7 @@ int main()
 		oslDrawImage(background);		
 		oslDrawImageXY(music, 105, 190);
 		oslDrawImageXY(browser, 276, 190);
-		oslDrawImageXY(gmail, 331, 190);
+		oslDrawImageXY(settings, 331, 190);
 		oslDrawImageXY(messengericon, 160, 190);
 		oslDrawImageXY(pointer, 232, 180); 
 
