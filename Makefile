@@ -2,7 +2,7 @@ TARGET = CyanogenPSP
 OBJS = main.o appdrawer.o home.o calculator.o lock.o settingsmenu.o clock.o recoverymenu.o imports.o menu.o common.o multi.o power_menu.o \
 	   apollo.o fm.o game.o mp3player.o messenger.o screenshot.o id3.o gallery.o \
 	   include/utils.o include/pgeZip.o include/ram.o \
-	   prx/brightness.o prx/isoLoader.o \
+	   prx/brightness.o \
 	   system/mem64.o system/fat.o system/opendir.o miniconv/MiniConv.o
 	   #scepower.o
 	   

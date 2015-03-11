@@ -12,10 +12,6 @@
 #include "screenshot.h"
 #include "include/utils.h"
 
-//Functions imported from PRX
-void startISO(char* file,int driver);
-int launch_pops(char *path);
-
 int folderScan(const char* path )
 {
 	curScroll = 1;

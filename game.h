@@ -2,6 +2,7 @@
 #include <systemctrl.h>
 #include <psploadexec.h>
 #include <psploadexec_kernel.h>
+#include <kubridge.h>
 #include <pspkernel.h>
 #include <pspdebug.h>
 #include <pspctrl.h>

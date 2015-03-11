@@ -6,7 +6,7 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
-#include "prx/iso loader/systemctrl_se.h"  
+#include "include/systemctrl_se.h"
 
 void gameUp()
 {
