@@ -10,6 +10,17 @@
 #define downloadPath "ms0:/PSP/GAME/CyanogenMod/downloads"
 #define musicPath "ms0:/MUSIC"
 
+enum colors {
+    RED =	0xFF0000FF,
+    GREEN =	0xFF00FF00,
+    BLUE =	0xFFFF0000,
+    WHITE =	0xFFFFFFFF,
+    LITEGRAY = 0xFFBFBFBF,
+    GRAY =  0xFF7F7F7F,
+    DARKGRAY = 0xFF3F3F3F,
+    BLACK = 0xFF000000
+};
+
 int fileExists(const char* path);
 int dirExists(const char* path);
 void deleteUpdateFile();
