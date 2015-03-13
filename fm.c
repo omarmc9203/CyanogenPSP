@@ -729,11 +729,6 @@ void dirDownx5()
 	}
 }
 
-void oslPrintText(int x, int y, float size, char * text, OSL_COLOR color) {
-   oslIntraFontSetStyle(Roboto, size, color, RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-   oslDrawStringf(x,y,text);
-}
-
 void dirDisplay()
 {	
 	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
@@ -1014,7 +1009,6 @@ void filemanager_unload()
 	oslDeleteImage(binaryicon);
 	oslDeleteImage(videoicon);
 	oslDeleteImage(archiveicon);
-	oslDeleteFont(Roboto);
 }
 
 int filemanage(int argc, char *argv[])
@@ -1031,9 +1025,8 @@ int filemanage(int argc, char *argv[])
 	videoicon = oslLoadImageFilePNG("system/app/filemanager/videoicon.png", OSL_IN_RAM, OSL_PF_8888);
 	archiveicon = oslLoadImageFilePNG("system/app/filemanager/archiveicon.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadFontFile("system/fonts/Roboto.pgf");
-	oslIntraFontSetStyle(Roboto, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	oslSetFont(Roboto);
+	oslIntraFontSetStyle(Roboto, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 
 	if (!filemanagerbg || !diricon || !imageicon || !mp3icon || !txticon || !unknownicon || !bar || !documenticon || !binaryicon || !videoicon || !archiveicon)
 		debugDisplay();

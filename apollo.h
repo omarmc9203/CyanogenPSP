@@ -20,7 +20,6 @@
 #define mp3YSelection 55 //The distance between the Y axis of the two selections
 
 OSL_IMAGE *mp3bg, *cursor, *nowplaying, *mp3_select;
-OSL_FONT *Roboto;
 
 int MP3Scan(const char* path);
 void mp3Up();

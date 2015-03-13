@@ -17,7 +17,6 @@
 #define galley_ySelection 56 //The distance between the Y axis of the two selections
 
 OSL_IMAGE *gallerybg, *gallerySelection, *galleryThumbnail, *galleryBar, *wallpaper;
-OSL_FONT *Roboto;
 
 SceCtrlData pad, oldpad;
 

@@ -228,7 +228,7 @@ void MP3Play(char * path)
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
-		oslDrawStringf(250,76,folderIcons[current].name);
+		oslDrawStringf(240,76,folderIcons[current].name);
 		//display_mp3_info(folderIcons[current].name);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
@@ -317,7 +317,7 @@ void soundPlay(char * path)
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
-		oslDrawStringf(250,76,folderIcons[current].name);
+		oslDrawStringf(240,76,folderIcons[current].name);
 		//display_mp3_info(folderIcons[current].name);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
@@ -453,28 +453,24 @@ void mp3Controls() //Controls
 			{
 				oslDeleteImage(mp3bg);
 				oslDeleteImage(mp3_select);
-				oslDeleteFont(Roboto);
 				appdrawer();
 			}
 			if(!strcmp("ms0:/PSP/MUSIC", lastDir)) 
 			{
 				oslDeleteImage(mp3bg);
 				oslDeleteImage(mp3_select);
-				oslDeleteFont(Roboto);
 				appdrawer();
 			}
 			if(!strcmp("ms0:/PSP/GAME/CyanogenMod/downloads", lastDir)) 
 			{
 				oslDeleteImage(mp3bg);
 				oslDeleteImage(mp3_select);
-				oslDeleteFont(Roboto);
 				appdrawer();
 			}
 			else
 			{
 				oslDeleteImage(mp3bg);
 				oslDeleteImage(mp3_select);
-				oslDeleteFont(Roboto);
 				mp3player();
 			}		
 	}
@@ -550,10 +546,9 @@ void mp3View(char * browseDirectory)
 {	
 	mp3bg = oslLoadImageFilePNG("system/app/apollo/mp3bg.png", OSL_IN_RAM, OSL_PF_8888);
 	mp3_select = oslLoadImageFilePNG("system/app/apollo/mp3_select.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+
 	oslSetFont(Roboto);
+	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
 	char * Directory = mp3Browse(browseDirectory);
 
@@ -580,8 +575,7 @@ int mp3player()
 	
 	if (!mp3bg || !mp3_select)
 		debugDisplay();
-		
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	int MenuSelection = 1; // Pretty obvious
@@ -630,21 +624,18 @@ int mp3player()
         {	
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
-			oslDeleteFont(Roboto);
 			mp3View("ms0:/MUSIC");
         }
 		if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
-			oslDeleteFont(Roboto);
 			mp3View("ms0:/PSP/MUSIC");
         }
 		if (MenuSelection == 3 && osl_keys->pressed.cross)
         {			
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
-			oslDeleteFont(Roboto);
 			mp3View("ms0:/PSP/GAME/CyanogenPSP/downloads");
         }
 		
@@ -652,7 +643,6 @@ int mp3player()
 		{
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
-			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 		

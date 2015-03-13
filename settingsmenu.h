@@ -35,8 +35,6 @@ OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *dis
 //definition of our sounds
 OSL_SOUND *tone;
 
-OSL_FONT *Roboto;
-
 typedef struct fw_version;
 
 char backgroundPath[100];

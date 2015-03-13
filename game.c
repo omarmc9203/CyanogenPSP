@@ -168,6 +168,29 @@ int launchISOEf0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x125, path, &param);
 }
 
+void getIcon0_fromfile(char* filename){
+    char file[256];
+	SceOff icon0_size;
+	
+    sprintf(file,"%s/icon0.png",filename);
+    SceUID fd = sceIoOpen(file, 0x0001/*O_RDONLY*/, 0777);
+	if(fd < 0){
+		icon0 = oslLoadImageFilePNG("ram:/Media/icon0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+		return;
+	}
+    icon0_size = sceIoLseek(fd, 0, SEEK_END);
+    sceIoLseek(fd, 0, SEEK_SET);
+    unsigned char icon[icon0_size];
+    if(icon0_size){
+        sceIoRead(fd, icon, icon0_size);
+        oslSetTempFileData(icon, icon0_size, &VF_MEMORY);
+        icon0 = oslLoadImageFilePNG(oslGetTempFileName(), OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+    }else{
+        icon0 = oslLoadImageFilePNG("ram:/Media/icon0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+    }
+    sceIoClose(fd);
+}
+
 void gameDisplay()
 {	
 	oslDrawImageXY(gamebg, 0, 0);
@@ -193,13 +216,13 @@ void gameDisplay()
 			break;
 		}                     
 
-		/*
-			getIcon0(folderIcons[i].name);			 
-			if(icon0!=NULL)
-			{
-				oslDrawImageXY(icon0, 327,100);
-			}
-		*/
+		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)))
+		{
+			getIcon0_fromfile(folderIcons[current].filePath);
+							oslDrawImageXY(icon0, 312,168);
+		}
+
+                        
 		
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) {
@@ -328,7 +351,6 @@ char * gameBrowse(const char * path)
 	folderScan(path);
 	dirVars();
 
-	
 	while (!osl_quit)
 	{		
 		LowMemExit();
@@ -357,7 +379,6 @@ char * popsBrowse(const char * path)
 {
 	folderScan(path);
 	dirVars();
-
 	
 	while (!osl_quit)
 	{		
@@ -387,7 +408,6 @@ void gameUnload()
 {
 	oslDeleteImage(gamebg);
 	oslDeleteImage(gameSelection);
-	oslDeleteFont(Roboto);
 }
 
 const OSL_VIRTUALFILENAME __image_ram_files[] = {
@@ -430,10 +450,9 @@ void gameView(char * browseDirectory, int type)
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadFontFile("system/fonts/Roboto.pgf");
-	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	oslSetFont(Roboto);
-
+	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+	
 	if (type == 0)
 	{
 		Directory = gameBrowse(browseDirectory); //For PSP Eboots
@@ -465,9 +484,8 @@ int gameApp()
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
 		
-	Roboto = oslLoadFontFile("system/fonts/Roboto.pgf");
-	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	oslSetFont(Roboto);
+	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	
 	if (!gamebg || !gameSelection)
 		debugDisplay();

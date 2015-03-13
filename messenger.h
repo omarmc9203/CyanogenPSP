@@ -2,7 +2,6 @@
 #include <oslib/oslib.h>
 
 OSL_IMAGE *messengerbg, *new_message, *cursor;
-OSL_FONT *pgfFont;
 
 int InitAdhocMessenger();
 void joinServer();

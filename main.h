@@ -31,5 +31,4 @@ int SetupCallbacks(void);
 int connectAPCallback(int state);
 int connectToAP(int config);
 void internet();
-void openGmail();
 void firstBootMessage();

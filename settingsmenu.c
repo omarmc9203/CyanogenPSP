@@ -212,8 +212,7 @@ void aboutMenu()
 {	
 	aboutbg = oslLoadImageFilePNG("system/settings/aboutbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	if (!aboutbg || !highlight)
@@ -285,7 +284,6 @@ void aboutMenu()
 		{	
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			settingsMenu();	
 		}
 
@@ -293,7 +291,6 @@ void aboutMenu()
 		{	
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			settingsMenu();	
 		}
 		
@@ -301,7 +298,6 @@ void aboutMenu()
 		{	
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			home();	
 		}
 
@@ -314,7 +310,6 @@ void aboutMenu()
 		{
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			updatesMenu();
 		}
 		
@@ -326,7 +321,6 @@ void aboutMenu()
 			{
 				oslDeleteImage(aboutbg);
 				oslDeleteImage(highlight);
-				oslDeleteFont(Roboto);
 				easterEgg();
 			}
 		}
@@ -373,8 +367,7 @@ void updatesMenu()
 {		    
 	updatesbg = oslLoadImageFilePNG("system/settings/updatesbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 
 	if (!updatesbg || !highlight)
@@ -429,7 +422,6 @@ void updatesMenu()
 		{
 			oslDeleteImage(updatesbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			aboutMenu();
 		}
 
@@ -437,7 +429,6 @@ void updatesMenu()
 		{
 			oslDeleteImage(updatesbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			aboutMenu();
 		}
 		
@@ -445,7 +436,6 @@ void updatesMenu()
 		{
 			oslDeleteImage(updatesbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -469,8 +459,7 @@ void performanceMenu()
 {	
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 
 	if (!performancebg || !highlight)
@@ -534,7 +523,6 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 
@@ -542,7 +530,6 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
@@ -550,7 +537,6 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			home();
 		}
 		
@@ -558,7 +544,6 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			processorMenu();
 		}
 
@@ -566,7 +551,6 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			ramMenu();
 		}
 		
@@ -574,7 +558,6 @@ void performanceMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			storageMenu();
 		}
 		
@@ -600,8 +583,7 @@ void processorMenu()
 
 	processorbg = oslLoadImageFilePNG("system/settings/processorbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	if (!processorbg || !highlight)
@@ -741,7 +723,6 @@ void processorMenu()
 		{
 			oslDeleteImage(processorbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 
@@ -749,7 +730,6 @@ void processorMenu()
 		{	
 			oslDeleteImage(processorbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 		
@@ -757,7 +737,6 @@ void processorMenu()
 		{
 			oslDeleteImage(processorbg);
 			oslDeleteImage(highlight);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -780,8 +759,7 @@ void ramMenu()
 {	
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	if (!performancebg || !highlight)
@@ -820,7 +798,6 @@ void ramMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 
@@ -828,7 +805,6 @@ void ramMenu()
 		{	
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 		
@@ -836,7 +812,6 @@ void ramMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -861,8 +836,7 @@ void storageMenu()
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	if (!performancebg || !highlight)
@@ -915,7 +889,6 @@ void storageMenu()
 			oslDeleteImage(performancebg);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 
@@ -925,7 +898,6 @@ void storageMenu()
 			oslDeleteImage(performancebg);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			performanceMenu();
 		}
 		
@@ -935,7 +907,6 @@ void storageMenu()
 			oslDeleteImage(performancebg);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -963,8 +934,7 @@ void displayMenu()
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 
 	if (!displaybg)
@@ -1076,7 +1046,6 @@ void displayMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 
@@ -1086,7 +1055,6 @@ void displayMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
@@ -1096,7 +1064,6 @@ void displayMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1120,8 +1087,7 @@ void wifiMenu()
 	wifibg = oslLoadImageFilePNG("system/settings/wifibg.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 
 	if (!wifibg)
@@ -1209,7 +1175,6 @@ void wifiMenu()
 			oslDeleteImage(wifibg);	
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 
@@ -1218,7 +1183,6 @@ void wifiMenu()
 			oslDeleteImage(wifibg);	
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			settingsMenu();
 		}
 		
@@ -1227,7 +1191,6 @@ void wifiMenu()
 			oslDeleteImage(wifibg);	
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1342,8 +1305,7 @@ void dumpMenu()
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	if (!developerbg || !highlight)
@@ -1410,7 +1372,6 @@ void dumpMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			developerMenu();
 		}
 		
@@ -1420,7 +1381,6 @@ void dumpMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			developerMenu();
 		}
 		
@@ -1430,7 +1390,6 @@ void dumpMenu()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1454,8 +1413,7 @@ void dumpMenu()
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);	
-			oslDeleteFont(Roboto);
+			oslDeleteImage(onswitch);
 			dumpMenuMore();
 		}
 		
@@ -1476,8 +1434,7 @@ void dumpMenuMore()
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	if (!developerbg || !highlight)
@@ -1537,7 +1494,6 @@ void dumpMenuMore()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			dumpMenu();
 		}
 		
@@ -1547,7 +1503,6 @@ void dumpMenuMore()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			dumpMenu();
 		}
 		
@@ -1557,7 +1512,6 @@ void dumpMenuMore()
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -1593,8 +1547,7 @@ void developerMenu()
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	if (!developerbg || !highlight)
@@ -1667,8 +1620,7 @@ void developerMenu()
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);	
-			oslDeleteFont(Roboto);
+			oslDeleteImage(onswitch);
 			settingsMenu();
 		}
 		
@@ -1677,8 +1629,7 @@ void developerMenu()
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);	
-			oslDeleteFont(Roboto);
+			oslDeleteImage(onswitch);
 			settingsMenu();
 		}
 		
@@ -1687,8 +1638,7 @@ void developerMenu()
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);	
-			oslDeleteFont(Roboto);
+			oslDeleteImage(onswitch);
 			home();
 		}
 
@@ -1727,8 +1677,7 @@ void developerMenu()
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);	
-			oslDeleteFont(Roboto);
+			oslDeleteImage(onswitch);
 			dumpMenu();
 		}
 	oslEndDrawing(); 
@@ -1785,7 +1734,6 @@ void settingsDeleteResources()
 	oslDeleteImage(wifi);
 	oslDeleteImage(performance);
 	oslDeleteImage(security);
-	oslDeleteFont(Roboto);
 }
 
 void settingsMenu()
@@ -1797,8 +1745,7 @@ void settingsMenu()
 	wifi = oslLoadImageFilePNG("system/settings/wifi.png", OSL_IN_RAM, OSL_PF_8888);
 	security = oslLoadImageFilePNG("system/settings/security.png", OSL_IN_RAM, OSL_PF_8888);
 	performance = oslLoadImageFilePNG("system/settings/performance.png", OSL_IN_RAM, OSL_PF_8888);
-		
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	
 	oslSetFont(Roboto);
 
 	if (!settingsbg || !about || !developeroptions || !wifi || !themes || !performance || !security)

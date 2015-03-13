@@ -151,8 +151,7 @@ void stopWatch()
 
 	if (!stop_watch)
 		debugDisplay();
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	SceCtrlData newPad, oldPad;
@@ -189,21 +188,18 @@ void stopWatch()
 		if (osl_keys->pressed.circle)
 		{
 			oslDeleteImage(stop_watch);
-			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{	
 			oslDeleteImage(stop_watch);
-			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
 			oslDeleteImage(stop_watch);
-			oslDeleteFont(Roboto);
 			home();
 		}
 
@@ -215,7 +211,6 @@ void stopWatch()
 		if (cursor->x >= 114 && cursor->x <= 150  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
 		{
 			oslDeleteImage(stop_watch);
-			oslDeleteFont(Roboto);
 			pspclock();
 		}
 		
@@ -283,8 +278,7 @@ int pspclock()
 	
 	if (!clockBg || !timeBg)
 		debugDisplay();
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	while (!osl_quit)
@@ -339,7 +333,6 @@ int pspclock()
 		{
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 
@@ -352,7 +345,6 @@ int pspclock()
 		{
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			oslDeleteFont(Roboto);
 			appdrawer();
 		}
 
@@ -360,7 +352,6 @@ int pspclock()
 		{
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			oslDeleteFont(Roboto);
 			home();
 		}
 		
@@ -369,7 +360,6 @@ int pspclock()
 		{
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			oslDeleteFont(Roboto);
 			stopWatch();
 		}
 		*/
@@ -383,6 +373,3 @@ int pspclock()
 	oslSyncFrame();
 	}
 }
-
-
-

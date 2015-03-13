@@ -3,7 +3,4 @@
 
 OSL_IMAGE *cursor, *calcbackground;
 
-OSL_FONT *Roboto;
-
-
 int calculator();

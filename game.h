@@ -21,7 +21,6 @@
 #define game_ySelection 29 //The distance between the Y axis of the two selections
 
 OSL_IMAGE 	*gamebg, *gameSelection, *icon0;
-OSL_FONT *Roboto;
 
 SceCtrlData pad, oldpad;
 

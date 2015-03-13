@@ -75,9 +75,9 @@ void doClient()
 			for (i=0; i < oslAdhocGetRemotePspCount(); i++)
 			{
 				if (i == current)
-				    oslIntraFontSetStyle(pgfFont, 1.0, RGBA(100,100,100,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+				    oslIntraFontSetStyle(Roboto, 1.0, RGBA(100,100,100,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 				else
-				    oslIntraFontSetStyle(pgfFont, 1.0, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+				    oslIntraFontSetStyle(Roboto, 1.0, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 				oslDrawString(10, 100 + 15 * i, oslAdhocGetPspByIndex(i)->name);
 			}
             oslEndDrawing();
@@ -339,10 +339,9 @@ int messenger()
 	
 	if (!messengerbg)
 		debugDisplay();
-
-	pgfFont = oslLoadFontFile("system/fonts/DroidSans.pgf");
-	oslIntraFontSetStyle(pgfFont, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-	oslSetFont(pgfFont);
+	
+	oslSetFont(Roboto);
+	oslIntraFontSetStyle(Roboto, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 		
 	while (!osl_quit)
 	{

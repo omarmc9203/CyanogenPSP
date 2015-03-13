@@ -19,8 +19,7 @@ int controlX = 25;
 void debugDisplay()
 {
 	debug = oslLoadImageFilePNG("system/debug/debug.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+
 	oslSetFont(Roboto);
 	
 	while (!osl_quit)
@@ -511,7 +510,6 @@ void unloadIcons() //Deleting the app drawer icons to save memory.
 {
 	oslDeleteImage(ic_allapps);
 	oslDeleteImage(ic_allapps_pressed);
-	oslDeleteFont(Roboto);
 }
 
 void LowMemExit() //This is temporary until I come up with a solution. It exits the app, once the memory is less than/equal to 1.5 MB
@@ -585,7 +583,6 @@ void homeUnloadResources()
 	oslDeleteImage(ic_allapps_pressed);
 	oslDeleteImage(wDay);
 	oslDeleteImage(wNight);
-	oslDeleteFont(Roboto);
 }
 
 void home()
@@ -594,7 +591,6 @@ void home()
 	wDay = oslLoadImageFilePNG("system/widget/Day.png", OSL_IN_RAM, OSL_PF_8888);
 	wNight = oslLoadImageFile("system/widget/Night.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
 	checkWidgetActivation();
@@ -609,10 +605,10 @@ void home()
 		controls();	
 		
 		oslDrawImage(background);		
-		oslDrawImageXY(music, 105, 190);
-		oslDrawImageXY(browser, 276, 190);
-		oslDrawImageXY(settings, 331, 190);
-		oslDrawImageXY(messengericon, 160, 190);
+		oslDrawImageXY(ic_launcher_apollo, 105, 190);
+		oslDrawImageXY(ic_launcher_browser, 276, 190);
+		oslDrawImageXY(ic_launcher_settings, 331, 190);
+		oslDrawImageXY(ic_launcher_messenger, 160, 190);
 		oslDrawImageXY(pointer, 232, 180);
 		
 		appDrawerIcon();

@@ -38,8 +38,6 @@
 OSL_IMAGE 	*filemanagerbg, *diricon, *imageicon, *mp3icon, *txticon, *unknownicon, *documenticon, *binaryicon, *videoicon, *archiveicon, *bar, 
 			*deletion, *action, *textview,  *gallerybar;
 
-OSL_FONT *Roboto;
-
 // Current Path
 static char cwd[1024];
 

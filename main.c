@@ -307,10 +307,10 @@ void firstBootMessage()
 			controls();
 
 			oslDrawImage(background);		
-			oslDrawImageXY(music, 105, 190);
-			oslDrawImageXY(browser, 276, 190);
-			oslDrawImageXY(gmail, 331, 190);
-			oslDrawImageXY(messengericon, 160, 190);
+			oslDrawImageXY(ic_launcher_apollo, 105, 190);
+			oslDrawImageXY(ic_launcher_browser, 276, 190);
+			oslDrawImageXY(ic_launcher_settings, 331, 190);
+			oslDrawImageXY(ic_launcher_messenger, 160, 190);
 			oslDrawImageXY(pointer, 230, 180);
 		
 			digitaltime(420,4,458); 
@@ -379,9 +379,6 @@ int main()
 	cursor = oslLoadImageFilePNG("system/cursor/cursor.png", OSL_IN_VRAM, OSL_PF_8888);
 	navbar = oslLoadImageFile("system/home/icons/nav.png", OSL_IN_VRAM, OSL_PF_8888);
 	navbar2 = oslLoadImageFile("system/home/icons/nav2.png", OSL_IN_RAM, OSL_PF_8888);
-	music = oslLoadImageFilePNG("system/home/icons/apollo.png", OSL_IN_RAM, OSL_PF_8888);
-	messengericon = oslLoadImageFilePNG("system/home/icons/message.png", OSL_IN_RAM, OSL_PF_8888);
-	browser = oslLoadImageFile("system/home/icons/browser.png", OSL_IN_RAM, OSL_PF_8888);
 	quickSettings = oslLoadImageFile("system/home/menu/quickSettings.png", OSL_IN_VRAM, OSL_PF_8888);
 	notif = oslLoadImageFile("system/home/menu/notif.png", OSL_IN_RAM, OSL_PF_8888);
 	batt100 = oslLoadImageFile("system/home/icons/100.png", OSL_IN_VRAM, OSL_PF_8888);
@@ -403,13 +400,15 @@ int main()
 	welcome = oslLoadImageFilePNG("system/home/icons/welcome.png", OSL_IN_RAM, OSL_PF_8888);
 	transbackground = oslLoadImageFilePNG("system/home/icons/transbackground.png", OSL_IN_RAM, OSL_PF_8888);
 	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_VRAM, OSL_PF_8888);
-	clockx = oslLoadImageFilePNG("system/home/icons/clock.png", OSL_IN_RAM, OSL_PF_8888);
-	fb = oslLoadImageFilePNG("system/home/icons/fb.png", OSL_IN_RAM, OSL_PF_8888);
-	settings = oslLoadImageFilePNG("system/home/icons/settings.png", OSL_IN_RAM, OSL_PF_8888);
-	gallery = oslLoadImageFilePNG("system/home/icons/gallery.png", OSL_IN_RAM, OSL_PF_8888);
-	umd = oslLoadImageFilePNG("system/home/icons/umd.png", OSL_IN_RAM, OSL_PF_8888);
-	calc = oslLoadImageFilePNG("system/home/icons/calc.png", OSL_IN_RAM, OSL_PF_8888);
-	isoloadericon = oslLoadImageFilePNG("system/home/icons/isoloadericon.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_apollo = oslLoadImageFilePNG("system/app/apollo/ic_launcher_apollo.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_messenger = oslLoadImageFilePNG("system/app/messenger/ic_launcher_messenger.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_browser = oslLoadImageFile("system/app/browser/ic_launcher_browser.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_filemanager = oslLoadImageFilePNG("system/app/filemanager/ic_launcher_filemanager.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_settings = oslLoadImageFilePNG("system/settings/ic_launcher_settings.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_gallery = oslLoadImageFilePNG("system/app/gallery/ic_launcher_gallery.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_umd = oslLoadImageFilePNG("system/app/umd/ic_launcher_umd.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_calculator = oslLoadImageFilePNG("system/app/calculator/ic_launcher_calculator.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_game = oslLoadImageFilePNG("system/app/game/ic_launcher_game.png", OSL_IN_RAM, OSL_PF_8888);
 	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
 	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -421,7 +420,7 @@ int main()
 	modid = pspSdkLoadStartModule("modules/brightness.prx", PSP_MEMORY_PARTITION_KERNEL);
 
 	//Debugger - Displays an error message if the following resources are missing.
-	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !music || !settings || !messengericon || !browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon)
+	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon)
 		debugDisplay();
 	
 	loadConfig();
@@ -446,10 +445,10 @@ int main()
 			
 		//Print the images onto the screen
 		oslDrawImage(background);		
-		oslDrawImageXY(music, 105, 190);
-		oslDrawImageXY(browser, 276, 190);
-		oslDrawImageXY(settings, 331, 190);
-		oslDrawImageXY(messengericon, 160, 190);
+		oslDrawImageXY(ic_launcher_apollo, 105, 190);
+		oslDrawImageXY(ic_launcher_browser, 276, 190);
+		oslDrawImageXY(ic_launcher_settings, 331, 190);
+		oslDrawImageXY(ic_launcher_messenger, 160, 190);
 		oslDrawImageXY(pointer, 232, 180); 
 
 		//Sets the transparency color (black)

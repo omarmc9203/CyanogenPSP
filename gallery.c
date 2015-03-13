@@ -308,7 +308,6 @@ void galleryUnload()
 	oslDeleteImage(gallerybg);
 	oslDeleteImage(gallerySelection);
 	oslDeleteImage(galleryThumbnail);
-	oslDeleteFont(Roboto);
 }
 
 void galleryView(char * browseDirectory)
@@ -316,10 +315,9 @@ void galleryView(char * browseDirectory)
 	gallerybg = oslLoadImageFilePNG("system/app/gallery/gallerybg.png", OSL_IN_RAM, OSL_PF_8888);
 	gallerySelection = oslLoadImageFilePNG("system/app/gallery/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+
 	oslSetFont(Roboto);
+	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 
 	char * Directory = galleryBrowse(browseDirectory);
 
@@ -344,10 +342,9 @@ int galleryApp()
 	gallerybg = oslLoadImageFilePNG("system/app/gallery/gallerybg.png", OSL_IN_RAM, OSL_PF_8888);
 	gallerySelection = oslLoadImageFilePNG("system/app/gallery/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
-		
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto-Regular.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+	
 	oslSetFont(Roboto);
+	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	
 	if (!gallerybg || !gallerySelection || !galleryThumbnail)
 		debugDisplay();
