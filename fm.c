@@ -488,14 +488,14 @@ void DeleteFile(const char * path)
 	while (!osl_quit) 
 	{
 		oslStartDrawing();	
-		oslDrawImageXY(deletion, 96,59);
+		oslDrawImageXY(deletion, 84,48);
 		oslDrawStringf(116,125,"This action cannot be undone. Do you");
 		oslDrawStringf(116,135,"want to continue?");
 	
-		oslDrawStringf(130,180,"Press circle");
-		oslDrawStringf(130,190,"to cancel");
-		oslDrawStringf(270,180,"Press cross");
-		oslDrawStringf(270,190,"to confirm");
+		oslDrawStringf(130,190,"Press circle");
+		oslDrawStringf(130,200,"to cancel");
+		oslDrawStringf(270,190,"Press cross");
+		oslDrawStringf(270,200,"to confirm");
 		
 		oslReadKeys();
 		
