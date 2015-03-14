@@ -24,10 +24,10 @@ void powermenu()
 
 		oslClearScreen(RGB(0,0,0));	
 		oslDrawImage(background);
-		oslDrawImageXY(music, 105, 190);
-		oslDrawImageXY(browser, 276, 190);
-		oslDrawImageXY(gmail, 331, 190);
-		oslDrawImageXY(messengericon, 160, 190);
+		oslDrawImageXY(ic_launcher_apollo, 105, 190);
+		oslDrawImageXY(ic_launcher_browser, 276, 190);
+		oslDrawImageXY(ic_launcher_settings, 331, 190);
+		oslDrawImageXY(ic_launcher_messenger, 160, 190);
 		oslDrawImageXY(pointer, 231, 180);
 		navbarButtons(0);
 		oslDrawImageXY(power, 102, 41);		

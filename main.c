@@ -20,7 +20,7 @@
 
 PSP_MODULE_INFO("CyanogenPSP",  1, 5, 1);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU); 
-PSP_HEAP_SIZE_KB(53248); //This line will be altered for slims. Right now us (20480) when building for PSP 1000s, and (53248) for testing on PPSSPP. Using heap_max breaks the browser so don't use it.
+PSP_HEAP_SIZE_KB(49*1024); //This line will be altered for slims. Right now us (20480) when building for PSP 1000s, and (53248) for testing on PPSSPP. Using heap_max breaks the browser so don't use it.
 
 int initOSLib() //Intialize OsLib
 {

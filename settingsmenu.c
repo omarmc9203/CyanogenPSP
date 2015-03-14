@@ -2,6 +2,7 @@
 #include "include/pgeZip.h"
 #include "include/ram.h"
 #include "include/utils.h"
+#include "include/pspusbdevice.h"
 #include "home.h"
 #include "fm.h"
 #include "clock.h"
