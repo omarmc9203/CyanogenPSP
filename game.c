@@ -216,12 +216,13 @@ void gameDisplay()
 			break;
 		}                     
 
+		/*
 		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)))
 		{
 			getIcon0_fromfile(folderIcons[current].filePath);
 							oslDrawImageXY(icon0, 312,168);
 		}
-
+		*/
                         
 		
 		// If the currently selected item is active, then display the name
