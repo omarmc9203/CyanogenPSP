@@ -33,6 +33,7 @@ int lockscreen()
 		
 		battery(370,2,1);
 		digitaltime(420,4,458);
+		androidQuickSettings();
 		
 		oslDrawImage(cursor);
 		

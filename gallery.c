@@ -396,7 +396,8 @@ int galleryApp()
         {		
 			galleryUnload();
 			galleryView("ms0:/PSP/PHOTO");
-        }
+        
+		}
 		if (MenuSelection == 3 && osl_keys->pressed.cross)
         {			
 			galleryUnload();

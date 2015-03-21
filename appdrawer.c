@@ -47,7 +47,7 @@ int appdrawer()
 	//loads appdrawer icons
 	appdrawer_loadImages();
 	
-	if (!ic_launcher_clock || !ic_launcher_settings || !ic_launcher_gallery || !ic_launcher_calculator || !ic_launcher_umd || !ic_launcher_filemanager || !ic_launcher_game || !backdrop)
+	if (!ic_launcher_clock || !backdrop)
 		debugDisplay();
 
 	int highlight = 0;

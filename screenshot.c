@@ -1,19 +1,5 @@
 #include "screenshot.h"
 
-void makeScreenshotDir()
-{
-	SceUID dir = sceIoDopen(screenshotpath);
-	
-	if (dirExists(screenshotpath))
-	{
-		sceIoDclose(dir);
-	}
-	else 
-	{
-		sceIoMkdir("ms0:/PSP/GAME/CyanogenPSP/screenshots",0777);
-	}
-}
-
 static void genScreenshotFileName(int lastNumber, char *fileName, const char *ext) //Change the file name starting from 0001
 {
 	int a, b, c, d;
@@ -34,8 +20,6 @@ static void genScreenshotFileName(int lastNumber, char *fileName, const char *ex
 
 void screenshot() //Takes screenshot
 {
-	makeScreenshotDir();
-
 	sprintf(checkname, "%s", "screenshot"); 
 
 	if(lastNumber == -1)

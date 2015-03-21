@@ -14,6 +14,8 @@
 
 int folderScan(const char* path )
 {
+	memset(&g_dir, 0, sizeof(SceIoDirent));
+
 	curScroll = 1;
 	sprintf(lastDir, path);
 
@@ -30,9 +32,10 @@ int folderScan(const char* path )
 
 	i = 1;
 	
-	if (fd) {
-		if (!(stricmp(path, "ms0:")==0 || (stricmp(path, "ms0:/")==0))) {
-
+	if (fd) 
+	{
+		if (!(stricmp(path, "ms0:")==0 || (stricmp(path, "ms0:/")==0))) 
+		{
 			sceIoDread(fd, &g_dir);		// get rid of '.' and '..'
 			sceIoDread(fd, &g_dir);
 
@@ -43,24 +46,31 @@ int folderScan(const char* path )
 			sprintf(folderIcons[1].fileType, "dotdot");
 
 			x = 2;
-		} else {
+		} 
+		else 
+		{
 			x = 1;
 		}
-		while ( sceIoDread(fd, &g_dir) && i<=MAX_FILES ) {
+		while ( sceIoDread(fd, &g_dir) && i<=MAX_FILES ) 
+		{
 			sprintf( dirScan[i].name, g_dir.d_name );
 			sprintf( dirScan[i].path, "%s/%s", path, dirScan[i].name );
-			
-			//skip . entries
-			if (!strcmp(".", g_dir.d_name)) 
+
+			//get rid of . and .. entries
+			if ((!strcmp(".", g_dir.d_name)) || (!strcmp("..", g_dir.d_name)))  
 			{
 				memset(&g_dir, 0, sizeof(SceIoDirent));
 				continue;
-			};
+			}
 
-			if (g_dir.d_stat.st_attr & FIO_SO_IFDIR) {
+			if (g_dir.d_stat.st_attr & FIO_SO_IFDIR) 
+			{
 				dirScan[i].directory = 1;
 				dirScan[i].exist = 1;
-			} else {
+			} 
+			else 
+			{
+			
 				dirScan[i].directory = 0;
 				dirScan[i].exist = 1;
 			}
@@ -72,7 +82,8 @@ int folderScan(const char* path )
 
 	sceIoDclose(fd);
 
-	for (i=1; i<MAX_FILES; i++) {
+	for (i=1; i<MAX_FILES; i++) 
+	{
 		if (dirScan[i].exist == 0) break;
 		folderIcons[x].active = 1;
 		sprintf(folderIcons[x].filePath, dirScan[i].path);
@@ -80,13 +91,16 @@ int folderScan(const char* path )
 
 		char *suffix = strrchr(dirScan[i].name, '.');
 		
-		if (dirScan[i].directory == 1) {      // if it's a directory
+		if (dirScan[i].directory == 1) 
+		{      // if it's a directory
 			sprintf(folderIcons[x].fileType, "fld");
 		} 
-		else if ((dirScan[i].directory == 0) && (suffix)) {		// if it's not a directory
+		else if ((dirScan[i].directory == 0) && (suffix)) 
+		{		// if it's not a directory
 			sprintf(folderIcons[x].fileType, "none");
 		}
-		else if (!(suffix)) {
+		else if (!(suffix)) 
+		{
 			sprintf(folderIcons[x].fileType, "none");
 		}
 		x++;
@@ -101,7 +115,8 @@ int runFile(const char* path, char* type)
 	openDir(path, type);
 	
 	// '..' or 'dotdot'
-	if (strcmp(type, "dotdot")==0){
+	if (strcmp(type, "dotdot")==0)
+	{
 		current = 1;
 		dirBack();
 	}		
@@ -110,7 +125,8 @@ int runFile(const char* path, char* type)
 
 int openDir(const char* path, char* type)
 {
-	if (strcmp(type, "fld")==0) {
+	if (strcmp(type, "fld")==0)
+	{
 		current = 1;
 		folderScan(path);
 	}
@@ -948,6 +964,19 @@ void dirControls() //Controls
 	if (current > MAX_FILES) current = MAX_FILES; // Stop the ">" from moving past the max files
 }
 
+char* pspFileGetParentDirectory(const char *path)
+{
+  char *pos = strrchr(path, '/');
+
+  if (!pos) return NULL;
+
+  char *parent = (char*)malloc(sizeof(char) * (pos - path + 2));
+  strncpy(parent, path, pos - path + 1);
+  parent[pos - path + 1] = '\0';
+
+  return parent;
+}
+
 void dirBack()
 {
 	int a = 0;
@@ -1048,6 +1077,3 @@ int filemanage(int argc, char *argv[])
 		oslSyncFrame();
 	}
 }
-
-
-

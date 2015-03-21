@@ -20,7 +20,7 @@
 
 PSP_MODULE_INFO("CyanogenPSP",  1, 5, 1);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU); 
-PSP_HEAP_SIZE_KB(49*1024); //This line will be altered for slims. Right now us (20480) when building for PSP 1000s, and (53248) for testing on PPSSPP. Using heap_max breaks the browser so don't use it.
+PSP_HEAP_SIZE_KB(20*1024); //This line will be altered for slims. Right now us (20480) when building for PSP 1000s, and (53248) for testing on PPSSPP. Using heap_max breaks the browser so don't use it.
 
 int initOSLib() //Intialize OsLib
 {
@@ -351,6 +351,42 @@ void firstBootMessage()
 	}
 }
 
+void createDirs()
+{
+	SceUID dir = sceIoDopen("ms0:/PICTUREO");
+	
+	if (dirExists("ms0:/PICTURE"))
+	{
+		sceIoDclose(dir);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/PICTURE",0777);
+	}
+
+	SceUID dir1 = sceIoDopen("ms0:/PSP/PHOTO");
+	
+	if (dirExists("ms0:/PSP/PHOTO"))
+	{
+		sceIoDclose(dir1);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/PSP/PHOTO",0777);
+	}
+	
+	SceUID dir2 = sceIoDopen("ms0:/PSP/GAME/CyanogenPSP/screenshots");
+	
+	if (dirExists("ms0:/PSP/GAME/CyanogenPSP/screenshots"))
+	{
+		sceIoDclose(dir2);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/PSP/GAME/CyanogenPSP/screenshots",0777);
+	}
+}
+
 int main()
 {
 	SetupCallbacks(); //Setup callbacks
@@ -373,6 +409,8 @@ int main()
 	fscanf(backgroundPathTXT,"%s",backgroundPath);
 	fclose(backgroundPathTXT);
 
+	createDirs();
+	
 	//Loads our images into memory
 	loadIcons();
 	background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
@@ -417,7 +455,7 @@ int main()
 	
 	SceUID modid;
 	
-	modid = pspSdkLoadStartModule("modules/brightness.prx", PSP_MEMORY_PARTITION_KERNEL);
+	modid = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
 
 	//Debugger - Displays an error message if the following resources are missing.
 	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon)

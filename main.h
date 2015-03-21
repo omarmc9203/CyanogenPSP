@@ -32,3 +32,4 @@ int connectAPCallback(int state);
 int connectToAP(int config);
 void internet();
 void firstBootMessage();
+void createDirs();
