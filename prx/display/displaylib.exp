@@ -12,6 +12,8 @@ PSP_EXPORT_END
 PSP_EXPORT_START(myLib, 0, 0x4001)
 PSP_EXPORT_FUNC(getBrightness)
 PSP_EXPORT_FUNC(setBrightness)
+PSP_EXPORT_FUNC(imposeSetBrightness)
+PSP_EXPORT_FUNC(imposeGetBrightness)
 PSP_EXPORT_END
 
 PSP_END_EXPORTS

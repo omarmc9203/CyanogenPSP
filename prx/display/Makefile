@@ -1,4 +1,4 @@
-TARGET = brightness
+TARGET = display
 OBJS = main.o
 
 INCDIR =
@@ -7,7 +7,7 @@ CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
 
 BUILD_PRX = 1
-PRX_EXPORTS = brightnesslib.exp
+PRX_EXPORTS = displaylib.exp
 
 USE_KERNEL_LIBC=1
 USE_KERNEL_LIBS=1
