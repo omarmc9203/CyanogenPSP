@@ -16,6 +16,9 @@ int yLine1 = -272;
 int yLine2 = -272;
 int controlX = 25;
 
+int imposeGetVolume();
+int imposeSetVolume();
+
 void debugDisplay()
 {
 	debug = oslLoadImageFilePNG("system/debug/debug.png", OSL_IN_RAM, OSL_PF_8888);
@@ -172,6 +175,93 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 			
 	if (scePowerIsBatteryCharging() == 1) // If the battery's charging, draw the charging icon on the battery icon.
 		oslDrawImageXY(battcharge,batx,baty);
+}
+
+void volumeController()
+{	
+	int llimit = 150;
+	int rlimit = 350;
+
+	int controlX;
+	int volume = imposeGetVolume();
+	
+	if (volume == 0)
+	{
+		controlX = 150;
+	}
+	else if (volume == 3)
+	{
+		controlX = 170;
+	}
+	else if (volume == 6)
+	{
+		controlX = 190;
+	}
+	else if (volume == 9)
+	{
+		controlX = 210;
+	}
+	else if (volume == 12)
+	{
+		controlX = 230;
+	}
+	else if (volume == 15)
+	{
+		controlX = 250;
+	}
+	else if (volume == 18)
+	{
+		controlX = 270;
+	}
+	else if (volume == 21)
+	{
+		controlX = 290;
+	}
+	else if (volume == 24)
+	{
+		controlX = 310;
+	}
+	else if (volume == 27)
+	{
+		controlX = 330;
+	}
+	else if (volume == 30)
+	{
+		controlX = 350;
+	}
+	if (osl_keys->pressed.up)
+	{
+		controlX += 3;
+		increase_volume(1);
+	}
+	if (osl_keys->pressed.down)
+	{
+		controlX -= 3;
+		decrease_volume(1);
+	}
+	
+	if (controlX <= llimit)
+	{
+		controlX = llimit;
+	}
+	else if (controlX >= rlimit)
+	{
+		controlX = rlimit;
+	}
+	
+	if (osl_pad.held.up)
+	{
+		oslDrawImageXY(volumeBar, 97,30);
+		oslDrawImageXY(volumeControl, controlX, 54);
+		oslDrawStringf(115,75, "Vol: %d", imposeGetVolume());
+	}
+	
+	if (osl_pad.held.down)
+	{
+		oslDrawImageXY(volumeBar, 97,30);
+		oslDrawImageXY(volumeControl, controlX, 54);
+		oslDrawStringf(115,75, "Vol: %d", imposeGetVolume());
+	}
 }
 
 void appDrawerIcon() //Draws the app drawer icon. Draws a different icon of the same size once hovered with the cursor.
@@ -639,6 +729,7 @@ void home()
 		}
 		
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 			
 		if (osl_keys->pressed.square)

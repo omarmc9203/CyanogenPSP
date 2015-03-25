@@ -12,7 +12,7 @@
 OSL_IMAGE *background, *cursor, *ic_allapps, *ic_allapps_pressed, *ic_launcher_apollo, *ic_launcher_settings, *ic_launcher_messenger, *ic_launcher_browser, 
 		  *pointer, *pointer1, *notif, *batt100, *batt80, *batt60, *batt40, *batt20, *batt10, *batt0, *battcharge, *backicon, *homeicon, *multicon, 
 		  *transbackground, *notif2, *debug, *brightness, *control, *navbar2, *backicon2, *homeicon2, *multicon2, *welcome, *quickSettings, *playing, 
-		  *navbar, *wDay, *wNight, *layerA, *layerB;
+		  *navbar, *wDay, *wNight, *layerA, *layerB, *volumeBar, *volumeControl;
 		  
 //definition of our sounds
 OSL_SOUND *tone;

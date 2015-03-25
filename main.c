@@ -37,32 +37,12 @@ int initOSLib() //Intialize OsLib
 
 int imposeGetVolume();
 int imposeSetVolume();
-int imposeGetMute();
-int imposeSetMute(int value);
 
 int getBrightness(void);
 void setBrightness(int brightness);
 
 int imposeSetBrightness(int value);
 int imposeGetBrightness();
-int displayEnable(void);
-int displayDisable(void);
-int getBrightness();
-void setBrightness(int brightness);
-int readButtons(SceCtrlData *pad_data, int count);
-int imposeSetHomePopup(int value);
-
-void initSystemButtons();
-unsigned int readSystemButtons(void);
-unsigned int readHomeButton(void);
-unsigned int readVolumeButtons(void);
-unsigned int readVolUpButton(void);
-unsigned int readVolDownButton(void);
-unsigned int readNoteButton(void);
-unsigned int readScreenButton(void);
-unsigned int readHoldSwitch(void);
-unsigned int readWLANSwitch(void);
-int readMainVolume(void);
  
 /* Exit callback */
 int exit_callback(int arg1, int arg2, void *common)
@@ -201,81 +181,26 @@ void internet() //Draws the browser
 	oslNetTerm();
 }
 
-/*
-int sysButtons() 
-{		
-	pspDebugScreenInit();
-	
-	SceCtrlData pad;
-	
-	SceUID modid = pspSdkLoadStartModule("modules/sysbuttons.prx", PSP_MEMORY_PARTITION_KERNEL);
-	
-	while (!osl_quit)
-	{
-		oslStartDrawing();
-		oslReadKeys();
+void set_volume(int vol) {
+	if(vol > 30)
+		vol = 30;
+	if(vol < 0)
+		vol = 0;
 		
-		if (readHomeButton)
-		{
-			powermenu();
-		}
-
-		if (readVolUpButton)
-		{
-			oslDrawStringf(240,136,"Volume up initiated");
-		}
-	
-		if (readVolDownButton) 
-		{
-			oslDrawStringf(240,146,"Volume down initiated");
-		}
-	oslEndDrawing(); 
-    oslEndFrame(); 
-	oslSyncFrame();	
-	}
+	imposeSetVolume(vol);
 }
 
-int bootMenu()
-{
-	while (!osl_quit)
-	{
-		oslStartDrawing();
-		
-		oslCls();
+void increase_volume(int n) {
+	int v = imposeGetVolume();
 	
-		oslPrintf("\n CyanogenPSP BootMenu\n");
-		
-		sceKernelDelayThread(3000000);
-		
-		oslPrintf("\n Checking Modules...\n");
-		
-		sceKernelDelayThread(3000000);
-		
-		oslPrintf("\n\n loading modules ...\n");   
-		if(pspSdkLoadStartModule("brightness.prx", PSP_MEMORY_PARTITION_KERNEL) < 0)   
-		{   
-			oslPrintf(" Error loading module brightness.prx\n");   
-			sceKernelDelayThread(5000000);   
-			return -1;   
-		}   
-		
-		oslPrintf("\n - brightness.prx loaded\n");
-		
-		sceKernelDelayThread(3000000);
-		
-		oslPrintf("\n\n Done!");
-	
-		//Ends Printing and Drawing
-		oslEndDrawing(); 
-
-		//End's Frame
-        oslEndFrame(); 
-		
-		//Synchronizes the screen 
-		oslSyncFrame();	
-	}
+	set_volume(v+n);
 }
-*/
+
+void decrease_volume(int n) {
+	int v = imposeGetVolume();
+	
+	set_volume(v-n);
+}
 
 //First Boot Message
 void firstBootMessage()
@@ -347,6 +272,7 @@ void firstBootMessage()
 		oslDeleteImage(welcome);
 		oslDeleteImage(transbackground);
 		unloadIcons();
+		lockscreen();
 		home();
 	}
 }
@@ -449,14 +375,17 @@ int main()
 	ic_launcher_game = oslLoadImageFilePNG("system/app/game/ic_launcher_game.png", OSL_IN_RAM, OSL_PF_8888);
 	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
 	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
+	volumeBar = oslLoadImageFilePNG("system/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
+	volumeControl = oslLoadImageFile("system/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
-	SceUID modid;
+	SceUID modid, modid2;
 	
 	modid = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
-
+	modid2 = pspSdkLoadStartModule("modules/sound.prx", PSP_MEMORY_PARTITION_KERNEL);
+	
 	//Debugger - Displays an error message if the following resources are missing.
 	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon)
 		debugDisplay();
