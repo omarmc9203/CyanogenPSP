@@ -835,8 +835,6 @@ void storageMenu()
 {	
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -858,8 +856,6 @@ void storageMenu()
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,98,"Press Select to toggle USB mass storage"); 
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_CENTER);
 		
 		if (osl_keys->pressed.select)
 		{
@@ -888,8 +884,6 @@ void storageMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
 			performanceMenu();
 		}
 
@@ -897,8 +891,6 @@ void storageMenu()
 		{	
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
 			performanceMenu();
 		}
 		
@@ -906,8 +898,6 @@ void storageMenu()
 		{
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
 			home();
 		}
 
@@ -1063,6 +1053,164 @@ void displayMenu()
 		{
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
+			home();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+		{	
+			multitask();
+		}
+		
+		if (osl_pad.held.R && osl_keys->pressed.triangle)
+		{
+			screenshot();
+		}
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();	
+	}
+}
+
+void securityMenu()
+{	
+	u8 Keyboard = 0;
+	char data[20] = "";
+	FILE * password;
+	int n;
+
+	securitybg = oslLoadImageFilePNG("system/settings/securitybg.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+
+	oslSetFont(Roboto);
+	
+	if (!securitybg || !highlight)
+		debugDisplay();
+	
+	while (!osl_quit)
+	{
+		LowMemExit();
+		
+		oslStartDrawing();
+		
+		oslClearScreen(RGB(0,0,0));
+		
+		controls();	
+		
+		oslDrawImageXY(securitybg, 0, 0);
+		
+		if (fileExists("system/settings/password.txt"))
+		{
+			passProtect = 1;
+			oslDrawImageXY(onswitch, 350, 78);
+		}
+		else
+		{
+			passProtect = 0;
+			oslDrawImageXY(offswitch, 350, 78);
+		}
+		
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		
+		oslDrawStringf(20,83,"Password Lock"); 
+		
+		if (cursor->x  >= 0 && cursor->x  <= 444 && cursor->y >= 61 && cursor->y <= 118)
+		{	
+			oslDrawImageXY(highlight, 0, 61);
+			oslDrawStringf(20,83,"Password Lock"); 
+			if (passProtect == 1)
+			{
+				oslDrawImageXY(onswitch, 350, 78);
+				if(osl_keys->pressed.cross)
+				{
+					n = 0;
+				}
+			}
+			else if (passProtect == 0)
+			{
+				oslDrawImageXY(offswitch, 350, 78);
+				if(osl_keys->pressed.cross)
+				{
+					n = 1;
+				}
+			}
+			
+			if (n == 0)
+			{
+				sceIoRemove("system/settings/password.txt");
+			}
+			
+			if(osl_keys->pressed.cross && n == 1)
+			{
+				if (Keyboard == 0)
+				{
+					oslInitOsk("Enter Password", "", 20, 1, 1); 
+					Keyboard = 1; 
+				}
+				if (Keyboard == 1)
+				{
+					oslDrawOsk(); 
+					if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE)
+					{
+						if (oslOskGetResult() == OSL_OSK_CANCEL)
+						{		 
+							Keyboard = -1; 
+						}
+						else
+						{
+							oslOskGetText(data); 
+							Keyboard = 2; 
+						}
+						oslEndOsk(); 
+					}
+				}
+				password = fopen("system/settings/password.txt", "w+");
+				fprintf(password, "%s", data);
+				fclose(password);
+				
+				Keyboard = 0; 
+			}
+		}
+
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+
+		digitaltime(386,4,424);
+		battery(337,2,0);
+		navbarButtons(2);
+		androidQuickSettings();
+		oslDrawImage(cursor);
+		
+		if (osl_keys->pressed.square)
+		{
+			powermenu();
+		}
+		
+		if (osl_keys->pressed.circle)
+		{
+			oslDeleteImage(highlight);
+			oslDeleteImage(performancebg);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
+			settingsMenu();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{	
+			oslDeleteImage(highlight);
+			oslDeleteImage(securitybg);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
+			settingsMenu();
+		}
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslDeleteImage(highlight);
+			oslDeleteImage(securitybg);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
 			home();
@@ -1820,6 +1968,12 @@ void settingsMenu()
 		{
 			settingsDeleteResources();
 			wifiMenu();
+		}
+		
+		if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 98 && cursor->y <= 154 && osl_keys->pressed.cross)
+		{
+			settingsDeleteResources();
+			securityMenu();
 		}
 		
 		if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 155 && cursor->y <= 210 && osl_keys->pressed.cross)

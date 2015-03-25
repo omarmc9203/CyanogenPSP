@@ -30,7 +30,7 @@
 
 //declaration
 OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *displaybg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
-		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *easterEggImg, *security;
+		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *easterEggImg, *security, *securitybg;
 
 //definition of our sounds
 OSL_SOUND *tone;
@@ -39,6 +39,7 @@ typedef struct fw_version;
 
 char backgroundPath[100];
 int widgetActivator, eDesktopActivator;
+int passProtect;
 int RJL;
 int PSPDebug;
 void onlineUpdater();
