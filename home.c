@@ -177,6 +177,7 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		oslDrawImageXY(battcharge,batx,baty);
 }
 
+/*
 void volumeController()
 {	
 	int llimit = 150;
@@ -263,6 +264,7 @@ void volumeController()
 		oslDrawStringf(115,75, "Vol: %d", imposeGetVolume());
 	}
 }
+*/
 
 void appDrawerIcon() //Draws the app drawer icon. Draws a different icon of the same size once hovered with the cursor.
 {
@@ -729,7 +731,7 @@ void home()
 		}
 		
 		androidQuickSettings();
-		volumeController();
+		//volumeController();
 		oslDrawImage(cursor);
 			
 		if (osl_keys->pressed.square)

@@ -5,9 +5,9 @@
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
-#include "settingsmenu.h"
 #include "screenshot.h"
-#include "include/systemctrl_se.h"
+#include "settingsmenu.h"
+#include "include/systemctrl_se.h"  
 
 void gameUp()
 {
@@ -169,29 +169,6 @@ int launchISOEf0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x125, path, &param);
 }
 
-void getIcon0_fromfile(char* filename){
-    char file[256];
-	SceOff icon0_size;
-	
-    sprintf(file,"%s/icon0.png",filename);
-    SceUID fd = sceIoOpen(file, 0x0001/*O_RDONLY*/, 0777);
-	if(fd < 0){
-		icon0 = oslLoadImageFilePNG("ram:/Media/icon0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-		return;
-	}
-    icon0_size = sceIoLseek(fd, 0, SEEK_END);
-    sceIoLseek(fd, 0, SEEK_SET);
-    unsigned char icon[icon0_size];
-    if(icon0_size){
-        sceIoRead(fd, icon, icon0_size);
-        oslSetTempFileData(icon, icon0_size, &VF_MEMORY);
-        icon0 = oslLoadImageFilePNG(oslGetTempFileName(), OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-    }else{
-        icon0 = oslLoadImageFilePNG("ram:/Media/icon0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-    }
-    sceIoClose(fd);
-}
-
 void gameDisplay()
 {	
 	oslDrawImageXY(gamebg, 0, 0);
@@ -218,13 +195,12 @@ void gameDisplay()
 		}                     
 
 		/*
-		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)))
-		{
-			getIcon0_fromfile(folderIcons[current].filePath);
-							oslDrawImageXY(icon0, 312,168);
-		}
+			getIcon0(folderIcons[i].name);			 
+			if(icon0!=NULL)
+			{
+				oslDrawImageXY(icon0, 327,100);
+			}
 		*/
-                        
 		
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) {
@@ -271,7 +247,7 @@ void gameControls(int n) //Controls
 	
 	char * ext = strrchr(folderIcons[current].filePath, '.');
 	
-	if (n==0) //For regular eboots
+	if (n == 0) //For regular eboots
 	{
 		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
 		{
@@ -302,7 +278,7 @@ void gameControls(int n) //Controls
 		}
 	}
 	
-	else if (n==1) //For POPS
+	else if (n == 1) //For POPS
 	{
 		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
 		{
@@ -413,6 +389,7 @@ char * gameBrowse(const char * path)
 	folderScan(path);
 	dirVars();
 
+	
 	while (!osl_quit)
 	{		
 		LowMemExit();
@@ -441,6 +418,7 @@ char * popsBrowse(const char * path)
 {
 	folderScan(path);
 	dirVars();
+
 	
 	while (!osl_quit)
 	{		
@@ -511,10 +489,9 @@ void gameView(char * browseDirectory, int type)
 
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
-	
+
 	oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-	
+
 	if (type == 0)
 	{
 		Directory = gameBrowse(browseDirectory); //For PSP Eboots
@@ -539,6 +516,22 @@ void gameView(char * browseDirectory, int type)
 		oslSyncFrame();	
 	}	
 	return 0;
+}
+
+void checkGBootActivation()
+{
+	FILE * gBootActivation;
+
+	if (!(fileExists("system/app/game/boot/gBootActivator.txt")))
+	{
+		gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
+		fprintf(gBootActivation, "1");
+		fclose(gBootActivation);
+	}
+
+	gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "r");
+	fscanf(gBootActivation,"%d",&gBootActivator);
+	fclose(gBootActivation);
 }
 
 void gameBoot()
@@ -588,36 +581,17 @@ void gameBoot()
 	}
 }
 
-void checkGBootActivation()
-{
-	FILE * gBootActivation;
-
-	if (!(fileExists("system/app/game/boot/gBootActivator.txt")))
-	{
-		gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
-		fprintf(gBootActivation, "1");
-		fclose(gBootActivation);
-	}
-
-	gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "r");
-	fscanf(gBootActivation,"%d",&gBootActivator);
-	fclose(gBootActivation);
-}
-
 int gameApp() 
 {
-	checkGBootActivation();
-
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	checkGBootActivation();
-		
+
 	oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	
 	if (!gamebg || !gameSelection)
 		debugDisplay();
+		
+	checkGBootActivation();
 	
 	int MenuSelection = 1; // Pretty obvious
 	int selector_x = 0; //The x position of the first selection
@@ -635,6 +609,7 @@ int gameApp()
 		oslReadKeys();
 		oslClearScreen(RGB(0,0,0));	
 		oslDrawImageXY(gamebg, 0, 0);
+		oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 		oslDrawString(10,10,"Game Launcher");
 		oslDrawImage(gameSelection);
 		
@@ -657,7 +632,7 @@ int gameApp()
 		if (MenuSelection == 1 && osl_keys->pressed.cross)
         {		
 			gameUnload();
-			gameView("ms0:PSP/GAME", 0); //PSP Homebrew
+			gameView("ms0:/PSP/GAME", 0); //PSP Homebrew
         }
 		if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		

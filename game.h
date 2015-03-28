@@ -2,7 +2,6 @@
 #include <systemctrl.h>
 #include <psploadexec.h>
 #include <psploadexec_kernel.h>
-#include <kubridge.h>
 #include <pspkernel.h>
 #include <pspdebug.h>
 #include <pspctrl.h>
@@ -21,6 +20,7 @@
 #define game_ySelection 29 //The distance between the Y axis of the two selections
 
 OSL_IMAGE 	*gamebg, *gameSelection, *icon0, *gameAnim[9];
+OSL_FONT *Roboto;
 
 SceCtrlData pad, oldpad;
 
@@ -40,8 +40,6 @@ char * gameBrowse(const char * path);
 char * popsBrowse(const char * path);
 void gameUnload();
 void gameView(char * browseDirectory, int type);
-void gameBoot();
-void checkGBootActivation();
 int gameApp();
 
 static unsigned int size_icon0_png = 8939;
