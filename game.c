@@ -5,6 +5,7 @@
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
+#include "settingsmenu.h"
 #include "screenshot.h"
 #include "include/systemctrl_se.h"
 
@@ -275,9 +276,29 @@ void gameControls(int n) //Controls
 		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
 		{
 			if (kuKernelGetModel() == 4)
-				launchEbootEf0(folderIcons[current].filePath);
+			{
+				if(gBootActivator == 1)
+				{
+					gameBoot();
+					launchEbootEf0(folderIcons[current].filePath);
+				}
+				else if(gBootActivator == 0)
+				{
+					launchEbootEf0(folderIcons[current].filePath);
+				}
+			}
 			else
-				launchEbootMs0(folderIcons[current].filePath);
+			{
+				if(gBootActivator == 1)
+				{
+					gameBoot();
+					launchEbootMs0(folderIcons[current].filePath);
+				}
+				else if(gBootActivator == 0)
+				{
+					launchEbootMs0(folderIcons[current].filePath);
+				}
+			}
 		}
 	}
 	
@@ -286,18 +307,58 @@ void gameControls(int n) //Controls
 		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
 		{
 			if (kuKernelGetModel() == 4)
-				launchPOPsEf0(folderIcons[current].filePath);
+			{
+				if(gBootActivator == 1)
+				{
+					gameBoot();
+					launchPOPsEf0(folderIcons[current].filePath);
+				}
+				else if(gBootActivator == 0)
+				{
+					launchPOPsEf0(folderIcons[current].filePath);
+				}
+			}
 			else
-				launchPOPsMs0(folderIcons[current].filePath);
+			{
+				if(gBootActivator == 1)
+				{
+					gameBoot();
+					launchPOPsMs0(folderIcons[current].filePath);
+				}
+				else if(gBootActivator == 0)
+				{
+					launchPOPsMs0(folderIcons[current].filePath);
+				}
+			}
 		}
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".iso") == 0) || ((strcmp(ext ,".ISO") == 0)) || ((strcmp(ext ,".cso") == 0)) || ((strcmp(ext ,".CSO") == 0))) && (osl_keys->held.cross))
 	{
 		if (kuKernelGetModel() == 4)
-			launchISOEf0(folderIcons[current].filePath);
-		else
-			launchISOMs0(folderIcons[current].filePath);
+			{
+				if(gBootActivator == 1)
+				{
+					gameBoot();
+					launchISOEf0(folderIcons[current].filePath);
+				}
+				else if(gBootActivator == 0)
+				{
+					launchISOEf0(folderIcons[current].filePath);
+				}
+			}
+			else
+			{
+				if(gBootActivator == 1)
+				{
+					gameBoot();
+					launchISOMs0(folderIcons[current].filePath);
+				}
+				else if(gBootActivator == 0)
+				{
+					launchISOMs0(folderIcons[current].filePath);
+				}
+			}
 	}
 	
 	if (osl_keys->pressed.circle)
@@ -480,10 +541,77 @@ void gameView(char * browseDirectory, int type)
 	return 0;
 }
 
+void gameBoot()
+{
+	int currentFrame = 0, i = 0;
+
+    gameAnim[0] = oslLoadImageFilePNG("system/app/game/boot/0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[1] = oslLoadImageFilePNG("system/app/game/boot/1.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[2] = oslLoadImageFilePNG("system/app/game/boot/2.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[3] = oslLoadImageFilePNG("system/app/game/boot/3.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[4] = oslLoadImageFilePNG("system/app/game/boot/4.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[5] = oslLoadImageFilePNG("system/app/game/boot/5.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[6] = oslLoadImageFilePNG("system/app/game/boot/6.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[7] = oslLoadImageFilePNG("system/app/game/boot/7.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[8] = oslLoadImageFilePNG("system/app/game/boot/8.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+
+    while(!osl_quit)
+	{
+		oslStartDrawing();
+        oslDrawImageXY(gameAnim[currentFrame], 0, 0); 
+		sceDisplayWaitVblankStart();
+		oslEndDrawing();
+		oslEndFrame();
+		oslSyncFrame();
+		sceKernelDelayThread(10000 * 6);
+   
+		currentFrame++;
+		if(currentFrame > 8)
+		{
+			i++;
+			currentFrame = 0;
+		}
+		
+		if (i > 2)
+		{	
+			while(!osl_quit)
+			{
+				oslStartDrawing();
+				oslDrawImageXY(gameAnim[0], 0, 0); 
+				oslEndDrawing();
+				oslEndFrame();
+				oslSyncFrame();
+				sceKernelDelayThread(3000000);
+				return;
+			}
+		}
+	}
+}
+
+void checkGBootActivation()
+{
+	FILE * gBootActivation;
+
+	if (!(fileExists("system/app/game/boot/gBootActivator.txt")))
+	{
+		gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
+		fprintf(gBootActivation, "1");
+		fclose(gBootActivation);
+	}
+
+	gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "r");
+	fscanf(gBootActivation,"%d",&gBootActivator);
+	fclose(gBootActivation);
+}
+
 int gameApp() 
 {
+	checkGBootActivation();
+
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	checkGBootActivation();
 		
 	oslSetFont(Roboto);
 	oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
@@ -529,7 +657,7 @@ int gameApp()
 		if (MenuSelection == 1 && osl_keys->pressed.cross)
         {		
 			gameUnload();
-			gameView("ms0:/PSP/GAME", 0); //PSP Homebrew
+			gameView("ms0:PSP/GAME", 0); //PSP Homebrew
         }
 		if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		

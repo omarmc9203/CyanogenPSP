@@ -6,6 +6,7 @@
 #include "home.h"
 #include "fm.h"
 #include "clock.h"
+#include "game.h"
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
@@ -920,6 +921,14 @@ void displayMenu()
 {	
 	FILE * widgetActivation;
 	FILE * eDesktopActivation;
+	FILE * bootAnimActivation;
+	FILE * gBootActivation;
+	
+	checkGBootActivation();
+	
+	bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "r");
+	fscanf(bootAnimActivation,"%d",&bootAnimActivator);
+	fclose(bootAnimActivation);
 
 	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
@@ -946,8 +955,9 @@ void displayMenu()
 		oslDrawImageXY(displaybg, 0, 0);
 		
 		oslDrawString(20,86,"Toggle day/night widget");
-		
 		oslDrawString(20,140,"Toggle expanded desktop");
+		oslDrawString(20,195,"Toggle boot animation");
+		oslDrawString(20,245,"Toggle game boot");
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
 		{
@@ -957,8 +967,20 @@ void displayMenu()
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179)
 		{
-			oslDrawImageXY(highlight, 0, 122);
+			oslDrawImageXY(highlight, 0, 118);
 			oslDrawString(20,140,"Toggle expanded desktop");
+		}
+		
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228)
+		{
+			oslDrawImageXY(highlight, 0, 173);
+			oslDrawString(20,195,"Toggle boot animation");
+		}
+		
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 228 && cursor->y <= 272)
+		{
+			oslDrawImageXY(highlight, 0, 228);
+			oslDrawString(20,245,"Toggle game boot");
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -967,11 +989,10 @@ void displayMenu()
 		battery(337,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
-		oslDrawImage(cursor);
 
 		if (widgetActivator == 0)
 		{
-			oslDrawImageXY(offswitch,350,75);
+			oslDrawImageXY(offswitch,350,80);
 			
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
 			{
@@ -984,7 +1005,7 @@ void displayMenu()
 		
 		else if (widgetActivator == 1)
 		{
-			oslDrawImageXY(onswitch,350,75);
+			oslDrawImageXY(onswitch,350,80);
 		
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
 			{
@@ -997,7 +1018,7 @@ void displayMenu()
 		
 		if (eDesktopActivator == 0)
 		{
-			oslDrawImageXY(offswitch,350,128);
+			oslDrawImageXY(offswitch,350,133);
 			
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
 			{
@@ -1010,7 +1031,7 @@ void displayMenu()
 		
 		else if (eDesktopActivator == 1)
 		{
-			oslDrawImageXY(onswitch,350,128);
+			oslDrawImageXY(onswitch,350,133);
 		
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
 			{
@@ -1020,6 +1041,60 @@ void displayMenu()
 				fclose(eDesktopActivation);
 			}
 		}
+		
+		if (bootAnimActivator == 0)
+		{
+			oslDrawImageXY(offswitch,350,186);
+			
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228 && osl_keys->pressed.cross)
+			{
+				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
+				bootAnimActivator = 1;
+				fprintf(bootAnimActivation, "1");
+				fclose(bootAnimActivation);
+			}
+		}
+		
+		else if (bootAnimActivator == 1)
+		{
+			oslDrawImageXY(onswitch,350,186);
+		
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228 && osl_keys->pressed.cross)
+			{
+				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
+				bootAnimActivator = 0;
+				fprintf(bootAnimActivation, "0");
+				fclose(bootAnimActivation);
+			}
+		}
+		
+		if (gBootActivator == 0)
+		{
+			oslDrawImageXY(offswitch,350,236);
+			
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
+			{
+				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
+				gBootActivator = 1;
+				fprintf(gBootActivation, "1");
+				fclose(gBootActivation);
+			}
+		}
+		
+		else if (gBootActivator == 1)
+		{
+			oslDrawImageXY(onswitch,350,236);
+		
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
+			{
+				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
+				gBootActivator = 0;
+				fprintf(gBootActivation, "0");
+				fclose(gBootActivation);
+			}
+		}
+		
+		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
 		{
@@ -1970,11 +2045,13 @@ void settingsMenu()
 			wifiMenu();
 		}
 		
+		/*
 		if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 98 && cursor->y <= 154 && osl_keys->pressed.cross)
 		{
 			settingsDeleteResources();
 			securityMenu();
 		}
+		*/
 		
 		if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 155 && cursor->y <= 210 && osl_keys->pressed.cross)
 		{

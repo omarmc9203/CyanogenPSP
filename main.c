@@ -207,19 +207,24 @@ void firstBootMessage()
 {	
 	int firstBoot;
 
-	FILE * firstBootTxt = fopen("system/firstBoot.txt", "r");
+	FILE * firstBootTxt;
 	
 	if (fileExists("system/firstBoot.txt"))
 	{
+		firstBootTxt = fopen("system/firstBoot.txt", "r");
 		fscanf(firstBootTxt,"%d",&firstBoot);
 		fclose(firstBootTxt);
 	}
 	else
 	{
 		firstBootTxt = fopen("system/firstBoot.txt", "w");
-		fprintf(firstBootTxt, "1", firstBoot);
+		fprintf(firstBootTxt, "1");
 		fclose(firstBootTxt);
 	}
+	
+	firstBootTxt = fopen("system/firstBoot.txt", "r");
+	fscanf(firstBootTxt,"%d",&firstBoot);
+	fclose(firstBootTxt);
 
 	if (firstBoot!= 0)
 	{

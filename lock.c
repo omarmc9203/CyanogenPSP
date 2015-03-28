@@ -37,7 +37,7 @@ int lockscreen()
 		oslIntraFontSetStyle(Roboto, 0.4f,WHITE,0,0);
 		getDayOfWeek(180,90,1);
 		getMonthOfYear(250,90);
-		oslDrawStringf(20,20,"%d",passProtect); 
+		//oslDrawStringf(20,20,"%d",passProtect); 
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
@@ -47,6 +47,7 @@ int lockscreen()
 		
 		oslDrawImage(cursor);
 		
+		/*
 		if (passProtect == 1)
 		{
 			if (cursor->x >= 220 && cursor->x <= 260 && cursor->y >= 100 && cursor->y <= 272) 
@@ -93,9 +94,10 @@ int lockscreen()
 				}
 			}
 		}
+		*/
 		
-		else if (passProtect == 0)
-		{
+		//else if (passProtect == 0)
+		//{
 			if (cursor->x >= 220 && cursor->x <= 260 && cursor->y >= 100 && cursor->y <= 272) 
 			{
 				if (osl_pad.held.cross && osl_keys->analogY <= -50)
@@ -104,7 +106,7 @@ int lockscreen()
 					home();
 				}
 			}
-		}
+		//}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
 		{
@@ -116,4 +118,3 @@ int lockscreen()
 	oslSyncFrame();
 	}
 }
-

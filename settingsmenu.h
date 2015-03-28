@@ -38,7 +38,7 @@ OSL_SOUND *tone;
 typedef struct fw_version;
 
 char backgroundPath[100];
-int widgetActivator, eDesktopActivator;
+int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator;
 int passProtect;
 int RJL;
 int PSPDebug;

@@ -20,7 +20,7 @@
 #define game_xSelection 0 //The distance between the X axis of the two selections
 #define game_ySelection 29 //The distance between the Y axis of the two selections
 
-OSL_IMAGE 	*gamebg, *gameSelection, *icon0;
+OSL_IMAGE 	*gamebg, *gameSelection, *icon0, *gameAnim[9];
 
 SceCtrlData pad, oldpad;
 
@@ -40,6 +40,8 @@ char * gameBrowse(const char * path);
 char * popsBrowse(const char * path);
 void gameUnload();
 void gameView(char * browseDirectory, int type);
+void gameBoot();
+void checkGBootActivation();
 int gameApp();
 
 static unsigned int size_icon0_png = 8939;
