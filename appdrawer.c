@@ -69,7 +69,7 @@ int appdrawer()
 		if (eDesktopActivator == 1)
 		{
 			navbarButtons(1);
-			battery(370,2,3);
+			battery(370,2,2);
 			if ((cursor->y <= 16) || (cursor->y >= 226))
 			{
 				digitaltime(420,4,458);

@@ -132,7 +132,7 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		oslDrawStringf(384, 4,"%d%%",batteryLife);
 	}
 	
-	if (n == 3)
+	if (n == 2)
 	{
 		if ((cursor->y <= 16) || (cursor->y >= 226))
 		{
@@ -713,7 +713,7 @@ void home()
 		if (eDesktopActivator == 1)
 		{
 			navbarButtons(1);
-			battery(370,2,3);
+			battery(370,2,2);
 			if ((cursor->y <= 16) || (cursor->y >= 226))
 			{
 				digitaltime(420,4,458);
