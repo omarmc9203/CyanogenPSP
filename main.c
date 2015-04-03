@@ -349,6 +349,17 @@ void createDirs()
 	{
 		sceIoMkdir("ms0:/PSP/GAME/CyanogenPSP/downloads",0777);
 	}
+	
+	SceUID dir6 = sceIoDopen("ms0:/ISO");
+	
+	if (dirExists("ms0:/ISO"))
+	{
+		sceIoDclose(dir6);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/ISO",0777);
+	}
 }
 
 int main()
