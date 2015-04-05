@@ -40,6 +40,7 @@ void debugDisplay()
 
 		if (osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			sceKernelExitGame();
 		}
 	
@@ -98,10 +99,6 @@ void controls() //Main controller function - allows cursor movement
 	{
 		cursor->y = dlimit;
 	}
-		
-	//Touch tones
-	if (osl_keys->pressed.cross) oslPlaySound(tone, 1);         
-	// It loads the sound file defined in the tones variable  when the cross button is pressed, in channel 1.
 }
 
 void battery(int batx, int baty, int n) // Draws the battery icon depending on its percentage. 
@@ -171,10 +168,16 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	else if (batteryLife >10 && batteryLife <= 20)
 		oslDrawImageXY(batt10,batx,baty);
 	else if (batteryLife >0 && batteryLife <= 10)
+	{
+		oslPlaySound(LowBattery, 1);  
 		oslDrawImageXY(batt0,batx,baty);
-			
+	}
+	
 	if (scePowerIsBatteryCharging() == 1) // If the battery's charging, draw the charging icon on the battery icon.
+	{
+		oslPlaySound(WirelessChargingStarted, 1);  
 		oslDrawImageXY(battcharge,batx,baty);
+	}
 }
 
 /*
@@ -519,6 +522,7 @@ void androidQuickSettings()
 		
 		if (cursor->x >= 386 && cursor->x <= 414 && cursor->y >= 12 && cursor->y <= 38 && osl_keys->pressed.cross)
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			notif_y = notif_y-272;
 			yPos1 = yPos1-272;
 			yPos2 = yPos2-272;
@@ -529,6 +533,7 @@ void androidQuickSettings()
 	
 		if (cursor->x >= 96 && cursor->x <= 206 && cursor->y >= 126 && cursor->y <= 192 && osl_keys->pressed.cross)
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			notif_y = notif_y-272;
 			yPos1 = yPos1-272;
 			yPos2 = yPos2-272;
@@ -538,7 +543,8 @@ void androidQuickSettings()
 		}
 		
 		if (cursor->x >= 198 && cursor->x <= 272 && cursor->y >= 204 && cursor->y <= 258 && osl_keys->pressed.cross)
-		{	
+		{
+			oslPlaySound(Lock, 1);
 			notif_y = notif_y-272;
 			yPos1 = yPos1-272;
 			yPos2 = yPos2-272;
@@ -747,12 +753,14 @@ void home()
 		
 		if (cursor->x >= 330 && cursor->x <= 374 && cursor->y >= 190 && cursor->y <= 240 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			homeUnloadResources();
 			settingsMenu();
 		}
 		
 		if (cursor->x >= 100 && cursor->x <= 154 && cursor->y >= 195 && cursor->y <= 240 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			homeUnloadResources();
 			mp3player();
 		}
@@ -767,22 +775,26 @@ void home()
 			
 		if (cursor->x >= 215 && cursor->x <= 243 && cursor->y >= 195 && cursor->y <= 230 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			homeUnloadResources();
 			appdrawer();
 		}
 
 		if (osl_keys->pressed.L)
 		{	
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
 		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			screenshot();
 		}
 	

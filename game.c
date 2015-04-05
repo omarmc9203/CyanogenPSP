@@ -241,6 +241,7 @@ void gameControls(int n) //Controls
 			}
 		}
 		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+			oslPlaySound(KeypressStandard, 1);  
 			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
 	}
@@ -251,6 +252,7 @@ void gameControls(int n) //Controls
 	{
 		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			if (kuKernelGetModel() == 4)
 			{
 				if(gBootActivator == 1)
@@ -279,9 +281,10 @@ void gameControls(int n) //Controls
 	}
 	
 	else if (n == 1) //For POPS
-	{
+	{ 
 		if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			if (kuKernelGetModel() == 4)
 			{
 				if(gBootActivator == 1)
@@ -310,7 +313,7 @@ void gameControls(int n) //Controls
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".iso") == 0) || ((strcmp(ext ,".ISO") == 0)) || ((strcmp(ext ,".cso") == 0)) || ((strcmp(ext ,".CSO") == 0))) && (osl_keys->held.cross))
-	{
+	{ 
 		if (kuKernelGetModel() == 4)
 			{
 				if(gBootActivator == 1)
@@ -361,6 +364,7 @@ void gameControls(int n) //Controls
 		
 	if (osl_keys->pressed.L)
 	{
+		oslPlaySound(Lock, 1);  
 		lockscreen();
     }
 	
@@ -631,16 +635,19 @@ int gameApp()
 		
 		if (MenuSelection == 1 && osl_keys->pressed.cross)
         {		
+			oslPlaySound(KeypressStandard, 1);  
 			gameUnload();
 			gameView("ms0:/PSP/GAME", 0); //PSP Homebrew
         }
 		if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
+			oslPlaySound(KeypressStandard, 1);  
 			gameUnload();
 			gameView("ms0:/ISO", 0); //ISO backups
         }
 		if (MenuSelection == 3 && osl_keys->pressed.cross)
         {		
+			oslPlaySound(KeypressStandard, 1);  
 			gameUnload();
 			gameView("ms0:/PSP/GAME", 1); //POPS
         }
@@ -658,6 +665,7 @@ int gameApp()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
 		}
 	

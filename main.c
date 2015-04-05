@@ -257,10 +257,11 @@ void firstBootMessage()
 			oslDrawImage(cursor);
 	
 			if (cursor->x >= 366 && cursor->x <= 442 && cursor->y >= 80 && cursor->y <= 116 && osl_keys->pressed.cross)
-			{
+			{ 
 				firstBootTxt = fopen("system/firstBoot.txt", "w"); 
 				fprintf(firstBootTxt, "0", firstBoot);
 				fclose(firstBootTxt);
+				oslPlaySound(KeypressStandard, 1); 
 				oslDeleteImage(welcome);
 				oslDeleteImage(transbackground);
 				unloadIcons();
@@ -368,8 +369,13 @@ int main()
 	initOSLib(); //Initializes OsLib
 	oslIntraFontInit(INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8); //Initializes OSL fonts
 	
-	//Loads our touch tones
-	tone = oslLoadSoundFile("system/media/audio/ui/KeypressStandard.wav", OSL_FMT_NONE);
+	//Loads our tones
+	camera_click = oslLoadSoundFile("system/media/audio/ui/camera_click.wav", OSL_FMT_NONE);
+	KeypressStandard = oslLoadSoundFile("system/media/audio/ui/KeypressStandard.wav", OSL_FMT_NONE);
+	Lock = oslLoadSoundFile("system/media/audio/ui/Lock.wav", OSL_FMT_NONE);
+	LowBattery = oslLoadSoundFile("system/media/audio/ui/LowBattery.wav", OSL_FMT_NONE);
+	Unlock = oslLoadSoundFile("system/media/audio/ui/Unlock.wav", OSL_FMT_NONE);
+	WirelessChargingStarted = oslLoadSoundFile("system/media/audio/ui/WirelessChargingStarted.wav", OSL_FMT_NONE);
 
 	FILE * backgroundPathTXT;
 	

@@ -1,3 +1,4 @@
+#include "home.h"
 #include "screenshot.h"
 
 static void genScreenshotFileName(int lastNumber, char *fileName, const char *ext) //Change the file name starting from 0001
@@ -20,6 +21,7 @@ static void genScreenshotFileName(int lastNumber, char *fileName, const char *ex
 
 void screenshot() //Takes screenshot
 {
+	oslPlaySound(camera_click, 1);  
 	sprintf(checkname, "%s", "screenshot"); 
 
 	if(lastNumber == -1)

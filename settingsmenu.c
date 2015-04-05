@@ -279,6 +279,7 @@ void aboutMenu()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -291,6 +292,7 @@ void aboutMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
 			settingsMenu();	
@@ -298,6 +300,7 @@ void aboutMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
 			home();	
@@ -305,11 +308,13 @@ void aboutMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
 			updatesMenu();
@@ -317,6 +322,7 @@ void aboutMenu()
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 121 && cursor->y <= 178 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			if  (osl_keys->pressed.cross)
 				n+=1;
 			if (n == 4)
@@ -399,6 +405,7 @@ void updatesMenu()
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 63 && cursor->y <= 113 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			onlineUpdater();
 		}
 		
@@ -417,6 +424,7 @@ void updatesMenu()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -429,6 +437,7 @@ void updatesMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(updatesbg);
 			oslDeleteImage(highlight);
 			aboutMenu();
@@ -436,6 +445,7 @@ void updatesMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(updatesbg);
 			oslDeleteImage(highlight);
 			home();
@@ -443,6 +453,7 @@ void updatesMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -518,6 +529,7 @@ void performanceMenu()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -530,6 +542,7 @@ void performanceMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			settingsMenu();
@@ -537,6 +550,7 @@ void performanceMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			home();
@@ -544,6 +558,7 @@ void performanceMenu()
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 75 && cursor->y <= 133 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			processorMenu();
@@ -551,6 +566,7 @@ void performanceMenu()
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 135 && cursor->y <= 191 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			ramMenu();
@@ -558,6 +574,7 @@ void performanceMenu()
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			storageMenu();
@@ -565,6 +582,7 @@ void performanceMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -730,6 +748,7 @@ void processorMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(processorbg);
 			oslDeleteImage(highlight);
 			performanceMenu();
@@ -737,6 +756,7 @@ void processorMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(processorbg);
 			oslDeleteImage(highlight);
 			home();
@@ -744,6 +764,7 @@ void processorMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -805,6 +826,7 @@ void ramMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			performanceMenu();
@@ -812,6 +834,7 @@ void ramMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			home();
@@ -819,6 +842,7 @@ void ramMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -890,6 +914,7 @@ void storageMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			performanceMenu();
@@ -897,6 +922,7 @@ void storageMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(performancebg);
 			home();
@@ -904,6 +930,7 @@ void storageMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -996,6 +1023,7 @@ void displayMenu()
 			
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
 				widgetActivator = 1;
 				fprintf(widgetActivation, "1");
@@ -1009,6 +1037,7 @@ void displayMenu()
 		
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
 				widgetActivator = 0;
 				fprintf(widgetActivation, "0");
@@ -1022,6 +1051,7 @@ void displayMenu()
 			
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
 				eDesktopActivator = 1;
 				fprintf(eDesktopActivation, "1");
@@ -1035,6 +1065,7 @@ void displayMenu()
 		
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
 				eDesktopActivator = 0;
 				fprintf(eDesktopActivation, "0");
@@ -1048,6 +1079,7 @@ void displayMenu()
 			
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228 && osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
 				bootAnimActivator = 1;
 				fprintf(bootAnimActivation, "1");
@@ -1061,6 +1093,7 @@ void displayMenu()
 		
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228 && osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
 				bootAnimActivator = 0;
 				fprintf(bootAnimActivation, "0");
@@ -1074,6 +1107,7 @@ void displayMenu()
 			
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
 				gBootActivator = 1;
 				fprintf(gBootActivation, "1");
@@ -1087,6 +1121,7 @@ void displayMenu()
 		
 			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
 				gBootActivator = 0;
 				fprintf(gBootActivation, "0");
@@ -1103,6 +1138,7 @@ void displayMenu()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -1117,6 +1153,7 @@ void displayMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1126,6 +1163,7 @@ void displayMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1202,6 +1240,7 @@ void securityMenu()
 				oslDrawImageXY(onswitch, 350, 78);
 				if(osl_keys->pressed.cross)
 				{
+					oslPlaySound(KeypressStandard, 1);  
 					n = 0;
 				}
 			}
@@ -1210,6 +1249,7 @@ void securityMenu()
 				oslDrawImageXY(offswitch, 350, 78);
 				if(osl_keys->pressed.cross)
 				{
+					oslPlaySound(KeypressStandard, 1);  
 					n = 1;
 				}
 			}
@@ -1275,6 +1315,7 @@ void securityMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(securitybg);
 			oslDeleteImage(offswitch);	
@@ -1284,6 +1325,7 @@ void securityMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(highlight);
 			oslDeleteImage(securitybg);
 			oslDeleteImage(offswitch);	
@@ -1293,6 +1335,7 @@ void securityMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -1369,6 +1412,7 @@ void wifiMenu()
 		
 		if (osl_keys->released.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			connectToAP(selectedConfig + 1);
         }
 		else if (osl_keys->released.up)
@@ -1391,6 +1435,7 @@ void wifiMenu()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -1404,6 +1449,7 @@ void wifiMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(wifibg);	
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
@@ -1412,6 +1458,7 @@ void wifiMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(wifibg);	
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
@@ -1420,6 +1467,7 @@ void wifiMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -1587,6 +1635,7 @@ void dumpMenu()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -1601,6 +1650,7 @@ void dumpMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1610,6 +1660,7 @@ void dumpMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1619,21 +1670,25 @@ void dumpMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			dump_filesystem("flash0:/", "ms0:/flash0");
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			dump_filesystem("flash1:/", "ms0:/flash1");
 		}
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 212 && cursor->y <= 268 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1709,6 +1764,7 @@ void dumpMenuMore()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -1723,6 +1779,7 @@ void dumpMenuMore()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1732,6 +1789,7 @@ void dumpMenuMore()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1741,16 +1799,19 @@ void dumpMenuMore()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			DumpBootBin();
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			dump_memory();
 		}
 		
@@ -1836,6 +1897,7 @@ void developerMenu()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -1850,6 +1912,7 @@ void developerMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1858,7 +1921,8 @@ void developerMenu()
 		}
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
-		{
+		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -1868,6 +1932,7 @@ void developerMenu()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -1878,6 +1943,7 @@ void developerMenu()
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 154 && osl_keys->pressed.cross)
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			RJL = 1;
 			LoadStartModule("modules/RemoteJoyLite.prx");
 		}
@@ -1888,6 +1954,7 @@ void developerMenu()
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 155 && cursor->y <= 214 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			PSPDebug = 1;
 			LoadStartModule("modules/psplink.prx");
 		}
@@ -1898,6 +1965,7 @@ void developerMenu()
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 215 && cursor->y <= 272 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(developerbg);
 			oslDeleteImage(highlight);
 			oslDeleteImage(offswitch);	
@@ -2013,6 +2081,7 @@ void settingsMenu()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -2024,23 +2093,27 @@ void settingsMenu()
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 	
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			appdrawer();
 		}
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			home();
 		}
 		
 		if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 98 && cursor->y <= 154 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			wifiMenu();
 		}
@@ -2048,6 +2121,7 @@ void settingsMenu()
 		/*
 		if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 98 && cursor->y <= 154 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			securityMenu();
 		}
@@ -2055,24 +2129,28 @@ void settingsMenu()
 		
 		if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 155 && cursor->y <= 210 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			displayMenu();
 		}
 
 		if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 155 && cursor->y <= 210 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			performanceMenu();
 		}
 		
 		if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 211 && cursor->y <= 267 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			developerMenu();
 		}
 
 		if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 211 && cursor->y <= 267 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			aboutMenu();
 		}

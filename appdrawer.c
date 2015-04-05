@@ -178,12 +178,13 @@ int appdrawer()
 		}
 		
 		if (osl_keys->pressed.square)
-		{
+		{ 
 			powermenu();
 		}
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -197,6 +198,7 @@ int appdrawer()
 		
 		if (cursor->x >= 10 && cursor->x <= 75 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			internet();
 		}
@@ -204,6 +206,7 @@ int appdrawer()
 		/* WIP Calculator
 		if (cursor->x >= 75 && cursor->x <= 140 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			calculator();
 		}
@@ -211,24 +214,28 @@ int appdrawer()
 		
 		if (cursor->x >= 140 && cursor->x <= 205 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			pspclock();
 		}
 		
 		if (cursor->x >= 205 && cursor->x <= 270 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			appdrawer_deleteImages();
 			filemanage();
 		}
 		
 		if (cursor->x >= 270 && cursor->x <= 335 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			galleryApp();
 		}
 		
 		if (cursor->x >= 335 && cursor->x <= 400 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			gameApp();
 		}
@@ -236,6 +243,7 @@ int appdrawer()
 		/* Messenger WIP
 		if (cursor->x >= 400 && cursor->x <= 465 && cursor->y >= 118 && cursor->y <= 170 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			messenger();
 		}
@@ -243,18 +251,21 @@ int appdrawer()
 		
 		if (cursor->x >= 10 && cursor->x <= 75 && cursor->y >= 110 && cursor->y <= 175 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			mp3player();
 		}
 		
 		if (cursor->x >= 75 && cursor->x <= 140 && cursor->y >= 110 && cursor->y <= 175 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			settingsMenu();
 		}
 		
 		if (cursor->x >= 140 && cursor->x <= 205 && cursor->y >= 110 && cursor->y <= 175 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			int i;
 			
 			while(1) 
@@ -354,23 +365,27 @@ int appdrawer()
 		
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			home();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			home();
 		}
 		
 		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			multitask();
 		}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			screenshot();
 		}
 				

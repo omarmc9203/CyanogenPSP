@@ -405,6 +405,7 @@ void OptionMenu()
 	
 		if (osl_keys->pressed.cross) 
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			fcopy(folderIcons[current].filePath);
 			oslDeleteImage(action);
 			refresh();
@@ -517,6 +518,7 @@ void DeleteFile(const char * path)
 		
 		if (osl_keys->pressed.cross) 
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			if (strcmp(folderIcons[current].fileType, "fld")==0)
 			{
 				DeleteRecursive(path);
@@ -859,6 +861,7 @@ void dirControls() //Controls
 			timer = 0;
 		}
 		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+			oslPlaySound(KeypressStandard, 1);  
 			runFile(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
 		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) {
@@ -899,11 +902,13 @@ void dirControls() //Controls
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".png") == 0) || (strcmp(ext ,".jpg") == 0) || (strcmp(ext ,".jpeg") == 0) || (strcmp(ext ,".gif") == 0) || (strcmp(ext ,".PNG") == 0) || (strcmp(ext ,".JPG") == 0) || (strcmp(ext ,".JPEG") == 0) || (strcmp(ext ,".GIF") == 0)) && (osl_keys->pressed.cross))
 	{
+		oslPlaySound(KeypressStandard, 1);  
 		showImage(folderIcons[current].filePath);
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".ZIP") == 0) || (strcmp(ext ,".zip") == 0)) && (osl_keys->pressed.cross))
 	{
+		oslPlaySound(KeypressStandard, 1);  
 		pgeZip* zipFiles = pgeZipOpen(folderIcons[current].filePath);
 		chdir("..");
 		pgeZipExtract(zipFiles, NULL);
@@ -915,6 +920,7 @@ void dirControls() //Controls
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".PBP") == 0) || (strcmp(ext ,".pbp") == 0)) && (osl_keys->pressed.cross))
 	{
+		oslPlaySound(KeypressStandard, 1);  
 		if (kuKernelGetModel() == 4)
 			launchEbootEf0(folderIcons[current].filePath);
 		else
@@ -923,16 +929,19 @@ void dirControls() //Controls
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))
 	{
+		oslPlaySound(KeypressStandard, 1);  
 		MP3Play(folderIcons[current].filePath);
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".wav") == 0) || ((strcmp(ext ,".WAV") == 0)) || ((strcmp(ext ,".BGM") == 0)) || ((strcmp(ext ,".bgm") == 0)) || ((strcmp(ext ,".MOD") == 0)) || ((strcmp(ext ,".mod") == 0)) || ((strcmp(ext ,".AT3") == 0)) || ((strcmp(ext ,".at3") == 0))) && (osl_keys->pressed.cross))
 	{
+		oslPlaySound(KeypressStandard, 1);  
 		soundPlay(folderIcons[current].filePath);
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".txt") == 0) || ((strcmp(ext ,".TXT") == 0)) || ((strcmp(ext ,".c") == 0)) || ((strcmp(ext ,".h") == 0)) || ((strcmp(ext ,".cpp") == 0))) && (osl_keys->pressed.cross))
 	{
+		oslPlaySound(KeypressStandard, 1);  
 		displayTextFromFile(folderIcons[current].filePath);
 	}
 	
@@ -943,6 +952,7 @@ void dirControls() //Controls
 		
 	if (osl_keys->pressed.L)
 	{
+		oslPlaySound(Lock, 1);  
 		lockscreen();
 	}
 	

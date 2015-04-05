@@ -226,24 +226,28 @@ int calculator()
 		}
 		
 		if (osl_keys->pressed.L)
-		{	
+		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(calcbackground);
 			appdrawer();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(calcbackground);
 			home();
 		}
 
 		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		

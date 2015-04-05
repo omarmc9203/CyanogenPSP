@@ -244,6 +244,7 @@ void MP3Play(char * path)
 		
 		else if(osl_keys->pressed.cross) 
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			MP3_Pause();
 			for(i=0; i<10; i++) 
 			{
@@ -276,6 +277,7 @@ void MP3Play(char * path)
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
 		}
 	
@@ -333,6 +335,7 @@ void soundPlay(char * path)
 		
 		if(osl_keys->pressed.cross) 
 		{
+			oslPlaySound(KeypressStandard, 1); 
 			oslPauseSound(sound,-1);
 		}
 		
@@ -351,6 +354,7 @@ void soundPlay(char * path)
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
 		}
 	
@@ -441,6 +445,7 @@ void mp3Controls() //Controls
 			}
 		}
 		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+			oslPlaySound(KeypressStandard, 1); 
 			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
 	}
@@ -477,6 +482,7 @@ void mp3Controls() //Controls
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))
 	{
+		oslPlaySound(KeypressStandard, 1); 
 		MP3Play(folderIcons[current].filePath);
 	}
 	
@@ -487,6 +493,7 @@ void mp3Controls() //Controls
 		
 	if (osl_keys->pressed.L)
 	{
+		oslPlaySound(Lock, 1);  
 		lockscreen();
     }
 	
@@ -622,18 +629,21 @@ int mp3player()
 		
 		if (MenuSelection == 1 && osl_keys->pressed.cross)
         {	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
 			mp3View("ms0:/MUSIC");
         }
 		if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
 			mp3View("ms0:/PSP/MUSIC");
         }
 		if (MenuSelection == 3 && osl_keys->pressed.cross)
-        {			
+        {	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
 			mp3View("ms0:/PSP/GAME/CyanogenPSP/downloads");
@@ -653,6 +663,7 @@ int mp3player()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
 		}
 	

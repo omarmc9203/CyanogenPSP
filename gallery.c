@@ -95,6 +95,7 @@ int changeWallpaper()
 	
 	if (osl_keys->pressed.cross) 
 	{
+		oslPlaySound(KeypressStandard, 1);  
 		FILE * backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "w");
 		fprintf(backgroundPathTXT,"%s", folderIcons[current].filePath);
 		fclose(backgroundPathTXT);
@@ -210,12 +211,14 @@ void galleryControls() //Controls
 			}
 		}
 		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+			oslPlaySound(KeypressStandard, 1);  
 			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
 	}
 	
 	if (osl_keys->pressed.cross)
 	{
+		oslPlaySound(KeypressStandard, 1);  
 		showImage(folderIcons[current].filePath);
 	}
 	
@@ -250,6 +253,7 @@ void galleryControls() //Controls
 		
 	if (osl_keys->pressed.L)
 	{
+		oslPlaySound(Lock, 1);  
 		lockscreen();
     }
 	
@@ -389,17 +393,20 @@ int galleryApp()
 		
 		if (MenuSelection == 1 && osl_keys->pressed.cross)
         {		
+			oslPlaySound(KeypressStandard, 1);  
 			galleryUnload();
 			galleryView("ms0:/PICTURE");
         }
 		if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
+			oslPlaySound(KeypressStandard, 1);  
 			galleryUnload();
 			galleryView("ms0:/PSP/PHOTO");
         
 		}
 		if (MenuSelection == 3 && osl_keys->pressed.cross)
-        {			
+        {		
+			oslPlaySound(KeypressStandard, 1);  
 			galleryUnload();
 			galleryView("ms0:/PSP/GAME/CyanogenPSP/screenshots");
         }
@@ -417,6 +424,7 @@ int galleryApp()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
 		}
 	

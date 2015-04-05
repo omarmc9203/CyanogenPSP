@@ -28,7 +28,7 @@ int multitask()
 
 		digitaltime(420,4,458);
 		battery(370,2,1);
-		navbarButtons(1);
+		navbarButtons(0);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -39,6 +39,7 @@ int multitask()
 		
 		if (osl_pad.held.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -50,18 +51,21 @@ int multitask()
 		
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_pad.held.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(multi_task);
 			return;
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_pad.held.cross)
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(multi_task);
 			home();
 		}
 
 		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_pad.held.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(multi_task);
 			multitask();
 		}
@@ -76,4 +80,3 @@ int multitask()
 	oslSyncFrame();
 	}
 }
-

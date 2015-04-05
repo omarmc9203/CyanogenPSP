@@ -102,6 +102,7 @@ int lockscreen()
 			{
 				if (osl_pad.held.cross && osl_keys->analogY <= -50)
 				{
+					oslPlaySound(Unlock, 1); 
 					oslDeleteImage(lockscreenBg);
 					home();
 				}

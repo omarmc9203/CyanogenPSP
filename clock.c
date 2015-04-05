@@ -114,6 +114,7 @@ void startCounter()
 		{
 			if (newPad.Buttons & PSP_CTRL_CROSS)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				break;
 			}
 		}
@@ -182,6 +183,7 @@ void stopWatch()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -193,23 +195,27 @@ void stopWatch()
 
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{	
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(stop_watch);
 			appdrawer();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(stop_watch);
 			home();
 		}
 
 		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
 		if (cursor->x >= 114 && cursor->x <= 150  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(stop_watch);
 			pspclock();
 		}
@@ -226,6 +232,7 @@ void stopWatch()
 		{	
 			if (newPad.Buttons & PSP_CTRL_CROSS)
 			{
+				oslPlaySound(KeypressStandard, 1);  
 				if (counter == 0)
 				{
 					counter = 1;
@@ -326,6 +333,7 @@ int pspclock()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -338,11 +346,13 @@ int pspclock()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 	
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
 			appdrawer();
@@ -350,6 +360,7 @@ int pspclock()
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
 			home();
@@ -358,6 +369,7 @@ int pspclock()
 		/*
 		if (cursor->x >= 285 && cursor->x <= 332  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
 			stopWatch();

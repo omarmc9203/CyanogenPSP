@@ -38,6 +38,7 @@ void clientConnected(struct remotePsp *aPsp)
         oslReadKeys();
 		if (osl_keys->released.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslQuit();
 		}
 		else if (osl_keys->released.circle)
@@ -275,18 +276,21 @@ void newMessage()
 
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(new_message);
 			messenger();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(new_message);
 			home();
 		}
 
 		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -297,6 +301,7 @@ void newMessage()
 		
 		if (cursor->x >= 7 && cursor->x <= 435 && cursor->y >= 55 && cursor->y <= 86 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			doServer();
 		}
 		
@@ -323,6 +328,7 @@ void newMessage()
 			if (osl_keys->pressed.circle){
 				return;
 			}else if (cursor->x >= 12 && cursor->x <= 415 && cursor->y >= 233 && cursor->y <= 270 && osl_pad.held.cross){
+				oslPlaySound(KeypressStandard, 1);  
 				oslInitOsk("Type Message", "", 128, 1, -1);
 				memset(message, 0, sizeof(message));
 			}
@@ -368,6 +374,7 @@ int messenger()
 		
 		if (osl_keys->pressed.L)
 		{
+			oslPlaySound(Lock, 1);  
 			lockscreen();
         }
 		
@@ -379,18 +386,21 @@ int messenger()
 
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(messengerbg);
 			appdrawer();
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(messengerbg);
 			home();
 		}
 
 		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
 		
@@ -401,12 +411,14 @@ int messenger()
 		
 		if (cursor->x >= 275 && cursor->x <= 376 && cursor->y >= 20 && cursor->y <= 52 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(messengerbg);
 			newMessage();
 		}
 		
 		if (cursor->x >= 378 && cursor->x <= 434 && cursor->y >= 20 && cursor->y <= 52 && osl_keys->pressed.cross)
 		{
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(messengerbg);
 			doClient();
 		}

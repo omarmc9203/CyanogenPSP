@@ -40,6 +40,7 @@ void powermenu()
 			oslDrawImageXY(power1, 102, 47);
 			if (osl_keys->pressed.cross)
 			{	
+				oslPlaySound(KeypressStandard, 1);  
 				sceKernelExitGame();
 			}
 		}
@@ -48,6 +49,7 @@ void powermenu()
 			oslDrawImageXY(recovery1, 102, 106);
 			if (osl_keys->pressed.cross)
 			{	
+				oslPlaySound(KeypressStandard, 1);  
 				oslSyncFrame();
 				sceKernelDelayThread(3*1000000);
 				oslDeleteImage(power);
@@ -62,6 +64,7 @@ void powermenu()
 			oslDrawImageXY(screenshot1, 102, 165);
 			if (osl_keys->pressed.cross)
 			{	
+				oslPlaySound(KeypressStandard, 1);  
 				oslDeleteImage(power);
 				oslDeleteImage(power1);
 				oslDeleteImage(recovery1);
