@@ -135,7 +135,7 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		if (batteryLife <= 99)
 		{
 			baty = y;
-			oslDrawStringf(batx+12, y+2,"%d%%",batteryLife);
+			oslDrawStringf(batx+18, y+2,"%d%%",batteryLife);
 		}
 		else  if (batteryLife > 99)
 		{
