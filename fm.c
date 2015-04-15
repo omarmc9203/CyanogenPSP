@@ -660,7 +660,7 @@ void displayTextFromFile()
 		oslReadKeys();
 		
 		oslClearScreen(RGB(0,0,0));
-		oslDrawImageXY(textview,0,19);
+		oslDrawImageXY(textview,0,0);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		battery(370,2,1);
@@ -670,8 +670,8 @@ void displayTextFromFile()
 		if(checkTextFile(folderIcons[current].filePath) == -1)
 			oslDrawStringf(40,33,"Unable to Open");
 			
-		oslDrawStringf(40,33,folderIcons[current].name);	
-		oslDrawStringf(10,55," \n%s", getTextFromFile());	
+		oslDrawStringf(40,40,folderIcons[current].name);	
+		oslDrawStringf(10,66," \n%s", getTextFromFile());	
 
 		if(osl_keys->pressed.circle)
 		{
@@ -903,7 +903,7 @@ void dirControls() //Controls
 	if (((ext) != NULL) && ((strcmp(ext ,".png") == 0) || (strcmp(ext ,".jpg") == 0) || (strcmp(ext ,".jpeg") == 0) || (strcmp(ext ,".gif") == 0) || (strcmp(ext ,".PNG") == 0) || (strcmp(ext ,".JPG") == 0) || (strcmp(ext ,".JPEG") == 0) || (strcmp(ext ,".GIF") == 0)) && (osl_keys->pressed.cross))
 	{
 		oslPlaySound(KeypressStandard, 1);  
-		showImage(folderIcons[current].filePath);
+		showImage(folderIcons[current].filePath, 0);
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".ZIP") == 0) || (strcmp(ext ,".zip") == 0)) && (osl_keys->pressed.cross))
