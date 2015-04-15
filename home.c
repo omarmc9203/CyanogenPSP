@@ -107,26 +107,16 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	
 	batteryLife = scePowerGetBatteryLifePercent(); //Gets battery percentage
 	
-	if (batteryLife <= 99 && n == 0)
+	if (n == 0 || n == 1)
 	{
-		batx = 343;
-		baty = 2;
-		oslDrawStringf(360, 4,"%d%%",batteryLife);
-	}
-	else  if (batteryLife > 99 && n == 0)
-	{
-		oslDrawStringf(352, 4,"%d%%",batteryLife);
-	}
-	
-	if (batteryLife <= 99 && n == 1)
-	{
-		batx = 375;
-		baty = 2;
-		oslDrawStringf(392, 4,"%d%%",batteryLife);
-	}
-	else  if (batteryLife > 99 && n == 1)
-	{
-		oslDrawStringf(384, 4,"%d%%",batteryLife);
+		if (batteryLife <= 99)
+		{
+			oslDrawStringf(batx+18, 4,"%d%%",batteryLife);
+		}
+		else  if (batteryLife > 99)
+		{
+			oslDrawStringf(batx+16, 4,"%d%%",batteryLife);
+		}
 	}
 	
 	if (n == 3)
@@ -144,14 +134,13 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		
 		if (batteryLife <= 99)
 		{
-			batx = 375;
 			baty = y;
-			oslDrawStringf(392, y+2,"%d%%",batteryLife);
+			oslDrawStringf(batx+12, y+2,"%d%%",batteryLife);
 		}
 		else  if (batteryLife > 99)
 		{
 			baty = y;
-			oslDrawStringf(384, y+2,"%d%%",batteryLife);
+			oslDrawStringf(batx+16, y+2,"%d%%",batteryLife);
 		}
 	}
 	
@@ -169,13 +158,13 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		oslDrawImageXY(batt10,batx,baty);
 	else if (batteryLife >0 && batteryLife <= 10)
 	{
-		oslPlaySound(LowBattery, 1);  
+		//oslPlaySound(LowBattery, 1);  
 		oslDrawImageXY(batt0,batx,baty);
 	}
 	
 	if (scePowerIsBatteryCharging() == 1) // If the battery's charging, draw the charging icon on the battery icon.
 	{
-		oslPlaySound(WirelessChargingStarted, 1);  
+		//oslPlaySound(WirelessChargingStarted, 1);  
 		oslDrawImageXY(battcharge,batx,baty);
 	}
 }
@@ -396,7 +385,7 @@ void androidQuickSettings()
 	
 	oslDrawImageXY(control,controlX,yPos2+66);	
 		
-	digitaltime(10,yPos1,48);
+	digitaltime(15,yPos1,53);
 	
 	if (getBrightness() == 10)
 	{

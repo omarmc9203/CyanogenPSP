@@ -9,6 +9,22 @@
 #include <oslib/oslib.h>
 #include <psprtc.h>
 
+#include <pspuser.h>
+#include <pspgu.h>
+#include <psputility.h>
+#include <psputility_netmodules.h>
+#include <psputility_htmlviewer.h>
+#include <pspnet.h>
+#include <pspnet_inet.h>
+#include <pspnet_apctl.h>
+#include <pspnet_resolver.h>
+#include <psphttp.h>
+#include <pspssl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <sys/unistd.h>
+
 //definition of our Images
 OSL_IMAGE *background, *cursor, *ic_allapps, *ic_allapps_pressed, *ic_launcher_apollo, *ic_launcher_settings, *ic_launcher_messenger, *ic_launcher_browser, 
 		  *pointer, *pointer1, *notif, *batt100, *batt80, *batt60, *batt40, *batt20, *batt10, *batt0, *battcharge, *backicon, *homeicon, *multicon, 
