@@ -26,7 +26,7 @@ void galleryUpx5();
 void galleryDownx5();
 void galleryDisplay();
 int changeWallpaper();
-void showImage(const char * path);
+void showImage(const char * path, int n);
 void galleryControls();
 char * galleryBrowse(const char * path);
 void galleryUnload();

@@ -28,6 +28,11 @@
 #define stateOverClock 2
 #define stateUnderClock 3
 
+#define MAX_SETTINGS_DISPLAY		4 // max amount of files displayed on-screen.
+#define SETTINGS_DISPLAY_X			20 // X value of where the filebrowser is displayed.
+#define SETTINGS_DISPLAY_Y			82 // Y value of the filebrowser is displayed.
+#define SETTINGS_CURR_DISPLAY_Y     62 
+
 //declaration
 OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *displaybg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
 		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *easterEggImg, *security, *securitybg;
@@ -37,6 +42,7 @@ OSL_SOUND *tone;
 
 typedef struct fw_version;
 
+char fontPath[100];
 char backgroundPath[100];
 int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator;
 int passProtect;
@@ -56,6 +62,19 @@ void performanceMenu();
 void processorMenu();
 void ramMenu();
 void displayMenu();
+void displayThemes();
+void settingsDisplay();
+void settingsUp();
+void settingsDown();
+void settingsUpx5();
+void settingsDownx5();
+void changeFont();
+void settingsControls(int n);
+char * settingsBrowse(const char * path, int n);
+void displaySubThemes(int n);
+void displayTime();
+void displayMiscellaneous();
+void securityMenu();
 void wifiMenu();
 void DumpBootBin(void);
 void dump_filesystem(const char *root, const char *write_loc);

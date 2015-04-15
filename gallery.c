@@ -1,6 +1,7 @@
 #include "home.h"
 #include "gallery.h"
 #include "appdrawer.h"
+#include "settingsmenu.h"
 #include "fm.h"
 #include "include/utils.h"
 
@@ -95,10 +96,12 @@ int changeWallpaper()
 	
 	if (osl_keys->pressed.cross) 
 	{
+		oslDeleteImage(background);
 		oslPlaySound(KeypressStandard, 1);  
 		FILE * backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "w");
 		fprintf(backgroundPathTXT,"%s", folderIcons[current].filePath);
 		fclose(backgroundPathTXT);
+		background = oslLoadImageFile(folderIcons[current].filePath, OSL_IN_RAM, OSL_PF_8888);
 		oslDeleteImage(wallpaper);
 		return;
 	}
@@ -115,7 +118,7 @@ int changeWallpaper()
 	}
 }
 
-void showImage(const char * path)
+void showImage(const char * path, int n)
 {
 	int zoomIn = 0, zoomOut = 0;
 
@@ -143,6 +146,15 @@ void showImage(const char * path)
 		oslDrawImageXY(galleryBar,0,0);
 		oslDrawStringf(40,12,folderIcons[current].name);
 		
+		if (n == 1)
+		{
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);
+				changeWallpaper();
+			}
+		}
+		
 		oslEndDrawing(); 
 		oslEndFrame(); 
 		oslSyncFrame();	
@@ -168,7 +180,16 @@ void showImage(const char * path)
 		{
 			oslDeleteImage(image);
 			oslDeleteImage(galleryBar);
-			return;
+			
+			if (n == 1)
+			{
+				displaySubThemes(1);
+			}
+			
+			else
+			{
+				return;
+			}
 		}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
@@ -219,7 +240,7 @@ void galleryControls() //Controls
 	if (osl_keys->pressed.cross)
 	{
 		oslPlaySound(KeypressStandard, 1);  
-		showImage(folderIcons[current].filePath);
+		showImage(folderIcons[current].filePath, 0);
 	}
 	
 	if (osl_keys->pressed.circle)

@@ -170,8 +170,8 @@ void stopWatch()
 		
 		oslDrawImageXY(stop_watch, 0, 19);
 
-		digitaltime(386,4,424);
-		battery(337,2,0);
+		digitaltime(381,4,419);
+		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -320,8 +320,8 @@ int pspclock()
 		
         oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
-		digitaltime(386,4,424);
-		battery(337,2,0);
+		digitaltime(381,4,419);
+		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
