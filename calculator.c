@@ -63,7 +63,7 @@ int calculator()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		battery(370,2,1);
 		
 		oslIntraFontSetStyle(Roboto, 0.8f,WHITE,0,0);

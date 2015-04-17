@@ -42,7 +42,7 @@ int lockscreen()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		androidQuickSettings();
 		
 		oslDrawImage(cursor);

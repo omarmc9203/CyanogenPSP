@@ -496,7 +496,7 @@ void androidQuickSettings()
 		}
 	}
 	
-	if (notif_enabled ==1)
+	if (notif_enabled == 1)
 	{
 		if (osl_keys->held.right)
 		{
@@ -711,16 +711,16 @@ void home()
 			battery(370,2,3);
 			if ((cursor->y <= 16) || (cursor->y >= 226))
 			{
-				digitaltime(420,4,458);
+				digitaltime(420,4,0);
 			}
 			else if (cursor->y >= 16 && cursor->y <= 226)
 			{
-				digitaltime(420,-10,458);
+				digitaltime(420,-10,0);
 			}	
 		}
 		else if (eDesktopActivator == 0)
 		{
-			digitaltime(420,4,458);
+			digitaltime(420,4,0);
 			navbarButtons(0);
 			battery(370,2,1);
 		}

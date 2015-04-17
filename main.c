@@ -18,7 +18,7 @@
 #include "include/ram.h"
 #include "include/utils.h"
 
-PSP_MODULE_INFO("CyanogenPSP",  1, 5, 1);
+PSP_MODULE_INFO("CyanogenPSP",  1, 5, 2);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU); 
 PSP_HEAP_SIZE_KB(20*1024); //This line will be altered for slims. Right now us (20480) when building for PSP 1000s, and (53248) for testing on PPSSPP. Using heap_max breaks the browser so don't use it.
 
@@ -243,14 +243,14 @@ void firstBootMessage()
 			oslDrawImageXY(ic_launcher_messenger, 160, 190);
 			oslDrawImageXY(pointer, 230, 180);
 		
-			digitaltime(420,4,458); 
+			digitaltime(420,4,0);
 		
 			oslSetTransparentColor(RGB(0,0,0));
 			appDrawerIcon();
 			oslDisableTransparentColor();
 		
 			battery(370,2,1);
-			navbarButtons(1);
+			navbarButtons(0);
 		
 			oslDrawImageXY(transbackground, 0, 0);
 			oslDrawImageXY(welcome, 0, 0);
@@ -389,6 +389,19 @@ int main()
 	backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "r");
 	fscanf(backgroundPathTXT,"%s",backgroundPath);
 	fclose(backgroundPathTXT);
+	
+	FILE * fontPathTXT;
+	
+	if (!(fileExists("system/fonts/fonts.txt")))
+	{
+		fontPathTXT = fopen("system/fonts/fonts.txt", "w");
+		fprintf(fontPathTXT, "system/fonts/Roboto.pgf");
+		fclose(fontPathTXT);
+	}
+	
+	fontPathTXT = fopen("system/fonts/fonts.txt", "r");
+	fscanf(fontPathTXT,"%s",fontPath);
+	fclose(fontPathTXT);
 
 	createDirs();
 	
@@ -433,7 +446,7 @@ int main()
 	volumeBar = oslLoadImageFilePNG("system/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
 	volumeControl = oslLoadImageFile("system/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	Roboto = oslLoadIntraFontFile("system/fonts/Roboto.pgf", INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
+	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
 	SceUID modid, modid2;
@@ -481,9 +494,9 @@ int main()
 		//Disables the transparent color
 		oslDisableTransparentColor();
 
-		navbarButtons(1);
+		navbarButtons(0);
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-		digitaltime(420,4,458); //Draws digital time (based on your local psp time) on the top right corner.
+		digitaltime(420,4,0);//Draws digital time (based on your local psp time) on the top right corner.
 		battery(370,2,1);
 		androidQuickSettings();
 		oslDrawImage(cursor);

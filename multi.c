@@ -26,7 +26,7 @@ int multitask()
 		
 		oslDrawString(130,136,"Your recent screens appear here");
 
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		battery(370,2,1);
 		navbarButtons(0);
 		androidQuickSettings();

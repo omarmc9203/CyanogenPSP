@@ -44,7 +44,7 @@ void galleryDisplay()
 	oslDrawStringf(25,18,"Album");
 	
 	battery(370,2,1);
-	digitaltime(420,4,458);
+	digitaltime(420,4,0);
 	
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_GALLERY_DISPLAY+curScroll;i++) {
@@ -70,7 +70,7 @@ void galleryDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) {
 			
-			oslDrawStringf(GALLERY_DISPLAY_X, (i - curScroll)*55+GALLERY_DISPLAY_Y, folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
+			oslDrawStringf(GALLERY_DISPLAY_X, (i - curScroll)*55+GALLERY_DISPLAY_Y, "%.52s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
 }
@@ -144,7 +144,7 @@ void showImage(const char * path, int n)
 		oslClearScreen(RGB(255,255,255));
 		oslDrawImage(image);//draw image
 		oslDrawImageXY(galleryBar,0,0);
-		oslDrawStringf(40,12,folderIcons[current].name);
+		oslDrawStringf(40,12, "%.55s", folderIcons[current].name);
 		
 		if (n == 1)
 		{
@@ -398,7 +398,7 @@ int galleryApp()
 		oslDrawStringf(25,201,"PSP/GAME/CyanogenPSP/screenshots");
 		
 		battery(370,2,1);
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		
 		gallerySelection->x = selector_image_x; //Sets the selection coordinates
         gallerySelection->y = selector_image_y; //Sets the selection coordinates

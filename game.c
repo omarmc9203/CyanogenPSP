@@ -205,7 +205,7 @@ void gameDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) {
 			
-			oslDrawStringf(GAME_DISPLAY_X, (i - curScroll)*29+GAME_DISPLAY_Y, folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)
+			oslDrawStringf(GAME_DISPLAY_X, (i - curScroll)*29+GAME_DISPLAY_Y, "%.41s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)
 		}
 	}
 }

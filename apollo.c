@@ -228,13 +228,13 @@ void MP3Play(char * path)
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
-		oslDrawStringf(240,76,folderIcons[current].name);
+		oslDrawStringf(240,76, "%.28s", folderIcons[current].name);
 		//display_mp3_info(folderIcons[current].name);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		
 		if(osl_keys->pressed.select) 
 		{
@@ -319,13 +319,13 @@ void soundPlay(char * path)
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
-		oslDrawStringf(240,76,folderIcons[current].name);
+		oslDrawStringf(240,76, "%.28s", folderIcons[current].name);
 		//display_mp3_info(folderIcons[current].name);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		
 		if(osl_keys->pressed.select) 
 		{
@@ -404,13 +404,13 @@ void mp3FileDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1)
 		{	
-			oslDrawStringf(MP3_DISPLAY_X, (i - curScroll)*55+MP3_DISPLAY_Y, folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
+			oslDrawStringf(MP3_DISPLAY_X, (i - curScroll)*55+MP3_DISPLAY_Y, "%.68s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
 	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
 	battery(370,2,1);
-	digitaltime(420,4,458);
+	digitaltime(420,4,0);
 }
 
 void mp3Controls() //Controls
@@ -613,7 +613,7 @@ int mp3player()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		
 		mp3_select->x = selector_image_x; //Sets the selection coordinates
         mp3_select->y = selector_image_y; //Sets the selection coordinates

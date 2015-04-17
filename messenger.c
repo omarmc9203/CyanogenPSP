@@ -261,7 +261,7 @@ void newMessage()
 
 		oslDrawImageXY(new_message, 0, 19);
 		
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 
 		battery(337,2,0);
 		navbarButtons(2);
@@ -362,7 +362,7 @@ int messenger()
 		oslDrawImageXY(messengerbg, 0, 19);
 
 		battery(337,2,0);
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);

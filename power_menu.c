@@ -32,7 +32,7 @@ void powermenu()
 		navbarButtons(0);
 		oslDrawImageXY(power, 102, 41);		
 		
-		digitaltime(420,4,458);
+		digitaltime(420,4,0);
 		battery(370,2,1);
 		
 		if (cursor->x >= 116 && cursor->x <= 364 && cursor->y >= 47 && cursor->y <= 106) 

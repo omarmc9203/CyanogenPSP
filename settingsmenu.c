@@ -77,7 +77,7 @@ void onlineUpdater()
         if (!browser)
 		{
             oslReadKeys();
-            int res = oslBrowserInit("https://github.com/joel16/CyanogenPSP-Bin/raw/master/Boot.zip", "/PSP/GAME/CyanogenPSP", 5*1024*1024,
+            int res = oslBrowserInit("http://raw.githubusercontent.com/joel16/CyanogenPSP-Bin/master/Boot.zip", "/PSP/GAME/CyanogenPSP", 5*1024*1024,
                                          PSP_UTILITY_HTMLVIEWER_DISPLAYMODE_SMART_FIT,
                                          PSP_UTILITY_HTMLVIEWER_DISABLE_STARTUP_LIMITS,
                                          PSP_UTILITY_HTMLVIEWER_INTERFACEMODE_FULL,
@@ -267,7 +267,7 @@ void aboutMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -412,7 +412,7 @@ void updatesMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -517,7 +517,7 @@ void performanceMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -729,7 +729,7 @@ void processorMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -807,7 +807,7 @@ void ramMenu()
 	
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -895,7 +895,7 @@ void storageMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -973,13 +973,13 @@ void displayMenu()
 		oslDrawString(20,140,"Time");
 		oslDrawString(20,195,"Miscellaneous");
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
 			oslDrawString(20,86,"Themes");
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawString(20,140,"Time");
@@ -993,7 +993,7 @@ void displayMenu()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1099,13 +1099,13 @@ void displayThemes()
 		oslDrawString(20,86,"Wallpaper");
 		oslDrawString(20,140,"Fonts");
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
 			oslDrawString(20,86,"Wallpaper");
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawString(20,140,"Fonts");
@@ -1113,7 +1113,7 @@ void displayThemes()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1137,7 +1137,7 @@ void displayThemes()
 			displayMenu();
 		}
 		
-		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
+		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1); 
 			oslDeleteImage(displaybg);
@@ -1145,7 +1145,7 @@ void displayThemes()
 			displaySubThemes(1);
 		}
 		
-		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
+		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1); 
 			oslDeleteImage(displaybg);
@@ -1191,7 +1191,7 @@ void settingsDisplay()
 	
 	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 	battery(330,2,0);
-	digitaltime(381,4,419);
+	digitaltime(381,4,0);
 	
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_SETTINGS_DISPLAY+curScroll;i++) {
@@ -1215,7 +1215,7 @@ void settingsDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) {
 			oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
-			oslDrawStringf(SETTINGS_DISPLAY_X, (i - curScroll)*55+SETTINGS_DISPLAY_Y, folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
+			oslDrawStringf(SETTINGS_DISPLAY_X, (i - curScroll)*55+SETTINGS_DISPLAY_Y, "%.56s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
 }
@@ -1452,13 +1452,13 @@ void displayTime()
 		oslDrawString(20,140,"Clock Style");
 		oslDrawString(20,195,"Display AM/PM");
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
 			oslDrawString(20,86,"Use 24-hour format");
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawString(20,140,"Clock Style");
@@ -1472,7 +1472,7 @@ void displayTime()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1569,19 +1569,19 @@ void displayMiscellaneous()
 		oslDrawString(20,195,"Toggle boot animation");
 		oslDrawString(20,245,"Toggle game boot");
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
 			oslDrawString(20,86,"Toggle day/night widget");
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawString(20,140,"Toggle expanded desktop");
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 227)
 		{
 			oslDrawImageXY(highlight, 0, 173);
 			oslDrawString(20,195,"Toggle boot animation");
@@ -1595,7 +1595,7 @@ void displayMiscellaneous()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1604,7 +1604,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(offswitch,350,80);
 			
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
@@ -1618,7 +1618,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(onswitch,350,80);
 		
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
@@ -1632,7 +1632,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(offswitch,350,133);
 			
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
@@ -1646,7 +1646,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(onswitch,350,133);
 		
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
@@ -1660,7 +1660,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(offswitch,350,186);
 			
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228 && osl_keys->pressed.cross)
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 227 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
@@ -1674,7 +1674,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(onswitch,350,186);
 		
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228 && osl_keys->pressed.cross)
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 227 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
@@ -1688,7 +1688,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(offswitch,350,236);
 			
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 228 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
@@ -1702,7 +1702,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(onswitch,350,236);
 		
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
+			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 228 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
@@ -1876,7 +1876,7 @@ void securityMenu()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1988,7 +1988,7 @@ void wifiMenu()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		switchStatus(3);
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2205,7 +2205,7 @@ void dumpMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2334,7 +2334,7 @@ void dumpMenuMore()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2467,7 +2467,7 @@ void developerMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2651,7 +2651,7 @@ void settingsMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();

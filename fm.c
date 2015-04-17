@@ -664,7 +664,7 @@ void displayTextFromFile()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		battery(370,2,1);
-		digitaltime(420,4,458);	
+		digitaltime(420,4,0);	
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		if(checkTextFile(folderIcons[current].filePath) == -1)
@@ -749,14 +749,16 @@ void dirDownx5()
 
 void dirDisplay()
 {	
-	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
 	oslDrawImageXY(filemanagerbg, 0, 0);
-	oslDrawStringf(86, 30, lastDir,RGB(0,0,0)); // Displays the current directory.
+	oslDrawStringf(86, 30, "%.34s",lastDir); // Displays the current directory.
 	oslDrawImageXY(bar,0,(current - curScroll)*44+CURR_DISPLAY_Y);
 	
 	battery(370,2,1);
-	digitaltime(420,4,458);
+	digitaltime(420,4,0);
+	
+	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_DISPLAY+curScroll;i++) {
@@ -833,7 +835,7 @@ void dirDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) {
 			
-			oslDrawStringf(DISPLAY_X, (i - curScroll)*44+DISPLAY_Y, folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
+			oslDrawStringf(DISPLAY_X, (i - curScroll)*44+DISPLAY_Y, "%.52s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
 }
@@ -1065,7 +1067,7 @@ int filemanage(int argc, char *argv[])
 	archiveicon = oslLoadImageFilePNG("system/app/filemanager/archiveicon.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
+	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
 	if (!filemanagerbg || !diricon || !imageicon || !mp3icon || !txticon || !unknownicon || !bar || !documenticon || !binaryicon || !videoicon || !archiveicon)
 		debugDisplay();
