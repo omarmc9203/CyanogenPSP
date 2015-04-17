@@ -50,22 +50,27 @@ void getMonthOfYear(int x, int y)
     oslDrawStringf(x,y,"%d %s", time.day, months[time.month - 1]);
 }
 
-/*Default x = 420, x2 = 458  
+/*Default x = 420  
   Default y = 4
   x is the location of the Time string on the X axis
   y is the location of the Time string on th Y axis
-  x2 is the location of the characters "PM/AM" on the X axis
+  n is to indicate whether it should be in black/white
 */	
 
-void digitaltime(int x, int y, int x2) 
+void digitaltime(int x, int y, int n) //n == 0 is white, n == 0 is black
 {					
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
+	
+	if (n == 0)
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+	else if (n == 1)
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
 	if(time.hour >= 12) 
-		oslDrawString(x2,y,"PM"); 
+		oslDrawString(x+38,y,"PM"); 
 	else 
-		oslDrawString(x2,y,"AM");   
+		oslDrawString(x+38,y,"AM");   
 		
 	if (time.hour > 12)
 		time.hour -= 12;
@@ -170,7 +175,7 @@ void stopWatch()
 		
 		oslDrawImageXY(stop_watch, 0, 19);
 
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -320,7 +325,7 @@ int pspclock()
 		
         oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
-		digitaltime(381,4,419);
+		digitaltime(381,4,0);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
