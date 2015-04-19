@@ -66,6 +66,97 @@ void makeMusicDir()
 }
 }
 
+void openOSK(char * initMessage)
+{
+	int Keyboard = 0;
+	char data[20] = "";
+
+	while(!osl_quit)
+	{
+	oslStartDrawing();
+		if (Keyboard == 0)
+		{
+			oslInitOsk(initMessage, "", 20, 1, 1);  
+			Keyboard = 1; 
+		}
+		if (Keyboard == 1)
+		{
+			oslDrawOsk(); 
+			if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE)
+			{
+				if (oslOskGetResult() == OSL_OSK_CANCEL)
+				{ 
+					return;
+				}
+				else
+				{
+					oslOskGetText(data); 
+					sprintf(tempMessage, "%s", data);
+					Keyboard = 2; 
+				}
+				oslEndOsk(); 
+				return;
+			}
+		}
+		Keyboard = 0; 
+	oslEndFrame();
+    oslSyncFrame();
+}
+}
+
+/*Simple File Encryption and Decryption
+by caroundw5h 
+*/
+
+void encryptFile(FILE *file)
+{ 
+    rewind(file); 
+    /*go through the file and change all characters to 1 charater after */ 
+    int i; 
+    while ( ( i = fgetc(file) )!=EOF )
+	{ 
+        i = i + 1; 
+        fseek(file, -1, SEEK_CUR); 
+        fputc(i,file); 
+        //fflush(file); 
+        /* fflush not needed if making a call to fseek. Either one is needed for  
+        manipulating a stream with i/o and vice versa */ 
+        fseek(file, 0, SEEK_CUR); 
+    } 
+} 
+
+void decryptFile(FILE *file)
+{ 
+    rewind(file); 
+    /*go through the file and change all characters back from 1 */ 
+    rewind(file); 
+    int i; 
+    while ( ( i = fgetc(file) )!=EOF )
+	{ 
+        i = i - 1; 
+        fseek(file, -1, SEEK_CUR); 
+        fputc(i,file); 
+        //fflush(file); 
+       /* fflush not needed if making a call to fseek. Either one is needed for  
+        manipulating a stream with i/o and vice versa */ 
+        fseek(file, 0, SEEK_CUR); 
+    } 
+}      
+
+int isEmpty(FILE *file) //Check to make sure its not a empty file
+{
+    long savedOffset = ftell(file);
+    fseek(file, 0, SEEK_END);
+
+    if (ftell(file) == 0)
+    {
+        return 1;
+    }
+
+    fseek(file, savedOffset, SEEK_SET);
+    return 0;
+}
+
 /*This was originally coded by Blade_punk. I modified it to add the X, and Y bits. */
 void fadeOut(OSL_IMAGE* bg,int x, int y)//Name and params taken
 {

@@ -10,6 +10,8 @@
 #define downloadPath "ms0:/PSP/GAME/CyanogenMod/downloads"
 #define musicPath "ms0:/MUSIC"
 
+char tempMessage[20];
+
 enum colors {
     RED =	0xFF0000FF,
     GREEN =	0xFF00FF00,
@@ -26,6 +28,10 @@ int dirExists(const char* path);
 void deleteUpdateFile();
 void makeDownloadDir();
 void makeMusicDir();
+void openOSK();
+void encryptFile(FILE *file);
+void decryptFile(FILE *file);
+int isEmpty(FILE *file);
 void fadeOut(OSL_IMAGE* bg,int x, int y);
 void fadeIn(OSL_IMAGE* bg, int x, int y);
 int disableUsb(void);

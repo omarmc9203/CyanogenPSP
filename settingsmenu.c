@@ -1771,9 +1771,9 @@ void displayMiscellaneous()
 
 void securityMenu()
 {	
-	u8 Keyboard = 0;
-	char data[20] = "";
+	char pass[20] = "";
 	FILE * password;
+
 	int n;
 
 	securitybg = oslLoadImageFilePNG("system/settings/securitybg.png", OSL_IN_RAM, OSL_PF_8888);
@@ -1798,17 +1798,6 @@ void securityMenu()
 		
 		oslDrawImageXY(securitybg, 0, 0);
 		
-		if (fileExists("system/settings/password.txt"))
-		{
-			passProtect = 1;
-			oslDrawImageXY(onswitch, 350, 78);
-		}
-		else
-		{
-			passProtect = 0;
-			oslDrawImageXY(offswitch, 350, 78);
-		}
-		
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
@@ -1816,61 +1805,14 @@ void securityMenu()
 		
 		if (cursor->x  >= 0 && cursor->x  <= 444 && cursor->y >= 61 && cursor->y <= 118)
 		{	
-			oslDrawImageXY(highlight, 0, 61);
+			oslDrawImageXY(highlight, 0, 62);
 			oslDrawStringf(20,83,"Password Lock"); 
-			if (passProtect == 1)
+			if (osl_keys->pressed.cross)
 			{
-				oslDrawImageXY(onswitch, 350, 78);
-				if(osl_keys->pressed.cross)
-				{
-					oslPlaySound(KeypressStandard, 1);  
-					n = 0;
-				}
-			}
-			else if (passProtect == 0)
-			{
-				oslDrawImageXY(offswitch, 350, 78);
-				if(osl_keys->pressed.cross)
-				{
-					oslPlaySound(KeypressStandard, 1);  
-					n = 1;
-				}
-			}
-			
-			if (n == 0)
-			{
-				sceIoRemove("system/settings/password.txt");
-			}
-			
-			if(osl_keys->pressed.cross && n == 1)
-			{
-				if (Keyboard == 0)
-				{
-					oslInitOsk("Enter Password", "", 20, 1, 1); 
-					Keyboard = 1; 
-				}
-				if (Keyboard == 1)
-				{
-					oslDrawOsk(); 
-					if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE)
-					{
-						if (oslOskGetResult() == OSL_OSK_CANCEL)
-						{		 
-							Keyboard = -1; 
-						}
-						else
-						{
-							oslOskGetText(data); 
-							Keyboard = 2; 
-						}
-						oslEndOsk(); 
-					}
-				}
-				password = fopen("system/settings/password.txt", "w+");
-				fprintf(password, "%s", data);
+				openOSK("Enter Password");
+				password = fopen("system/settings/password.txt", "w");
+				fprintf(password, "%s", tempMessage);
 				fclose(password);
-				
-				Keyboard = 0; 
 			}
 		}
 
@@ -1890,7 +1832,7 @@ void securityMenu()
 		if (osl_keys->pressed.circle)
 		{
 			oslDeleteImage(highlight);
-			oslDeleteImage(performancebg);
+			oslDeleteImage(securitybg);
 			oslDeleteImage(offswitch);	
 			oslDeleteImage(onswitch);
 			settingsMenu();
@@ -2701,14 +2643,12 @@ void settingsMenu()
 			wifiMenu();
 		}
 		
-		/*
 		if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 98 && cursor->y <= 154 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			securityMenu();
 		}
-		*/
 		
 		if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 155 && cursor->y <= 210 && osl_keys->pressed.cross)
 		{
