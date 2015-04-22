@@ -66,7 +66,7 @@ void makeMusicDir()
 }
 }
 
-void openOSK(char * initMessage)
+void openOSK(char * initMessage, int textLimit, int lang)
 {
 	int Keyboard = 0;
 	char data[20] = "";
@@ -76,7 +76,7 @@ void openOSK(char * initMessage)
 	oslStartDrawing();
 		if (Keyboard == 0)
 		{
-			oslInitOsk(initMessage, "", 20, 1, 1);  
+			oslInitOsk(initMessage, "", textLimit, 1, lang);  
 			Keyboard = 1; 
 		}
 		if (Keyboard == 1)
@@ -90,8 +90,9 @@ void openOSK(char * initMessage)
 				}
 				else
 				{
-					oslOskGetText(data); 
+					oslOskGetText(data);
 					sprintf(tempMessage, "%s", data);
+					sprintf(tempPin, "%s", data);
 					Keyboard = 2; 
 				}
 				oslEndOsk(); 

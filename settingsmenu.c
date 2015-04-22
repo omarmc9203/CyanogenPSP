@@ -257,7 +257,7 @@ void aboutMenu()
 			oslDrawString(20,92,"Click for, view or install available updates");
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 121 && cursor->y <= 178)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 120 && cursor->y <= 178)
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
@@ -1771,10 +1771,8 @@ void displayMiscellaneous()
 
 void securityMenu()
 {	
-	char pass[20] = "";
 	FILE * password;
-
-	int n;
+	FILE * pin;
 
 	securitybg = oslLoadImageFilePNG("system/settings/securitybg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
@@ -1802,6 +1800,7 @@ void securityMenu()
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,83,"Password Lock"); 
+		oslDrawStringf(20,144,"Pin Lock"); 
 		
 		if (cursor->x  >= 0 && cursor->x  <= 444 && cursor->y >= 61 && cursor->y <= 118)
 		{	
@@ -1809,10 +1808,27 @@ void securityMenu()
 			oslDrawStringf(20,83,"Password Lock"); 
 			if (osl_keys->pressed.cross)
 			{
-				openOSK("Enter Password");
-				password = fopen("system/settings/password.txt", "w");
+				sceIoRemove("system/settings/password.bin");
+				sceIoRemove("system/settings/pin.bin");
+				openOSK("Enter Password", 20, -1);
+				password = fopen("system/settings/password.bin", "w");
 				fprintf(password, "%s", tempMessage);
 				fclose(password);
+			}
+		}
+		
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 119 && cursor->y <= 178)
+		{	
+			oslDrawImageXY(highlight, 0, 120);
+			oslDrawStringf(20,144,"Pin Lock"); 
+			if (osl_keys->pressed.cross)
+			{
+				sceIoRemove("system/settings/password.bin");
+				sceIoRemove("system/settings/pin.bin");
+				openOSK("Enter Pin", 4, -1);
+				pin = fopen("system/settings/pin.bin", "w");
+				fprintf(pin, "%s", tempPin);
+				fclose(pin);
 			}
 		}
 
