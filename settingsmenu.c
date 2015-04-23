@@ -1810,7 +1810,7 @@ void securityMenu()
 			{
 				sceIoRemove("system/settings/password.bin");
 				sceIoRemove("system/settings/pin.bin");
-				openOSK("Enter Password", 20, -1);
+				openOSK("Enter Password", "", 20, -1);
 				password = fopen("system/settings/password.bin", "w");
 				fprintf(password, "%s", tempMessage);
 				fclose(password);
@@ -1825,7 +1825,7 @@ void securityMenu()
 			{
 				sceIoRemove("system/settings/password.bin");
 				sceIoRemove("system/settings/pin.bin");
-				openOSK("Enter Pin", 4, -1);
+				openOSK("Enter Pin", "", 4, -1);
 				pin = fopen("system/settings/pin.bin", "w");
 				fprintf(pin, "%s", tempPin);
 				fclose(pin);

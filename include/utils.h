@@ -12,6 +12,7 @@
 
 char tempMessage[20];
 char tempPin[4];
+char tempData[250];
 
 enum colors {
     RED =	0xFF0000FF,
@@ -29,7 +30,7 @@ int dirExists(const char* path);
 void deleteUpdateFile();
 void makeDownloadDir();
 void makeMusicDir();
-void openOSK(char * initMessage, int textLimit, int lang);
+void openOSK(char * message, char * initialMessage, int textLimit, int lang);
 void encryptFile(FILE *file);
 void decryptFile(FILE *file);
 int isEmpty(FILE *file);

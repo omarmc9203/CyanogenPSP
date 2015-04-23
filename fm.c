@@ -425,7 +425,7 @@ void OptionMenu()
 		else if (osl_keys->pressed.circle) 
 		{
 			oslDeleteImage(action);
-			refresh();
+			renameFile(folderIcons[current].filePath);
 		}
 	
 		else if (osl_keys->pressed.select) 
@@ -438,60 +438,54 @@ void OptionMenu()
 	}
 }
 
+void renameFile(char * path)
+{
+	while (!osl_quit)
+	{
+		LowMemExit();
+		
+		oslStartDrawing();
+		
+		openOSK("Enter File Name", path, 250, -1);
+		
+		sceIoRename(path, tempData);
+		
+		refresh();
+		
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();
+	}
+}
+
 void newFolder()
 {
-	int skip = 0;
-    char newFolderName[250] = "";
+	char newDir[250] = "";
 
 	while (!osl_quit)
 	{
 		LowMemExit();
-	
-		if (!skip)
+		
+		oslStartDrawing();
+		
+		openOSK("Enter Folder Name", "", 250, -1);
+		
+		strcpy(newDir, lastDir); //Copy current directory to newDir
+        strcat(newDir, "/"); //Add a '/' to newDir to denote the file path
+        strcat(newDir, tempData); //Add data returned from the OSK to newDir
+		
+		if (dirExists(newDir))
 		{
-			oslStartDrawing();
-
-			if (oslOskIsActive())
-			{
-				oslDrawOsk();
-				if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE)
-				{
-					if (oslOskGetResult() == OSL_OSK_CANCEL)
-					return;
-					else
-					{
-						char userText[100] = "";
-						oslOskGetText(userText);
-						sprintf(newFolderName, "%s", userText);
-						sceIoMkdir(newFolderName,0777);
-									
-			if (dirExists(newFolderName))
-			{
-				return;
-			}
-					}
-						oslEndOsk();
-				}
-			}
-			oslEndDrawing();
+			return;
 		}
 		
-		if (!oslOskIsActive())
-		{
-			oslReadKeys();
-			if (osl_keys->pressed.circle)
-			{
-				return;
-			}
-			else
-			{
-				oslInitOsk("Type Name of Folder", "", 128, 1, -1);
-				memset(newFolderName, 0, sizeof(newFolderName));
-			}
-		oslEndDrawing(); 
-		oslEndFrame(); 
-		skip = oslSyncFrame();
-		}
+		sceIoMkdir(newDir,0777); //Create the new dir in the current directory.
+		
+		refresh();
+		
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();
 	}
 }
 
@@ -894,13 +888,11 @@ void dirControls() //Controls
 			dirBack();
 		}		
 	}
-	
-	/*
+
 	if (osl_keys->pressed.R)
 	{		
 		newFolder();
 	}
-	*/
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".png") == 0) || (strcmp(ext ,".jpg") == 0) || (strcmp(ext ,".jpeg") == 0) || (strcmp(ext ,".gif") == 0) || (strcmp(ext ,".PNG") == 0) || (strcmp(ext ,".JPG") == 0) || (strcmp(ext ,".JPEG") == 0) || (strcmp(ext ,".GIF") == 0)) && (osl_keys->pressed.cross))
 	{
@@ -941,7 +933,7 @@ void dirControls() //Controls
 		soundPlay(folderIcons[current].filePath);
 	}
 	
-	if (((ext) != NULL) && ((strcmp(ext ,".txt") == 0) || ((strcmp(ext ,".TXT") == 0)) || ((strcmp(ext ,".c") == 0)) || ((strcmp(ext ,".h") == 0)) || ((strcmp(ext ,".cpp") == 0))) && (osl_keys->pressed.cross))
+	if (((ext) != NULL) && ((strcmp(ext ,".txt") == 0) || ((strcmp(ext ,".TXT") == 0)) || ((strcmp(ext ,".c") == 0)) || ((strcmp(ext ,".h") == 0)) || ((strcmp(ext ,".cpp") == 0)) || ((strcmp(ext ,".bin") == 0))) && (osl_keys->pressed.cross))
 	{
 		oslPlaySound(KeypressStandard, 1);  
 		displayTextFromFile(folderIcons[current].filePath);

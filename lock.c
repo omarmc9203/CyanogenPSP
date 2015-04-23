@@ -61,7 +61,7 @@ int lockscreen()
 			{	
 				if (osl_pad.held.cross && osl_keys->analogY <= -50)
 				{
-					openOSK("Enter Password", 20, -1);
+					openOSK("Enter Password", "", 20, -1);
 					password = fopen("system/settings/password.bin", "r");
 					fscanf(password,"%s",passwordData);
 					fclose(password);
@@ -82,7 +82,7 @@ int lockscreen()
 			{	
 				if (osl_pad.held.cross && osl_keys->analogY <= -50)
 				{
-					openOSK("Enter Pin", 4, -1);
+					openOSK("Enter Pin", "", 4, -1);
 					pin = fopen("system/settings/pin.bin", "r");
 					fscanf(pin,"%s", pinData);
 					fclose(pin);
