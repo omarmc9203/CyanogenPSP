@@ -1,6 +1,22 @@
 language: c
-compiler:
-  - gcc
-  - clang
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get remove mingw* -q
+  
+install:
+  - cd ..
+  - wget https://dl.dropboxusercontent.com/u/23414835/PSPSDK/psptoolchain_1.0_amd64.deb -O psptoolchain.deb
+  - sudo dpkg --install psptoolchain.deb
+  - source /etc/profile.d/psptoolchain.sh
+  - cd $TRAVIS_BUILD_DIR
+  
+
 # Change this to your needs
-script: ./configure && make
+script:
+  - make -k
+
