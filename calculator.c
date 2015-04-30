@@ -1,5 +1,6 @@
 #include "calculator.h"
 #include "include/utils.h"
+#include "appdrawer.h"
 #include "fm.h"
 #include "home.h"
 #include "clock.h"

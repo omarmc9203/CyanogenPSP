@@ -4,6 +4,7 @@
 #include "include/utils.h"
 #include "include/pspusbdevice.h"
 #include "home.h"
+#include "appdrawer.h"
 #include "fm.h"
 #include "clock.h"
 #include "game.h"
@@ -255,6 +256,13 @@ void aboutMenu()
 			oslDrawImageXY(highlight, 0, 63);
 			oslDrawString(20,78,"CyanogenPSP Updates");
 			oslDrawString(20,92,"Click for, view or install available updates");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(aboutbg);
+				oslDeleteImage(highlight);
+				updatesMenu();
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 120 && cursor->y <= 178)
@@ -263,6 +271,18 @@ void aboutMenu()
 			pspGetModel(20,143);
 			oslDrawStringf(20,129,"CyanogenPSP version: %s-20150308-OFFICIAL",cyanogenpspversion);
 			oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				if  (osl_keys->pressed.cross)
+					n+=1;
+				if (n == 4)
+				{
+					oslDeleteImage(aboutbg);
+					oslDeleteImage(highlight);
+					easterEgg();
+				}
+			}
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -311,27 +331,6 @@ void aboutMenu()
 		{	
 			oslPlaySound(KeypressStandard, 1);  
 			multitask();
-		}
-
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(aboutbg);
-			oslDeleteImage(highlight);
-			updatesMenu();
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 121 && cursor->y <= 178 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			if  (osl_keys->pressed.cross)
-				n+=1;
-			if (n == 4)
-			{
-				oslDeleteImage(aboutbg);
-				oslDeleteImage(highlight);
-				easterEgg();
-			}
 		}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
@@ -402,12 +401,11 @@ void updatesMenu()
 		{
 			oslDrawImageXY(highlight, 0, 70);
 			oslDrawString(20,93,"Check for Updates");
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 63 && cursor->y <= 113 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			onlineUpdater();
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				onlineUpdater();
+			}
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -501,18 +499,39 @@ void performanceMenu()
 		{
 			oslDrawImageXY(highlight, 0, 86);
 			oslDrawString(15,103,"Processor");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(highlight);
+				oslDeleteImage(performancebg);
+				processorMenu();
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 135 && cursor->y <= 191)
 		{
 			oslDrawImageXY(highlight, 0, 144);
 			oslDrawString(15,166,"Ram Management");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(highlight);
+				oslDeleteImage(performancebg);
+				ramMenu();
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272)
 		{
 			oslDrawImageXY(highlight, 0, 229);
 			oslDrawString(15,240,"Storage Management");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(highlight);
+				oslDeleteImage(performancebg);
+				storageMenu();
+			}
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -556,31 +575,7 @@ void performanceMenu()
 			oslDeleteImage(performancebg);
 			home();
 		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 75 && cursor->y <= 133 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(highlight);
-			oslDeleteImage(performancebg);
-			processorMenu();
-		}
 
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 135 && cursor->y <= 191 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(highlight);
-			oslDeleteImage(performancebg);
-			ramMenu();
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(highlight);
-			oslDeleteImage(performancebg);
-			storageMenu();
-		}
-		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{	
 			oslPlaySound(KeypressStandard, 1);  
@@ -597,11 +592,46 @@ void performanceMenu()
 	}
 }
 
+void setCpuBoot()
+{
+	FILE * processorInfo;
+	
+	if (!(fileExists("system/settings/processorInfo.bin")))
+	{
+		processorInfo = fopen("system/settings/processorInfo.bin", "w");
+		fprintf(processorInfo, "4");
+		fclose(processorInfo);
+	}
+
+	processorInfo = fopen("system/settings/processorInfo.bin", "r");
+	fscanf(processorInfo,"%d",&processorState);
+	fclose(processorInfo);
+	
+	if (processorState == 0)
+		scePowerSetClockFrequency(20, 20, 10);
+	else if (processorState == 1)
+		scePowerSetClockFrequency(75, 75, 37);
+	else if (processorState == 2)
+		scePowerSetClockFrequency(100, 100, 50);
+	else if (processorState == 3)
+		scePowerSetClockFrequency(133, 133, 66);
+	else if (processorState == 4)
+		scePowerSetClockFrequency(222, 222, 111);
+	else if (processorState == 5)
+		scePowerSetClockFrequency(266, 266, 133);
+	else if (processorState == 6)
+		scePowerSetClockFrequency(300, 300, 150);
+	else
+		scePowerSetClockFrequency(333, 333, 166);
+}
+
 void processorMenu()
 {	
+	FILE * processorInfo;
+	
 	int currentState = stateOff;
 	int cpufreq, cpu, bus;
-
+	
 	processorbg = oslLoadImageFilePNG("system/settings/processorbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
@@ -645,76 +675,96 @@ void processorMenu()
 		
 		if (currentState == stateOverClock)
 		{
+			processorInfo = fopen("system/settings/processorInfo.bin", "w");
 			cpufreq = scePowerGetCpuClockFrequency();
 			
 			if (cpufreq <18)
 			{
+				fprintf(processorInfo, "0");
 				scePowerSetClockFrequency(20, 20, 10);
 			}
 			else if (cpufreq <70)
 			{
+				fprintf(processorInfo, "1");
 		        scePowerSetClockFrequency(75, 75, 37);	
 			}
 			else if (cpufreq <95)
 			{
+				fprintf(processorInfo, "2");
 				scePowerSetClockFrequency(100, 100, 50);
 			}
 			else if (cpufreq <125)
 			{
+				fprintf(processorInfo, "3");
 				scePowerSetClockFrequency(133, 133, 66);
 			}
 			else if (cpufreq <215)
 			{
+				fprintf(processorInfo, "4");
 				scePowerSetClockFrequency(222, 222, 111);
 			}
 			else if (cpufreq <260)
 			{
-			scePowerSetClockFrequency(266, 266, 133);
+				fprintf(processorInfo, "5");
+				scePowerSetClockFrequency(266, 266, 133);
 			}
 			else if (cpufreq <290)
 			{
+				fprintf(processorInfo, "6");
 				scePowerSetClockFrequency(300, 300, 150);
 			}
 			else if (cpufreq <325)
 			{
+				fprintf(processorInfo, "7");
 				scePowerSetClockFrequency(333, 333, 166);
 			}
 			
+			fclose(processorInfo);
 			currentState = stateNoClock;
 		}
 		
 		if (currentState == stateUnderClock)
 		{
+			processorInfo = fopen("system/settings/processorInfo.bin", "w");
 			cpufreq = scePowerGetCpuClockFrequency();
+			
 			if (cpufreq> 300)
 			{
+				fprintf(processorInfo, "6");
 				scePowerSetClockFrequency(300, 300, 150);
 			}
 			else if (cpufreq> 266)
 			{
+				fprintf(processorInfo, "5");
 				scePowerSetClockFrequency(266, 266, 133);
 			}
 			else if (cpufreq> 222)
 			{
+				fprintf(processorInfo, "4");
 				scePowerSetClockFrequency(222, 222, 111);
 			}
 			else if (cpufreq> 133)
 			{
+				fprintf(processorInfo, "3");
 				scePowerSetClockFrequency(133, 133, 66);
 			}
 			else if (cpufreq> 100)
 			{
+				fprintf(processorInfo, "2");
 				scePowerSetClockFrequency(100, 100, 50);
 			}
 			else if (cpufreq> 75)
 		    {
+				fprintf(processorInfo, "1");
 				scePowerSetClockFrequency(75, 75, 37);
 			}
 			else if (cpufreq> 20)
 			{
+				fprintf(processorInfo, "0");
 				scePowerSetClockFrequency(20, 20, 10);
 			}
 			
+			fclose(processorInfo);
 			currentState = stateNoClock; // This state allows the frequency to not climb on each cycle.
 		}
 		
@@ -977,18 +1027,39 @@ void displayMenu()
 		{
 			oslDrawImageXY(highlight, 0, 63);
 			oslDrawString(20,86,"Themes");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displayThemes();
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawString(20,140,"Time");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displayTime();
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228)
 		{
 			oslDrawImageXY(highlight, 0, 173);
 			oslDrawString(20,195,"Miscellaneous");
+			if (osl_keys->pressed.cross)
+			{	
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displayMiscellaneous();
+			}
 		}
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -1015,30 +1086,6 @@ void displayMenu()
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);
 			settingsMenu();
-		}
-		
-		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			oslDeleteImage(displaybg);
-			oslDeleteImage(highlight);			
-			displayThemes();
-		}
-		
-		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 179 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			oslDeleteImage(displaybg);
-			oslDeleteImage(highlight);			
-			displayTime();
-		}
-		
-		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			oslDeleteImage(displaybg);
-			oslDeleteImage(highlight);			
-			displayMiscellaneous();
 		}
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
@@ -1103,12 +1150,26 @@ void displayThemes()
 		{
 			oslDrawImageXY(highlight, 0, 63);
 			oslDrawString(20,86,"Wallpaper");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displaySubThemes(1);
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawString(20,140,"Fonts");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displaySubThemes(0);
+			}
 		}
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -1135,22 +1196,6 @@ void displayThemes()
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);
 			displayMenu();
-		}
-		
-		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			oslDeleteImage(displaybg);
-			oslDeleteImage(highlight);			
-			displaySubThemes(1);
-		}
-		
-		if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			oslDeleteImage(displaybg);
-			oslDeleteImage(highlight);			
-			displaySubThemes(0);
 		}
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
@@ -2147,18 +2192,37 @@ void dumpMenu()
 		{
 			oslDrawImageXY(highlight, 0, 101);
 			oslDrawString(20,123,"Dump Flash 0");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				dump_filesystem("flash0:/", "ms0:/flash0");
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211)
 		{
 			oslDrawImageXY(highlight, 0, 158);
 			oslDrawString(20,181,"Dump Flash 1");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				dump_filesystem("flash1:/", "ms0:/flash1");
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 212 && cursor->y <= 268)
 		{
 			oslDrawImageXY(highlight, 0, 216);
 			oslDrawString(20,236,"More");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(developerbg);
+				oslDeleteImage(highlight);
+				oslDeleteImage(offswitch);	
+				oslDeleteImage(onswitch);
+				dumpMenuMore();
+			}
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -2213,28 +2277,6 @@ void dumpMenu()
 		{	
 			oslPlaySound(KeypressStandard, 1);  
 			multitask();
-		}
-
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			dump_filesystem("flash0:/", "ms0:/flash0");
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			dump_filesystem("flash1:/", "ms0:/flash1");
-		}
-
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 212 && cursor->y <= 268 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(developerbg);
-			oslDeleteImage(highlight);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			dumpMenuMore();
 		}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
@@ -2282,12 +2324,22 @@ void dumpMenuMore()
 		{
 			oslDrawImageXY(highlight, 0, 101);
 			oslDrawString(20,123,"Dump UMD boot.bin");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				DumpBootBin();
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211)
 		{
 			oslDrawImageXY(highlight, 0, 158);
 			oslDrawString(20,181,"Dump Memory");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				dump_memory();
+			}
 		}
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -2342,18 +2394,6 @@ void dumpMenuMore()
 		{	
 			oslPlaySound(KeypressStandard, 1);  
 			multitask();
-		}
-
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			DumpBootBin();
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			dump_memory();
 		}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
@@ -2408,6 +2448,12 @@ void developerMenu()
 			oslDrawString(10,107,"Toggle Remote Joy Lite");
 			oslDrawString(10,121,"Displays your PSP screen on your computer via USB.");
 			oslDrawString(10,135,"Press Triangle to disable or it may cause the program to crash");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				RJL = 1;
+				LoadStartModule("modules/RemoteJoyLite.prx");
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 155 && cursor->y <= 214)
@@ -2415,12 +2461,27 @@ void developerMenu()
 			oslDrawImageXY(highlight, 0, 157);
 			oslDrawString(10,168,"Toggle USB Debugging");
 			oslDrawString(10,182,"Press Triangle to disable or it may cause the program to crash");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				PSPDebug = 1;
+				LoadStartModule("modules/psplink.prx");
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 215 && cursor->y <= 272)
 		{
 			oslDrawImageXY(highlight, 0, 216);
 			oslDrawString(10,236,"Dumping Tools");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(developerbg);
+				oslDeleteImage(highlight);
+				oslDeleteImage(offswitch);	
+				oslDeleteImage(onswitch);
+				dumpMenu();
+			}
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -2481,37 +2542,15 @@ void developerMenu()
 		{
 			screenshot();
 		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 154 && osl_keys->pressed.cross)
-		{	
-			oslPlaySound(KeypressStandard, 1);  
-			RJL = 1;
-			LoadStartModule("modules/RemoteJoyLite.prx");
-		}
+
 		if(RJL == 1 && osl_keys->pressed.triangle)
 		{
 			StopUnloadModule("modules/RemoteJoyLite.prx");
 		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 155 && cursor->y <= 214 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			PSPDebug = 1;
-			LoadStartModule("modules/psplink.prx");
-		}
+
 		if(PSPDebug == 1  && osl_keys->pressed.triangle)
 		{	
 			StopUnloadModule("modules/psplink.prx");			
-		}
-
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 215 && cursor->y <= 272 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(developerbg);
-			oslDeleteImage(highlight);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			dumpMenu();
 		}
 	oslEndDrawing(); 
     oslEndFrame(); 

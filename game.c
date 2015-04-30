@@ -1,4 +1,5 @@
 #include "home.h"
+#include "appdrawer.h"
 #include "game.h"
 #include "clock.h"
 #include "fm.h"

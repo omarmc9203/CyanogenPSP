@@ -1,4 +1,5 @@
 #include "apollo.h"
+#include "appdrawer.h"
 #include "home.h"
 #include "clock.h"
 #include "fm.h"

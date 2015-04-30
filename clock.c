@@ -1,4 +1,5 @@
 #include "clock.h"
+#include "appdrawer.h"
 #include "home.h"
 #include "lock.h"
 #include "multi.h"
@@ -54,17 +55,17 @@ void getMonthOfYear(int x, int y)
   Default y = 4
   x is the location of the Time string on the X axis
   y is the location of the Time string on th Y axis
-  n is to indicate whether it should be in black/white
+  colour is to indicate whether it should be in black/white
 */	
 
-void digitaltime(int x, int y, int n) //n == 0 is white, n == 0 is black
+void digitaltime(int x, int y, int color) //color == 0 is white, color == 0 is black
 {					
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
 	
-	if (n == 0)
+	if (color == 0)
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-	else if (n == 1)
+	else if (color == 1)
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
 	if(time.hour >= 12) 

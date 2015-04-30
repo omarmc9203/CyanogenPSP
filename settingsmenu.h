@@ -44,7 +44,7 @@ typedef struct fw_version;
 
 char fontPath[100];
 char backgroundPath[100];
-int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator;
+int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState;
 int passProtect;
 int RJL;
 int PSPDebug;

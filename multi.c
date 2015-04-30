@@ -1,4 +1,5 @@
 #include "clock.h"
+#include "appdrawer.h"
 #include "home.h"
 #include "lock.h"
 #include "multi.h"
