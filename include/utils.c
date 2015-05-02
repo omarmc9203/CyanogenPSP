@@ -1,4 +1,6 @@
 #include "utils.h"
+#include "../home.h"
+
 
 int transp;//Fo transparency
 OSL_COLOR *fade;//To hold the colour of the rectangle blitted
@@ -68,24 +70,32 @@ void makeMusicDir()
 
 void openOSK(char * message, char * initialMessage, int textLimit, int lang)
 {
+	int skip = 0;
 	int Keyboard = 0;
 	char data[20] = "";
+	
+	OSL_IMAGE *keyboardBg = oslLoadImageFilePNG("system/settings/keyboard.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
 
 	while(!osl_quit)
 	{
-	oslStartDrawing();
+	if (!skip)
+	{
+		oslStartDrawing();
+		oslDrawImageXY(keyboardBg, 0, 0);
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		battery(370,2,1);
+		digitaltime(420,4,0);
 		if (Keyboard == 0)
 		{
 			oslInitOsk(message, initialMessage, textLimit, 1, lang);  
 			Keyboard = 1; 
-		}
-		if (Keyboard == 1)
-		{
 			oslDrawOsk(); 
 			if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE)
 			{
-				if (oslOskGetResult() == OSL_OSK_CANCEL)
-				{ 
+				if (oslOskGetResult() == OSL_OSK_CANCEL) 
+				{
+					Keyboard = 2; 
+					oslDeleteImage(keyboardBg);
 					return;
 				}
 				else
@@ -95,15 +105,17 @@ void openOSK(char * message, char * initialMessage, int textLimit, int lang)
 					sprintf(tempPin, "%s", data);
 					sprintf(tempData, "%s", data);
 					Keyboard = 2; 
+					oslDeleteImage(keyboardBg);
 				}
-				oslEndOsk(); 
+				oslEndOsk();		
 				return;
 			}
+			oslEndDrawing(); 
 		}
 		Keyboard = 0; 
-	oslEndDrawing(); 
-    oslEndFrame(); 
-	oslSyncFrame();
+	}
+	oslEndFrame();
+    skip = oslSyncFrame();
 }
 }
 
