@@ -319,9 +319,8 @@ void newMessage()
 
 		oslDrawImageXY(new_message, 0, 0);
 		
-		digitaltime(420,4,0);
-
-		battery(337,2,0);
+		digitaltime(381,4,0);
+		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -419,8 +418,8 @@ int messenger()
 
 		oslDrawImageXY(messengerbg, 0, 0);
 
-		battery(337,2,0);
-		digitaltime(420,4,0);
+		digitaltime(381,4,0);
+		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
@@ -467,20 +466,22 @@ int messenger()
 			screenshot();
 		}
 		
-		if (cursor->x >= 275 && cursor->x <= 376 && cursor->y >= 20 && cursor->y <= 52 && osl_keys->pressed.cross)
+		if (cursor->x >= 385 && cursor->x <= 428 && cursor->y >= 210 && cursor->y <= 258 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(messengerbg);
 			newMessage();
 		}
 		
+		/*
 		if (cursor->x >= 378 && cursor->x <= 434 && cursor->y >= 20 && cursor->y <= 52 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(messengerbg);
 			doClient();
 		}
-
+		*/
+		
         if (osl_keys->released.triangle && oslIsWlanPowerOn())
 			doClient();
         else if (osl_keys->released.square && oslIsWlanPowerOn())
