@@ -1,14 +1,14 @@
 // Thanks to West-Li, this program is based on his PSP Module Checker.
 // Thanks DAX for his ipl_update.prx
 // Thanks Yoti for his libpspident.a
-// Thanks Hellcat for his hc menu lib.
 // Thanks Raing3 for his psppower lib.
 #include "recoverymenu.h"
 #include "modules/ipl_update.h"
 #include "modules/batman.h"
 #include "modules/kuman.h"
-
-#include "menu.h"
+#include "include/common.h"
+#include "include/utils.h"
+#include "home.h"
 #include "kuman_header.h"
 #include "systemctrl_se.h"
 #include "settingsmenu.h"
@@ -153,8 +153,8 @@ void backupPassword()
 	memset(pass, 0, sizeof(pass));
 	
 	FILE * configtxt = fopen(PWD, "wb"); //create config file
-	fprintf("Password: %s\n", GetRegistryValue("/CONFIG/SYSTEM/LOCK", "password", &pass, sizeof(pass)));
-	fclose(PWD);	
+	fprintf(configtxt, "Password: %s\n", GetRegistryValue("/CONFIG/SYSTEM/LOCK", "password", &pass, sizeof(pass)));
+	fclose(configtxt);	
 }
 
 //Based on raing3s CheckSysInfoP4 
@@ -183,7 +183,7 @@ void ShowPage3()
 		
 		oslDrawImageXY(recoverybg, 0, 0);
 	
-		GetRegistryValue("/CONFIG/SYSTEM/XMB", "button_assign", &value);
+		GetRegistryValue("/CONFIG/SYSTEM/XMB", "button_assign", &value, sizeof(value));
 
 		if (value == 1) 
 		{
@@ -194,7 +194,7 @@ void ShowPage3()
 			oslDrawStringf(10,100,button, "Swap buttons: No (currently: X is enter)\n");		
 		}
 	
-		GetRegistryValue("/CONFIG/MUSIC", "wma_play", &value);
+		GetRegistryValue("/CONFIG/MUSIC", "wma_play", &value, sizeof(value));
 
 		if (value == 1)
 		{
@@ -205,7 +205,7 @@ void ShowPage3()
 			oslDrawStringf(10,110,wma, "WMA:          No\n");		
 		}
 	
-		GetRegistryValue("/CONFIG/BROWSER", "flash_activated", &value);
+		GetRegistryValue("/CONFIG/BROWSER", "flash_activated", &value, sizeof(value));
 
 		if (value == 1)
 		{
@@ -303,7 +303,7 @@ void ShowPage2()
 		batser = GetBatSer();
 
 		oslDrawStringf(10,20,"Battery Status:  %s\n", scePowerIsBatteryCharging() == 1 ? "Charging" : "Using");
-		oslDrawStringf(10,30,"Battery %%:       %i%%\n\n", scePowerGetBatteryLifePercent() < 0 ? 0 : scePowerGetBatteryLifePercent()); //Here I used printf because my CheckerPrintf doesn't printf %
+		oslDrawStringf(10,30,"Battery %%:       %i%%\n\n", scePowerGetBatteryLifePercent() < 0 ? 0 : scePowerGetBatteryLifePercent());
 		oslDrawStringf(10,40,"Hours Left:   %i:%02i\n\n", scePowerGetBatteryLifeTime() < 0 ? 0 : (scePowerGetBatteryLifeTime() / 60), scePowerGetBatteryLifeTime() < 0 ? 0 : (scePowerGetBatteryLifeTime() - (scePowerGetBatteryLifeTime() / 60 * 60)));
 		oslDrawStringf(10,50,"Battery Temp:    %iºC\n", scePowerGetBatteryTemp() < 0 ? 0 : scePowerGetBatteryTemp());
 		oslDrawStringf(10,60,"Battery Voltage: %0.3fV\n\n", scePowerGetBatteryVolt() < 0 ? 0 : (float)scePowerGetBatteryVolt() / 1000.0);
@@ -349,12 +349,6 @@ void ShowPage2()
 	}
 }
 
-typedef struct
-{
-	unsigned int major;
-	unsigned int minor;
-} fw_version;
-
 fw_version getFwVersion(fw_version *v)
 {
 		long int a = sceKernelDevkitVersion();
@@ -366,7 +360,6 @@ fw_version getFwVersion(fw_version *v)
 void ShowPage1()
 {
     int baryon, pommel, tachyon, fuseid, fusecfg, mb, model, type, region;
-	char *unk_minor = "-";
 	
 	recoverybg = oslLoadImageFilePNG("android_bootable_recovery/res/images/recoverybg.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -472,8 +465,8 @@ int ConfigurationMenu()
 	int MenuSelection = 1; // Pretty obvious
 	int selector_x = 0; //The x position of the first selection
 	int selector_y = 10; //The y position of the first selection
-	int selector_image_x; //Determines the starting x position of the selection
-	int selector_image_y; //Determines the starting y position of the selection
+	int selector_image_x = 0; //Determines the starting x position of the selection
+	int selector_image_y = 0; //Determines the starting y position of the selection
 	int numMenuItems = 5; //Amount of items in the menu
 		
 	int selection = 0;
@@ -564,8 +557,8 @@ int ShowAdvancedCnfMenu()
 	int MenuSelection = 1; // Pretty obvious
 	int selector_x = 0; //The x position of the first selection
 	int selector_y = 10; //The y position of the first selection
-	int selector_image_x; //Determines the starting x position of the selection
-	int selector_image_y; //Determines the starting y position of the selection
+	int selector_image_x = 0; //Determines the starting x position of the selection
+	int selector_image_y = 0; //Determines the starting y position of the selection
 	int numMenuItems = 6; //Amount of items in the menu
 
 	int selection = 0;
@@ -675,8 +668,8 @@ int ShowCnfMenu()
     int MenuSelection = 1; // Pretty obvious
 	int selector_x = 0; //The x position of the first selection
 	int selector_y = 10; //The y position of the first selection
-	int selector_image_x; //Determines the starting x position of the selection
-	int selector_image_y; //Determines the starting y position of the selection
+	int selector_image_x = 0; //Determines the starting x position of the selection
+	int selector_image_y = 0; //Determines the starting y position of the selection
 	int numMenuItems = 14; //Amount of items in the menu
 		
 	int selection = 0;
@@ -890,9 +883,9 @@ int ShowSystemMenu()
     int MenuSelection = 1; // Pretty obvious
 	int selector_x = 0; //The x position of the first selection
 	int selector_y = 10; //The y position of the first selection
-	int selector_image_x; //Determines the starting x position of the selection
-	int selector_image_y; //Determines the starting y position of the selection
 	int numMenuItems = 6; //Amount of items in the menu
+	int selector_image_x = 0; //Determines the starting x position of the selection
+	int selector_image_y = 0; //Determines the starting y position of the selection
 
 	int selection = 0;
 	
@@ -1012,8 +1005,8 @@ int ShowBatteryMenu()
 	int MenuSelection = 1; // Pretty obvious
 	int selector_x = 0; //The x position of the first selection
 	int selector_y = 10; //The y position of the first selection
-	int selector_image_x; //Determines the starting x position of the selection
-	int selector_image_y; //Determines the starting y position of the selection
+	int selector_image_x = 0; //Determines the starting x position of the selection
+	int selector_image_y = 0; //Determines the starting y position of the selection
 	int numMenuItems = 5; //Amount of items in the menu
 		
 	int selection = 0;
@@ -1155,7 +1148,9 @@ int mainRecoveryMenu()
 	int selector_x = 0; //The x position of the first selection
 	int selector_y = 10; //The y position of the first selection
 	int numMenuItems = 9; //Amount of items in the menu
-		
+	int selector_image_x = 0; //Determines the starting x position of the selection
+	int selector_image_y = 0; //Determines the starting y position of the selection
+	
 	int selection = 0;
 	
 	recoverybg = oslLoadImageFilePNG("android_bootable_recovery/res/images/recoverybg.png", OSL_IN_RAM, OSL_PF_8888);
@@ -1243,7 +1238,7 @@ int mainRecoveryMenu()
 		
 		if (MenuSelection == 7 && osl_keys->pressed.cross)
 		{
-			CheckerExit();
+			xmbExit();
 		}
 		
 		if (MenuSelection == 8 && osl_keys->pressed.cross)
@@ -1253,7 +1248,7 @@ int mainRecoveryMenu()
 		
 		if (MenuSelection == 9 && osl_keys->pressed.cross)
 		{
-			shutdown_device();
+			shutdownDevice();
 		}
 		
 		oslEndDrawing(); 

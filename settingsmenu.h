@@ -6,6 +6,7 @@
 #include <pspnet.h>
 #include <pspnet_inet.h>
 #include <pspnet_apctl.h>
+#include <pspwlan.h>
 
 //OSLib
 #include <oslib/oslib.h>
@@ -40,8 +41,16 @@ OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *dis
 //definition of our sounds
 OSL_SOUND *tone;
 
-typedef struct fw_version;
+struct fw_version
+{
+	unsigned int major;
+	unsigned int minor;
+};
 
+typedef struct fw_version fw_version;
+
+int connectAPCallback(int state);
+int connectToAP(int config);
 char fontPath[100];
 char backgroundPath[100];
 int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState;
@@ -59,8 +68,10 @@ void aboutMenu();
 void easterEgg();
 void updatesMenu();
 void performanceMenu();
+void setCpuBoot();
 void processorMenu();
 void ramMenu();
+void storageMenu();
 void displayMenu();
 void displayThemes();
 void settingsDisplay();
@@ -71,7 +82,7 @@ void settingsDownx5();
 void changeFont();
 void settingsControls(int n);
 char * settingsBrowse(const char * path, int n);
-void displaySubThemes(int n);
+void displaySubThemes(char * browseDirectory, int n);
 void displayTime();
 void displayMiscellaneous();
 void securityMenu();

@@ -390,4 +390,5 @@ int pspclock()
     oslEndFrame(); 
 	oslSyncFrame();
 	}
+	return 0;
 }

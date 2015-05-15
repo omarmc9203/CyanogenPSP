@@ -1,4 +1,6 @@
 #include "home.h"
+#include "appdrawer.h"
+#include "apollo.h"
 #include "clock.h"
 #include "lock.h"
 #include "multi.h"
@@ -16,8 +18,55 @@ int yLine1 = -272;
 int yLine2 = -272;
 int controlX = 25;
 
+int getBrightness(void);
+void setBrightness(int brightness);
+
 int imposeGetVolume();
 int imposeSetVolume();
+
+void internet() //Draws the browser
+{
+	int skip = 0;
+    int browser = 0;
+	char message[100] = "";
+	
+	oslNetInit();
+
+    while(!osl_quit)
+	{
+        browser = oslBrowserIsActive();
+		if (!skip)
+		{
+            oslStartDrawing();
+
+            if (browser)
+			{
+                oslDrawBrowser();
+                if (oslGetBrowserStatus() == PSP_UTILITY_DIALOG_NONE)
+				{
+                    oslEndBrowser();
+					home();
+                }
+            }
+            oslEndDrawing();
+		}
+		oslEndFrame();
+		skip = oslSyncFrame();
+
+        if (!browser)
+		{
+            oslReadKeys();
+            oslBrowserInit("http://www.google.com", "/PSP/GAME/CyanogenPSP/downloads", 5*1024*1024, //Downloads will be saved into this directory
+                                         PSP_UTILITY_HTMLVIEWER_DISPLAYMODE_SMART_FIT,
+                                         PSP_UTILITY_HTMLVIEWER_DISABLE_STARTUP_LIMITS,
+                                         PSP_UTILITY_HTMLVIEWER_INTERFACEMODE_FULL,
+                                         PSP_UTILITY_HTMLVIEWER_CONNECTMODE_MANUAL_ALL);
+			memset(message, 0, sizeof(message));
+
+        }
+    }
+	oslNetTerm();
+}
 
 void debugDisplay()
 {
@@ -103,7 +152,7 @@ void controls() //Main controller function - allows cursor movement
 
 void battery(int batx, int baty, int n) // Draws the battery icon depending on its percentage. 
 {
-	int batteryLife, y;
+	int batteryLife, y = 0;
 	
 	batteryLife = scePowerGetBatteryLifePercent(); //Gets battery percentage
 	
@@ -362,8 +411,6 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 
 void androidQuickSettings()
 {
-	SceCtrlData pad;
-
 	int notif_up;
 	int notif_down;
 	int notif_enabled;

@@ -1,9 +1,11 @@
 #include "utils.h"
 #include "../home.h"
+#include "../clock.h"
+#include "../screenshot.h"
 
 
 int transp;//Fo transparency
-OSL_COLOR *fade;//To hold the colour of the rectangle blitted
+int fade;//To hold the colour of the rectangle blitted
 
 char usbStatus = 0;
 char usbModuleStatus = 0;
@@ -113,6 +115,12 @@ void openOSK(char * message, char * initialMessage, int textLimit, int lang)
 			oslEndDrawing(); 
 		}
 		Keyboard = 0; 
+		
+		oslReadKeys();
+		if (osl_pad.held.R && osl_keys->pressed.triangle)
+		{
+			screenshot();
+		}
 	}
 	oslEndFrame();
     skip = oslSyncFrame();

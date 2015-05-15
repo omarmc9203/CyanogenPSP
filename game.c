@@ -9,6 +9,8 @@
 #include "screenshot.h"
 #include "settingsmenu.h"
 #include "include/systemctrl_se.h"  
+#include "include/utils.h"
+
 
 void gameUp()
 {
@@ -42,7 +44,7 @@ void gameDownx5()
 	}
 }
 
-int launchEbootMs0(const char *path[])
+int launchEbootMs0(char path[])
 {
 	// Load Execute Parameter
 	struct SceKernelLoadExecVSHParam param;
@@ -60,7 +62,7 @@ int launchEbootMs0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x141, path, &param);
 }
 
-int launchEbootEf0(const char *path[])
+int launchEbootEf0(char path[])
 {
 	// Load Execute Parameter
 	struct SceKernelLoadExecVSHParam param;
@@ -78,7 +80,7 @@ int launchEbootEf0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x152, path, &param);
 }
 
-int launchPOPsMs0(const char *path[])
+int launchPOPsMs0(char path[])
 {
 	// Load Execute Parameter
 	struct SceKernelLoadExecVSHParam param;
@@ -96,7 +98,7 @@ int launchPOPsMs0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x144, path, &param);
 }
 
-int launchPOPsEf0(const char *path[])
+int launchPOPsEf0(char path[])
 {
 	// Load Execute Parameter
 	struct SceKernelLoadExecVSHParam param;
@@ -114,10 +116,8 @@ int launchPOPsEf0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x155, path, &param);
 }
 
-int launchISOMs0(const char *path[])
+int launchISOMs0(char path[])
 {
-	char* bootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
-
 	// Load Execute Parameter
 	struct SceKernelLoadExecVSHParam param;
 	
@@ -142,10 +142,8 @@ int launchISOMs0(const char *path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x123, path, &param);
 }
 
-int launchISOEf0(const char *path[])
+int launchISOEf0(char path[])
 {
-	char* bootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
-
 	// Load Execute Parameter
 	struct SceKernelLoadExecVSHParam param;
 	
@@ -173,19 +171,37 @@ int launchISOEf0(const char *path[])
 void gameDisplay()
 {	
 	oslDrawImageXY(gamebg, 0, 0);
-	oslDrawString(10,10,"Game Launcher");
-	oslDrawImageXY(gameSelection,0,(current - curScroll)*29+GAME_CURR_DISPLAY_Y);
+	oslDrawImageXY(gameSelection,-2,(current - curScroll)*63+GAME_CURR_DISPLAY_Y);
+	
+	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+	battery(370,2,1);
+	digitaltime(420,4,0);
+	
+	/*
+	if (folderIcons[i].active == 1) 
+	{
+		getIcon0(folderIcons[current].filePath);
+		if(icon0!=NULL)
+		{	
+			oslDrawImageXY(icon0, 326,118);
+		}
+	}
+	
+	else if (folderIcons[i].active == 0)
+	{
+		oslDeleteImage(icon0);
+	}
+	*/
 	
 	// Displays the directories, while also incorporating the scrolling
-	for(i=curScroll;i<MAX_GAME_DISPLAY+curScroll;i++) {
-	
-		char * ext = strrchr(dirScan[i].name, '.'); //For file extension.
-	
+	for(i=curScroll;i<MAX_GAME_DISPLAY+curScroll;i++) 
+	{
 		// Handles the cursor and the display to not move past the MAX_GAME_DISPLAY.
 		// For moving down
 		//if ((folderIcons[i].active == 0) && (current >= i-1)) {
 	
-		if ((folderIcons[i].active == 0) && (current >= i-1)) {
+		if ((folderIcons[i].active == 0) && (current >= i-1)) 
+		{
 			current = i-1;
 			break;
 		}
@@ -193,20 +209,13 @@ void gameDisplay()
 		if (current <= curScroll-1) {
 			current = curScroll-1;
 			break;
-		}                     
-
-		/*
-			getIcon0(folderIcons[i].name);			 
-			if(icon0!=NULL)
-			{
-				oslDrawImageXY(icon0, 327,100);
-			}
-		*/
-		
-		// If the currently selected item is active, then display the name
-		if (folderIcons[i].active == 1) {
+		}                    
 			
-			oslDrawStringf(GAME_DISPLAY_X, (i - curScroll)*29+GAME_DISPLAY_Y, "%.41s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)
+		// If the currently selected item is active, then display the name
+		if (folderIcons[i].active == 1) 
+		{
+			oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+			oslDrawStringf(GAME_DISPLAY_X, (i - curScroll)*63+GAME_DISPLAY_Y, "%.41s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it
 		}
 	}
 }
@@ -394,7 +403,6 @@ char * gameBrowse(const char * path)
 	folderScan(path);
 	dirVars();
 
-	
 	while (!osl_quit)
 	{		
 		LowMemExit();
@@ -423,7 +431,6 @@ char * popsBrowse(const char * path)
 {
 	folderScan(path);
 	dirVars();
-
 	
 	while (!osl_quit)
 	{		
@@ -459,16 +466,22 @@ const OSL_VIRTUALFILENAME __image_ram_files[] = {
 	{"ram:/Media/icon0.png", (void*)icon0_png, sizeof(icon0_png), &VF_MEMORY}
 };
 
-void getIcon0(char* filename){
+unsigned int size_icon0_png = 8939;
+
+void getIcon0(char* filename)
+{
     //unsigned char _header[40];
     int icon0Offset, icon1Offset;
     char file[256];
     sprintf(file,"%s/eboot.pbp",filename);
     SceUID fd = sceIoOpen(file, 0x0001/*O_RDONLY*/, 0777);
-	if(fd < 0){
+	
+    if(fd < 0)
+	{
 		icon0 = oslLoadImageFilePNG("ram:/Media/icon0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-		return;
-	}
+        return;
+    }
+	
     //sceIoRead(fd, _header, 40);
     //printf("letto header\n");
     sceIoLseek(fd, 12, SEEK_SET);
@@ -478,20 +491,24 @@ void getIcon0(char* filename){
     int icon0_size = icon1Offset - icon0Offset;
     sceIoLseek(fd, icon0Offset, SEEK_SET);
     unsigned char icon[icon0_size];
-    if(icon0_size){
+	
+    if(icon0_size)
+	{
         sceIoRead(fd, icon, icon0_size);
         oslSetTempFileData(icon, icon0_size, &VF_MEMORY);
         icon0 = oslLoadImageFilePNG(oslGetTempFileName(), OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-    }else{
+    }
+	
+	else
+	{
         icon0 = oslLoadImageFilePNG("ram:/Media/icon0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
     }
-    sceIoClose(fd);
+    
+	sceIoClose(fd);
 }
 
-void gameView(char * browseDirectory, int type)
+int gameView(char * browseDirectory, int type)
 {	
-	char * Directory;
-
 	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
 
@@ -499,12 +516,12 @@ void gameView(char * browseDirectory, int type)
 
 	if (type == 0)
 	{
-		Directory = gameBrowse(browseDirectory); //For PSP Eboots
+		gameBrowse(browseDirectory); //For PSP Eboots
 	}
 	
 	else if (type == 1)
 	{
-		Directory = popsBrowse(browseDirectory); //For POPS Eboots
+		popsBrowse(browseDirectory); //For POPS Eboots
 	}
 	
 	while (!osl_quit)
@@ -514,7 +531,7 @@ void gameView(char * browseDirectory, int type)
 		oslStartDrawing();
 		oslClearScreen(RGB(0,0,0));	
 		
-		centerText(480/2, 272/2, Directory, 50);	// Shows the path that 'Directory' was supposed to receive from mp3Browse();
+		centerText(480/2, 272/2, browseDirectory, 50);	// Shows the path that 'Directory' was supposed to receive from mp3Browse();
 	 
 		oslEndDrawing(); 
         oslEndFrame(); 
@@ -539,51 +556,55 @@ void checkGBootActivation()
 	fclose(gBootActivation);
 }
 
-void gameBoot()
+int gameBoot()
 {
 	int currentFrame = 0, i = 0;
 
-    gameAnim[0] = oslLoadImageFilePNG("system/app/game/boot/0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-	gameAnim[1] = oslLoadImageFilePNG("system/app/game/boot/1.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-	gameAnim[2] = oslLoadImageFilePNG("system/app/game/boot/2.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-	gameAnim[3] = oslLoadImageFilePNG("system/app/game/boot/3.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-	gameAnim[4] = oslLoadImageFilePNG("system/app/game/boot/4.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-	gameAnim[5] = oslLoadImageFilePNG("system/app/game/boot/5.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-	gameAnim[6] = oslLoadImageFilePNG("system/app/game/boot/6.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-	gameAnim[7] = oslLoadImageFilePNG("system/app/game/boot/7.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
-	gameAnim[8] = oslLoadImageFilePNG("system/app/game/boot/8.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+    gameAnim[0] = oslLoadImageFileGIF("system/app/game/boot/0.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[1] = oslLoadImageFileGIF("system/app/game/boot/1.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[2] = oslLoadImageFileGIF("system/app/game/boot/2.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[3] = oslLoadImageFileGIF("system/app/game/boot/3.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[4] = oslLoadImageFileGIF("system/app/game/boot/4.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[5] = oslLoadImageFileGIF("system/app/game/boot/5.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[6] = oslLoadImageFileGIF("system/app/game/boot/6.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[7] = oslLoadImageFileGIF("system/app/game/boot/7.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[8] = oslLoadImageFileGIF("system/app/game/boot/8.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[9] = oslLoadImageFileGIF("system/app/game/boot/9.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[10] = oslLoadImageFileGIF("system/app/game/boot/10.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[11] = oslLoadImageFileGIF("system/app/game/boot/11.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[12] = oslLoadImageFileGIF("system/app/game/boot/12.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[13] = oslLoadImageFileGIF("system/app/game/boot/13.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[14] = oslLoadImageFileGIF("system/app/game/boot/14.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[15] = oslLoadImageFileGIF("system/app/game/boot/15.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[16] = oslLoadImageFileGIF("system/app/game/boot/16.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[17] = oslLoadImageFileGIF("system/app/game/boot/17.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[18] = oslLoadImageFileGIF("system/app/game/boot/18.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	gameAnim[19] = oslLoadImageFileGIF("system/app/game/boot/19.gif", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
 
     while(!osl_quit)
 	{
 		oslStartDrawing();
-        oslDrawImageXY(gameAnim[currentFrame], 0, 0); 
+		oslClearScreen(RGB(255,255,255));
+		oslDrawImageXY(gameAnim[currentFrame], 80, -25); 
 		sceDisplayWaitVblankStart();
 		oslEndDrawing();
 		oslEndFrame();
 		oslSyncFrame();
-		sceKernelDelayThread(10000 * 6);
+		sceKernelDelayThread(10000 * 3);
    
 		currentFrame++;
-		if(currentFrame > 8)
+		if(currentFrame > 19)
 		{
-			i++;
 			currentFrame = 0;
+			i++;
 		}
 		
-		if (i > 2)
-		{	
-			while(!osl_quit)
-			{
-				oslStartDrawing();
-				oslDrawImageXY(gameAnim[0], 0, 0); 
-				oslEndDrawing();
-				oslEndFrame();
-				oslSyncFrame();
-				sceKernelDelayThread(3000000);
-				return;
-			}
+		if (i > 7)
+		{
+			return 1;
 		}
 	}
+	return 0;
 }
 
 int gameApp() 
@@ -599,8 +620,8 @@ int gameApp()
 	checkGBootActivation();
 	
 	int MenuSelection = 1; // Pretty obvious
-	int selector_x = 0; //The x position of the first selection
-	int selector_y = 45; //The y position of the first selection
+	int selector_x = -2; //The x position of the first selection
+	int selector_y = 3; //The y position of the first selection
 	int selector_image_x; //Determines the starting x position of the selection
 	int selector_image_y = 0; //Determines the starting y position of the selection
 	int numMenuItems = 3; //Amount of items in the menu
@@ -614,13 +635,16 @@ int gameApp()
 		oslReadKeys();
 		oslClearScreen(RGB(0,0,0));	
 		oslDrawImageXY(gamebg, 0, 0);
-		oslIntraFontSetStyle(Roboto, 0.5, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
-		oslDrawString(10,10,"Game Launcher");
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		oslDrawImage(gameSelection);
 		
-		oslDrawStringf(10,79,"GAME");
-		oslDrawStringf(10,108,"ISO/CSO");
-		oslDrawStringf(10,137,"POPS");
+		oslDrawStringf(20,87,"GAME");
+		oslDrawStringf(20,150,"ISO/CSO");
+		oslDrawStringf(20,213,"POPS");
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+		battery(370,2,1);
+		digitaltime(420,4,0);	
 		
 		gameSelection->x = selector_image_x; //Sets the selection coordinates
         gameSelection->y = selector_image_y; //Sets the selection coordinates

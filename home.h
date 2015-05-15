@@ -37,6 +37,7 @@ OSL_SOUND *camera_click, *KeypressStandard, *Lock, *LowBattery, *Unlock, *Wirele
 //definition of our font
 OSL_FONT *Roboto;
 
+void internet();
 void debugDisplay();
 void controls();
 void battery(int batx, int baty, int n);

@@ -3,6 +3,7 @@
 #include "include/ram.h"
 #include "include/utils.h"
 #include "include/pspusbdevice.h"
+#include "include/common.h"
 #include "home.h"
 #include "appdrawer.h"
 #include "fm.h"
@@ -20,6 +21,76 @@ int setclock;
 char cyanogenpspversion[5] = "5.2";
 char lang[12] = "Uk English";
 static char Settings_message[100] = "";
+
+char buffer[100] = "";
+
+int connectAPCallback(int state) //Internet stuff
+{
+    oslStartDrawing();
+    oslDrawImageXY(wifibg, 0, 19);
+    oslDrawString(30, 175, "Connecting to AP...");
+    sprintf(buffer, "State: %i", state);
+    oslDrawString(30, 195, buffer);
+    oslEndDrawing();
+    oslEndFrame();
+    oslSyncFrame();
+
+    return 0;
+} 
+ 
+int connectToAP(int config) //Internet stuff
+{
+    oslStartDrawing();
+    oslDrawImageXY(wifibg, 0, 19);
+    oslDrawString(30, 175, "Connecting to AP...");
+    oslEndDrawing();
+    oslEndFrame();
+    oslSyncFrame();
+
+    int result = oslConnectToAP(config, 30, connectAPCallback);
+    if (!result){
+        char ip[30] = "";
+        char resolvedIP[30] = "";
+
+        oslStartDrawing();
+        oslDrawImageXY(wifibg, 0, 19);
+        oslGetIPaddress(ip);
+        sprintf(buffer, "IP address: %s", ip);
+        oslDrawString(30, 175, buffer);
+
+        sprintf(buffer, "Resolving %s", Address);
+        oslDrawString(30, 195, buffer);
+        oslEndDrawing();
+        oslEndFrame();
+        oslSyncFrame();
+
+        result = oslResolveAddress(Address, resolvedIP);
+
+        oslStartDrawing();
+        oslDrawImageXY(wifibg, 0, 19);
+        oslGetIPaddress(ip);
+        if (!result)
+            sprintf(buffer, "Resolved IP address: %s", ip);
+        else
+            sprintf(buffer, "Error resolving address!");
+        oslDrawString(30, 195, buffer);
+        oslEndDrawing();
+        oslEndFrame();
+        oslSyncFrame();
+		sceKernelDelayThread(3*1000000);
+    }else{
+        oslStartDrawing();
+        oslDrawImageXY(wifibg, 0, 19);
+        sprintf(buffer, "Error connecting to AP!");
+        oslDrawString(30, 195, buffer);
+        oslEndDrawing();
+        oslEndFrame();
+        oslSyncFrame();
+		sceKernelDelayThread(3*1000000);
+    }
+    oslDisconnectFromAP();
+    return 0;
+} 
 
 void onlineUpdater()
 {
@@ -78,7 +149,7 @@ void onlineUpdater()
         if (!browser)
 		{
             oslReadKeys();
-            int res = oslBrowserInit("http://raw.githubusercontent.com/joel16/CyanogenPSP-Bin/master/Boot.zip", "/PSP/GAME/CyanogenPSP", 5*1024*1024,
+            oslBrowserInit("http://raw.githubusercontent.com/joel16/CyanogenPSP-Bin/master/Boot.zip", "/PSP/GAME/CyanogenPSP", 5*1024*1024,
                                          PSP_UTILITY_HTMLVIEWER_DISPLAYMODE_SMART_FIT,
                                          PSP_UTILITY_HTMLVIEWER_DISABLE_STARTUP_LIMITS,
                                          PSP_UTILITY_HTMLVIEWER_INTERFACEMODE_FULL,
@@ -206,11 +277,7 @@ void pspGetModel(int x, int y)
 	}
 }
 
-typedef struct
-{
-	unsigned int major;
-	unsigned int minor;
-} fw_version;
+fw_version getFwVersion(fw_version *v);
 
 void aboutMenu()
 {	
@@ -909,6 +976,9 @@ void ramMenu()
 
 void storageMenu()
 {	
+	int ret, status;
+	const char *drvname;
+
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
@@ -916,6 +986,14 @@ void storageMenu()
 	
 	if (!performancebg || !highlight)
 		debugDisplay();
+	
+	status = 0;
+	drvname = "mscmhc0:";
+	
+	if (kuKernelGetModel() == 4)
+		drvname = "mscmhcemu0:";
+		
+	ret = sceIoDevctl(drvname, 0x02025801, 0, 0, &status, sizeof(status));
 	
 	while (!osl_quit)
 	{
@@ -931,7 +1009,8 @@ void storageMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawStringf(20,98,"Press Select to toggle USB mass storage"); 
+		oslDrawStringf(20,85,"Press Select to toggle USB mass storage"); 
+		oslDrawStringf(20,110,"Available Storage Space = %d MB", ret);
 		
 		if (osl_keys->pressed.select)
 		{
@@ -1155,7 +1234,7 @@ void displayThemes()
 				oslPlaySound(KeypressStandard, 1); 
 				oslDeleteImage(displaybg);
 				oslDeleteImage(highlight);			
-				displaySubThemes(1);
+				displaySubThemes("system/framework/framework-res/res", 1);
 			}
 		}
 		
@@ -1168,7 +1247,7 @@ void displayThemes()
 				oslPlaySound(KeypressStandard, 1); 
 				oslDeleteImage(displaybg);
 				oslDeleteImage(highlight);			
-				displaySubThemes(0);
+				displaySubThemes("system/fonts", 0);
 			}
 		}
 
@@ -1239,26 +1318,27 @@ void settingsDisplay()
 	digitaltime(381,4,0);
 	
 	// Displays the directories, while also incorporating the scrolling
-	for(i=curScroll;i<MAX_SETTINGS_DISPLAY+curScroll;i++) {
-	
-		char * ext = strrchr(dirScan[i].name, '.'); //For file extension.
-	
+	for(i=curScroll;i<MAX_SETTINGS_DISPLAY+curScroll;i++) 
+	{
 		// Handles the cursor and the display to not move past 4.
 		// For moving down
 		//if ((folderIcons[i].active == 0) && (current >= i-1)) {
 	
-		if ((folderIcons[i].active == 0) && (current >= i-1)) {
+		if ((folderIcons[i].active == 0) && (current >= i-1)) 
+		{
 			current = i-1;
 			break;
 		}
 		// For moving up
-		if (current <= curScroll-1) {
+		if (current <= curScroll-1) 
+		{
 			current = curScroll-1;
 			break;
 		}
 		
 		// If the currently selected item is active, then display the name
-		if (folderIcons[i].active == 1) {
+		if (folderIcons[i].active == 1) 
+		{
 			oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 			oslDrawStringf(SETTINGS_DISPLAY_X, (i - curScroll)*55+SETTINGS_DISPLAY_Y, "%.56s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
@@ -1436,7 +1516,7 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 	return returnMe;
 }
 
-void displaySubThemes(int n) // n is used here to search for fonts or wallpaper
+void displaySubThemes(char * browseDirectory, int n) // n is used here to search for fonts or wallpaper
 {	
 	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
@@ -1446,12 +1526,10 @@ void displaySubThemes(int n) // n is used here to search for fonts or wallpaper
 	if (!displaybg)
 		debugDisplay();
 		
-	char * testDirectory;
-		
 	if (n == 0)	
-		testDirectory = settingsBrowse("system/fonts", 0); //For fonts
+		browseDirectory = settingsBrowse("system/fonts", 0); //For fonts
 	else if (n == 1)
-		testDirectory = settingsBrowse("system/framework/framework-res/res", 1); //For wallpapers
+		browseDirectory = settingsBrowse("system/framework/framework-res/res", 1); //For wallpapers
 	
 	while (!osl_quit)
 	{
@@ -1461,7 +1539,7 @@ void displaySubThemes(int n) // n is used here to search for fonts or wallpaper
 		
 		oslClearScreen(RGB(0,0,0));
 		
-		centerText(480/2, 272/2, testDirectory, 50);
+		centerText(480/2, 272/2, browseDirectory, 50);
 		
 		oslEndDrawing(); 
 		oslEndFrame(); 
@@ -1853,6 +1931,7 @@ void securityMenu()
 			oslDrawStringf(20,83,"Password Lock"); 
 			if (osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);
 				sceIoRemove("system/settings/password.bin");
 				sceIoRemove("system/settings/pin.bin");
 				openOSK("Enter Password", "", 20, -1);
@@ -1868,6 +1947,7 @@ void securityMenu()
 			oslDrawStringf(20,144,"Pin Lock"); 
 			if (osl_keys->pressed.cross)
 			{
+				oslPlaySound(KeypressStandard, 1);
 				sceIoRemove("system/settings/password.bin");
 				sceIoRemove("system/settings/pin.bin");
 				openOSK("Enter Pin", "", 4, -1);

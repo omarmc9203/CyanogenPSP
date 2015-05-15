@@ -10,6 +10,7 @@
 #include "main.h"
 #include "multi.h"
 #include "mp3player.h"
+#include "messenger.h"
 #include "power_menu.h"
 #include "recoverymenu.h"
 #include "settingsmenu.h"
@@ -38,9 +39,6 @@ int initOSLib() //Initialize OsLib
 int imposeGetVolume();
 int imposeSetVolume();
 
-int getBrightness(void);
-void setBrightness(int brightness);
-
 int imposeSetBrightness(int value);
 int imposeGetBrightness();
  
@@ -68,117 +66,6 @@ int SetupCallbacks(void)
 	thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, THREAD_ATTR_USER, 0);
 	if(thid >= 0) sceKernelStartThread(thid, 0, 0);
 	return thid;
-}
-
-int connectAPCallback(int state) //Internet stuff
-{
-    oslStartDrawing();
-    oslDrawImageXY(wifibg, 0, 19);
-    oslDrawString(30, 175, "Connecting to AP...");
-    sprintf(buffer, "State: %i", state);
-    oslDrawString(30, 195, buffer);
-    oslEndDrawing();
-    oslEndFrame();
-    oslSyncFrame();
-
-    return 0;
-} 
- 
-int connectToAP(int config) //Internet stuff
-{
-    oslStartDrawing();
-    oslDrawImageXY(wifibg, 0, 19);
-    oslDrawString(30, 175, "Connecting to AP...");
-    oslEndDrawing();
-    oslEndFrame();
-    oslSyncFrame();
-
-    int result = oslConnectToAP(config, 30, connectAPCallback);
-    if (!result){
-        char ip[30] = "";
-        char resolvedIP[30] = "";
-
-        oslStartDrawing();
-        oslDrawImageXY(wifibg, 0, 19);
-        oslGetIPaddress(ip);
-        sprintf(buffer, "IP address: %s", ip);
-        oslDrawString(30, 175, buffer);
-
-        sprintf(buffer, "Resolving %s", ADDRESS);
-        oslDrawString(30, 195, buffer);
-        oslEndDrawing();
-        oslEndFrame();
-        oslSyncFrame();
-
-        result = oslResolveAddress(ADDRESS, resolvedIP);
-
-        oslStartDrawing();
-        oslDrawImageXY(wifibg, 0, 19);
-        oslGetIPaddress(ip);
-        if (!result)
-            sprintf(buffer, "Resolved IP address: %s", ip);
-        else
-            sprintf(buffer, "Error resolving address!");
-        oslDrawString(30, 195, buffer);
-        oslEndDrawing();
-        oslEndFrame();
-        oslSyncFrame();
-		sceKernelDelayThread(3*1000000);
-    }else{
-        oslStartDrawing();
-        oslDrawImageXY(wifibg, 0, 19);
-        sprintf(buffer, "Error connecting to AP!");
-        oslDrawString(30, 195, buffer);
-        oslEndDrawing();
-        oslEndFrame();
-        oslSyncFrame();
-		sceKernelDelayThread(3*1000000);
-    }
-    oslDisconnectFromAP();
-    return 0;
-} 
-
-void internet() //Draws the browser
-{
-	int skip = 0;
-    int browser = 0;
-	
-	oslNetInit();
-
-    while(!osl_quit)
-	{
-        browser = oslBrowserIsActive();
-		if (!skip)
-		{
-            oslStartDrawing();
-
-            if (browser)
-			{
-                oslDrawBrowser();
-                if (oslGetBrowserStatus() == PSP_UTILITY_DIALOG_NONE)
-				{
-                    oslEndBrowser();
-					home();
-                }
-            }
-            oslEndDrawing();
-		}
-		oslEndFrame();
-		skip = oslSyncFrame();
-
-        if (!browser)
-		{
-            oslReadKeys();
-            int res = oslBrowserInit("http://www.google.com", "/PSP/GAME/CyanogenPSP/downloads", 5*1024*1024, //Downloads will be saved into this directory
-                                         PSP_UTILITY_HTMLVIEWER_DISPLAYMODE_SMART_FIT,
-                                         PSP_UTILITY_HTMLVIEWER_DISABLE_STARTUP_LIMITS,
-                                         PSP_UTILITY_HTMLVIEWER_INTERFACEMODE_FULL,
-                                         PSP_UTILITY_HTMLVIEWER_CONNECTMODE_MANUAL_ALL);
-			memset(message, 0, sizeof(message));
-
-        }
-    }
-	oslNetTerm();
 }
 
 void set_volume(int vol) {
@@ -259,7 +146,7 @@ void firstBootMessage()
 			if (cursor->x >= 366 && cursor->x <= 442 && cursor->y >= 80 && cursor->y <= 116 && osl_keys->pressed.cross)
 			{ 
 				firstBootTxt = fopen("system/firstBoot.txt", "w"); 
-				fprintf(firstBootTxt, "0", firstBoot);
+				fprintf(firstBootTxt, "0");
 				fclose(firstBootTxt);
 				oslPlaySound(KeypressStandard, 1); 
 				oslDeleteImage(welcome);
@@ -449,7 +336,7 @@ int main()
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
-	SceUID modid, modid2;
+	SceUID modid; //, modid2;
 	
 	modid = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
 	//modid2 = pspSdkLoadStartModule("modules/sound.prx", PSP_MEMORY_PARTITION_KERNEL);
@@ -466,6 +353,8 @@ int main()
 	
 	makeDownloadDir(); //Created Download directory if there isn't any - PSP/Game/CyanogenMod/Downloads
 	deleteUpdateFile(); //Delete update.zip
+	
+	setCpuBoot();
 	
 	//Main loop to run the program
 	while (!osl_quit)

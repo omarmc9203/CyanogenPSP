@@ -1,6 +1,9 @@
 #include "home.h"
+#include "clock.h"
+#include "screenshot.h"
 #include "power_menu.h"
 #include "lock.h"
+#include "recoverymenu.h"
 //#include <scepower.h>
 
 void powermenu()

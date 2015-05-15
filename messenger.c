@@ -8,6 +8,63 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
+#include "include/utils.h"
+
+char message[500] = "";	
+
+int message1()
+{
+    char* nickname = (char*)malloc(100);
+    int skip = 0;
+
+    oslSetFont(Roboto);
+	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+	
+    while(!osl_quit)
+    {
+       if (!skip)
+       {
+               oslStartDrawing();
+               if (oslIsWlanPowerOn())
+               {
+                   oslDrawString(10, 10, "Please Enter nickname By Pressing X (Client)...");
+                   oslDrawString(10, 25, "Please Press O To Act As Server...");
+                   if (oslOskIsActive()){
+                    oslDrawOsk();
+                    if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE)
+                    {
+                        if (oslOskGetResult() == OSL_OSK_CANCEL)
+                        {
+                            nickname = (char*)"Client";
+                        }   
+                        else
+                        {
+                            oslOskGetText(nickname);
+                        }
+                        oslEndOsk();
+                    }
+               }
+               else
+               {
+                   oslDrawString(10, 40, "Please turn on the wlan switch!");
+               }
+               oslEndDrawing();
+           }
+           oslEndFrame();
+           skip = oslSyncFrame();
+           oslReadKeys();
+           if (osl_keys->released.cross && oslIsWlanPowerOn())
+           {
+               oslInitOsk((char*)"Please enter nickname!", (char*)"Client", 99, 1, -1);
+
+           }
+      }
+
+    }
+
+    sceKernelExitGame();
+    return 0;
+}
 
 //Prints some info:
 void printInfo()
@@ -260,7 +317,7 @@ void newMessage()
 		
 		controls();	
 
-		oslDrawImageXY(new_message, 0, 19);
+		oslDrawImageXY(new_message, 0, 0);
 		
 		digitaltime(420,4,0);
 
@@ -360,7 +417,7 @@ int messenger()
 		
 		controls();	
 
-		oslDrawImageXY(messengerbg, 0, 19);
+		oslDrawImageXY(messengerbg, 0, 0);
 
 		battery(337,2,0);
 		digitaltime(420,4,0);
@@ -376,7 +433,7 @@ int messenger()
 		if (osl_keys->pressed.L)
 		{
 			oslPlaySound(Lock, 1);  
-			lockscreen();
+			message1();
         }
 		
 		if (osl_keys->pressed.circle)
@@ -433,5 +490,6 @@ int messenger()
 		oslEndFrame(); 
 		oslSyncFrame();
 	}
+	return 0;
 }
 

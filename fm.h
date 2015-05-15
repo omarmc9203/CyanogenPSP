@@ -12,6 +12,7 @@
 #include <pspiofilemgr.h>
 #include <pspinit.h>
 #include <stdlib.h>
+#include <kubridge.h>
 #include <oslib/oslib.h>
 #include <psploadexec.h>
 #include <psploadexec_kernel.h>
@@ -39,7 +40,7 @@ OSL_IMAGE 	*filemanagerbg, *diricon, *imageicon, *mp3icon, *txticon, *unknownico
 			*deletion, *action, *textview,  *gallerybar;
 
 // Current Path
-static char cwd[1024];
+char cwd[1024];
 
 /* Globals */
 
@@ -67,6 +68,11 @@ typedef struct File {
 
 	int size;
 	int directory;
+	
+	// Next Item
+	struct File * next;
+	// Folder Flag
+	int isFolder;
 
 } File;
 
@@ -83,14 +89,13 @@ int timer;
 char returnMe[512];
 SceCtrlData pad, oldpad;
 
-/*
-// Copy Move Origin
-static char copysource[1024];
-int copymode = NOTHING_TO_COPY
+int copy_bytes(SceUID source, SceUID destination, unsigned bytes);
+int copy_folder(char * source, char * destination);
+void copy(int flag);
+int paste(void);
+int copy_file(char * a, char * b);
+int copy_folder_recursive(char * a, char * b);
 
-// File List
-File * files = NULL;
-*/
 
 int folderScan(const char* path);
 int runFile(const char* path, char* type );
@@ -99,8 +104,10 @@ void build_path(char *output, const char *root, const char *path, int append);
 void write_file(const char *read_loc, const char *write_loc, const char *name);
 void refresh();
 void OptionMenu();
-void DeleteFile(const char * path);
-void recursiveDelete(const char *dir);
+void renameFile();
+void newFolder();
+void DeleteFile(char path[]);
+int deleteRecursive(char path[]); //Thanks Moonchild!
 void fcopy(char * source);
 void fpaste(char * destination);
 int checkTextFile(char *textfile);

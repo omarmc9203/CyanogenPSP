@@ -19,7 +19,7 @@ extern "C" {
 
 
 // *** FUNCTIONS DECLARATIONS ***
-
+int sceKernelFreePartitionMemory(int blockid);
 u32 ramAvailableLineareMax (void);
 u32 ramAvailable (void);
 

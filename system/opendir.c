@@ -160,7 +160,7 @@ void getExtension(char *fileName, char *extension, int extMaxLength){
             if (i == strlen(fileName) - 1)
                 return;
             for (j = i+1; j < strlen(fileName); j++){
-                extension[count++] = toupper(fileName[j]);
+                extension[count++] = (char)toupper((unsigned char)fileName[j]);
                 if (count > extMaxLength)
                     return;
             }

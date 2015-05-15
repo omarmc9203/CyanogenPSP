@@ -1,5 +1,6 @@
 #include "home.h"
 #include "game.h"
+#include "appdrawer.h"
 #include "apollo.h"
 #include "fm.h"
 #include "clock.h"
@@ -11,6 +12,352 @@
 #include "settingsmenu.h"
 #include "screenshot.h"
 #include "include/utils.h"
+
+static unsigned copy_progress;
+
+int copy_bytes(SceUID source, SceUID destination, unsigned bytes)
+{
+	char buffer[0x8000];
+	
+	while(bytes)
+	{
+		//calculate the read/write size
+		int copy_size = bytes > sizeof(buffer)? sizeof(buffer): bytes;
+		
+		//read bytes to buffer
+		if(sceIoRead(source, buffer, copy_size) < copy_size)
+			break;
+		
+		//write bytes to file
+		if(sceIoWrite(destination, buffer, copy_size) < copy_size)
+			break;
+		
+		bytes -= copy_size;
+		copy_progress += copy_size;
+	};
+	
+	return bytes == 0;
+}
+
+int copy_folder( char * source,  char * destination)
+{
+	if(!strcmp(source, destination) || !strcmp(destination, "ms0:/PSP/GAME/"))
+		return 0;
+	
+	if(!strncmp(source, destination, strlen(source))) //avoid inception
+		return 0;
+	
+	//get a pointer to the folder name
+	char * new_folder = strrchr(source, '/') - 1;
+	while(* new_folder != '/')
+		new_folder--;
+	new_folder++;
+
+	size_t len = strlen(destination);
+	
+	char * new_destination = malloc(len + 256);
+	
+	//create destination folder if it doesnt exist
+	sceIoMkdir(destination,0777);
+	
+	//create new dir on destination
+	strcpy(new_destination, destination);
+	strcat(new_destination, new_folder);
+	
+	int ret = copy_folder_recursive(source, new_destination);
+	
+	free(new_destination);
+	
+	return ret;
+}
+
+int copymode = NOTHING_TO_COPY;
+
+static char copysource[1024];
+char oldLocation[250] = "";
+char newLocation[250] = "";
+	
+int copyData = 0;
+int position = 0;
+int filecount = 0;
+
+// File List
+File * findindex(int index);
+File * files = NULL;
+
+File * findindex(int index)
+{
+	// File Iterator Variable
+	int i = 0;
+	
+	// Find File Item
+	File * file = files; for(; file != NULL && i != index; file = file->next) i++;
+	
+	// Return File
+	return file;
+}
+
+// Copy File or Folder
+void copy(int flag)
+{
+	// Find File
+	File * file = findindex(position);
+	
+	// Not found
+	if(file == NULL) return;
+	
+	// Copy File Source
+	strcpy(copysource, cwd);
+	strcpy(copysource + strlen(copysource), file->name);
+	
+	// Add Recursive Folder Flag
+	if(file->isFolder) flag |= COPY_FOLDER_RECURSIVE;
+	
+	// Set Copy Flags
+	copymode = flag;
+}
+
+int paste(void)
+{
+	// No Copy Source
+	if(copymode == NOTHING_TO_COPY) return -1;
+	
+	// Source and Target Folder are identical
+	char * lastslash = NULL; int i = 0; for(; i < strlen(copysource); i++) if(copysource[i] == '/') lastslash = copysource + i;
+	char backup = lastslash[1];
+	lastslash[1] = 0;
+	int identical = strcmp(copysource, cwd) == 0;
+	lastslash[1] = backup;
+	if(identical) return -2;
+	
+	// Source Filename
+	char * filename = lastslash + 1;
+	
+	// Required Target Path Buffer Size
+	int requiredlength = strlen(cwd) + strlen(filename) + 1;
+	
+	// Allocate Target Path Buffer
+	char * copytarget = (char *)malloc(requiredlength);
+	
+	// Puzzle Target Path
+	strcpy(copytarget, cwd);
+	strcpy(copytarget + strlen(copytarget), filename);
+	
+	// Return Result
+	int result = -3;
+	
+	// Recursive Folder Copy
+	if((copymode & COPY_FOLDER_RECURSIVE) == COPY_FOLDER_RECURSIVE)
+	{
+		// Check Files in current Folder
+		File * node = files; for(; node != NULL; node = node->next)
+		{
+			// Found a file matching the name (folder = ok, file = not)
+			if(strcmp(filename, node->name) == 0 && !node->isFolder)
+			{
+				// Error out
+				return -4;
+			}
+		}
+		
+		// Copy Folder recursively
+		result = copy_folder_recursive(copysource, copytarget);
+		
+		// Source Delete
+		if(result == 0 && (copymode & COPY_DELETE_ON_FINISH) == COPY_DELETE_ON_FINISH)
+		{
+			// Append Trailing Slash (for recursion to work)
+			copysource[strlen(copysource) + 1] = 0;
+			copysource[strlen(copysource)] = '/';
+			
+			// Delete Source
+			deleteRecursive(copysource);
+		}
+	}
+	
+	// Simple File Copy
+	else
+	{
+		// Copy File
+		result = copy_file(copysource, copytarget);
+		
+		// Source Delete
+		if(result == 0 && (copymode & COPY_DELETE_ON_FINISH) == COPY_DELETE_ON_FINISH)
+		{
+			// Delete File
+			sceIoRemove(copysource);
+		}
+	}
+	
+	// Paste Success
+	if(result == 0)
+	{
+		// Erase Cache Data
+		memset(copysource, 0, sizeof(copysource));
+		copymode = NOTHING_TO_COPY;
+	}
+	
+	// Free Target Path Buffer
+	free(copytarget);
+	
+	// Return Result
+	return result;
+}
+
+// Copy File from A to B
+int copy_file(char * a, char * b)
+{
+	// Chunk Size
+	int chunksize = 512 * 1024;
+	
+	// Reading Buffer
+	char * buffer = (char *)malloc(chunksize);
+	
+	// Accumulated Writing
+	int totalwrite = 0;
+	
+	// Accumulated Reading
+	int totalread = 0;
+	
+	// Result
+	int result = 0;
+	
+	// Open File for Reading
+	int in = sceIoOpen(a, PSP_O_RDONLY, 0777);
+	
+	// Opened File for Reading
+	if(in >= 0)
+	{
+		// Delete Output File (if existing)
+		sceIoRemove(b);
+		
+		// Open File for Writing
+		int out = sceIoOpen(b, PSP_O_WRONLY | PSP_O_CREAT, 0777);
+		
+		// Opened File for Writing
+		if(out >= 0)
+		{
+			// Read Byte Count
+			int read = 0;
+			
+			// Copy Loop (512KB at a time)
+			while((read = sceIoRead(in, buffer, chunksize)) > 0)
+			{
+				// Accumulate Read Data
+				totalread += read;
+				
+				// Write Data
+				totalwrite += sceIoWrite(out, buffer, read);
+			}
+			
+			// Close Output File
+			sceIoClose(out);
+			
+			// Insufficient Copy
+			if(totalread != totalwrite) result = -3;
+		}
+		
+		// Output Open Error
+		else result = -2;
+		
+		// Close Input File
+		sceIoClose(in);
+	}
+	
+	// Input Open Error
+	else result = -1;
+	
+	// Free Memory
+	free(buffer);
+	
+	// Return Result
+	return result;
+}
+
+// Copy Folder from A to B
+int copy_folder_recursive(char * a, char * b)
+{
+	// Open Working Directory
+	int directory = sceIoDopen(a);
+	
+	// Opened Directory
+	if(directory >= 0)
+	{
+		// Create Output Directory (is allowed to fail, we can merge folders after all)
+		sceIoMkdir(b, 0777);
+		
+		// File Info Read Result
+		int dreadresult = 1;
+		
+		// Iterate Files
+		while(dreadresult > 0)
+		{
+			// File Info
+			SceIoDirent info;
+			
+			// Clear Memory
+			memset(&info, 0, sizeof(info));
+			
+			// Read File Data
+			dreadresult = sceIoDread(directory, &info);
+			
+			// Read Success
+			if(dreadresult >= 0)
+			{
+				// Valid Filename
+				if(strlen(info.d_name) > 0)
+				{
+					// Calculate Buffer Size
+					int insize = strlen(a) + strlen(info.d_name) + 2;
+					int outsize = strlen(b) + strlen(info.d_name) + 2;
+					
+					// Allocate Buffer
+					char * inbuffer = (char *)malloc(insize);
+					char * outbuffer = (char *)malloc(outsize);
+					
+					// Puzzle Input Path
+					strcpy(inbuffer, a);
+					inbuffer[strlen(inbuffer) + 1] = 0;
+					inbuffer[strlen(inbuffer)] = '/';
+					strcpy(inbuffer + strlen(inbuffer), info.d_name);
+					
+					// Puzzle Output Path
+					strcpy(outbuffer, b);
+					outbuffer[strlen(outbuffer) + 1] = 0;
+					outbuffer[strlen(outbuffer)] = '/';
+					strcpy(outbuffer + strlen(outbuffer), info.d_name);
+					
+					// Another Folder
+					if(FIO_S_ISDIR(info.d_stat.st_mode))
+					{
+						// Copy Folder (via recursion)
+						copy_folder_recursive(inbuffer, outbuffer);
+					}
+					
+					// Simple File
+					else
+					{
+						// Copy File
+						copy_file(inbuffer, outbuffer);
+					}
+					
+					// Free Buffer
+					free(inbuffer);
+					free(outbuffer);
+				}
+			}
+		}
+		
+		// Close Directory
+		sceIoDclose(directory);
+		
+		// Return Success
+		return 0;
+	}
+	
+	// Open Error
+	else return -1;
+}
 
 int folderScan(const char* path )
 {
@@ -210,175 +557,6 @@ void refresh()
 	dirBrowse(lastDir);
 }
 
-int sceIoCopyFile(const char * srcfile, const char * destfile, int * overwrite) {
-	int fdsrc, fddest, bytes_readed = -1;
-	char buffer[1024*3];
-	int bufsize = sizeof(buffer);
- 
-	if(fileExists(srcfile) == 0) {
-		return 0;
-	}
-	if((fileExists(destfile) == 1) && (overwrite == 0)) {
-		return 0;
-	}
- 
-	fdsrc = sceIoOpen(srcfile, PSP_O_RDONLY, 0777); // Opens the source file for read access permission
-	if(fdsrc < 0) return 0; // If 'fdsrc' is not a valid file descriptor, then return 0 and exit function
- 
-	fddest = sceIoOpen(destfile, PSP_O_WRONLY | PSP_O_CREAT | PSP_O_TRUNC, 0777); // Opens the dest file for write access permission. Creates it if it doesn't exists
-	if(fddest < 0) { sceIoClose(fdsrc); return 0; } // If 'fddest' is not a valid file descriptor, then closes the opened file descriptor of the source file and return 0 for exit the function
- 
-	bytes_readed = sceIoRead(fdsrc, buffer, bufsize);
-	while(bytes_readed > 0) {
-		sceIoWrite(fddest, buffer, bytes_readed);
-		bytes_readed = sceIoRead(fdsrc, buffer, bufsize);
-	}
-	sceIoClose(fddest);
-	sceIoClose(fdsrc);
-	return 1;
-}
- 
-int sceIoCopyDirectory(const char * sourcepath, const char * destpath, int * overwrite) {
-	int dfdsrc, dfddest, bytes_readed = -1;
- 
-	dfdsrc = sceIoDopen(sourcepath); // Assign the directory descriptor to the int 'dfd_src'
-	if(dfdsrc < 0) return 0; // If 'dfd_src' is not a valid directory descriptor, then returns 0 and exit function
- 
-	int check = dirExists(destpath); // Assign the directory check to the int 'check'
-	if(check == 0) { // If the 'destpath' folder doesn't exists...
-		sceIoMkdir(destpath, 0777); // Create a folder
-	} else if(check == 1 && overwrite == 0) {
-		return 0;
-	} else if(check == 1 && overwrite == 1) {
-		sceIoRmdir(destpath);
-	}
- 
-	dfddest = sceIoDopen(destpath);
-	if(dfddest < 0) {sceIoDclose(dfdsrc); return 0;} // If 'dfddest' is not a valid directory descriptor, then closes the opened directory descriptor of the source directory and return 0 for exit the function
- 
-	SceIoDirent ent;
-	memset(&ent, 0, sizeof(SceIoDirent));
- 
-	bytes_readed = sceIoDread(dfdsrc, &ent);
- 
-	while(bytes_readed > 0) {
-		sceIoWrite(dfddest, ent.d_private, bytes_readed);
-		bytes_readed = sceIoDread(dfdsrc, &ent);
-	}
- 
-	sceIoDclose(dfdsrc);
-	sceIoDclose(dfddest);
- 
-	return 1;
- 
-}
-
- /*
-// Copy File or Folder
-void copy(int flag, File * path)
-{	
-	// Not found
-	if(path == NULL) return;
-	
-	// Copy File Source
-	strcpy(copysource, cwd);
-	strcpy(copysource + strlen(copysource), folderIcons[current].name);
-	
-	// Add Recursive Folder Flag
-	if(dirExists(path)) flag |= COPY_FOLDER_RECURSIVE;
-	
-	// Set Copy Flags
-	copymode = flag;
-} 
-
-int paste(void)
-{
-	// No Copy Source
-	if(copymode == NOTHING_TO_COPY) return -1;
-	
-	// Source and Target Folder are identical
-	char * lastslash = NULL; int i = 0; for(; i < strlen(copysource); i++) if(copysource[i] == '/') lastslash = copysource + i;
-	char backup = lastslash[1];
-	lastslash[1] = 0;
-	int identical = strcmp(copysource, cwd) == 0;
-	lastslash[1] = backup;
-	if(identical) return -2;
-	
-	// Source Filename
-	char * filename = lastslash + 1;
-	
-	// Required Target Path Buffer Size
-	int requiredlength = strlen(cwd) + strlen(filename) + 1;
-	
-	// Allocate Target Path Buffer
-	char * copytarget = (char *)malloc(requiredlength);
-	
-	// Puzzle Target Path
-	strcpy(copytarget, cwd);
-	strcpy(copytarget + strlen(copytarget), filename);
-	
-	// Return Result
-	int result = -3;
-	
-	// Recursive Folder Copy
-	if((copymode & COPY_FOLDER_RECURSIVE) == COPY_FOLDER_RECURSIVE)
-	{
-		// Check Files in current Folder
-		File * node = files; for(; node != NULL; node = node->next)
-		{
-			// Found a file matching the name (folder = ok, file = not)
-			if(strcmp(filename, node->name) == 0 && !dirExists(node)) //
-			{
-				// Error out
-				return -4;
-			}
-		}
-		
-		// Copy Folder recursively
-		result = copy_folder_recursive(copysource, copytarget);
-		
-		// Source Delete
-		if(result == 0 && (copymode & COPY_DELETE_ON_FINISH) == COPY_DELETE_ON_FINISH)
-		{
-			// Append Trailing Slash (for recursion to work)
-			copysource[strlen(copysource) + 1] = 0;
-			copysource[strlen(copysource)] = '/';
-			
-			// Delete Source
-			delete_folder_recursive(copysource);
-		}
-	}
-	
-	// Simple File Copy
-	else
-	{
-		// Copy File
-		result = copy_file(copysource, copytarget);
-		
-		// Source Delete
-		if(result == 0 && (copymode & COPY_DELETE_ON_FINISH) == COPY_DELETE_ON_FINISH)
-		{
-			// Delete File
-			sceIoRemove(copysource);
-		}
-	}
-	
-	// Paste Success
-	if(result == 0)
-	{
-		// Erase Cache Data
-		memset(copysource, 0, sizeof(copysource));
-		copymode = NOTHING_TO_COPY;
-	}
-	
-	// Free Target Path Buffer
-	free(copytarget);
-	
-	// Return Result
-	return result;
-}
-*/
-
 void OptionMenu()
 {
 	action = oslLoadImageFilePNG("system/app/filemanager/actions.png", OSL_IN_RAM, OSL_PF_8888);
@@ -391,7 +569,14 @@ void OptionMenu()
 		oslStartDrawing();	
 		oslDrawImageXY(action, 98,47);
 		oslDrawStringf(120,115,"Press X");
-		oslDrawStringf(120,125,"to Copy");
+		if (copyData == 1)
+		{
+			oslDrawStringf(120,125,"to Paste");
+		}
+		else
+		{
+			oslDrawStringf(120,125,"to Copy");
+		}
 		oslDrawStringf(260,115,"Press Triangle");
 		oslDrawStringf(260,125,"to Cut");
 	
@@ -403,10 +588,20 @@ void OptionMenu()
 	
 		oslReadKeys();
 	
-		if (osl_keys->pressed.cross) 
+		if ((osl_keys->pressed.cross) && (copyData == 0)) 
 		{
+			strcpy(oldLocation, folderIcons[current].filePath); 
+			copyData = 1;
 			oslPlaySound(KeypressStandard, 1);  
-			fcopy(folderIcons[current].filePath);
+			oslDeleteImage(action);
+			refresh();
+		}
+		
+		else if ((osl_keys->pressed.cross) && (copyData == 1)) 
+		{
+			copy_folder(oldLocation, folderIcons[current].filePath);
+			copyData = 0;
+			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(action);
 			refresh();
 		}
@@ -425,7 +620,7 @@ void OptionMenu()
 		else if (osl_keys->pressed.circle) 
 		{
 			oslDeleteImage(action);
-			renameFile(folderIcons[current].filePath);
+			renameFile();
 		}
 	
 		else if (osl_keys->pressed.select) 
@@ -438,7 +633,7 @@ void OptionMenu()
 	}
 }
 
-void renameFile(char * path)
+void renameFile()
 {
 	while (!osl_quit)
 	{
@@ -446,9 +641,9 @@ void renameFile(char * path)
 		
 		oslStartDrawing();
 		
-		openOSK("Enter File Name", path, 250, -1);
+		openOSK("Enter File Name", folderIcons[current].filePath, 250, -1);
 		
-		sceIoRename(path, tempData);
+		sceIoRename(folderIcons[current].filePath, tempData);
 		
 		refresh();
 		
@@ -489,7 +684,7 @@ void newFolder()
 	}
 }
 
-void DeleteFile(const char * path)
+void DeleteFile(char path[])
 {
 	deletion = oslLoadImageFilePNG("system/app/filemanager/deletion.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -515,7 +710,7 @@ void DeleteFile(const char * path)
 			oslPlaySound(KeypressStandard, 1);  
 			if (strcmp(folderIcons[current].fileType, "fld")==0)
 			{
-				DeleteRecursive(path);
+				deleteRecursive(path);
 				oslSyncFrame();
 				sceKernelDelayThread(3*1000000);
 				oslDeleteImage(deletion);
@@ -540,7 +735,7 @@ void DeleteFile(const char * path)
 	}
 }
 
-int DeleteRecursive(char *path) //Thanks Moonchild!
+int deleteRecursive(char path[]) //Thanks Moonchild!
 {
   SceUID dfd;
 
@@ -559,13 +754,11 @@ int DeleteRecursive(char *path) //Thanks Moonchild!
             if (dir.d_name[0] != '.')
             {
                sprintf(filePath, "%s%s/", path, dir.d_name);
-               DeleteRecursive(filePath);
+               deleteRecursive(filePath);
             }
          }
          else
-         {
-            SceUID fd;            
-
+         {     
             strcpy(filePath, path);
             strcat(filePath, dir.d_name);
             
@@ -583,35 +776,6 @@ int DeleteRecursive(char *path) //Thanks Moonchild!
   return 1;
 }
 
-char * buffer;
-long size;
-
-void fcopy(char * source) 
-{
-	FILE * src;
-	src = fopen(source,"r");
-	fseek(src,0,SEEK_END);
-	size = ftell(src);
-	rewind(src);
-	buffer = malloc(size);
-	fread(buffer,1,size,src);
-	fclose(src);
-	
-	if (osl_keys->pressed.square) 
-	{
-	fpaste(folderIcons[current].filePath);
-	}
-}
-
-void fpaste(char * destination) 
-{
-	FILE * dst;
-
-	dst = fopen(destination,"w");
-	fwrite(buffer,1,size,dst);
-	fclose(dst);
-}
-
 int checkTextFile(char *textfile)
 {
 	SceUID fd = sceIoOpen(textfile, PSP_O_RDONLY, 0777);
@@ -626,10 +790,10 @@ int checkTextFile(char *textfile)
 	return 0;
 }
 
+char text_File[] = "";
+
 char *getTextFromFile()
 {
-	char text_File[1000];
-
 	memset(text_File, 0, sizeof(text_File));
 	SceUID fd = sceIoOpen(file, PSP_O_RDONLY, 0777);
 	
@@ -861,9 +1025,8 @@ void dirControls() //Controls
 			runFile(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
 		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) {
-			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
-				curScroll = 1;
-				current = 1;
+			if (copyData == 1){
+				paste();
 			}
 		}
 	}
@@ -1080,4 +1243,5 @@ int filemanage(int argc, char *argv[])
         oslEndFrame(); 
 		oslSyncFrame();
 	}
+	return 0;
 }

@@ -3,6 +3,7 @@
 #include <pspctrl.h>
 #include <psppower.h>
 #include <stdio.h>
+#include <pspwlan.h>
 #include <oslib/oslib.h>
 
 #include <kubridge.h>
@@ -15,9 +16,6 @@
 OSL_IMAGE *recoverybg, *Selector;
 
 OSL_FONT *roboto;
-
-int selector_image_x; //Determines the starting x position of the selection
-int selector_image_y; //Determines the starting y position of the selection
 
 void ShowPage5();
 void ShowPage4();

@@ -28,4 +28,5 @@ pause
 ECHO Delete objects not needed...
 DEL *.o
 DEL *.sfo
+DEL *.elf
 cls

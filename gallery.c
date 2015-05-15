@@ -1,7 +1,12 @@
 #include "home.h"
+#include "clock.h"
 #include "gallery.h"
 #include "appdrawer.h"
 #include "settingsmenu.h"
+#include "screenshot.h"
+#include "lock.h"
+#include "multi.h"
+#include "power_menu.h"
 #include "fm.h"
 #include "include/utils.h"
 
@@ -47,20 +52,20 @@ void galleryDisplay()
 	digitaltime(420,4,0);
 	
 	// Displays the directories, while also incorporating the scrolling
-	for(i=curScroll;i<MAX_GALLERY_DISPLAY+curScroll;i++) {
-	
-		char * ext = strrchr(dirScan[i].name, '.'); //For file extension.
-	
+	for(i=curScroll;i<MAX_GALLERY_DISPLAY+curScroll;i++) 
+	{
 		// Handles the cursor and the display to not move past the MAX_GALLERY_DISPLAY.
 		// For moving down
 		//if ((folderIcons[i].active == 0) && (current >= i-1)) {
 	
-		if ((folderIcons[i].active == 0) && (current >= i-1)) {
+		if ((folderIcons[i].active == 0) && (current >= i-1)) 
+		{
 			current = i-1;
 			break;
 		}
 		// For moving up
-		if (current <= curScroll-1) {
+		if (current <= curScroll-1) 
+		{
 			current = curScroll-1;
 			break;
 		}
@@ -68,8 +73,8 @@ void galleryDisplay()
 		oslDrawImageXY(galleryThumbnail,20,(i - curScroll)*56+THUMBNAIL_DISPLAY_Y);
 		
 		// If the currently selected item is active, then display the name
-		if (folderIcons[i].active == 1) {
-			
+		if (folderIcons[i].active == 1) 
+		{	
 			oslDrawStringf(GALLERY_DISPLAY_X, (i - curScroll)*55+GALLERY_DISPLAY_Y, "%.52s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
@@ -103,22 +108,23 @@ int changeWallpaper()
 		fclose(backgroundPathTXT);
 		background = oslLoadImageFile(folderIcons[current].filePath, OSL_IN_RAM, OSL_PF_8888);
 		oslDeleteImage(wallpaper);
-		return;
+		return 1;
 	}
 		
 	if (osl_keys->pressed.circle) 
 	{
 		oslDeleteImage(wallpaper);
-		return;
+		return 0;
 	}
 		
 	oslEndDrawing(); 
 	oslEndFrame(); 
 	oslSyncFrame();
 	}
+	return 0;
 }
 
-void showImage(const char * path, int n)
+int showImage(char * path, int n)
 {
 	int zoomIn = 0, zoomOut = 0;
 
@@ -136,8 +142,8 @@ void showImage(const char * path, int n)
 	image->x = OSL_SCREEN_WIDTH / 2;
 	image->y = OSL_SCREEN_HEIGHT / 2;
 		
-	while (!osl_quit) {
-
+	while (!osl_quit) 
+	{
 		oslReadKeys();
 		oslStartDrawing();	
 		
@@ -183,12 +189,12 @@ void showImage(const char * path, int n)
 			
 			if (n == 1)
 			{
-				displaySubThemes(1);
+				displaySubThemes("system/framework/framework-res/res", 1);
 			}
 			
 			else
 			{
-				return;
+				return 1;
 			}
 		}
 		
@@ -199,6 +205,7 @@ void showImage(const char * path, int n)
 	}
 	//delete image
 	oslDeleteImage(image);	
+	return 0;
 }
 
 void galleryControls() //Controls
@@ -335,7 +342,7 @@ void galleryUnload()
 	oslDeleteImage(galleryThumbnail);
 }
 
-void galleryView(char * browseDirectory)
+int galleryView(char * browseDirectory)
 {	
 	gallerybg = oslLoadImageFilePNG("system/app/gallery/gallerybg.png", OSL_IN_RAM, OSL_PF_8888);
 	gallerySelection = oslLoadImageFilePNG("system/app/gallery/highlight.png", OSL_IN_RAM, OSL_PF_8888);

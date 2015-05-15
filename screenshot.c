@@ -1,7 +1,10 @@
 #include "home.h"
+#include "include/utils.h"
 #include "screenshot.h"
 
-static void genScreenshotFileName(int lastNumber, char *fileName, const char *ext) //Change the file name starting from 0001
+int lastNumber = -1;
+
+void genScreenshotFileName(int lastNumber, char *fileName, const char *ext) //Change the file name starting from 0001
 {
 	int a, b, c, d;
 

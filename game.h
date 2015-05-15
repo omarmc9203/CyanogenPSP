@@ -11,15 +11,15 @@
 #include <stdio.h>
 #include <oslib/oslib.h>
 
-#define MAX_GAME_DISPLAY		6 // max amount of files displayed on-screen.
-#define GAME_DISPLAY_X			10 // X value of where the filebrowser is displayed.
-#define GAME_DISPLAY_Y			79 // Y value of the filebrowser is displayed.
-#define GAME_CURR_DISPLAY_Y     74 
+#define MAX_GAME_DISPLAY		3 // max amount of files displayed on-screen.
+#define GAME_DISPLAY_X			20 // X value of where the filebrowser is displayed.
+#define GAME_DISPLAY_Y			87 // Y value of the filebrowser is displayed.
+#define GAME_CURR_DISPLAY_Y     66 
 
 #define game_xSelection 0 //The distance between the X axis of the two selections
-#define game_ySelection 29 //The distance between the Y axis of the two selections
+#define game_ySelection 63 //The distance between the Y axis of the two selections
 
-OSL_IMAGE 	*gamebg, *gameSelection, *icon0, *gameAnim[9];
+OSL_IMAGE 	*gamebg, *gameSelection, *icon0, *gameAnim[20];
 OSL_FONT *Roboto;
 
 SceCtrlData pad, oldpad;
@@ -28,21 +28,23 @@ void gameUp();
 void gameDown();
 void gameUpx5();
 void gameDownx5();
-int launchEbootMs0(const char *path[]);
-int launchEbootEf0(const char *path[]);
-int launchPOPsMs0(const char *path[]);
-int launchPOPsEf0(const char *path[]);
-int launchISOMs0(const char *path[]);
-int launchISOEf0(const char *path[]);
+int launchEbootMs0(char path[]);
+int launchEbootEf0(char path[]);
+int launchPOPsMs0(char path[]);
+int launchPOPsEf0(char path[]);
+int launchISOMs0(char path[]);
+int launchISOEf0(char path[]);
 void gameDisplay();
 void gameControls(int n);
 char * gameBrowse(const char * path);
 char * popsBrowse(const char * path);
 void gameUnload();
-void gameView(char * browseDirectory, int type);
+void getIcon0(char* filename);
+int gameView(char * browseDirectory, int type);
+void checkGBootActivation();
+int gameBoot();
 int gameApp();
 
-static unsigned int size_icon0_png = 8939;
 static unsigned char icon0_png[] __attribute__((aligned(16))) = {
 	0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52, 
 	0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00, 0x50, 0x08, 0x02, 0x00, 0x00, 0x00, 0x79, 0xcc, 0x6b, 

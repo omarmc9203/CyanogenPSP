@@ -1,20 +1,10 @@
 // Thanks to West-Li, this program is based on his PSP Module Checker.
 // Thanks DAX for his ipl_update.prx
 // Thanks Yoti for his libpspident.a
-// Thanks Hellcat for his hc menu lib.
 // Thanks Raing3 for his psppower lib.
-
-#include <pspsdk.h>
-#include <pspkernel.h>
-#include <pspctrl.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <pspreg.h>
-
-#include "home.h"
-#include "include/utils.h"
+#include "common.h"
+#include "utils.h"
+#include "../home.h"
 
 char version_txt[256];
 char *file;
@@ -36,7 +26,7 @@ void CheckerPrintf(char *fmt, ...)
 	pspDebugScreenPrintf(msg);
 }
 
-void CheckerExit()
+void xmbExit()
 {
 	sceIoRemove("ipl_update.prx");
 	sceIoRemove("batman.prx");
@@ -44,7 +34,7 @@ void CheckerExit()
 	sceKernelExitGame();
 }
 
-void Exittoshell()
+void exitToGUI()
 {
 	sceIoRemove("ipl_update.prx");
 	sceIoRemove("batman.prx");
@@ -52,7 +42,7 @@ void Exittoshell()
 	home();
 }
 
-void shutdown_device()
+void shutdownDevice()
 {
 	scePowerRequestStandby();
 }
@@ -60,7 +50,6 @@ void shutdown_device()
 void deviceStandby()
 {
 	scePowerRequestSuspend();
-	return 0;
 }
 
 void USB_Toggle()
@@ -68,30 +57,14 @@ void USB_Toggle()
 	SceCtrlData pad;
 	
 	if(pad.Buttons & PSP_CTRL_SELECT)
-		{
-			enableUsb();
-		}
+	{
+		enableUsb();
+	}
 		
-		else if(pad.Buttons & PSP_CTRL_SELECT)
-		{
-			disableUsb();
-		}
-}
-
-void CheckerSetColor(int color)
-{
-    hcMenuSetColors(0x00FFFFFF, color);
-	MainScreenColor = color;
-}
-
-void CheckerInitMainScreen(char *menu_txt)
-{
-	pspDebugScreenSetTextColor(MainScreenColor);
-    pspDebugScreenClear();
-    CheckerPrintf("CyanoPSP Recovery Menu\n");
-	CheckerPrintf("%s\n\n", menu_txt);
-    CheckerPrintf("\n\n\n");
-	pspDebugScreenSetTextColor(0x00FFFFFF);
+	else if(pad.Buttons & PSP_CTRL_SELECT)
+	{
+		disableUsb();
+	}
 }
 
 //Error
@@ -123,7 +96,7 @@ void Error(char *fmt, ...)
 		sceKernelDelayThread(10000);
 	}
 	
-	CheckerExit();
+	xmbExit();
 }
 
 //File helper

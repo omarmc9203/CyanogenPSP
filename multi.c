@@ -47,14 +47,14 @@ int multitask()
 		if (osl_pad.held.circle)
 		{	
 			oslDeleteImage(multi_task);
-			return;
+			return 1;
 		}
 		
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_pad.held.cross)
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(multi_task);
-			return;
+			return 1;
 		}
 		
 		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_pad.held.cross)
@@ -80,4 +80,5 @@ int multitask()
     oslEndFrame(); 
 	oslSyncFrame();
 	}
+	return 0;
 }

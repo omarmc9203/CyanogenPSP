@@ -1,4 +1,9 @@
 #include "appdrawer.h"
+#include "calculator.h"
+#include "apollo.h"
+#include "messenger.h"
+#include "fm.h"
+#include "game.h"
 #include "settingsmenu.h"
 #include "clock.h"
 #include "home.h"
@@ -34,7 +39,7 @@ int appdrawer()
 	int gallery_x = 280;
 	int gallery_text_x = 302;
 	int game_icon = 345;
-	int game_text_icon = 370;
+	int game_text_icon = 368;
 	int messenger_x = 410;
 	int messenger_text_x = 430; 
 	int music_x = 20;
@@ -49,8 +54,6 @@ int appdrawer()
 	
 	if (!ic_launcher_clock || !backdrop)
 		debugDisplay();
-
-	int highlight = 0;
 
 	oslSetFont(Roboto);
 		
@@ -188,8 +191,6 @@ int appdrawer()
 			lockscreen();
         }
 		
-		int n = 0;
-		
 		if (osl_keys->pressed.circle)
 		{
 			appdrawer_deleteImages();
@@ -203,14 +204,13 @@ int appdrawer()
 			internet();
 		}
 		
-		/* WIP Calculator
+		// WIP Calculator
 		if (cursor->x >= 75 && cursor->x <= 140 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			calculator();
 		}
-		*/
 		
 		if (cursor->x >= 140 && cursor->x <= 205 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
@@ -239,15 +239,13 @@ int appdrawer()
 			appdrawer_deleteImages();
 			gameApp();
 		}
-		
-		/* Messenger WIP
-		if (cursor->x >= 400 && cursor->x <= 465 && cursor->y >= 118 && cursor->y <= 170 && osl_keys->pressed.cross)
+
+		if (cursor->x >= 400 && cursor->x <= 465 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			messenger();
 		}
-		*/
 		
 		if (cursor->x >= 10 && cursor->x <= 75 && cursor->y >= 110 && cursor->y <= 175 && osl_keys->pressed.cross)
 		{
@@ -393,5 +391,6 @@ int appdrawer()
         oslEndFrame(); 
 		oslSyncFrame();	
 	}
+	return 0;
 }
 

@@ -13,15 +13,8 @@
 //PSP Time
 #include <psprtc.h>
 
-#define ADDRESS "www.google.com"
-
 //declaration
-		  
-OSL_FONT *Roboto;
-
-static int runningFlag = 1;
-static char message[100] = "";
-static char buffer[100] = "";
+OSL_IMAGE * bootAnim[78];
 
 //function declarations
 int initOSLib(); 

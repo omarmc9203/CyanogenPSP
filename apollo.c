@@ -294,7 +294,7 @@ void MP3Play(char * path)
 	MP3_End();
 }
 
-void soundPlay(char * path)
+int soundPlay(char * path)
 {	
 	nowplaying = oslLoadImageFilePNG("system/app/apollo/nowplaying.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -331,7 +331,7 @@ void soundPlay(char * path)
 		if(osl_keys->pressed.select) 
 		{
 			oslDeleteImage(nowplaying);
-			return;
+			return 1;
 		}
 		
 		if(osl_keys->pressed.cross) 
@@ -345,7 +345,7 @@ void soundPlay(char * path)
 			oslStopSound(sound);
 			oslDeleteSound(sound);
 			oslDeleteImage(nowplaying);
-			return;
+			return 1;
 		}
 		
 		if (osl_keys->pressed.square)
@@ -384,8 +384,6 @@ void mp3FileDisplay()
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_MP3_DISPLAY+curScroll;i++) 
 	{
-		char * ext = strrchr(dirScan[i].name, '.'); //For file extension.
-	
 		// Handles the cursor and the display to not move past the MAX_MP3_DISPLAY.
 		// For moving down
 		//if ((folderIcons[i].active == 0) && (current >= i-1)) {
@@ -550,7 +548,7 @@ char * mp3Browse(const char * path)
 	return returnMe;
 }
 
-void mp3View(char * browseDirectory)
+int mp3View(char * browseDirectory)
 {	
 	mp3bg = oslLoadImageFilePNG("system/app/apollo/mp3bg.png", OSL_IN_RAM, OSL_PF_8888);
 	mp3_select = oslLoadImageFilePNG("system/app/apollo/mp3_select.png", OSL_IN_RAM, OSL_PF_8888);

@@ -16,7 +16,7 @@ extern "C" {
 #define FALSE 0
 #define TRUE !FALSE
 
-static int isPlaying;	// Set to true when a mod is being played
+	int isPlaying;	// Set to true when a mod is being played
 
 //  Function prototypes for public functions
 //    void MP3setStubs(codecStubs * stubs);
@@ -31,6 +31,7 @@ static int isPlaying;	// Set to true when a mod is being played
     int MP3_Load(char *filename);
     void MP3_GetTimeString(char *dest);
     int MP3_EndOfStream();
+	void releaseAudioCh();
 
 #ifdef __cplusplus
 }

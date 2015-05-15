@@ -46,7 +46,7 @@ char *umdmodes[4] =
         "Sony NP9660 -NO UMD-"
 };
 
-char *vshmenuoptions[3] =
+char *vshmenuoptions[4] =
 {
         "Disabled",
 		"VshMenu",

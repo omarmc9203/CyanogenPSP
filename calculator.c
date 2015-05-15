@@ -35,13 +35,15 @@ int variable, selection;
  
 int calculator()
 {
-	int result;
-	int x;
-	int y;
+	//int result;
+	int x = 1;
+	int y = 1;
+	/*
 	int enterednumber;
 	int numberuse = 0;
 	int suppression = 1;
 	int Number = 0;
+	*/
 
 	calcbackground = oslLoadImageFile("system/app/calculator/calcbg.png", OSL_IN_RAM, OSL_PF_8888);
 
@@ -93,125 +95,121 @@ int calculator()
 		oslDrawString(446,120,"ln");
 	
 		if (osl_keys->pressed.left)
-		x = x++;
+		x -= 1;
 		if (x == 0)
 		x = 8;
 
 		if (osl_keys->pressed.right)
-		x = x++;
+		x += 1;
 		if (x == 10)
 		x = 1;
 
 		if (osl_keys->pressed.up)
-		y = y--;
+		y -= 1;
 		if (y == 0)
 		y = 4;
 
 		if (osl_keys->pressed.down)
-		y = y++;
+		y += 1;
 		if (y == 5)
 		y = 1;
-		
-		x = 1;
-		y = 1;
-
 			
 			if (y == 1 && x ==1)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(35,120,"7");
 			}
 			else if (y == 1 && x == 2)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(90,120,"8");
 			}
 			else if (y == 1 && x  == 3) 
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(145,120,"9");
 			}
 			else if (y == 1 && x == 4)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(218,120,"/");
 			}
 			else if (y == 1 && x == 5)
 			{
-				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.6f,BLACK,0,0);
 				oslDrawString(260,120,"DEL");
 			}
 			else if (y == 1 && x  == 6) 
 			{
-				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.6f,BLACK,0,0);
 				oslDrawString(326,120,"sin");
 			}
 			else if (y == 1 && x  == 7)
 			{
-				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.6f,BLACK,0,0);
 				oslDrawString(366,120,"cos");
 			}
 			else if (y == 1 && x  == 8)
 			{
-				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.6f,BLACK,0,0);
 				oslDrawString(406,120,"tan");
 			}
 			else if (y == 1 && x  == 9)
 			{
-				oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.6f,BLACK,0,0);
 				oslDrawString(446,120,"ln");
 			}
 			
 			if (y == 2 && x == 1)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(35,160,"4");
 			}
 			else if (y == 2 && x == 2) 
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(90,160,"5");
 			}
 			else if (y == 2 && x == 3)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(145,160,"6");
 			}
 			else if (y == 2 && x == 4) 
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(218,160,"x");
 			}
 
 			if (y == 3 && x == 1)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(35,200,"1");
 			}
 			else if (y == 3 && x == 2)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(90,200,"2");
 			}
 			else if (y == 3 && x == 3)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(145,200,"3");
 			}
 			else if (y == 3 && x == 4)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(218,200,"-");
 			}	
 
 			if (y == 4 && x == 1)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(90,240,"0");
 			}
 			else if (y == 4 && x == 2)
 			{
-				oslIntraFontSetStyle(Roboto, 0.8f,DARKGRAY,0,0);
+				oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,0);
 				oslDrawString(218,240,"+");
 			}
 		
@@ -260,6 +258,6 @@ int calculator()
         oslEndDrawing(); 
 		oslEndFrame(); 
 		oslSyncFrame();
-		}
+	}
+	return 0;
 }
-
