@@ -688,7 +688,7 @@ void setCpuBoot()
 		scePowerSetClockFrequency(266, 266, 133);
 	else if (processorState == 6)
 		scePowerSetClockFrequency(300, 300, 150);
-	else
+	else if (processorState == 7)
 		scePowerSetClockFrequency(333, 333, 166);
 }
 
@@ -697,7 +697,7 @@ void processorMenu()
 	FILE * processorInfo;
 	
 	int currentState = stateOff;
-	int cpufreq, cpu, bus;
+	int cpufreq, cpu, bus, state;
 	
 	processorbg = oslLoadImageFilePNG("system/settings/processorbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
@@ -745,47 +745,43 @@ void processorMenu()
 			processorInfo = fopen("system/settings/processorInfo.bin", "w");
 			cpufreq = scePowerGetCpuClockFrequency();
 			
-			if (cpufreq <18)
+			if (cpufreq <70)
 			{
-				fprintf(processorInfo, "0");
-				scePowerSetClockFrequency(20, 20, 10);
-			}
-			else if (cpufreq <70)
-			{
-				fprintf(processorInfo, "1");
+				state = 1;
 		        scePowerSetClockFrequency(75, 75, 37);	
 			}
 			else if (cpufreq <95)
 			{
-				fprintf(processorInfo, "2");
+				state = 2;
 				scePowerSetClockFrequency(100, 100, 50);
 			}
 			else if (cpufreq <125)
 			{
-				fprintf(processorInfo, "3");
+				state = 3;
 				scePowerSetClockFrequency(133, 133, 66);
 			}
 			else if (cpufreq <215)
 			{
-				fprintf(processorInfo, "4");
+				state = 4;
 				scePowerSetClockFrequency(222, 222, 111);
 			}
 			else if (cpufreq <260)
 			{
-				fprintf(processorInfo, "5");
+				state = 5;
 				scePowerSetClockFrequency(266, 266, 133);
 			}
 			else if (cpufreq <290)
 			{
-				fprintf(processorInfo, "6");
+				state = 6;
 				scePowerSetClockFrequency(300, 300, 150);
 			}
 			else if (cpufreq <325)
 			{
-				fprintf(processorInfo, "7");
+				state = 7;
 				scePowerSetClockFrequency(333, 333, 166);
 			}
 			
+			fprintf(processorInfo, "%d", state);
 			fclose(processorInfo);
 			currentState = stateNoClock;
 		}
@@ -797,40 +793,41 @@ void processorMenu()
 			
 			if (cpufreq> 300)
 			{
-				fprintf(processorInfo, "6");
+				state = 6;
 				scePowerSetClockFrequency(300, 300, 150);
 			}
 			else if (cpufreq> 266)
 			{
-				fprintf(processorInfo, "5");
+				state = 5;
 				scePowerSetClockFrequency(266, 266, 133);
 			}
 			else if (cpufreq> 222)
 			{
-				fprintf(processorInfo, "4");
+				state = 4;
 				scePowerSetClockFrequency(222, 222, 111);
 			}
 			else if (cpufreq> 133)
 			{
-				fprintf(processorInfo, "3");
+				state = 3;
 				scePowerSetClockFrequency(133, 133, 66);
 			}
 			else if (cpufreq> 100)
 			{
-				fprintf(processorInfo, "2");
+				state = 2;
 				scePowerSetClockFrequency(100, 100, 50);
 			}
 			else if (cpufreq> 75)
 		    {
-				fprintf(processorInfo, "1");
+				state = 1;
 				scePowerSetClockFrequency(75, 75, 37);
 			}
 			else if (cpufreq> 20)
 			{
-				fprintf(processorInfo, "0");
+				state = 0;
 				scePowerSetClockFrequency(20, 20, 10);
 			}
 			
+			fprintf(processorInfo, "%d", state);
 			fclose(processorInfo);
 			currentState = stateNoClock; // This state allows the frequency to not climb on each cycle.
 		}
