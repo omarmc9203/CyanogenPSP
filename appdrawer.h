@@ -8,4 +8,6 @@
 OSL_IMAGE *ic_launcher_calculator, *ic_launcher_clock, *ic_launcher_umd, *ic_launcher_gallery, *ic_launcher_filemanager, *ic_launcher_game, *backdrop;
 
 void appdrawer_loadImages();
+void appdrawer_deleteImages();
+void appHighlight(int n);
 int appdrawer();

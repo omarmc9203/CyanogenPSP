@@ -26,6 +26,185 @@ void appdrawer_deleteImages()
 	oslDeleteImage(ic_launcher_clock);
 }
 
+void appHighlight(int n)
+{
+	float zoomIn = 1.1, zoomOut = 1.1;
+
+	if (n == 0)
+	{	
+		if (cursor->x >= 100 && cursor->x <= 154 && cursor->y >= 195 && cursor->y <= 240)
+		{
+			ic_launcher_apollo->stretchX = ic_launcher_apollo->sizeX * zoomIn;
+			ic_launcher_apollo->stretchY = ic_launcher_apollo->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_apollo->stretchX = ic_launcher_apollo->sizeX;
+			ic_launcher_apollo->stretchY = ic_launcher_apollo->sizeY;
+		}
+	
+		if (cursor->x >= 155 && cursor->x <= 210 && cursor->y >= 195 && cursor->y <= 240)
+		{
+			ic_launcher_messenger->stretchX = ic_launcher_messenger->sizeX * zoomIn;
+			ic_launcher_messenger->stretchY = ic_launcher_messenger->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_messenger->stretchX = ic_launcher_messenger->sizeX;
+			ic_launcher_messenger->stretchY = ic_launcher_messenger->sizeY;
+		}
+	
+		if (cursor->x >= 276 && cursor->x <= 321 && cursor->y >= 195 && cursor->y <= 240)
+		{
+			ic_launcher_browser->stretchX = ic_launcher_browser->sizeX * zoomIn;
+			ic_launcher_browser->stretchY = ic_launcher_browser->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_browser->stretchX = ic_launcher_browser->sizeX;
+			ic_launcher_browser->stretchY = ic_launcher_browser->sizeY;
+		}
+		
+		if (cursor->x >= 330 && cursor->x <= 374 && cursor->y >= 190 && cursor->y <= 240)
+		{
+			ic_launcher_settings->stretchX = ic_launcher_settings->sizeX * zoomIn;
+			ic_launcher_settings->stretchY = ic_launcher_settings->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_settings->stretchX = ic_launcher_settings->sizeX;
+			ic_launcher_settings->stretchY = ic_launcher_settings->sizeY;
+		}
+	}
+
+	else if (n == 1)
+	{
+		if (cursor->x >= 10 && cursor->x <= 75 && cursor->y >= 25 && cursor->y <= 90)
+		{
+			ic_launcher_browser->stretchX = ic_launcher_browser->sizeX * zoomIn;
+			ic_launcher_browser->stretchY = ic_launcher_browser->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_browser->stretchX = ic_launcher_browser->sizeX;
+			ic_launcher_browser->stretchY = ic_launcher_browser->sizeY;
+		}
+		
+		if (cursor->x >= 75 && cursor->x <= 140 && cursor->y >= 25 && cursor->y <= 90)
+		{
+			ic_launcher_calculator->stretchX = ic_launcher_calculator->sizeX * zoomIn;
+			ic_launcher_calculator->stretchY = ic_launcher_calculator->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_calculator->stretchX = ic_launcher_calculator->sizeX;
+			ic_launcher_calculator->stretchY = ic_launcher_calculator->sizeY;
+		}
+		
+		if (cursor->x >= 140 && cursor->x <= 205 && cursor->y >= 25 && cursor->y <= 90)
+		{
+			ic_launcher_clock->stretchX = ic_launcher_clock->sizeX * zoomIn;
+			ic_launcher_clock->stretchY = ic_launcher_clock->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_clock->stretchX = ic_launcher_clock->sizeX;
+			ic_launcher_clock->stretchY = ic_launcher_clock->sizeY;
+		}
+		
+		if (cursor->x >= 205 && cursor->x <= 270 && cursor->y >= 25 && cursor->y <= 90)
+		{
+			ic_launcher_filemanager->stretchX = ic_launcher_filemanager->sizeX * zoomIn;
+			ic_launcher_filemanager->stretchY = ic_launcher_filemanager->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_filemanager->stretchX = ic_launcher_filemanager->sizeX;
+			ic_launcher_filemanager->stretchY = ic_launcher_filemanager->sizeY;
+		}
+		
+		if (cursor->x >= 270 && cursor->x <= 335 && cursor->y >= 25 && cursor->y <= 90)
+		{
+			ic_launcher_gallery->stretchX = ic_launcher_gallery->sizeX * zoomIn;
+			ic_launcher_gallery->stretchY = ic_launcher_gallery->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_gallery->stretchX = ic_launcher_gallery->sizeX;
+			ic_launcher_gallery->stretchY = ic_launcher_gallery->sizeY;
+		}
+		
+		if (cursor->x >= 335 && cursor->x <= 400 && cursor->y >= 25 && cursor->y <= 90)
+		{
+			ic_launcher_game->stretchX = ic_launcher_game->sizeX * zoomIn;
+			ic_launcher_game->stretchY = ic_launcher_game->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_game->stretchX = ic_launcher_game->sizeX;
+			ic_launcher_game->stretchY = ic_launcher_game->sizeY;
+		}
+		
+		if (cursor->x >= 400 && cursor->x <= 465 && cursor->y >= 25 && cursor->y <= 90)
+		{
+			ic_launcher_messenger->stretchX = ic_launcher_messenger->sizeX * zoomIn;
+			ic_launcher_messenger->stretchY = ic_launcher_messenger->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_messenger->stretchX = ic_launcher_messenger->sizeX;
+			ic_launcher_messenger->stretchY = ic_launcher_messenger->sizeY;
+		}
+		
+		if (cursor->x >= 10 && cursor->x <= 75 && cursor->y >= 110 && cursor->y <= 175)
+		{
+			ic_launcher_apollo->stretchX = ic_launcher_apollo->sizeX * zoomIn;
+			ic_launcher_apollo->stretchY = ic_launcher_apollo->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_apollo->stretchX = ic_launcher_apollo->sizeX;
+			ic_launcher_apollo->stretchY = ic_launcher_apollo->sizeY;
+		}
+		
+		if (cursor->x >= 75 && cursor->x <= 140 && cursor->y >= 110 && cursor->y <= 175)
+		{
+			ic_launcher_settings->stretchX = ic_launcher_settings->sizeX * zoomIn;
+			ic_launcher_settings->stretchY = ic_launcher_settings->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_settings->stretchX = ic_launcher_settings->sizeX;
+			ic_launcher_settings->stretchY = ic_launcher_settings->sizeY;
+		}
+		
+		if (cursor->x >= 140 && cursor->x <= 205 && cursor->y >= 110 && cursor->y <= 175)
+		{
+			ic_launcher_umd->stretchX = ic_launcher_umd->sizeX * zoomIn;
+			ic_launcher_umd->stretchY = ic_launcher_umd->sizeY * zoomOut;
+		}
+		
+		else
+		{
+			ic_launcher_umd->stretchX = ic_launcher_umd->sizeX;
+			ic_launcher_umd->stretchY = ic_launcher_umd->sizeY;
+		}
+	}
+}
+
 int appdrawer()
 {	
 	int browser_x = 20;
@@ -134,6 +313,7 @@ int appdrawer()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		androidQuickSettings();
+		appHighlight(1);
 		oslDrawImage(cursor);
 			
 		if (osl_pad.held.left && (osl_pad.held.cross))
