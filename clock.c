@@ -7,19 +7,44 @@
 #include "screenshot.h"
 #include "include/utils.h"
 
-int hour = 0;
-int minute = 0;
-int second = 0;
-int milisec = 0;
+time_t		currentTime;
+time_t		startTimer_;
 
-int counter = 0;
-int timer = 0;
+int timeState;
+int timerStart = 0;
 
-char shour[2];
-char sminute[2];
-char ssecond[2];
-char smilisec[2];
-char stimer[10];
+void startTimer() 
+{
+	//Get current time
+	sceKernelLibcTime(&startTimer_);
+	
+	// Set Timer initiation to 1
+	timerStart = 1;
+}
+
+void pauseTimer() 
+{
+	timerStart = 2;
+}
+
+int getTimer()
+{
+	if(!timerStart)
+		return 0;
+
+	//Get the current time
+	sceKernelLibcTime(&currentTime);
+
+	//Return the difference between current time and the start time.
+	timeState = ((int)currentTime - (int)startTimer_);
+	
+	return timeState;
+}
+
+void resetTimer() 
+{
+	timerStart = 0; //Reset to 0
+}
 
 void getDayOfWeek(int x, int y, int n)
 {
@@ -106,75 +131,51 @@ void centerClock(int n)
 	}
 }
 
-void startCounter()
+int pspTimer()
 {
-	SceCtrlData newPad, oldPad;
+	pspTime time;
+	sceRtcGetCurrentClockLocalTime(&time);
 
-	while (!osl_quit)
-	{
-		oslStartDrawing();
-		
-		oldPad = newPad;
-		sceCtrlReadBufferPositive(&newPad, 1);
-		if (newPad.Buttons != oldPad.Buttons)
-		{
-			if (newPad.Buttons & PSP_CTRL_CROSS)
-			{
-				oslPlaySound(KeypressStandard, 1);  
-				break;
-			}
-		}
-
-		if (hour == 60)
-		{
-			hour = 0;
-		}
-		if (minute == 60)
-		{
-			hour++;
-			minute = 0;
-		}
-		if (second == 60)
-		{
-			minute++;
-			second = 0;
-		}
-		if (milisec == 60)
-		{
-			second++;
-			milisec = milisec *1.67;
-		}
-		oslDrawStringf(200,200,"%d:%d:%d.%d       ", hour, minute, second, milisec);
-		milisec++;
-	}
-	oslEndDrawing(); 
-	oslEndFrame(); 
-	oslSyncFrame();
-}
-
-void stopWatch()
-{
-	stop_watch = oslLoadImageFilePNG("system/app/clock/stop_watch.png", OSL_IN_RAM, OSL_PF_8888);
-
-	if (!stop_watch)
+	timerBg = oslLoadImageFilePNG("system/app/clock/timerBg.png", OSL_IN_RAM, OSL_PF_8888);
+	timerPause = oslLoadImageFilePNG("system/app/clock/pause.png", OSL_IN_RAM, OSL_PF_8888);
+	timerPlay = oslLoadImageFilePNG("system/app/clock/play.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	loadBg();
+	
+	if (!timerBg || !timeBg || !timerPause || !timerPlay)
 		debugDisplay();
 
 	oslSetFont(Roboto);
 	
-	SceCtrlData newPad, oldPad;
-	sceCtrlReadBufferPositive(&oldPad, 1);
-	
 	while (!osl_quit)
-	{	
+	{		
 		LowMemExit();
-		
+	
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));
 		
 		controls();	
 		
-		oslDrawImageXY(stop_watch, 0, 19);
+		oslDrawImageXY(timeBg, 0, 0);
+		oslDrawImageXY(timerBg, 0, 0);
+		
+		if (timerStart == 1)
+			oslDrawImageXY(timerPause, 200, 204);
+		else 
+			oslDrawImageXY(timerPlay, 200, 204);
+		
+		if (time.hour > 12)
+			time.hour -= 12;
+	
+		if (time.hour == 00)
+			time.hour = 12;
+		
+		oslIntraFontSetStyle(Roboto, 0.6f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
+		
+		oslDrawStringf(224,110,"%d\n", getTimer());
+
+        oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
 		digitaltime(381,4,0);
 		battery(330,2,0);
@@ -195,79 +196,220 @@ void stopWatch()
 		
 		if (osl_keys->pressed.circle)
 		{
-			oslDeleteImage(stop_watch);
-			appdrawer();
-		}
-
-		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
-		{	
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(stop_watch);
+			oslDeleteImage(timerBg);
+			oslDeleteImage(timeBg);
 			appdrawer();
 		}
 		
-		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+		if (cursor->x >= 108 && cursor->x <= 140  && cursor->y >= 25 && cursor->y <= 54 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(stop_watch);
-			home();
+			oslDeleteImage(timerBg);
+			oslDeleteImage(timeBg);
+			pspclock();
 		}
 
-		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			multitask();
 		}
-		
-		if (cursor->x >= 114 && cursor->x <= 150  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
+	
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
 			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(stop_watch);
-			pspclock();
+			oslDeleteImage(timerBg);
+			oslDeleteImage(timeBg);
+			appdrawer();
 		}
-		
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(timerBg);
+			oslDeleteImage(timeBg);
+			home();
+		}
+
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
 		{
 			screenshot();
 		}
-		
-		oldPad = newPad;
-		sceCtrlReadBufferPositive(&newPad, 1);
-
-		if (newPad.Buttons != oldPad.Buttons)
-		{	
-			if (newPad.Buttons & PSP_CTRL_CROSS)
-			{
-				oslPlaySound(KeypressStandard, 1);  
-				if (counter == 0)
-				{
-					counter = 1;
-					startCounter();
-				}
-			}
-			if (newPad.Buttons & PSP_CTRL_RTRIGGER)
-			{	
-			hour = 0;
-			minute = 0;
-			second = 0;
-			milisec = 0;
-			oslDrawStringf(211,175, "0:0:0.00       ");
-			counter = 0;
-			}
-		}
-		oslEndDrawing(); 
-		oslEndFrame(); 
-		oslSyncFrame();
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();
 	}
+	return 0;
 }
 
-int pspclock()
+int pspStopWatch()
+{
+	int hour = 0, min = 0, miliSec = 0, temp;
+	pspTime time;
+	sceRtcGetCurrentClockLocalTime(&time);
+
+	stopWatchBg = oslLoadImageFilePNG("system/app/clock/stopWatchBg.png", OSL_IN_RAM, OSL_PF_8888);
+	timerPause = oslLoadImageFilePNG("system/app/clock/pause.png", OSL_IN_RAM, OSL_PF_8888);
+	timerPlay = oslLoadImageFilePNG("system/app/clock/play.png", OSL_IN_RAM, OSL_PF_8888);
+	reset = oslLoadImageFilePNG("system/app/clock/reset.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	loadBg();
+	
+	if (!stopWatchBg || !timeBg || !timerPause || !timerPlay)
+		debugDisplay();
+
+	oslSetFont(Roboto);
+	
+	while (!osl_quit)
+	{		
+		LowMemExit();
+	
+		oslStartDrawing();
+		
+		oslClearScreen(RGB(0,0,0));
+		
+		controls();	
+		
+		oslDrawImageXY(timeBg, 0, 0);
+		oslDrawImageXY(stopWatchBg, 0, 0);
+		
+		if (timerStart == 1)
+		{
+			oslDrawImageXY(timerPause, 200, 215);
+			oslDrawImageXY(reset, 80, 222);
+		}
+		else 
+			oslDrawImageXY(timerPlay, 200, 215);
+			
+		oslIntraFontSetStyle(Roboto, 0.7f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
+		
+		oslDrawStringf(224,110,"%d %d %d %d\n", hour, min, getTimer(), miliSec);
+		
+		temp = getTimer();
+
+		if (timerStart == 1)
+		{
+			miliSec+=1;
+			if (miliSec > 99)
+			miliSec = 0;
+		}
+		
+		if (timeState >= 60)
+		{
+			min += 1;
+			resetTimer();
+			startTimer();
+		}
+		
+		if (min >= 60)
+		{
+			hour += 1;
+			min = 0;
+		}
+
+        oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+
+		digitaltime(381,4,0);
+		battery(330,2,0);
+		navbarButtons(2);
+		androidQuickSettings();
+		oslDrawImage(cursor);
+
+		if (cursor->x >= 196 && cursor->x <= 246  && cursor->y >= 208 && cursor->y <= 258 && timerStart == 1 && osl_keys->pressed.cross)
+		{
+			pauseTimer();
+			oslPlaySound(KeypressStandard, 1);  
+		}
+		
+		if (cursor->x >= 196 && cursor->x <= 246  && cursor->y >= 208 && cursor->y <= 258 && osl_keys->pressed.cross)
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			startTimer();
+		}
+		
+		if (cursor->x >= 70 && cursor->x <= 106  && cursor->y >= 216 && cursor->y <= 248 && osl_keys->pressed.cross)
+		{
+			miliSec = 0;
+			oslPlaySound(KeypressStandard, 1);  
+			resetTimer();
+		}
+		
+		if (osl_keys->pressed.square)
+		{	
+			powermenu();
+		}
+		
+		if (osl_keys->pressed.L)
+		{
+			oslPlaySound(Lock, 1);  
+			lockscreen();
+        }
+				
+		if (osl_keys->pressed.circle)
+		{
+			oslDeleteImage(stopWatchBg);
+			oslDeleteImage(timeBg);
+			oslDeleteImage(reset);
+			oslDeleteImage(timerPlay);
+			oslDeleteImage(timerPause);
+			appdrawer();
+		}
+		
+		if (cursor->x >= 108 && cursor->x <= 140  && cursor->y >= 25 && cursor->y <= 54 && osl_keys->pressed.cross)
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(stopWatchBg);
+			oslDeleteImage(timeBg);
+			oslDeleteImage(reset);
+			oslDeleteImage(timerPlay);
+			oslDeleteImage(timerPause);
+			pspclock();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			multitask();
+		}
+	
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(stopWatchBg);
+			oslDeleteImage(timeBg);
+			oslDeleteImage(reset);
+			oslDeleteImage(timerPlay);
+			oslDeleteImage(timerPause);
+			appdrawer();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(stopWatchBg);
+			oslDeleteImage(timeBg);
+			oslDeleteImage(reset);
+			oslDeleteImage(timerPlay);
+			oslDeleteImage(timerPause);
+			home();
+		}
+
+		if (osl_pad.held.R && osl_keys->pressed.triangle)
+		{
+			screenshot();
+		}
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();
+	}
+	return 0;
+}
+
+void loadBg()
 {
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
 
-	clockBg = oslLoadImageFilePNG("system/app/clock/clockBg.png", OSL_IN_RAM, OSL_PF_8888);
-	
 	if (time.hour >= 0.00  && time.hour <= 11.59)
 	{
 		timeBg = oslLoadImageFilePNG("system/app/clock/timeBg5.png", OSL_IN_RAM, OSL_PF_8888);
@@ -288,6 +430,16 @@ int pspclock()
 	{
 		timeBg = oslLoadImageFilePNG("system/app/clock/timeBg4.png", OSL_IN_RAM, OSL_PF_8888);
 	}
+}
+
+int pspclock()
+{
+	pspTime time;
+	sceRtcGetCurrentClockLocalTime(&time);
+
+	clockBg = oslLoadImageFilePNG("system/app/clock/clockBg.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	loadBg();
 	
 	if (!clockBg || !timeBg)
 		debugDisplay();
@@ -372,15 +524,23 @@ int pspclock()
 			home();
 		}
 		
-		/*
-		if (cursor->x >= 285 && cursor->x <= 332  && cursor->y >= 19 && cursor->y <= 50 && osl_keys->pressed.cross)
+		/* PSP timer
+		if (cursor->x >= 186 && cursor->x <= 214  && cursor->y >= 25 && cursor->y <= 54 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(clockBg);
 			oslDeleteImage(timeBg);
-			stopWatch();
+			pspTimer();
 		}
 		*/
+		
+		if (cursor->x >= 258 && cursor->x <= 286  && cursor->y >= 25 && cursor->y <= 54 && osl_keys->pressed.cross)
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(clockBg);
+			oslDeleteImage(timeBg);
+			pspStopWatch();
+		}
 		
 		if (osl_pad.held.R && osl_keys->pressed.triangle)
 		{
