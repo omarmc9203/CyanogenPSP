@@ -175,7 +175,7 @@ void gameDisplay()
 	
 	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 	battery(370,2,1);
-	digitaltime(420,4,0);
+	digitaltime(420,4,0,hrTime);
 	
 	/*
 	if (folderIcons[i].active == 1) 
@@ -224,33 +224,39 @@ void gameControls(int n) //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) {
-	
-		if ((pad.Buttons & PSP_CTRL_DOWN) && (!(oldpad.Buttons & PSP_CTRL_DOWN))) {
+	if (pad.Buttons != oldpad.Buttons) 
+	{
+		if (osl_keys->pressed.down) 
+		{
 			gameDown();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_UP) && (!(oldpad.Buttons & PSP_CTRL_UP))) {
+		else if (osl_keys->pressed.up) 
+		{
 			gameUp();
 			timer = 0;
 		}
 		
-		if ((pad.Buttons & PSP_CTRL_RIGHT) && (!(oldpad.Buttons & PSP_CTRL_RIGHT))) {
+		if (osl_keys->pressed.right) 
+		{
 			gameDownx5();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_LEFT) && (!(oldpad.Buttons & PSP_CTRL_LEFT))) {
+		else if (osl_keys->pressed.left) 
+		{
 			gameUpx5();	
 			timer = 0;
 		}
 		
-		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) {
+		if (osl_keys->pressed.triangle) 
+		{
 			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
 				curScroll = 1;
 				current = 1;
 			}
 		}
-		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+		if (osl_keys->pressed.cross) 
+		{
 			oslPlaySound(KeypressStandard, 1);  
 			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
@@ -644,7 +650,7 @@ int gameApp()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		battery(370,2,1);
-		digitaltime(420,4,0);	
+		digitaltime(420,4,0,hrTime);	
 		
 		gameSelection->x = selector_image_x; //Sets the selection coordinates
         gameSelection->y = selector_image_y; //Sets the selection coordinates

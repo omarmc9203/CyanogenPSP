@@ -822,7 +822,7 @@ void displayTextFromFile()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		battery(370,2,1);
-		digitaltime(420,4,0);	
+		digitaltime(420,4,0,hrTime);	
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		if(checkTextFile(folderIcons[current].filePath) == -1)
@@ -914,7 +914,7 @@ void dirDisplay()
 	oslDrawImageXY(bar,0,(current - curScroll)*44+CURR_DISPLAY_Y);
 	
 	battery(370,2,1);
-	digitaltime(420,4,0);
+	digitaltime(420,4,0,hrTime);
 	
 	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
@@ -1002,29 +1002,35 @@ void dirControls() //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) {
-	
-		if ((pad.Buttons & PSP_CTRL_DOWN) && (!(oldpad.Buttons & PSP_CTRL_DOWN))) {
+	if (pad.Buttons != oldpad.Buttons) 
+	{
+		if (osl_keys->pressed.down) 
+		{
 			dirDown();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_UP) && (!(oldpad.Buttons & PSP_CTRL_UP))) {
+		else if (osl_keys->pressed.up) 
+		{
 			dirUp();
 			timer = 0;
 		}
-		if ((pad.Buttons & PSP_CTRL_RIGHT) && (!(oldpad.Buttons & PSP_CTRL_RIGHT))) {
+		if (osl_keys->pressed.right) 
+		{
 			dirDownx5();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_LEFT) && (!(oldpad.Buttons & PSP_CTRL_LEFT))) {
+		else if (osl_keys->pressed.left) 
+		{
 			dirUpx5();
 			timer = 0;
 		}
-		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+		if (osl_keys->pressed.cross) 
+		{
 			oslPlaySound(KeypressStandard, 1);  
 			runFile(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
-		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) {
+		if (osl_keys->pressed.triangle) 
+		{
 			if (copyData == 1){
 				paste();
 			}

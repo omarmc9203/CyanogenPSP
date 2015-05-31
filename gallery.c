@@ -49,7 +49,7 @@ void galleryDisplay()
 	oslDrawStringf(25,18,"Album");
 	
 	battery(370,2,1);
-	digitaltime(420,4,0);
+	digitaltime(420,4,0,hrTime);
 	
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_GALLERY_DISPLAY+curScroll;i++) 
@@ -103,7 +103,7 @@ int changeWallpaper()
 	{
 		oslDeleteImage(background);
 		oslPlaySound(KeypressStandard, 1);  
-		FILE * backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "w");
+		FILE * backgroundPathTXT = fopen("system/settings/background.txt", "w");
 		fprintf(backgroundPathTXT,"%s", folderIcons[current].filePath);
 		fclose(backgroundPathTXT);
 		background = oslLoadImageFile(folderIcons[current].filePath, OSL_IN_RAM, OSL_PF_8888);
@@ -212,33 +212,39 @@ void galleryControls() //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) {
-	
-		if ((pad.Buttons & PSP_CTRL_DOWN) && (!(oldpad.Buttons & PSP_CTRL_DOWN))) {
+	if (pad.Buttons != oldpad.Buttons) 
+	{
+		if (osl_keys->pressed.down) 
+		{
 			galleryDown();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_UP) && (!(oldpad.Buttons & PSP_CTRL_UP))) {
+		if (osl_keys->pressed.up) 
+		{
 			galleryUp();
 			timer = 0;
 		}
 		
-		if ((pad.Buttons & PSP_CTRL_RIGHT) && (!(oldpad.Buttons & PSP_CTRL_RIGHT))) {
+		if (osl_keys->pressed.right) 
+		{
 			galleryDownx5();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_LEFT) && (!(oldpad.Buttons & PSP_CTRL_LEFT))) {
+		else if (osl_keys->pressed.left) 
+		{
 			galleryUpx5();	
 			timer = 0;
 		}
 		
-		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) {
+		if (osl_keys->pressed.triangle) 
+		{
 			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
 				curScroll = 1;
 				current = 1;
 			}
 		}
-		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+		if (osl_keys->pressed.cross) 
+		{
 			oslPlaySound(KeypressStandard, 1);  
 			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
@@ -405,7 +411,7 @@ int galleryApp()
 		oslDrawStringf(25,201,"PSP/GAME/CyanogenPSP/screenshots");
 		
 		battery(370,2,1);
-		digitaltime(420,4,0);
+		digitaltime(420,4,0,hrTime);
 		
 		gallerySelection->x = selector_image_x; //Sets the selection coordinates
         gallerySelection->y = selector_image_y; //Sets the selection coordinates

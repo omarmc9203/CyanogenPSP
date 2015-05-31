@@ -8,8 +8,8 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
+#include "settingsmenu.h"
 #include "include/utils.h"
-#include "id3.h"
 
 int MP3Scan(const char* path )
 {
@@ -140,68 +140,11 @@ void mp3Downx5()
 		curScroll += 5; // To do with how it scrolls
 	}
 }
-/*
-
-char *compact_str(char *s, int max_length) {
-	char *suffix;
-	char t[max_length+1];
- 
-	if(strlen(s) > max_length) {
-		suffix = strrchr(s, '.');
-			if(suffix != NULL) {			
-				strncpy(t, s, max_length-4);
-				t[max_length-4] = '\0';
-				s = strcat(t, suffix);   	
-			} else {
-				strncpy(t, s, max_length-1);
-				t[max_length] = '\0';
-				strcpy(s, t);
-			}
-	}
-
-	return s;
-}
-
-void display_mp3_info(struct FILE_INFO *file) {
-	
-	int y_start = 25; //210
-
-
-	if(file->cover != NULL)
-		oslDrawImageXY(file->cover, 305, 23);  
-
-
-	//oslDrawStringf(MP3DISPLAY_X, 190, "ID3Tag: %s", file->mp3Info.ID3.versionfound);	 	
-
-	//oslDrawStringf(MP3DISPLAY_X, 200, "Title : %s", compact_str(file->mp3Info.ID3.ID3Title, 28));			 
-
-	//oslDrawStringf(MP3DISPLAY_X, 210, "%s", compact_str(file->mp3Info.ID3.ID3Album, 28));			 
-
-	//oslDrawStringf(MP3DISPLAY_X, 220, "Year  : %s", file->mp3Info.ID3.ID3Year);			 
-
-	oslDrawStringf(250, 81, "%s", compact_str(file->mp3Info.ID3.ID3Artist, 28));			 
-
-	//oslDrawStringf(MP3DISPLAY_X, 240, "Genre : %s", compact_str(file->mp3Info.ID3.ID3GenreText, 28));			 	
-}
-*/
-/*
-
-void getMP3METagInfo(char *filename, struct fileInfo *targetInfo){
-    //ID3:
-    struct ID3Tag ID3;
-    ID3 = ParseID3(filename);
-    strcpy(targetInfo->title, ID3.ID3Title);
-    strcpy(targetInfo->artist, ID3.ID3Artist);
-    strcpy(targetInfo->album, ID3.ID3Album);
-    strcpy(targetInfo->year, ID3.ID3Year);
-    strcpy(targetInfo->genre, ID3.ID3GenreText);
-    strcpy(targetInfo->trackNumber, ID3.ID3TrackText);
-    targetInfo->length = ID3.ID3Length / 1000;
-}
-*/
 
 void MP3Play(char * path)
 {	
+	struct ID3Tag ID3;
+
 	nowplaying = oslLoadImageFilePNG("system/app/apollo/nowplaying.png", OSL_IN_RAM, OSL_PF_8888);
 
 	if (!nowplaying)
@@ -213,6 +156,7 @@ void MP3Play(char * path)
 	
 	int i;
 	MP3_Init(1);
+	ID3 = ParseID3(path);
 	MP3_Load(path);
 	MP3_Play();
 	
@@ -229,13 +173,19 @@ void MP3Play(char * path)
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
-		oslDrawStringf(240,76, "%.28s", folderIcons[current].name);
+		oslDrawStringf(240,76, "Playing: %.19s", folderIcons[current].name);
+		oslDrawStringf(240,96, "Title: %.21s", ID3.ID3Title);
+		
+		oslDrawStringf(240,116, "Artist: %.20s", ID3.ID3Artist);
+		oslDrawStringf(240,136, "Album: %.21s", ID3.ID3Album);
+		oslDrawStringf(240,156, "Year: %.22s", ID3.ID3Year);
+		oslDrawStringf(240,176, "Genre: %.21s", ID3.ID3GenreText);
 		//display_mp3_info(folderIcons[current].name);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
-		digitaltime(420,4,0);
+		digitaltime(420,4,0,hrTime);
 		
 		if(osl_keys->pressed.select) 
 		{
@@ -326,7 +276,7 @@ int soundPlay(char * path)
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
-		digitaltime(420,4,0);
+		digitaltime(420,4,0,hrTime);
 		
 		if(osl_keys->pressed.select) 
 		{
@@ -409,41 +359,45 @@ void mp3FileDisplay()
 	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
 	battery(370,2,1);
-	digitaltime(420,4,0);
+	digitaltime(420,4,0,hrTime);
 }
 
 void mp3Controls() //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) {
-	
-		if ((pad.Buttons & PSP_CTRL_DOWN) && (!(oldpad.Buttons & PSP_CTRL_DOWN))) 
+	if (pad.Buttons != oldpad.Buttons) 
+	{
+		if (osl_keys->pressed.down) 
 		{
 			mp3Down();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_UP) && (!(oldpad.Buttons & PSP_CTRL_UP))) 
+		else if (osl_keys->pressed.up) 
 		{
 			mp3Up();
 			timer = 0;
 		}
-		if ((pad.Buttons & PSP_CTRL_RIGHT) && (!(oldpad.Buttons & PSP_CTRL_RIGHT))) {
+		if (osl_keys->pressed.right) 
+		{
 			mp3Downx5();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_LEFT) && (!(oldpad.Buttons & PSP_CTRL_LEFT))) {
+		if (osl_keys->pressed.left) 
+		{
 			mp3Upx5();
 			timer = 0;
 		}
-		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) 
+		if (osl_keys->pressed.triangle) 
 		{
-			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
+			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) 
+			{
 				curScroll = 1;
 				current = 1;
 			}
 		}
-		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+		if (osl_keys->pressed.cross) 
+		{
 			oslPlaySound(KeypressStandard, 1); 
 			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
@@ -612,7 +566,7 @@ int mp3player()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
-		digitaltime(420,4,0);
+		digitaltime(420,4,0,hrTime);
 		
 		mp3_select->x = selector_image_x; //Sets the selection coordinates
         mp3_select->y = selector_image_y; //Sets the selection coordinates
