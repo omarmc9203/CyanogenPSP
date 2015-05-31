@@ -432,7 +432,7 @@ void androidQuickSettings()
 	
 	oslDrawImageXY(control,controlX,yPos2+66);	
 		
-	digitaltime(15,yPos1,53);
+	digitaltime(15,yPos1,53,hrTime);
 	
 	if (getBrightness() == 10)
 	{
@@ -659,12 +659,15 @@ void dayNightCycleWidget()
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
 	
-	if (time.hour > 12)
-		time.hour -= 12;
+	if (hrTime == 0)
+	{
+		if (time.hour > 12)
+			time.hour -= 12;
 	
-	if (time.hour == 00)
-		time.hour = 12;
-		
+		if (time.hour == 00)
+			time.hour = 12;
+	}
+	
     oslIntraFontSetStyle(Roboto, 1.7f,WHITE,0,INTRAFONT_ALIGN_CENTER);
 	oslDrawStringf(235,70,"%2d:%02d", time.hour, time.minutes);
 		
@@ -758,22 +761,23 @@ void home()
 			battery(370,2,3);
 			if ((cursor->y <= 16) || (cursor->y >= 226))
 			{
-				digitaltime(420,4,0);
+				digitaltime(420,4,0,hrTime);
 			}
 			else if (cursor->y >= 16 && cursor->y <= 226)
 			{
-				digitaltime(420,-10,0);
+				digitaltime(420,-10,0,hrTime);
 			}	
 		}
 		else if (eDesktopActivator == 0)
 		{
-			digitaltime(420,4,0);
+			digitaltime(420,4,0,hrTime);
 			navbarButtons(0);
 			battery(370,2,1);
 		}
 		
 		androidQuickSettings();
 		//volumeController();
+		appHighlight(0);
 		oslDrawImage(cursor);
 			
 		if (osl_keys->pressed.square)

@@ -130,7 +130,7 @@ void firstBootMessage()
 			oslDrawImageXY(ic_launcher_messenger, 160, 190);
 			oslDrawImageXY(pointer, 230, 180);
 		
-			digitaltime(420,4,0);
+			digitaltime(420,4,0,hrTime);
 		
 			oslSetTransparentColor(RGB(0,0,0));
 			appDrawerIcon();
@@ -266,29 +266,42 @@ int main()
 
 	FILE * backgroundPathTXT;
 	
-	if (!(fileExists("system/framework/framework-res/res/background.txt")))
+	if (!(fileExists("system/settings/background.txt")))
 	{
-		backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "w");
+		backgroundPathTXT = fopen("system/settings/background.txt", "w");
 		fprintf(backgroundPathTXT, "system/framework/framework-res/res/background.png");
 		fclose(backgroundPathTXT);
 	}
 	
-	backgroundPathTXT = fopen("system/framework/framework-res/res/background.txt", "r");
+	backgroundPathTXT = fopen("system/settings/background.txt", "r");
 	fscanf(backgroundPathTXT,"%s",backgroundPath);
 	fclose(backgroundPathTXT);
 	
 	FILE * fontPathTXT;
 	
-	if (!(fileExists("system/fonts/fonts.txt")))
+	if (!(fileExists("system/settings/fonts.txt")))
 	{
-		fontPathTXT = fopen("system/fonts/fonts.txt", "w");
+		fontPathTXT = fopen("system/settings/fonts.txt", "w");
 		fprintf(fontPathTXT, "system/fonts/Roboto.pgf");
 		fclose(fontPathTXT);
 	}
 	
-	fontPathTXT = fopen("system/fonts/fonts.txt", "r");
+	fontPathTXT = fopen("system/settings/fonts.txt", "r");
 	fscanf(fontPathTXT,"%s",fontPath);
 	fclose(fontPathTXT);
+	
+	FILE * timeSetTxt;
+	
+	if (!(fileExists("system/app/clock/timeSet.txt")))
+	{
+		timeSetTxt = fopen("system/app/clock/timeSet.txt", "w");
+		fprintf(timeSetTxt, "0");
+		fclose(timeSetTxt);
+	}
+	
+	timeSetTxt = fopen("system/app/clock/timeSet.txt", "r");
+	fscanf(timeSetTxt,"%d", &hrTime);
+	fclose(timeSetTxt);
 
 	createDirs();
 	
@@ -385,7 +398,7 @@ int main()
 
 		navbarButtons(0);
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-		digitaltime(420,4,0);//Draws digital time (based on your local psp time) on the top right corner.
+		digitaltime(420,4,0,hrTime);//Draws digital time (based on your local psp time) on the top right corner.
 		battery(370,2,1);
 		androidQuickSettings();
 		oslDrawImage(cursor);

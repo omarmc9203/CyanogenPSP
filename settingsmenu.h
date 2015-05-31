@@ -49,11 +49,13 @@ struct fw_version
 
 typedef struct fw_version fw_version;
 
+SceUID modules[3];
+
 int connectAPCallback(int state);
 int connectToAP(int config);
 char fontPath[100];
 char backgroundPath[100];
-int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState;
+int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, language, hrTime;
 int passProtect;
 int RJL;
 int PSPDebug;

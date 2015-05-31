@@ -7,6 +7,7 @@
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
+#include "settingsmenu.h"
 #include "screenshot.h"
 
 char x1[4][20] = {
@@ -66,7 +67,7 @@ int calculator()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
-		digitaltime(420,4,0);
+		digitaltime(420,4,0,hrTime);
 		battery(370,2,1);
 		
 		oslIntraFontSetStyle(Roboto, 0.8f,WHITE,0,0);

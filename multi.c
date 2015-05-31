@@ -5,6 +5,7 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
+#include "settingsmenu.h"
 #include "include/utils.h"
 
 int multitask()
@@ -27,7 +28,7 @@ int multitask()
 		
 		oslDrawString(130,136,"Your recent screens appear here");
 
-		digitaltime(420,4,0);
+		digitaltime(420,4,0,hrTime);
 		battery(370,2,1);
 		navbarButtons(0);
 		androidQuickSettings();

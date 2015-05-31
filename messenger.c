@@ -8,6 +8,7 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
+#include "settingsmenu.h"
 #include "include/utils.h"
 
 char message[500] = "";	
@@ -319,7 +320,7 @@ void newMessage()
 
 		oslDrawImageXY(new_message, 0, 0);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -418,7 +419,7 @@ int messenger()
 
 		oslDrawImageXY(messengerbg, 0, 0);
 
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();

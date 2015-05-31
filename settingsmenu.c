@@ -354,7 +354,7 @@ void aboutMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -477,7 +477,7 @@ void updatesMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -603,7 +603,7 @@ void performanceMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -697,7 +697,7 @@ void processorMenu()
 	FILE * processorInfo;
 	
 	int currentState = stateOff;
-	int cpufreq, cpu, bus, state;
+	int cpufreq, cpu, bus, state = 0;
 	
 	processorbg = oslLoadImageFilePNG("system/settings/processorbg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
@@ -843,7 +843,7 @@ void processorMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -921,7 +921,7 @@ void ramMenu()
 	
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -973,24 +973,20 @@ void ramMenu()
 
 void storageMenu()
 {	
-	int ret, status;
-	const char *drvname;
-
 	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
+	unsigned int buf[5]; 
+	unsigned int *pbuf = buf; 
+	sceIoDevctl("ms0:", 0x02425818, &pbuf, sizeof(pbuf), 0, 0);
+	
+	unsigned int freeSpace = buf[1]*buf[3]*buf[4];
+	unsigned int totalSpace = buf[0]*buf[3]*buf[4];
+	
 	if (!performancebg || !highlight)
 		debugDisplay();
-	
-	status = 0;
-	drvname = "mscmhc0:";
-	
-	if (kuKernelGetModel() == 4)
-		drvname = "mscmhcemu0:";
-		
-	ret = sceIoDevctl(drvname, 0x02025801, 0, 0, &status, sizeof(status));
 	
 	while (!osl_quit)
 	{
@@ -1006,8 +1002,9 @@ void storageMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawStringf(20,85,"Press Select to toggle USB mass storage"); 
-		oslDrawStringf(20,110,"Available Storage Space = %d MB", ret);
+		oslDrawStringf(20,80,"Press Select to toggle USB mass storage"); 
+		oslDrawStringf(20,100,"Total Storage Space = %d MB", totalSpace);
+		oslDrawStringf(20,120,"Available Storage Space = %d MB", freeSpace);
 		
 		if (osl_keys->pressed.select)
 		{
@@ -1021,7 +1018,7 @@ void storageMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1140,7 +1137,7 @@ void displayMenu()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1250,7 +1247,7 @@ void displayThemes()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1312,7 +1309,7 @@ void settingsDisplay()
 	
 	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 	battery(330,2,0);
-	digitaltime(381,4,0);
+	digitaltime(381,4,0,hrTime);
 	
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_SETTINGS_DISPLAY+curScroll;i++) 
@@ -1380,7 +1377,7 @@ void changeFont() //Created a separated function for this only because deleting 
 	{		
 		oslDeleteFont(Roboto);
 		oslPlaySound(KeypressStandard, 1);  
-		FILE * fontPathTXT = fopen("system/fonts/fonts.txt", "w");
+		FILE * fontPathTXT = fopen("system/settings/fonts.txt", "w");
 		fprintf(fontPathTXT,"%s", folderIcons[current].filePath);
 		fclose(fontPathTXT);
 		Roboto = oslLoadIntraFontFile(folderIcons[current].filePath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
@@ -1393,33 +1390,32 @@ void settingsControls(int n) //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) {
-	
-		if ((pad.Buttons & PSP_CTRL_DOWN) && (!(oldpad.Buttons & PSP_CTRL_DOWN))) {
+	if (pad.Buttons != oldpad.Buttons) 
+	{
+		if (osl_keys->pressed.down)
+		{
 			settingsDown();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_UP) && (!(oldpad.Buttons & PSP_CTRL_UP))) {
+		else if (osl_keys->pressed.up)
+		{
 			settingsUp();
 			timer = 0;
 		}
 		
-		if ((pad.Buttons & PSP_CTRL_RIGHT) && (!(oldpad.Buttons & PSP_CTRL_RIGHT))) {
+		if (osl_keys->pressed.right)
+		{
 			settingsDownx5();
 			timer = 0;
 		}
-		else if ((pad.Buttons & PSP_CTRL_LEFT) && (!(oldpad.Buttons & PSP_CTRL_LEFT))) {
+		else if (osl_keys->pressed.left)
+		{
 			settingsUpx5();	
 			timer = 0;
 		}
 		
-		if ((pad.Buttons & PSP_CTRL_TRIANGLE) && (!(oldpad.Buttons & PSP_CTRL_TRIANGLE))) {
-			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
-				curScroll = 1;
-				current = 1;
-			}
-		}
-		if ((pad.Buttons & PSP_CTRL_CROSS) && (!(oldpad.Buttons & PSP_CTRL_CROSS))) {
+		if (osl_keys->pressed.cross)
+		{
 			oslPlaySound(KeypressStandard, 1);  
 			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
@@ -1546,8 +1542,12 @@ void displaySubThemes(char * browseDirectory, int n) // n is used here to search
 
 void displayTime()
 {	
+	FILE * timeSetTxt;
+	
 	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -1572,10 +1572,42 @@ void displayTime()
 		oslDrawString(20,140,"Clock Style");
 		oslDrawString(20,195,"Display AM/PM");
 		
+		if (hrTime == 0)
+			oslDrawImageXY(offswitch,350,80);
+				
+		else if (hrTime == 1)
+			oslDrawImageXY(onswitch,350,80);
+		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
 			oslDrawString(20,86,"Use 24-hour format");
+			if (hrTime == 0)
+			{
+				oslDrawImageXY(offswitch,350,80);
+				
+				if (osl_keys->pressed.cross)
+				{
+					oslPlaySound(KeypressStandard, 1);
+					hrTime = 1;
+					timeSetTxt = fopen("system/app/clock/timeSet.txt", "w");
+					fprintf(timeSetTxt, "%d", hrTime);
+					fclose(timeSetTxt);
+				}
+			}
+			else if (hrTime == 1)
+			{
+				oslDrawImageXY(onswitch,350,80);
+			
+				if (osl_keys->pressed.cross)
+				{
+					oslPlaySound(KeypressStandard, 1);
+					hrTime = 0;
+					timeSetTxt = fopen("system/app/clock/timeSet.txt", "w");
+					fprintf(timeSetTxt, "%d", hrTime);
+					fclose(timeSetTxt);
+				}
+			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
@@ -1592,7 +1624,7 @@ void displayTime()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1613,6 +1645,8 @@ void displayTime()
 		{
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
 			displayMenu();
 		}
 
@@ -1621,6 +1655,8 @@ void displayTime()
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
 			displayMenu();
 		}
 		
@@ -1629,6 +1665,8 @@ void displayTime()
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);
+			oslDeleteImage(offswitch);	
+			oslDeleteImage(onswitch);
 			home();
 		}
 
@@ -1715,7 +1753,7 @@ void displayMiscellaneous()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -1956,7 +1994,7 @@ void securityMenu()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2068,7 +2106,7 @@ void wifiMenu()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		switchStatus(3);
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2304,7 +2342,7 @@ void dumpMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2421,7 +2459,7 @@ void dumpMenuMore()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2529,7 +2567,7 @@ void developerMenu()
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				RJL = 1;
-				LoadStartModule("modules/RemoteJoyLite.prx");
+				modules[0] = LoadStartModule("modules/RemoteJoyLite.prx");
 			}
 		}
 		
@@ -2542,7 +2580,7 @@ void developerMenu()
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				PSPDebug = 1;
-				LoadStartModule("modules/psplink.prx");
+				modules[1] = LoadStartModule("modules/psplink.prx");
 			}
 		}
 		
@@ -2563,7 +2601,7 @@ void developerMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -2622,12 +2660,12 @@ void developerMenu()
 
 		if(RJL == 1 && osl_keys->pressed.triangle)
 		{
-			StopUnloadModule("modules/RemoteJoyLite.prx");
+			StopUnloadModule(modules[0]);
 		}
 
 		if(PSPDebug == 1  && osl_keys->pressed.triangle)
 		{	
-			StopUnloadModule("modules/psplink.prx");			
+			StopUnloadModule(modules[1]);
 		}
 	oslEndDrawing(); 
     oslEndFrame(); 
@@ -2725,7 +2763,7 @@ void settingsMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();

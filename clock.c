@@ -5,6 +5,7 @@
 #include "multi.h"
 #include "power_menu.h"
 #include "screenshot.h"
+#include "settingsmenu.h"
 #include "include/utils.h"
 
 time_t		currentTime;
@@ -83,7 +84,7 @@ void getMonthOfYear(int x, int y)
   colour is to indicate whether it should be in black/white
 */	
 
-void digitaltime(int x, int y, int color) //color == 0 is white, color == 0 is black
+void digitaltime(int x, int y, int color, int hr) //color == 0 is white, color == 0 is black
 {					
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
@@ -92,19 +93,26 @@ void digitaltime(int x, int y, int color) //color == 0 is white, color == 0 is b
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 	else if (color == 1)
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
-
-	if(time.hour >= 12) 
-		oslDrawString(x+38,y,"PM"); 
-	else 
-		oslDrawString(x+38,y,"AM");   
 		
-	if (time.hour > 12)
-		time.hour -= 12;
+	if (hr == 0)
+	{
+		if(time.hour >= 12) 
+			oslDrawString(x+38,y,"PM"); 
+		else 
+			oslDrawString(x+38,y,"AM");   
+		
+		if (time.hour > 12)
+			time.hour -= 12;
 	
-	if (time.hour == 00)
-	time.hour = 12;
-	
-	oslDrawStringf(x,y,"%2d:%02d", time.hour, time.minutes);	
+		if (time.hour == 00)
+			time.hour = 12;
+			
+		oslDrawStringf(x,y,"%2d:%02d", time.hour, time.minutes);
+	}	
+	else if (hr == 1)
+	{
+		oslDrawStringf(x+15,y,"%2d:%02d", time.hour, time.minutes);
+	}
 }
 
 void centerClock(int n) 
@@ -112,12 +120,15 @@ void centerClock(int n)
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
 	
-	if (time.hour > 12)
-		time.hour -= 12;
+	if (hrTime == 0)
+	{
+		if (time.hour > 12)
+			time.hour -= 12;
 	
-	if (time.hour == 00)
-		time.hour = 12;
-		
+		if (time.hour == 00)
+			time.hour = 12;
+	}
+	
     oslIntraFontSetStyle(Roboto, 1.7f,WHITE,0,INTRAFONT_ALIGN_CENTER);
 	
 	if (n==0)
@@ -177,7 +188,7 @@ int pspTimer()
 
         oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -309,7 +320,7 @@ int pspStopWatch()
 
         oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
@@ -459,26 +470,24 @@ int pspclock()
 		oslDrawImageXY(timeBg, 0, 0);
 		oslDrawImageXY(clockBg, 0, 0);
 		
-		if (time.hour > 12)
-			time.hour -= 12;
-	
-		if (time.hour == 00)
-			time.hour = 12;
-		
         centerClock(0);
 		
 		oslIntraFontSetStyle(Roboto, 0.6f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
-		if(time.hour <= 12) 
-		oslDrawString(300,136,"PM"); 
-		else if (time.hour >= 12) 
-		oslDrawString(300,136,"AM");  
+		
+		if (hrTime == 0)
+		{			
+			if(time.hour <= 12) 
+				oslDrawString(300,136,"PM"); 
+			else if (time.hour >= 12) 
+				oslDrawString(300,136,"AM");  
+		}
 		
 		getDayOfWeek(190,156,2);
 		getMonthOfYear(265,156);
 		
         oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
-		digitaltime(381,4,0);
+		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();

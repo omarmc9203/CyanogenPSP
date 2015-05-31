@@ -48,7 +48,7 @@ int lockscreen()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
-		digitaltime(420,4,0);
+		digitaltime(420,4,0,hrTime);
 		
 		if (passProtect != 1)
 			androidQuickSettings();

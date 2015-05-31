@@ -7,6 +7,7 @@
 #include "settingsmenu.h"
 #include "clock.h"
 #include "home.h"
+#include "language.h"
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
@@ -210,13 +211,13 @@ int appdrawer()
 	int browser_x = 20;
 	int browser_text_x = 42;
 	int calc_x = 85;
-	int calc_text_x = 110;
+	int calc_text_x = 111;
 	int clock_x = 150;
 	int clock_text_x = 174;
 	int fm_x = 215;
 	int fm_text_x = 240;
 	int gallery_x = 280;
-	int gallery_text_x = 302;
+	int gallery_text_x = 304;
 	int game_icon = 345;
 	int game_text_icon = 368;
 	int messenger_x = 410;
@@ -224,7 +225,7 @@ int appdrawer()
 	int music_x = 20;
 	int music_text_x = 42;
 	int settings_x = 85;
-	int settings_test_x = 106;
+	int settings_test_x = 107;
 	int umd_x = 150;
 	int umd_text_x = 170;
 
@@ -254,16 +255,16 @@ int appdrawer()
 			battery(370,2,3);
 			if ((cursor->y <= 16) || (cursor->y >= 226))
 			{
-				digitaltime(420,4,0);
+				digitaltime(420,4,0,hrTime);
 			}
 			else if (cursor->y >= 16 && cursor->y <= 226)
 			{
-				digitaltime(420,-10,0);
+				digitaltime(420,-10,0,hrTime);
 			}	
 		}
 		else if (eDesktopActivator == 0)
 		{
-			digitaltime(420,4,0);
+			digitaltime(420,4,0,hrTime);
 			navbarButtons(0);
 			battery(370,2,1);
 		}
@@ -271,26 +272,25 @@ int appdrawer()
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_CENTER);
 		oslDrawImageXY(backdrop, 0, 15);
 		oslDrawImageXY(ic_launcher_browser, browser_x, 35);
-		oslDrawString(browser_text_x,85,"Browser");
+		oslDrawStringf(browser_text_x,85, "%s", lang_appDrawer[0][0]);
 		oslDrawImageXY(ic_launcher_calculator, calc_x, 35);
-		oslDrawString(calc_text_x,85,"Calculator");
+		oslDrawStringf(calc_text_x,85, "%s", lang_appDrawer[0][1]);
 		oslDrawImageXY(ic_launcher_clock, clock_x, 35);
-		oslDrawString(clock_text_x,85,"Clock");
+		oslDrawStringf(clock_text_x,85, "%s", lang_appDrawer[0][2]);
 		oslDrawImageXY(ic_launcher_filemanager, fm_x, 35);
-		oslDrawString(fm_text_x-5,85,"File");
-		oslDrawString(fm_text_x,95,"Manager");
+		oslDrawStringf(fm_text_x,85,"%s", lang_appDrawer[0][3]);
 		oslDrawImageXY(ic_launcher_gallery, gallery_x, 35);
-		oslDrawString(gallery_text_x,85,"Gallery");
+		oslDrawStringf(gallery_text_x,85, "%s", lang_appDrawer[0][4]);
 		oslDrawImageXY(ic_launcher_game, game_icon, 35);
-		oslDrawString(game_text_icon,85,"Game");
+		oslDrawStringf(game_text_icon,85, "%s", lang_appDrawer[0][5]);
 		oslDrawImageXY(ic_launcher_messenger, messenger_x, 35);
-		oslDrawString(messenger_text_x,85,"Messages");
+		oslDrawStringf(messenger_text_x,85, "%s", lang_appDrawer[0][6]);
 		oslDrawImageXY(ic_launcher_apollo, music_x, 120);
-		oslDrawString(music_text_x,175,"Music");
+		oslDrawStringf(music_text_x,175, "%s", lang_appDrawer[0][7]);
 		oslDrawImageXY(ic_launcher_settings, settings_x, 120);
-		oslDrawString(settings_test_x,175,"Settings");
+		oslDrawStringf(settings_test_x,175, "%s", lang_appDrawer[0][8]);
 		oslDrawImageXY(ic_launcher_umd, umd_x, 122);
-		oslDrawString(umd_text_x,175,"UMD");
+		oslDrawStringf(umd_text_x,175, "%s", lang_appDrawer[0][9]);
 		
 		if (umd_x <= -10 && fm_x <= -10)
 		{
