@@ -180,7 +180,6 @@ void MP3Play(char * path)
 		oslDrawStringf(240,136, "Album: %.21s", ID3.ID3Album);
 		oslDrawStringf(240,156, "Year: %.22s", ID3.ID3Year);
 		oslDrawStringf(240,176, "Genre: %.21s", ID3.ID3GenreText);
-		//display_mp3_info(folderIcons[current].name);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		

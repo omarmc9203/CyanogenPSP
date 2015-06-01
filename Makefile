@@ -3,7 +3,6 @@ OBJS = main.o appdrawer.o home.o calculator.o lock.o settingsmenu.o clock.o reco
 	   apollo.o fm.o game.o mp3player.o messenger.o screenshot.o gallery.o \
 	   include/utils.o include/pgeZip.o include/ram.o include/common.o \
 	   prx/display.o prx/sound.o \
-	   system/mem64.o system/fat.o system/opendir.o miniconv/MiniConv.o
 	   #scepower.o
 	   
 BUILD_PRX = 1
