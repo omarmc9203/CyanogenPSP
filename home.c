@@ -1,4 +1,5 @@
 #include "home.h"
+#include "language.h"
 #include "appdrawer.h"
 #include "apollo.h"
 #include "clock.h"
@@ -218,13 +219,16 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	}
 }
 
-/*
+//Imports
+void increase_volume(int n);
+void decrease_volume(int n);
+
 void volumeController()
 {	
 	int llimit = 150;
 	int rlimit = 350;
 
-	int controlX;
+	int controlX = 0;
 	int volume = imposeGetVolume();
 	
 	if (volume == 0)
@@ -296,6 +300,8 @@ void volumeController()
 		oslDrawImageXY(volumeBar, 97,30);
 		oslDrawImageXY(volumeControl, controlX, 54);
 		oslDrawStringf(115,75, "Vol: %d", imposeGetVolume());
+		oslSyncFrame();
+		sceKernelDelayThread(1*1000000);
 	}
 	
 	if (osl_pad.held.down)
@@ -303,9 +309,10 @@ void volumeController()
 		oslDrawImageXY(volumeBar, 97,30);
 		oslDrawImageXY(volumeControl, controlX, 54);
 		oslDrawStringf(115,75, "Vol: %d", imposeGetVolume());
+		oslSyncFrame();
+		sceKernelDelayThread(1*1000000);
 	}
 }
-*/
 
 void appDrawerIcon() //Draws the app drawer icon. Draws a different icon of the same size once hovered with the cursor.
 {
@@ -424,11 +431,25 @@ void androidQuickSettings()
 	getDayOfWeek(15,yPos2+5,1);
 	getMonthOfYear(88,yPos2+5);
 
-	oslDrawStringf(137,yLine1, "Wi-Fi");
+	oslDrawStringf(137,yLine1, "%s", lang_quickSettings[0][0]);
 	oslDrawStringf(340,yPos2, "%d%%",scePowerGetBatteryLifePercent());
-	oslDrawStringf(292,yLine1, "Balanced");
+	
+	int cpu = getCpuClock();
+	
+	if (cpu <= 133)
+	{
+		oslDrawStringf(285,yLine1, "%s", lang_quickSettings[0][1]);
+	}
+	else if (cpu >= 300)
+	{
+		oslDrawStringf(284,yLine1, "%s", lang_quickSettings[0][3]);
+	}
+	else 
+	{
+		oslDrawStringf(292,yLine1, "%s", lang_quickSettings[0][2]);
+	}
 		
-	oslDrawStringf(202,yLine2, "Lockscreen");
+	oslDrawStringf(202,yLine2, "%s", lang_quickSettings[0][4]);
 	
 	oslDrawImageXY(control,controlX,yPos2+66);	
 		
