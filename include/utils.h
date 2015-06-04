@@ -11,7 +11,7 @@
 #define musicPath "ms0:/MUSIC"
 
 char tempMessage[20];
-char tempPin[4];
+char tempPin[5];
 char tempData[250];
 
 enum colors {
@@ -28,7 +28,7 @@ enum colors {
 int fileExists(const char* path);
 int dirExists(const char* path);
 void deleteUpdateFile();
-void makeDownloadDir();
+void createDirs();
 void makeMusicDir();
 void openOSK(char * message, char * initialMessage, int textLimit, int lang);
 void encryptFile(FILE *file);

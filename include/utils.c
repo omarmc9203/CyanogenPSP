@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "../home.h"
+#include "../settingsmenu.h"
 #include "../clock.h"
 #include "../screenshot.h"
 
@@ -13,11 +14,13 @@ char usbModuleStatus = 0;
 int fileExists(const char* path)
 {
 	SceUID dir = sceIoOpen(path, PSP_O_RDONLY, 0777);
-	if (dir >= 0){
+	if (dir >= 0)
+	{
 		sceIoClose(dir);
 		return 1;
 	}
-	else {
+	else
+	{
 		return 0;
 	}
 }
@@ -25,11 +28,13 @@ int fileExists(const char* path)
 int dirExists(const char* path)
 {
 	SceUID dir = sceIoDopen(path);
-	if (dir >= 0){
+	if (dir >= 0)
+	{
 		sceIoDclose(dir);
 		return 1;
 	}
-	else {
+	else 
+	{
 		return 0;
 	}
 }
@@ -42,32 +47,84 @@ void deleteUpdateFile()
 	}
 }
 
-void makeDownloadDir()
+void createDirs()
 {
-	SceUID dir = sceIoDopen(downloadPath);
+	SceUID dir = sceIoDopen("ms0:/PICTUREO");
 	
-	if (dirExists(downloadPath))
+	if (dirExists("ms0:/PICTURE"))
 	{
 		sceIoDclose(dir);
 	}
 	else 
 	{
-		sceIoMkdir("ms0:/PSP/GAME/CyanogenMod/downloads",0777);
-}
-}
+		sceIoMkdir("ms0:/PICTURE",0777);
+	}
 
-void makeMusicDir()
-{
-	SceUID dir = sceIoDopen(musicPath);
+	SceUID dir1 = sceIoDopen("ms0:/PSP/PHOTO");
 	
-	if (dirExists(musicPath))
+	if (dirExists("ms0:/PSP/PHOTO"))
 	{
-		sceIoDclose(dir);
+		sceIoDclose(dir1);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/PSP/PHOTO",0777);
+	}
+	
+	SceUID dir2 = sceIoDopen("ms0:/PSP/GAME/CyanogenPSP/screenshots");
+	
+	if (dirExists("ms0:/PSP/GAME/CyanogenPSP/screenshots"))
+	{
+		sceIoDclose(dir2);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/PSP/GAME/CyanogenPSP/screenshots",0777);
+	}
+	
+	SceUID dir3 = sceIoDopen("ms0:/MUSIC");
+	
+	if (dirExists("ms0:/MUSIC"))
+	{
+		sceIoDclose(dir3);
 	}
 	else 
 	{
 		sceIoMkdir("ms0:/MUSIC",0777);
-}
+	}
+	
+	SceUID dir4 = sceIoDopen("ms0:/PSP/MUSIC");
+	
+	if (dirExists("ms0:/PSP/MUSIC"))
+	{
+		sceIoDclose(dir4);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/PSP/MUSIC",0777);
+	}
+	
+	SceUID dir5 = sceIoDopen("ms0:/PSP/GAME/CyanogenPSP/downloads");
+	
+	if (dirExists("ms0:/PSP/GAME/CyanogenPSP/downloads"))
+	{
+		sceIoDclose(dir5);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/PSP/GAME/CyanogenPSP/downloads",0777);
+	}
+	
+	SceUID dir6 = sceIoDopen("ms0:/ISO");
+	
+	if (dirExists("ms0:/ISO"))
+	{
+		sceIoDclose(dir6);
+	}
+	else 
+	{
+		sceIoMkdir("ms0:/ISO",0777);
+	}
 }
 
 void openOSK(char * message, char * initialMessage, int textLimit, int lang)
@@ -86,7 +143,7 @@ void openOSK(char * message, char * initialMessage, int textLimit, int lang)
 		oslDrawImageXY(keyboardBg, 0, 0);
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		battery(370,2,1);
-		digitaltime(420,4,0);
+		digitaltime(420,4,0,hrTime);
 		if (Keyboard == 0)
 		{
 			oslInitOsk(message, initialMessage, textLimit, 1, lang);  
@@ -95,11 +152,7 @@ void openOSK(char * message, char * initialMessage, int textLimit, int lang)
 			if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE)
 			{
 				if (oslOskGetResult() == OSL_OSK_CANCEL) 
-				{
 					Keyboard = 2; 
-					oslDeleteImage(keyboardBg);
-					return;
-				}
 				else
 				{
 					oslOskGetText(data);
@@ -126,45 +179,6 @@ void openOSK(char * message, char * initialMessage, int textLimit, int lang)
     skip = oslSyncFrame();
 }
 }
-
-/*Simple File Encryption and Decryption
-by caroundw5h 
-*/
-
-void encryptFile(FILE *file)
-{ 
-    rewind(file); 
-    /*go through the file and change all characters to 1 charater after */ 
-    int i; 
-    while ( ( i = fgetc(file) )!=EOF )
-	{ 
-        i = i + 1; 
-        fseek(file, -1, SEEK_CUR); 
-        fputc(i,file); 
-        //fflush(file); 
-        /* fflush not needed if making a call to fseek. Either one is needed for  
-        manipulating a stream with i/o and vice versa */ 
-        fseek(file, 0, SEEK_CUR); 
-    } 
-} 
-
-void decryptFile(FILE *file)
-{ 
-    rewind(file); 
-    /*go through the file and change all characters back from 1 */ 
-    rewind(file); 
-    int i; 
-    while ( ( i = fgetc(file) )!=EOF )
-	{ 
-        i = i - 1; 
-        fseek(file, -1, SEEK_CUR); 
-        fputc(i,file); 
-        //fflush(file); 
-       /* fflush not needed if making a call to fseek. Either one is needed for  
-        manipulating a stream with i/o and vice versa */ 
-        fseek(file, 0, SEEK_CUR); 
-    } 
-}      
 
 int isEmpty(FILE *file) //Check to make sure its not a empty file
 {

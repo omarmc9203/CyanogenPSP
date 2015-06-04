@@ -170,86 +170,6 @@ void firstBootMessage()
 	}
 }
 
-void createDirs()
-{
-	SceUID dir = sceIoDopen("ms0:/PICTUREO");
-	
-	if (dirExists("ms0:/PICTURE"))
-	{
-		sceIoDclose(dir);
-	}
-	else 
-	{
-		sceIoMkdir("ms0:/PICTURE",0777);
-	}
-
-	SceUID dir1 = sceIoDopen("ms0:/PSP/PHOTO");
-	
-	if (dirExists("ms0:/PSP/PHOTO"))
-	{
-		sceIoDclose(dir1);
-	}
-	else 
-	{
-		sceIoMkdir("ms0:/PSP/PHOTO",0777);
-	}
-	
-	SceUID dir2 = sceIoDopen("ms0:/PSP/GAME/CyanogenPSP/screenshots");
-	
-	if (dirExists("ms0:/PSP/GAME/CyanogenPSP/screenshots"))
-	{
-		sceIoDclose(dir2);
-	}
-	else 
-	{
-		sceIoMkdir("ms0:/PSP/GAME/CyanogenPSP/screenshots",0777);
-	}
-	
-	SceUID dir3 = sceIoDopen("ms0:/MUSIC");
-	
-	if (dirExists("ms0:/MUSIC"))
-	{
-		sceIoDclose(dir3);
-	}
-	else 
-	{
-		sceIoMkdir("ms0:/MUSIC",0777);
-	}
-	
-	SceUID dir4 = sceIoDopen("ms0:/PSP/MUSIC");
-	
-	if (dirExists("ms0:/PSP/MUSIC"))
-	{
-		sceIoDclose(dir4);
-	}
-	else 
-	{
-		sceIoMkdir("ms0:/PSP/MUSIC",0777);
-	}
-	
-	SceUID dir5 = sceIoDopen("ms0:/PSP/GAME/CyanogenPSP/downloads");
-	
-	if (dirExists("ms0:/PSP/GAME/CyanogenPSP/downloads"))
-	{
-		sceIoDclose(dir5);
-	}
-	else 
-	{
-		sceIoMkdir("ms0:/PSP/GAME/CyanogenPSP/downloads",0777);
-	}
-	
-	SceUID dir6 = sceIoDopen("ms0:/ISO");
-	
-	if (dirExists("ms0:/ISO"))
-	{
-		sceIoDclose(dir6);
-	}
-	else 
-	{
-		sceIoMkdir("ms0:/ISO",0777);
-	}
-}
-
 int main()
 {
 	SetupCallbacks(); //Setup callbacks
@@ -349,7 +269,7 @@ int main()
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto);
 	
-	SceUID modid; //, modid2;
+	SceUID modid;//, modid2;
 	
 	modid = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
 	//modid2 = pspSdkLoadStartModule("modules/sound.prx", PSP_MEMORY_PARTITION_KERNEL);
@@ -363,8 +283,7 @@ int main()
 	//Sets the cursor's original position on the screen
 	cursor->x = 240;
 	cursor->y = 136;
-	
-	makeDownloadDir(); //Created Download directory if there isn't any - PSP/Game/CyanogenMod/Downloads
+
 	deleteUpdateFile(); //Delete update.zip
 	
 	setCpuBoot();
