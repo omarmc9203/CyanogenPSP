@@ -10,7 +10,7 @@ int lockscreen()
 	FILE * password;
 	FILE * pin;
 	char passwordData[20] = "";
-	char pinData[4] = "";
+	char pinData[5] = "";
 	
 	lockscreenBg = oslLoadImageFilePNG("system/lockscreen/lockscreenBg.png", OSL_IN_RAM, OSL_PF_8888);
 
@@ -57,7 +57,7 @@ int lockscreen()
 
 		if (passProtect == 1)
 		{
-			if (cursor->x >= 220 && cursor->x <= 260 && cursor->y >= 100 && cursor->y <= 272) 
+			if (cursor->x >= 200 && cursor->x <= 280 && cursor->y >= 100 && cursor->y <= 272) 
 			{	
 				if (osl_pad.held.cross && osl_keys->analogY <= -50)
 				{
@@ -79,12 +79,12 @@ int lockscreen()
 		
 		else if (passProtect == 2)
 		{
-			if (cursor->x >= 220 && cursor->x <= 260 && cursor->y >= 100 && cursor->y <= 272) 
+			if (cursor->x >= 200 && cursor->x <= 280 && cursor->y >= 100 && cursor->y <= 272) 
 			{	
 				if (osl_pad.held.cross && osl_keys->analogY <= -50)
 				{
 					oslPlaySound(KeypressStandard, 1);
-					openOSK("Enter Pin", "", 4, -1);
+					openOSK("Enter Pin", "", 5, -1);
 					pin = fopen("system/settings/pin.bin", "r");
 					fscanf(pin,"%s", pinData);
 					fclose(pin);
@@ -101,7 +101,7 @@ int lockscreen()
 		
 		else if (passProtect == 0)
 		{
-			if (cursor->x >= 220 && cursor->x <= 260 && cursor->y >= 100 && cursor->y <= 272) 
+			if (cursor->x >= 200 && cursor->x <= 280 && cursor->y >= 100 && cursor->y <= 272) 
 			{
 				if (osl_pad.held.cross && osl_keys->analogY <= -50)
 				{
