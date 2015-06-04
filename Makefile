@@ -1,6 +1,6 @@
 TARGET = CyanogenPSP
 OBJS = main.o appdrawer.o home.o calculator.o lock.o settingsmenu.o clock.o recoverymenu.o imports.o multi.o power_menu.o \
-	   apollo.o fm.o game.o mp3player.o messenger.o screenshot.o gallery.o \
+	   apollo.o fm.o game.o mp3player.o messenger.o screenshot.o gallery.o language.o \
 	   include/utils.o include/pgeZip.o include/ram.o include/common.o \
 	   prx/display.o prx/sound.o \
 	   #scepower.o

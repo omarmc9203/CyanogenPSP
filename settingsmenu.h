@@ -36,7 +36,7 @@
 
 //declaration
 OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *displaybg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
-		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *easterEggImg, *security, *securitybg;
+		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *security, *securitybg;
 
 //definition of our sounds
 OSL_SOUND *tone;
@@ -55,7 +55,7 @@ int connectAPCallback(int state);
 int connectToAP(int config);
 char fontPath[100];
 char backgroundPath[100];
-int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, language, hrTime;
+int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language;
 int passProtect;
 int RJL;
 int PSPDebug;

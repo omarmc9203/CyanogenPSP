@@ -1,4 +1,5 @@
 #include "settingsmenu.h"
+#include "language.h"
 #include "include/pgeZip.h"
 #include "include/ram.h"
 #include "include/utils.h"
@@ -28,9 +29,9 @@ int connectAPCallback(int state) //Internet stuff
 {
     oslStartDrawing();
     oslDrawImageXY(wifibg, 0, 19);
-    oslDrawString(30, 175, "Connecting to AP...");
+    oslDrawStringf(30, 175, "Connecting to AP...");
     sprintf(buffer, "State: %i", state);
-    oslDrawString(30, 195, buffer);
+    oslDrawStringf(30, 195, buffer);
     oslEndDrawing();
     oslEndFrame();
     oslSyncFrame();
@@ -42,7 +43,7 @@ int connectToAP(int config) //Internet stuff
 {
     oslStartDrawing();
     oslDrawImageXY(wifibg, 0, 19);
-    oslDrawString(30, 175, "Connecting to AP...");
+    oslDrawStringf(30, 175, "Connecting to AP...");
     oslEndDrawing();
     oslEndFrame();
     oslSyncFrame();
@@ -56,10 +57,10 @@ int connectToAP(int config) //Internet stuff
         oslDrawImageXY(wifibg, 0, 19);
         oslGetIPaddress(ip);
         sprintf(buffer, "IP address: %s", ip);
-        oslDrawString(30, 175, buffer);
+        oslDrawStringf(30, 175, buffer);
 
         sprintf(buffer, "Resolving %s", Address);
-        oslDrawString(30, 195, buffer);
+        oslDrawStringf(30, 195, buffer);
         oslEndDrawing();
         oslEndFrame();
         oslSyncFrame();
@@ -73,7 +74,7 @@ int connectToAP(int config) //Internet stuff
             sprintf(buffer, "Resolved IP address: %s", ip);
         else
             sprintf(buffer, "Error resolving address!");
-        oslDrawString(30, 195, buffer);
+        oslDrawStringf(30, 195, buffer);
         oslEndDrawing();
         oslEndFrame();
         oslSyncFrame();
@@ -82,7 +83,7 @@ int connectToAP(int config) //Internet stuff
         oslStartDrawing();
         oslDrawImageXY(wifibg, 0, 19);
         sprintf(buffer, "Error connecting to AP!");
-        oslDrawString(30, 195, buffer);
+        oslDrawStringf(30, 195, buffer);
         oslEndDrawing();
         oslEndFrame();
         oslSyncFrame();
@@ -194,13 +195,13 @@ void switchStatus(int n)
 		if (sceWlanGetSwitchState() == 0)
 		{
 			oslDrawImageXY(offswitch, 392, 68);
-			oslDrawString(58,74,"Off");
+			oslDrawStringf(58,74,"Off");
 		}
 		
 		else
 		{
 			oslDrawImageXY(onswitch, 392, 68);
-			oslDrawString(58,74,"On");
+			oslDrawStringf(58,74,"On");
 		}
 	}
 }
@@ -248,32 +249,32 @@ void pspGetModel(int x, int y)
 	
 	if(pspmodel == 0)
 	{
-		oslDrawString(x,y,"Model: PSP 1000");
+		oslDrawStringf(x,y,"Model: PSP 1000");
 	}
    
 	else if(pspmodel == 1)
 	{
-		oslDrawString(x,y,"Model: PSP 2000");
+		oslDrawStringf(x,y,"Model: PSP 2000");
 	}
    
 	else if (pspmodel == 2)
 	{
-		oslDrawString(x,y,"Model: PSP 3000");
+		oslDrawStringf(x,y,"Model: PSP 3000");
 	}
    
 	else if(pspmodel == 3)
 	{
-		oslDrawString(x,y,"Model: PSP 3000");
+		oslDrawStringf(x,y,"Model: PSP 3000");
 	}
 		
 	else if (pspmodel == 4)
 	{
-		oslDrawString(x,y,"Model: PSP Go N1000");
+		oslDrawStringf(x,y,"Model: PSP Go N1000");
 	}
    
 	else
 	{
-		oslDrawString(x,y,"Model: PS Vita");
+		oslDrawStringf(x,y,"Model: PS Vita");
 	}
 }
 
@@ -289,7 +290,6 @@ void aboutMenu()
 	if (!aboutbg || !highlight)
 		debugDisplay();
 
-	int n = 0;
 	u8 *macAddress = oslAdhocGetMacAddress();
 	
 	fw_version version;
@@ -309,20 +309,20 @@ void aboutMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
-		oslDrawString(20,78,"CyanogenPSP Updates");
-		oslDrawString(20,92,"Click for, view or install available updates");
+		oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
+		oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"CyanogenPSP version: %s-20150308-OFFICIAL",cyanogenpspversion);
-		oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
-		oslDrawStringf(20,185,"Kernel version: %d.%d", version.major, version.minor);
-		oslDrawStringf(20,199,"OSLib version: %s",OSL_VERSION);
-		oslDrawString(20,213,"joellovesanna@psp #1");
+		oslDrawStringf(20,129,"%s %s-20150308-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+		oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
+		oslDrawStringf(20,185,"%s %d.%d", lang_settingsAbout[language][5], version.major, version.minor);
+		oslDrawStringf(20,199,"%s %s", lang_settingsAbout[language][6], OSL_VERSION);
+		oslDrawStringf(20,213,"joellovesanna@psp #1");
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
 		{
 			oslDrawImageXY(highlight, 0, 63);
-			oslDrawString(20,78,"CyanogenPSP Updates");
-			oslDrawString(20,92,"Click for, view or install available updates");
+			oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
+			oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -336,20 +336,8 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"CyanogenPSP version: %s-20150308-OFFICIAL",cyanogenpspversion);
-			oslDrawStringf(20,157,"Mac Address: %02X:%02X:%02X:%02X:%02X:%02X", macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
-			if (osl_keys->pressed.cross)
-			{
-				oslPlaySound(KeypressStandard, 1);  
-				if  (osl_keys->pressed.cross)
-					n+=1;
-				if (n == 4)
-				{
-					oslDeleteImage(aboutbg);
-					oslDeleteImage(highlight);
-					easterEgg();
-				}
-			}
+			oslDrawStringf(20,129,"%s %s-20150308-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+			oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -411,33 +399,6 @@ void aboutMenu()
 	}
 }
 
-void easterEgg()
-{
-	easterEggImg = oslLoadImageFilePNG("system/settings/easteregg.png", OSL_IN_RAM, OSL_PF_8888);
-		
-	if (!easterEggImg)
-		debugDisplay();
-	
-	while (!osl_quit)
-	{
-		LowMemExit();
-		
-		oslStartDrawing();
-		oslClearScreen(RGB(0,0,0));
-		controls();
-		oslDrawImageXY(easterEggImg, 0, 0);
-		
-		if(osl_keys->pressed.circle)
-		{
-			oslDeleteImage(easterEggImg);
-			aboutMenu();
-		}
-		oslEndDrawing(); 
-        oslEndFrame(); 
-		oslSyncFrame();
-	}
-}
-
 void updatesMenu()
 {		    
 	updatesbg = oslLoadImageFilePNG("system/settings/updatesbg.png", OSL_IN_RAM, OSL_PF_8888);
@@ -462,12 +423,12 @@ void updatesMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawString(20,93,"Check for Updates");
+		oslDrawStringf(20,93, "%s", lang_settingsUpdates[language][0]);
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 63 && cursor->y <= 113)
 		{
 			oslDrawImageXY(highlight, 0, 70);
-			oslDrawString(20,93,"Check for Updates");
+			oslDrawStringf(20,93, "%s", lang_settingsUpdates[language][0]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -558,14 +519,14 @@ void performanceMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
-		oslDrawString(15,103,"Processor");
-		oslDrawString(15,166,"Ram Management");
-		oslDrawString(15,240,"Storage Management");
+		oslDrawStringf(15,103, "%s", lang_settingsPerformance[language][0]);
+		oslDrawStringf(15,166, "%s", lang_settingsPerformance[language][1]);
+		oslDrawStringf(15,240, "%s", lang_settingsPerformance[language][2]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 75 && cursor->y <= 133)
 		{
 			oslDrawImageXY(highlight, 0, 86);
-			oslDrawString(15,103,"Processor");
+			oslDrawStringf(15,103, "%s", lang_settingsPerformance[language][0]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -578,7 +539,7 @@ void performanceMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 135 && cursor->y <= 191)
 		{
 			oslDrawImageXY(highlight, 0, 144);
-			oslDrawString(15,166,"Ram Management");
+			oslDrawStringf(15,166, "%s", lang_settingsPerformance[language][1]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -591,7 +552,7 @@ void performanceMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272)
 		{
 			oslDrawImageXY(highlight, 0, 229);
-			oslDrawString(15,240,"Storage Management");
+			oslDrawStringf(15,240, "%s", lang_settingsPerformance[language][2]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -721,14 +682,14 @@ void processorMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawString(20,76,"Current CPU Frequency");
-		oslDrawString(20,128,"CPU Overclock");
+		oslDrawStringf(20,76, "%s", lang_settingsProcessor[language][0]);
+		oslDrawStringf(20,128, "%s", lang_settingsProcessor[language][1]);
 		
 		if (cursor->x >= 16 && cursor->x <= 480 && cursor->y >= 118 && cursor->y <= 174)
 		{
 			oslDrawImageXY(highlight, 0, 122);
-			oslDrawString(20,128,"CPU Overclock");
-			oslDrawString(20,145,"Press R to increase frequency and L to decrease frequency");
+			oslDrawStringf(20,128, "%s", lang_settingsProcessor[language][1]);
+			oslDrawStringf(20,145, "%s", lang_settingsProcessor[language][2]);
 		}
 		
 		if (osl_keys->pressed.L)
@@ -836,9 +797,9 @@ void processorMenu()
 		bus = getBusClock(); 
 		
 		oslDrawStringf(20,87,"%d/%d",cpu, bus);
-		oslDrawString(20,189,"Current CPU Frequency");
+		oslDrawStringf(20,189, "%s", lang_settingsProcessor[language][0]);
 		oslDrawStringf(20,202,"%d MHz", cpu);
-		oslDrawString(20,241,"Current BUS Frequency");
+		oslDrawStringf(20,241, "%s", lang_settingsProcessor[language][3]);
 		oslDrawStringf(20,254,"%d MHz", bus);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -917,7 +878,7 @@ void ramMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawStringf(20,98,"RAM Available: %d MB Available\n",oslGetRamStatus().maxAvailable/1000000); 
+		oslDrawStringf(20,98,"%s %d %s\n", lang_settingsRAM[language][0], oslGetRamStatus().maxAvailable/1000000, lang_settingsRAM[language][1]); 
 	
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
@@ -1002,9 +963,9 @@ void storageMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawStringf(20,80,"Press Select to toggle USB mass storage"); 
-		oslDrawStringf(20,100,"Total Storage Space = %d MB", totalSpace);
-		oslDrawStringf(20,120,"Available Storage Space = %d MB", freeSpace);
+		oslDrawStringf(20,80, "%s", lang_settingsStorage[language][0]); 
+		oslDrawStringf(20,100,"%s %d MB", lang_settingsStorage[language][1], totalSpace);
+		oslDrawStringf(20,120,"%s %d MB", lang_settingsStorage[language][2], freeSpace);
 		
 		if (osl_keys->pressed.select)
 		{
@@ -1092,14 +1053,14 @@ void displayMenu()
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
-		oslDrawString(20,86,"Themes");
-		oslDrawString(20,140,"Time");
-		oslDrawString(20,195,"Miscellaneous");
+		oslDrawStringf(20,86, "%s", lang_settingsDisplay[language][0]);
+		oslDrawStringf(20,140, "%s", lang_settingsDisplay[language][1]);
+		oslDrawStringf(20,195, "%s", lang_settingsDisplay[language][2]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
-			oslDrawString(20,86,"Themes");
+			oslDrawStringf(20,86, "%s", lang_settingsDisplay[language][0]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1); 
@@ -1112,7 +1073,7 @@ void displayMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
-			oslDrawString(20,140,"Time");
+			oslDrawStringf(20,140, "%s", lang_settingsDisplay[language][1]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1); 
@@ -1125,7 +1086,7 @@ void displayMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228)
 		{
 			oslDrawImageXY(highlight, 0, 173);
-			oslDrawString(20,195,"Miscellaneous");
+			oslDrawStringf(20,195, "%s", lang_settingsDisplay[language][2]);
 			if (osl_keys->pressed.cross)
 			{	
 				oslPlaySound(KeypressStandard, 1); 
@@ -1216,13 +1177,13 @@ void displayThemes()
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
-		oslDrawString(20,86,"Wallpaper");
-		oslDrawString(20,140,"Fonts");
+		oslDrawStringf(20,86, "%s", lang_settingsThemes[language][0]);
+		oslDrawStringf(20,140, "%s", lang_settingsThemes[language][1]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
-			oslDrawString(20,86,"Wallpaper");
+			oslDrawStringf(20,86, "%s", lang_settingsThemes[language][0]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1); 
@@ -1235,7 +1196,7 @@ void displayThemes()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
-			oslDrawString(20,140,"Fonts");
+			oslDrawStringf(20,140, "%s", lang_settingsThemes[language][1]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1); 
@@ -1568,9 +1529,7 @@ void displayTime()
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
-		oslDrawString(20,86,"Use 24-hour format");
-		oslDrawString(20,140,"Clock Style");
-		oslDrawString(20,195,"Display AM/PM");
+		oslDrawStringf(20,86, "%s", lang_settingsTime[language][0]);
 		
 		if (hrTime == 0)
 			oslDrawImageXY(offswitch,350,80);
@@ -1581,7 +1540,7 @@ void displayTime()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
-			oslDrawString(20,86,"Use 24-hour format");
+			oslDrawStringf(20,86, "%s", lang_settingsTime[language][0]);
 			if (hrTime == 0)
 			{
 				oslDrawImageXY(offswitch,350,80);
@@ -1608,18 +1567,6 @@ void displayTime()
 					fclose(timeSetTxt);
 				}
 			}
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
-		{
-			oslDrawImageXY(highlight, 0, 118);
-			oslDrawString(20,140,"Clock Style");
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228)
-		{
-			oslDrawImageXY(highlight, 0, 173);
-			oslDrawString(20,195,"Display AM/PM");
 		}
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
@@ -1722,41 +1669,36 @@ void displayMiscellaneous()
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
-		oslDrawString(20,86,"Toggle day/night widget");
-		oslDrawString(20,140,"Toggle expanded desktop");
-		oslDrawString(20,195,"Toggle boot animation");
-		oslDrawString(20,245,"Toggle game boot");
+		oslDrawStringf(20,86, "%s", lang_settingsMiscellaneous[language][0]);
+		oslDrawStringf(20,140, "%s", lang_settingsMiscellaneous[language][1]);
+		oslDrawStringf(20,195, "%s", lang_settingsMiscellaneous[language][2]);
+		oslDrawStringf(20,245, "%s", lang_settingsMiscellaneous[language][3]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
 			oslDrawImageXY(highlight, 0, 63);
-			oslDrawString(20,86,"Toggle day/night widget");
+			oslDrawStringf(20,86, "%s", lang_settingsMiscellaneous[language][0]);
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
-			oslDrawString(20,140,"Toggle expanded desktop");
+			oslDrawStringf(20,140, "%s", lang_settingsMiscellaneous[language][1]);
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 227)
 		{
 			oslDrawImageXY(highlight, 0, 173);
-			oslDrawString(20,195,"Toggle boot animation");
+			oslDrawStringf(20,195, "%s", lang_settingsMiscellaneous[language][2]);
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 228 && cursor->y <= 272)
 		{
 			oslDrawImageXY(highlight, 0, 228);
-			oslDrawString(20,245,"Toggle game boot");
+			oslDrawStringf(20,245, "%s", lang_settingsMiscellaneous[language][3]);
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
-		navbarButtons(2);
-		androidQuickSettings();
 
 		if (widgetActivator == 0)
 		{
@@ -1870,6 +1812,10 @@ void displayMiscellaneous()
 			}
 		}
 		
+		digitaltime(381,4,0,hrTime);
+		battery(330,2,0);
+		navbarButtons(2);
+		androidQuickSettings();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -1957,13 +1903,13 @@ void securityMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawStringf(20,83,"Password Lock"); 
-		oslDrawStringf(20,144,"Pin Lock"); 
+		oslDrawStringf(20,83, "%s", lang_settingsSecuirty[language][0]); 
+		oslDrawStringf(20,144, "%s", lang_settingsSecuirty[language][1]); 
 		
 		if (cursor->x  >= 0 && cursor->x  <= 444 && cursor->y >= 61 && cursor->y <= 118)
 		{	
 			oslDrawImageXY(highlight, 0, 62);
-			oslDrawStringf(20,83,"Password Lock"); 
+			oslDrawStringf(20,83, "%s", lang_settingsSecuirty[language][0]); 
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);
@@ -1979,13 +1925,13 @@ void securityMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 119 && cursor->y <= 178)
 		{	
 			oslDrawImageXY(highlight, 0, 120);
-			oslDrawStringf(20,144,"Pin Lock"); 
+			oslDrawStringf(20,144, "%s", lang_settingsSecuirty[language][1]); 
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);
 				sceIoRemove("system/settings/password.bin");
 				sceIoRemove("system/settings/pin.bin");
-				openOSK("Enter Pin", "", 4, -1);
+				openOSK("Enter Pin", "", 5, -1);
 				pin = fopen("system/settings/pin.bin", "w");
 				fprintf(pin, "%s", tempPin);
 				fclose(pin);
@@ -2071,14 +2017,14 @@ void wifiMenu()
     int numconfigs = oslGetNetConfigs(configs);
 	if (!numconfigs)
 	{
-        sprintf(Settings_message, "No WiFi configuration found");
+        sprintf(Settings_message, "%s", lang_settingsWifi[language][0]);
         enabled = 0;
     }
 	
 	oslNetInit(); 
 	
 	if (!oslIsWlanPowerOn())
-        sprintf(Settings_message, "Please turn on the Wlan switch.");
+        sprintf(Settings_message, "%s", lang_settingsWifi[language][1]);
 
 	while (!osl_quit)
 	{			
@@ -2097,11 +2043,11 @@ void wifiMenu()
 		if (enabled)
 		{
 			sprintf(buffer, "%s", configs[selectedConfig].name);
-    		oslDrawString(10, wifi_y+28, configs[selectedConfig].name);
-			oslDrawString(10, 206, "Press up or down to navigate through your Wifi configurations.");
+    		oslDrawStringf(10, wifi_y+28, configs[selectedConfig].name);
+			oslDrawStringf(10, 206, "%s", lang_settingsWifi[language][2]);
         }
 		
-		oslDrawString(10, 220, Settings_message);
+		oslDrawStringf(10, 220, Settings_message);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
@@ -2188,15 +2134,16 @@ void DumpBootBin(void)
 	int i;
 	int fd;
 
+	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 	i = sceUmdCheckMedium();
 	if(i == 0)
 	{
-		oslDrawString(4,5,"Insert UMD");
+		oslDrawStringf(4,5, "%s", lang_settingsDump[language][5]);
 		i = sceUmdWaitDriveStat(PSP_UMD_PRESENT);
 	}
 
 	i = sceUmdActivate(1, "disc0:");
-	oslDrawString(4,5,"Mounted disc");
+	oslDrawStringf(4,5, "%s", lang_settingsDump[language][6]);
 	oslSyncFrame();
 	sceKernelDelayThread(2*1000000);
 
@@ -2215,7 +2162,7 @@ void DumpBootBin(void)
 		build_path(path, "ms0:/", game_id, 0);
 		sceIoMkdir(path, 0777);
 
-		oslDrawStringf(4,15,"Found game %s\n", game_id);
+		oslDrawStringf(4,15,"%s %s\n", lang_settingsDump[language][7], game_id);
 		write_file("disc0:/PSP_GAME/SYSDIR", path, "BOOT.BIN");
 		oslSyncFrame();
 		sceKernelDelayThread(3*1000000);
@@ -2261,7 +2208,8 @@ void dump_memory(void)
 {
 	int fd;
 
-	oslDrawString(4,5,"Dumping 28Megs from 0x8400000\n");
+	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+	oslDrawStringf(4,5,"%s 0x8400000\n", lang_settingsDump[language][8]);
 	fd = sceIoOpen("ms0:/MEMORY.BIN", PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);
 	if(fd >= 0)
 	{
@@ -2299,14 +2247,14 @@ void dumpMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
-		oslDrawString(20,123,"Dump Flash 0");
-		oslDrawString(20,181,"Dump Flash 1");
-		oslDrawString(20,236,"More");
+		oslDrawStringf(20,123, "%s", lang_settingsDump[language][0]);
+		oslDrawStringf(20,181, "%s", lang_settingsDump[language][1]);
+		oslDrawStringf(20,236, "%s", lang_settingsDump[language][2]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155)
 		{
 			oslDrawImageXY(highlight, 0, 101);
-			oslDrawString(20,123,"Dump Flash 0");
+			oslDrawStringf(20,123, "%s", lang_settingsDump[language][0]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -2317,7 +2265,7 @@ void dumpMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211)
 		{
 			oslDrawImageXY(highlight, 0, 158);
-			oslDrawString(20,181,"Dump Flash 1");
+			oslDrawStringf(20,181, "%s", lang_settingsDump[language][1]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -2328,7 +2276,7 @@ void dumpMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 212 && cursor->y <= 268)
 		{
 			oslDrawImageXY(highlight, 0, 216);
-			oslDrawString(20,236,"More");
+			oslDrawStringf(20,236, "%s", lang_settingsDump[language][2]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -2432,13 +2380,13 @@ void dumpMenuMore()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
-		oslDrawString(20,123,"Dump UMD boot.bin");
-		oslDrawString(20,181,"Dump Memory");
+		oslDrawStringf(20,123, "%s", lang_settingsDump[language][3]);
+		oslDrawStringf(20,181, "%s", lang_settingsDump[language][4]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155)
 		{
 			oslDrawImageXY(highlight, 0, 101);
-			oslDrawString(20,123,"Dump UMD boot.bin");
+			oslDrawStringf(20,123, "%s", lang_settingsDump[language][3]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -2449,7 +2397,7 @@ void dumpMenuMore()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211)
 		{
 			oslDrawImageXY(highlight, 0, 158);
-			oslDrawString(20,181,"Dump Memory");
+			oslDrawStringf(20,181, "%s", lang_settingsDump[language][4]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -2550,19 +2498,19 @@ void developerMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawString(10,107,"Toggle Remote Joy Lite");
-		oslDrawString(10,121,"Displays your PSP screen on your computer via USB.");
-		oslDrawString(10,135,"Press Triangle to disable or it may cause the program to crash");
-		oslDrawString(10,168,"Toggle USB Debugging");
-		oslDrawString(10,182,"Press Triangle to disable or it may cause the program to crash");
-		oslDrawString(10,236,"Dumping Tools");
+		oslDrawStringf(10,107, "%s", lang_settingsDeveloperOptions[language][0]);
+		oslDrawStringf(10,121, "%s", lang_settingsDeveloperOptions[language][1]);
+		oslDrawStringf(10,135, "%s", lang_settingsDeveloperOptions[language][2]);
+		oslDrawStringf(10,168, "%s", lang_settingsDeveloperOptions[language][3]);
+		oslDrawStringf(10,182, "%s", lang_settingsDeveloperOptions[language][2]);
+		oslDrawStringf(10,236, "%s", lang_settingsDeveloperOptions[language][4]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 154)
 		{
 			oslDrawImageXY(highlight, 0, 100);
-			oslDrawString(10,107,"Toggle Remote Joy Lite");
-			oslDrawString(10,121,"Displays your PSP screen on your computer via USB.");
-			oslDrawString(10,135,"Press Triangle to disable or it may cause the program to crash");
+			oslDrawStringf(10,107, "%s", lang_settingsDeveloperOptions[language][0]);
+			oslDrawStringf(10,121, "%s", lang_settingsDeveloperOptions[language][1]);
+			oslDrawStringf(10,135, "%s", lang_settingsDeveloperOptions[language][2]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -2574,8 +2522,8 @@ void developerMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 155 && cursor->y <= 214)
 		{
 			oslDrawImageXY(highlight, 0, 157);
-			oslDrawString(10,168,"Toggle USB Debugging");
-			oslDrawString(10,182,"Press Triangle to disable or it may cause the program to crash");
+			oslDrawStringf(10,168, "%s", lang_settingsDeveloperOptions[language][3]);
+			oslDrawStringf(10,182, "%s", lang_settingsDeveloperOptions[language][2]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -2587,7 +2535,7 @@ void developerMenu()
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 215 && cursor->y <= 272)
 		{
 			oslDrawImageXY(highlight, 0, 216);
-			oslDrawString(10,236,"Dumping Tools");
+			oslDrawStringf(10,236, "%s", lang_settingsDeveloperOptions[language][4]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -2678,37 +2626,37 @@ void settingsHighlight()
 	if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 98 && cursor->y <= 154)
 	{
 		oslDrawImageXY(wifi, 1, 100);
-		oslDrawString(50,120,"Wi-Fi");
+		oslDrawStringf(50,120,"%s", lang_settingsMain[language][0]);
 	}
 		
 	if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 98 && cursor->y <= 154)
 	{
 		oslDrawImageXY(security, 222, 101);
-		oslDrawString(280,120,"Security");
+		oslDrawStringf(280,120,"%s", lang_settingsMain[language][1]);
 	}
 	
 	if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 155 && cursor->y <= 210)
 	{
 		oslDrawImageXY(themes, 0, 156);
-		oslDrawString(50,177,"Display");
+		oslDrawStringf(50,177,"%s", lang_settingsMain[language][2]);
 	}
 
 	if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 155 && cursor->y <= 210)
 	{
 		oslDrawImageXY(performance, 225, 155);
-		oslDrawString(280,177,"Performance");
+		oslDrawStringf(280,177,"%s", lang_settingsMain[language][3]);
 	}
 		
 	if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 211 && cursor->y <= 267)
 	{
 		oslDrawImageXY(developeroptions, 0, 211);
-		oslDrawString(50,234,"Developer Options");
+		oslDrawStringf(50,234,"%s", lang_settingsMain[language][4]);
 	}
 
 	if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 211 && cursor->y <= 267)
 	{
 		oslDrawImageXY(about, 226, 211);
-		oslDrawString(280,233,"About");
+		oslDrawStringf(280,233,"%s", lang_settingsMain[language][5]);
 	}
 }
 
@@ -2752,12 +2700,12 @@ void settingsMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
-		oslDrawString(50,177,"Display");
-		oslDrawString(50,120,"Wi-Fi");
-		oslDrawString(280,120,"Security");
-		oslDrawString(50,234,"Developer Options");
-		oslDrawString(280,177,"Performance");
-		oslDrawString(280,234,"About");
+		oslDrawStringf(50,120,"%s", lang_settingsMain[language][0]);
+		oslDrawStringf(280,120,"%s", lang_settingsMain[language][1]);
+		oslDrawStringf(50,177,"%s", lang_settingsMain[language][2]);
+		oslDrawStringf(280,177,"%s", lang_settingsMain[language][3]);
+		oslDrawStringf(50,234,"%s", lang_settingsMain[language][4]);
+		oslDrawStringf(280,234,"%s", lang_settingsMain[language][5]);
 		
 		settingsHighlight();
 		
