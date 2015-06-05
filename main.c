@@ -222,6 +222,19 @@ int main()
 	timeSetTxt = fopen("system/app/clock/timeSet.txt", "r");
 	fscanf(timeSetTxt,"%d", &hrTime);
 	fclose(timeSetTxt);
+	
+	FILE * languageTxt;
+	
+	if (!(fileExists("system/settings/language.txt")))
+	{
+		languageTxt = fopen("system/settings/language.txt", "w");
+		fprintf(languageTxt, "0");
+		fclose(languageTxt);
+	}
+	
+	languageTxt = fopen("system/settings/language.txt", "r");
+	fscanf(languageTxt,"%d", &language);
+	fclose(languageTxt);
 
 	createDirs();
 	
