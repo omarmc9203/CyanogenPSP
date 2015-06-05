@@ -235,6 +235,17 @@ int main()
 	languageTxt = fopen("system/settings/language.txt", "r");
 	fscanf(languageTxt,"%d", &language);
 	fclose(languageTxt);
+	
+	checkGBootActivation();
+	
+	FILE * bootAnimActivation;
+	
+	if (!(fileExists("system/boot/bootAnimActivator.txt")))
+	{
+		bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
+		fprintf(bootAnimActivation, "1");
+		fclose(bootAnimActivation);
+	}
 
 	createDirs();
 	
