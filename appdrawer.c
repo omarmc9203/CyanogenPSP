@@ -1,4 +1,5 @@
 #include "appdrawer.h"
+#include "language.h"
 #include "calculator.h"
 #include "apollo.h"
 #include "messenger.h"
@@ -7,7 +8,6 @@
 #include "settingsmenu.h"
 #include "clock.h"
 #include "home.h"
-#include "language.h"
 #include "lock.h"
 #include "multi.h"
 #include "power_menu.h"
@@ -272,25 +272,25 @@ int appdrawer()
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_CENTER);
 		oslDrawImageXY(backdrop, 0, 15);
 		oslDrawImageXY(ic_launcher_browser, browser_x, 35);
-		oslDrawStringf(browser_text_x,85, "%s", lang_appDrawer[0][0]);
+		oslDrawStringf(browser_text_x,85, "%s", lang_appDrawer[language][0]);
 		oslDrawImageXY(ic_launcher_calculator, calc_x, 35);
-		oslDrawStringf(calc_text_x,85, "%s", lang_appDrawer[0][1]);
+		oslDrawStringf(calc_text_x,85, "%s", lang_appDrawer[language][1]);
 		oslDrawImageXY(ic_launcher_clock, clock_x, 35);
-		oslDrawStringf(clock_text_x,85, "%s", lang_appDrawer[0][2]);
+		oslDrawStringf(clock_text_x,85, "%s", lang_appDrawer[language][2]);
 		oslDrawImageXY(ic_launcher_filemanager, fm_x, 35);
-		oslDrawStringf(fm_text_x,85,"%s", lang_appDrawer[0][3]);
+		oslDrawStringf(fm_text_x,85,"%s", lang_appDrawer[language][3]);
 		oslDrawImageXY(ic_launcher_gallery, gallery_x, 35);
-		oslDrawStringf(gallery_text_x,85, "%s", lang_appDrawer[0][4]);
+		oslDrawStringf(gallery_text_x,85, "%s", lang_appDrawer[language][4]);
 		oslDrawImageXY(ic_launcher_game, game_icon, 35);
-		oslDrawStringf(game_text_icon,85, "%s", lang_appDrawer[0][5]);
+		oslDrawStringf(game_text_icon,85, "%s", lang_appDrawer[language][5]);
 		oslDrawImageXY(ic_launcher_messenger, messenger_x, 35);
-		oslDrawStringf(messenger_text_x,85, "%s", lang_appDrawer[0][6]);
+		oslDrawStringf(messenger_text_x,85, "%s", lang_appDrawer[language][6]);
 		oslDrawImageXY(ic_launcher_apollo, music_x, 120);
-		oslDrawStringf(music_text_x,175, "%s", lang_appDrawer[0][7]);
+		oslDrawStringf(music_text_x,175, "%s", lang_appDrawer[language][7]);
 		oslDrawImageXY(ic_launcher_settings, settings_x, 120);
-		oslDrawStringf(settings_test_x,175, "%s", lang_appDrawer[0][8]);
+		oslDrawStringf(settings_test_x,175, "%s", lang_appDrawer[language][8]);
 		oslDrawImageXY(ic_launcher_umd, umd_x, 122);
-		oslDrawStringf(umd_text_x,175, "%s", lang_appDrawer[0][9]);
+		oslDrawStringf(umd_text_x,175, "%s", lang_appDrawer[language][9]);
 		
 		if (umd_x <= -10 && fm_x <= -10)
 		{

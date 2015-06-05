@@ -431,25 +431,25 @@ void androidQuickSettings()
 	getDayOfWeek(15,yPos2+5,1);
 	getMonthOfYear(88,yPos2+5);
 
-	oslDrawStringf(137,yLine1, "%s", lang_quickSettings[0][0]);
+	oslDrawStringf(137,yLine1, "%s", lang_quickSettings[language][0]);
 	oslDrawStringf(340,yPos2, "%d%%",scePowerGetBatteryLifePercent());
 	
 	int cpu = getCpuClock();
 	
 	if (cpu <= 133)
 	{
-		oslDrawStringf(285,yLine1, "%s", lang_quickSettings[0][1]);
+		oslDrawStringf(285,yLine1, "%s", lang_quickSettings[language][1]);
 	}
 	else if (cpu >= 300)
 	{
-		oslDrawStringf(284,yLine1, "%s", lang_quickSettings[0][3]);
+		oslDrawStringf(284,yLine1, "%s", lang_quickSettings[language][3]);
 	}
 	else 
 	{
-		oslDrawStringf(292,yLine1, "%s", lang_quickSettings[0][2]);
+		oslDrawStringf(292,yLine1, "%s", lang_quickSettings[language][2]);
 	}
 		
-	oslDrawStringf(202,yLine2, "%s", lang_quickSettings[0][4]);
+	oslDrawStringf(202,yLine2, "%s", lang_quickSettings[language][4]);
 	
 	oslDrawImageXY(control,controlX,yPos2+66);	
 		
