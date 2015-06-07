@@ -36,7 +36,7 @@
 
 //declaration
 OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *displaybg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
-		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *security, *securitybg;
+		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *security, *securitybg, *music;
 
 //definition of our sounds
 OSL_SOUND *tone;
@@ -54,8 +54,8 @@ SceUID modules[3];
 int connectAPCallback(int state);
 int connectToAP(int config);
 char fontPath[100];
-char backgroundPath[100];
-int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language;
+char backgroundPath[100], nickname[25], pspname[25];
+int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language, usbStat, isPlaying;
 int passProtect;
 int RJL;
 int PSPDebug;

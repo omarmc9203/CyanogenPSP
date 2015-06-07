@@ -943,8 +943,8 @@ void storageMenu()
 	unsigned int *pbuf = buf; 
 	sceIoDevctl("ms0:", 0x02425818, &pbuf, sizeof(pbuf), 0, 0);
 	
-	unsigned int freeSpace = buf[1]*buf[3]*buf[4];
-	unsigned int totalSpace = buf[0]*buf[3]*buf[4];
+	double freeSpace = buf[1]*buf[3]*buf[4];
+	double totalSpace = buf[0]*buf[3]*buf[4];
 	
 	if (!performancebg || !highlight)
 		debugDisplay();
@@ -964,8 +964,8 @@ void storageMenu()
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,80, "%s", lang_settingsStorage[language][0]); 
-		oslDrawStringf(20,100,"%s %d MB", lang_settingsStorage[language][1], totalSpace);
-		oslDrawStringf(20,120,"%s %d MB", lang_settingsStorage[language][2], freeSpace);
+		oslDrawStringf(20,100,"%s %.2f MB", lang_settingsStorage[language][1], totalSpace/1048576);
+		oslDrawStringf(20,120,"%s %.2f MB", lang_settingsStorage[language][2], freeSpace/1048576);
 		
 		if (osl_keys->pressed.select)
 		{
@@ -1638,8 +1638,6 @@ void displayMiscellaneous()
 	FILE * eDesktopActivation;
 	FILE * bootAnimActivation;
 	FILE * gBootActivation;
-	
-	checkGBootActivation();
 	
 	bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "r");
 	fscanf(bootAnimActivation,"%d",&bootAnimActivator);

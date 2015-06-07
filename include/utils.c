@@ -224,81 +224,92 @@ void fadeIn(OSL_IMAGE* bg, int x, int y)//Name and params taken
 
 int disableUsb(void)
 {
-   if(usbStatus)
-   {
-      sceUsbDeactivate(0);
-      pspUsbDeviceFinishDevice();
-      sceUsbStop(PSP_USBSTOR_DRIVERNAME, 0, 0);
-      sceUsbStop(PSP_USBBUS_DRIVERNAME, 0, 0);
-      usbStatus = 0;
-      sceKernelDelayThread(300000);
-   }
-   return 0;
+	if(usbStatus)
+	{
+		sceUsbDeactivate(0);
+		pspUsbDeviceFinishDevice();
+		sceUsbStop(PSP_USBSTOR_DRIVERNAME, 0, 0);
+		sceUsbStop(PSP_USBBUS_DRIVERNAME, 0, 0);
+		usbStatus = 0;
+		usbStat = 0;
+		sceKernelDelayThread(300000);
+	}
+	return 0;
 }
 
 int enableUsb()
 {
-   if (usbStatus == 1)
-   {
-      disableUsb();
-      return 0;
-   }
+	if (usbStatus == 1)
+	{
+		disableUsb();
+		return 0;
+	}
 
-   if(!usbModuleStatus)
-   {
-      pspSdkLoadStartModule("flash0:/kd/semawm.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbstor.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbstormgr.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbstorms.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbstorboot.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbdevice.prx", PSP_MEMORY_PARTITION_KERNEL);
-      usbModuleStatus = 1;
-   }
+	if(!usbModuleStatus)
+	{
+		pspSdkLoadStartModule("flash0:/kd/semawm.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbstor.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbstormgr.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbstorms.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbstorboot.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbdevice.prx", PSP_MEMORY_PARTITION_KERNEL);
+		usbModuleStatus = 1;
+	}
 
-   if (!usbStatus)
-   {
-   sceUsbStart(PSP_USBBUS_DRIVERNAME, 0, 0);
-   sceUsbStart(PSP_USBSTOR_DRIVERNAME, 0, 0);
-   sceUsbstorBootSetCapacity(0x800000);
-   sceUsbActivate(0x1c8);
-   usbStatus = 1;
-   sceKernelDelayThread(300000);
-   }
-   return 1;
+	if (!usbStatus)
+	{
+		sceUsbStart(PSP_USBBUS_DRIVERNAME, 0, 0);
+		sceUsbStart(PSP_USBSTOR_DRIVERNAME, 0, 0);
+		sceUsbstorBootSetCapacity(0x800000);
+		sceUsbActivate(0x1c8);
+		usbStatus = 1;
+		usbStat = 1;
+		sceKernelDelayThread(300000);
+	}
+	
+	return 1;
 }
 
 int enableUsbEx(u32 device)
 {
+	if (usbStatus == 1)
+	{
+		disableUsb();
+		return 0;
+	}
 
-   if (usbStatus == 1)
-   {
-      disableUsb();
-      return 0;
-   }
-
-   if(!usbModuleStatus)
-   {
-      pspSdkLoadStartModule("flash0:/kd/usbdevice.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/semawm.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbstor.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbstormgr.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbstorms.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbstorboot.prx", PSP_MEMORY_PARTITION_KERNEL);
-      pspSdkLoadStartModule("flash0:/kd/usbdevice.prx", PSP_MEMORY_PARTITION_KERNEL);
-      usbModuleStatus = 1;
-   }
-   if (!usbStatus)
-   {
-   pspUsbDeviceSetDevice(device, 0, 0);
-   sceUsbStart(PSP_USBBUS_DRIVERNAME, 0, 0);
-   sceUsbStart(PSP_USBSTOR_DRIVERNAME, 0, 0);
-   sceUsbActivate(0x1c8);
-   usbStatus = 1;
-   sceKernelDelayThread(300000);
-   }
-   return 1;
+	pspUsbDeviceSetDevice(device, 0, 0);
+	
+	if(!usbModuleStatus)
+	{
+		pspSdkLoadStartModule("flash0:/kd/usbdevice.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/semawm.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbstor.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbstormgr.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbstorms.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbstorboot.prx", PSP_MEMORY_PARTITION_KERNEL);
+		pspSdkLoadStartModule("flash0:/kd/usbdevice.prx", PSP_MEMORY_PARTITION_KERNEL);
+		usbModuleStatus = 1;
+	}
+	
+	if (!usbStatus)
+	{
+		sceUsbStart(PSP_USBBUS_DRIVERNAME, 0, 0);
+		sceUsbStart(PSP_USBSTOR_DRIVERNAME, 0, 0);
+		sceUsbActivate(0x1c8);
+		usbStatus = 1;
+		usbStat = 1;
+		sceKernelDelayThread(300000);
+	}
+	
+	return 1;
 }
 
 int isUSBCableConnected(){
     return (sceUsbGetState() & PSP_USB_CABLE_CONNECTED);
+}
+
+char getPSPNickname()
+{
+	return sceUtilityGetSystemParamString(1, nickname, 25);
 }

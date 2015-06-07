@@ -5,6 +5,7 @@
 #include <pspusb.h>
 #include <pspusbstor.h>
 #include <pspmodulemgr.h>
+#include <kubridge.h>
 #include "pspusbdevice.h"
 
 #define downloadPath "ms0:/PSP/GAME/CyanogenMod/downloads"
@@ -39,5 +40,6 @@ void fadeIn(OSL_IMAGE* bg, int x, int y);
 int disableUsb(void);
 int enableUsb();
 int enableUsbEx(u32 device);
+char getPSPNickname();
 int isUSBCableConnected();
 

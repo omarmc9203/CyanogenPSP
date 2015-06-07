@@ -167,6 +167,22 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		{
 			oslDrawStringf(batx+16, 4,"%d%%",batteryLife);
 		}
+		
+		if (usbStat == 1)
+		{
+			oslDrawImageXY(usbdebug,5, -1);
+		}
+			
+		else if (isPlaying == 1)
+		{
+			oslDrawImageXY(music,5, 2);
+		}
+		
+		if (usbStat == 1 && isPlaying == 1)
+		{
+			oslDrawImageXY(usbdebug, 5, -1);
+			oslDrawImageXY(music, 26, 2);
+		}
 	}
 	
 	if (n == 3)
@@ -192,6 +208,22 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 			baty = y;
 			oslDrawStringf(batx+16, y+2,"%d%%",batteryLife);
 		}
+		
+		if (usbStat == 1)
+		{
+			oslDrawImageXY(usbdebug,5, y-3);
+		}
+			
+		else if (isPlaying == 1)
+		{
+			oslDrawImageXY(music,5, y);
+		}
+		
+		if (usbStat == 1 && isPlaying == 1)
+		{
+			oslDrawImageXY(usbdebug, 5, y-3);
+			oslDrawImageXY(music, 26, y);
+		}
 	}
 	
 	if (batteryLife == 100)
@@ -213,10 +245,8 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	}
 	
 	if (scePowerIsBatteryCharging() == 1) // If the battery's charging, draw the charging icon on the battery icon.
-	{
 		//oslPlaySound(WirelessChargingStarted, 1);  
 		oslDrawImageXY(battcharge,batx,baty);
-	}
 }
 
 //Imports
@@ -432,7 +462,8 @@ void androidQuickSettings()
 	getMonthOfYear(88,yPos2+5);
 
 	oslDrawStringf(137,yLine1, "%s", lang_quickSettings[language][0]);
-	oslDrawStringf(340,yPos2, "%d%%",scePowerGetBatteryLifePercent());
+	oslDrawStringf(335,yPos2, "%d%%",scePowerGetBatteryLifePercent());
+	oslDrawStringf(415,yPos2, "%.7s", pspname);
 	
 	int cpu = getCpuClock();
 	

@@ -160,6 +160,8 @@ void MP3Play(char * path)
 	MP3_Load(path);
 	MP3_Play();
 	
+	isPlaying = 1;
+	
 	while (!osl_quit)
 	{
 		LowMemExit();
@@ -217,6 +219,7 @@ void MP3Play(char * path)
 			MP3_End();
 			releaseAudioCh();
 			oslDeleteImage(nowplaying);
+			isPlaying = 0;
 			return;
 		}
 		
