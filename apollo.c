@@ -437,8 +437,17 @@ void mp3Controls() //Controls
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))
 	{
-		oslPlaySound(KeypressStandard, 1); 
-		MP3Play(folderIcons[current].filePath);
+		if (isPlaying == 1)
+		{
+			MP3_End();
+			releaseAudioCh();
+			MP3Play(folderIcons[current].filePath);
+		}
+		else 
+		{
+			oslPlaySound(KeypressStandard, 1); 
+			MP3Play(folderIcons[current].filePath);
+		}
 	}
 	
 	if (osl_keys->pressed.square)
