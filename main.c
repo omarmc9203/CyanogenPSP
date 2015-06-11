@@ -170,21 +170,34 @@ void firstBootInitiation()
 			oslDrawImageXY(ic_launcher_settings, 331, 190);
 			oslDrawImageXY(ic_launcher_messenger, 160, 190);
 			oslDrawImageXY(pointer, 230, 180);
-		
-			digitaltime(420,4,0,hrTime);
-		
 			oslSetTransparentColor(RGB(0,0,0));
 			appDrawerIcon();
 			oslDisableTransparentColor();
+			
+			oslDrawImageXY(transbackground, 0, 0);
+			oslDrawImageXY(welcome, 0, 0);
+			
+			oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+			oslDrawStringf(20,30, "Welcome");
+			
+			oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,INTRAFONT_ALIGN_LEFT);
+			oslDrawStringf(20,60, "Use the analog stick to navigate the cursor and");
+			
+			oslDrawStringf(20,80, "press X (cross) to open the application.");
+			
+			oslIntraFontSetStyle(Roboto, 0.6f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+			oslDrawStringf(400,110, "GOT IT");
+		
+			oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+			
+			digitaltime(420,4,0,hrTime);
 		
 			battery(370,2,1);
 			navbarButtons(0);
-		
-			oslDrawImageXY(transbackground, 0, 0);
-			oslDrawImageXY(welcome, 0, 0);
+			
 			oslDrawImage(cursor);
 	
-			if (cursor->x >= 366 && cursor->x <= 442 && cursor->y >= 80 && cursor->y <= 116 && osl_keys->pressed.cross)
+			if (cursor->x >= 388 && cursor->x <= 464 && cursor->y >= 98 && cursor->y <= 132 && osl_keys->pressed.cross)
 			{ 
 				firstBootTxt = fopen("system/firstBoot.txt", "w"); 
 				fprintf(firstBootTxt, "0");
