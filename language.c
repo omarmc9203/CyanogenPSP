@@ -92,11 +92,11 @@ const char lang_settingsRAM[][2][20] =
 
 const char lang_settingsStorage[][3][60] = 
 {	
-	{"Press select to toggle USB mass storage", "Total storage:", "Available storage:"},
-	{"Press select to toggle USB mass storage", "Total storage:", "Available storage:"},
-	{"Press select to toggle USB mass storage", "Total storage:", "Available storage:"},
-	{"Press select to toggle USB mass storage", "Total storage:", "Available storage:"},
-	{"Press select to toggle USB mass storage", "Total storage:", "Available storage:"}
+	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
+	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
+	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
+	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
+	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"}
 };
 
 const char lang_settingsAbout[][7][80] = 

@@ -14,7 +14,7 @@
 #include <psprtc.h>
 
 //declaration
-OSL_IMAGE * bootAnim[78];
+OSL_IMAGE * bootAnim[13];
 
 //function declarations
 int initOSLib(); 
@@ -24,5 +24,5 @@ int SetupCallbacks(void);
 int connectAPCallback(int state);
 int connectToAP(int config);
 void internet();
-void firstBootMessage();
+void firstBootInitiation();
 int main();

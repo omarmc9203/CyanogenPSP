@@ -115,6 +115,8 @@ int WriteFile(char *file, void *buf, int size)
 	   Error("Cannot write %s", file);
 
 	sceIoClose(fd);
+	
+	return 0;
 }
 
 //Check File
@@ -130,27 +132,28 @@ int VerifyFile(char *file)
 	return 0;
 }
 
-//Load Start Module
-int LoadStartModule(char *module)
+int LoadStartModule(char *path)
 {
-    SceUID mod = sceKernelLoadModule(module, 0, NULL);
+    u32 loadResult;
+    u32 startResult;
+    int status;
 
-    if (mod >= 0)
-    {
-        mod = sceKernelStartModule(mod, 0, NULL, NULL, NULL);
-        if (mod < 0)
-            Error("Cannot load/start %s", module);
-    }
-
-    return 0;
+    loadResult = kuKernelLoadModule(path, 0, NULL);
+    if (loadResult & 0x80000000)
+       return -1;
+       
+    startResult = sceKernelStartModule(loadResult, 0, NULL, &status, NULL);
+    if (loadResult != startResult)
+       return -2;
+    return loadResult;
 }
 
-int StopUnloadModule(char *module)
+int StopUnloadModule(SceUID modID)
 {
-	sceKernelStopModule(module, 0, NULL, NULL, NULL);
-	sceKernelUnloadModule(module);
-
-    return 0;
+    int status = 0;
+    sceKernelStopModule(modID, 0, NULL, &status, NULL);
+    sceKernelUnloadModule(modID);
+	return 0;
 }
 
 //Battery
@@ -230,43 +233,43 @@ int SetRegistryValue(const char *dir, const char *name, u32 val)
         return ret;
 }
 
-void *GetRegistryValue(const char *dir, const char *name, void *buf, int bufsize)
+int GetRegistryValue(const char *dir, const char *name, u32 *val) 
 {
-	int ret = NULL;
-	struct RegParam reg;
-	REGHANDLE h;
+    int ret = 0;
+    struct RegParam reg;
+    REGHANDLE h;
 
-	memset(&reg, 0, sizeof(reg));
-	reg.regtype = 1;
-	reg.namelen = strlen("/system");
-	reg.unk2 = 1;
-	reg.unk3 = 1;
-	strcpy(reg.name, "/system");
-	if(sceRegOpenRegistry(&reg, 2, &h) == 0){
-		REGHANDLE hd;
-		if(!sceRegOpenCategory(h, dir, 2, &hd)){
-			REGHANDLE hk;
-			unsigned int type, size;
+    memset(&reg, 0, sizeof(reg));
+    reg.regtype = 1;
+    reg.namelen = strlen("/system");
+    reg.unk2 = 1;
+    reg.unk3 = 1;
+    strcpy(reg.name, "/system");
+    if(sceRegOpenRegistry(&reg, 2, &h) == 0) {
+        REGHANDLE hd;
+        if(!sceRegOpenCategory(h, dir, 2, &hd)) {
+            REGHANDLE hk;
+            unsigned int type, size;
 
-			if(!sceRegGetKeyInfo(hd, name, &hk, &type, &size)){
-				if(!sceRegGetKeyValue(hd, hk, buf, bufsize)){
-					ret = buf;
-					sceRegFlushCategory(hd);
-				}
-			}
-			sceRegCloseCategory(hd);
-		}
-		sceRegFlushRegistry(h);
-		sceRegCloseRegistry(h);
-	}
+            if(!sceRegGetKeyInfo(hd, name, &hk, &type, &size)) {
+                if(!sceRegGetKeyValue(hd, hk, val, 4)) {
+                    ret = 1;
+                    sceRegFlushCategory(hd);
+                }
+            }
+            sceRegCloseCategory(hd);
+        }
+        sceRegFlushRegistry(h);
+        sceRegCloseRegistry(h);
+    }
 
-	return ret;
+    return ret;
 }
 
 //Registry Func
 void swap_buttons()
 {
-	GetRegistryValue("/CONFIG/SYSTEM/XMB", "button_assign", &value, NULL);
+	GetRegistryValue("/CONFIG/SYSTEM/XMB", "button_assign", &value);
 	value = !value;
     SetRegistryValue("/CONFIG/SYSTEM/XMB", "button_assign", value); 
 
@@ -282,7 +285,7 @@ void swap_buttons()
 
 void active_wma()
 {
-	GetRegistryValue("/CONFIG/MUSIC", "wma_play", &value, NULL);
+	GetRegistryValue("/CONFIG/MUSIC", "wma_play", &value);
 
 	if (value == 1)
 	{
@@ -297,7 +300,7 @@ void active_wma()
 
 void active_flash()
 {
-	GetRegistryValue("/CONFIG/BROWSER", "flash_activated", &value, NULL);
+	GetRegistryValue("/CONFIG/BROWSER", "flash_activated", &value);
 
 	if(value == 1)
 	{
@@ -315,7 +318,7 @@ void fake_name()
 {
 	CheckerPrintf("Setting random name...");
 	value = chGetFakeName(20, 3465);
-	SetRegistryValue("/CONFIG/SYSTEM", "owner_name", &value);
+	SetRegistryValue("/CONFIG/SYSTEM", "owner_name", value);
     sceKernelDelayThread(2000000);
 	CheckerPrintf("Done");
 }

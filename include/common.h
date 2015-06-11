@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <pspreg.h>
+#include <kubridge.h>
 
 //imported functions
 u32 writeBat(u8 addr, u16 data);
@@ -41,16 +42,17 @@ void USB_Toggle();
 void Error(char *fmt, ...);
 int WriteFile(char *file, void *buf, int size);
 int VerifyFile(char *file);
-int LoadStartModule(char *module);
-int StopUnloadModule(char *module);
+int LoadStartModule(char *path);
+int StopUnloadModule(SceUID modID);
 u32 GetBatSer();
 void SetBatSer(u16 ser1, u16 ser2);
 int GetBatType();
 int SetRegistryValue(const char *dir, const char *name, u32 val);
-void *GetRegistryValue(const char *dir, const char *name, void *buf, int bufsize);
+int GetRegistryValue(const char *dir, const char *name, u32 *val);
 void swap_buttons();
 void active_wma();
 void active_flash();
+void fake_name();
 void hide_mac();
 int CheckVersion(char *version);
 char *GetVersion();

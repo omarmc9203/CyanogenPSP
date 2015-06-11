@@ -90,7 +90,7 @@ void decrease_volume(int n) {
 }
 
 //First Boot Message
-void firstBootMessage()
+void firstBootInitiation()
 {	
 	int firstBoot;
 
@@ -113,6 +113,47 @@ void firstBootMessage()
 	fscanf(firstBootTxt,"%d",&firstBoot);
 	fclose(firstBootTxt);
 
+	//Loads our images into memory
+	loadIcons();
+	background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
+	cursor = oslLoadImageFilePNG("system/cursor/cursor.png", OSL_IN_VRAM, OSL_PF_8888);
+	navbar2 = oslLoadImageFile("system/home/icons/nav2.png", OSL_IN_RAM, OSL_PF_8888);
+	navbar = oslLoadImageFile("system/home/icons/nav.png", OSL_IN_VRAM, OSL_PF_8888);
+	notif = oslLoadImageFile("system/home/menu/notif.png", OSL_IN_RAM, OSL_PF_8888);
+	pointer = oslLoadImageFilePNG("system/home/icons/pointer.png", OSL_IN_RAM, OSL_PF_8888);
+	pointer1 = oslLoadImageFilePNG("system/home/icons/pointer1.png", OSL_IN_RAM, OSL_PF_8888);
+	backicon = oslLoadImageFilePNG("system/home/icons/backicon.png", OSL_IN_RAM, OSL_PF_8888);
+	homeicon = oslLoadImageFilePNG("system/home/icons/homeicon.png", OSL_IN_RAM, OSL_PF_8888);
+	multicon = oslLoadImageFilePNG("system/home/icons/multicon.png", OSL_IN_RAM, OSL_PF_8888);
+	backicon2 = oslLoadImageFilePNG("system/home/icons/backicon2.png", OSL_IN_RAM, OSL_PF_8888);
+	homeicon2 = oslLoadImageFilePNG("system/home/icons/homeicon2.png", OSL_IN_RAM, OSL_PF_8888);
+	multicon2 = oslLoadImageFilePNG("system/home/icons/multicon2.png", OSL_IN_RAM, OSL_PF_8888);
+	welcome = oslLoadImageFilePNG("system/home/icons/welcome.png", OSL_IN_RAM, OSL_PF_8888);
+	transbackground = oslLoadImageFilePNG("system/home/icons/transbackground.png", OSL_IN_RAM, OSL_PF_8888);
+	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_VRAM, OSL_PF_8888);
+	ic_launcher_apollo = oslLoadImageFilePNG("system/app/apollo/ic_launcher_apollo.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_messenger = oslLoadImageFilePNG("system/app/messenger/ic_launcher_messenger.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_browser = oslLoadImageFile("system/app/browser/ic_launcher_browser.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_filemanager = oslLoadImageFilePNG("system/app/filemanager/ic_launcher_filemanager.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_settings = oslLoadImageFilePNG("system/settings/ic_launcher_settings.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_gallery = oslLoadImageFilePNG("system/app/gallery/ic_launcher_gallery.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_umd = oslLoadImageFilePNG("system/app/umd/ic_launcher_umd.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_calculator = oslLoadImageFilePNG("system/app/calculator/ic_launcher_calculator.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_game = oslLoadImageFilePNG("system/app/game/ic_launcher_game.png", OSL_IN_RAM, OSL_PF_8888);
+	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
+	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
+	usbdebug = oslLoadImageFilePNG("system/home/icons/usbdebug.png", OSL_IN_RAM, OSL_PF_8888);
+	music = oslLoadImageFilePNG("system/home/icons/music.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	
+	//Debugger - Displays an error message if the following resources are missing.
+	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon || !usbdebug  || !music)
+		debugDisplay();
+		
+	//Sets the cursor's original position on the screen
+	cursor->x = 240;
+	cursor->y = 136;	
+	
 	if (firstBoot!= 0)
 	{
 		fclose(firstBootTxt);
@@ -170,6 +211,72 @@ void firstBootMessage()
 	}
 }
 
+int bootAnimation()
+{
+	int currentFrame = 0, i = 0;
+	
+	FILE * bootAnimActivation;
+	
+	if (!(fileExists("system/boot/bootAnimActivator.txt")))
+	{
+		bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
+		fprintf(bootAnimActivation, "1");
+		fclose(bootAnimActivation);
+	}
+	
+	bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "r");
+	fscanf(bootAnimActivation,"%d", &bootAnimActivator);
+	fclose(bootAnimActivation);
+	
+	if (bootAnimActivator != 1)
+		firstBootInitiation();
+	
+	bootAnim[0] = oslLoadImageFilePNG("system/boot/part1/boot0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[1] = oslLoadImageFilePNG("system/boot/part1/boot1.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[2] = oslLoadImageFilePNG("system/boot/part1/boot2.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[3] = oslLoadImageFilePNG("system/boot/part1/boot3.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[4] = oslLoadImageFilePNG("system/boot/part1/boot4.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[5] = oslLoadImageFilePNG("system/boot/part1/boot5.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[6] = oslLoadImageFilePNG("system/boot/part1/boot6.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[7] = oslLoadImageFilePNG("system/boot/part1/boot7.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[8] = oslLoadImageFilePNG("system/boot/part1/boot8.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[9] = oslLoadImageFilePNG("system/boot/part1/boot9.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[10] = oslLoadImageFilePNG("system/boot/part1/boot10.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[11] = oslLoadImageFilePNG("system/boot/part1/boot11.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	bootAnim[12] = oslLoadImageFilePNG("system/boot/part1/boot12.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	
+	while(!osl_quit)
+	{
+		oslStartDrawing();
+		oslDrawImageXY(bootAnim[currentFrame], 80, -25); 
+		sceDisplayWaitVblankStart();
+		oslEndDrawing();
+		oslEndFrame();
+		oslSyncFrame();
+		sceKernelDelayThread(10000 * 2);
+   
+		currentFrame++;
+		if(currentFrame > 12)
+		{
+			currentFrame = 0;
+			i++;
+		}
+		
+		if (i > 21)
+		{
+			for (i = 0; i <=12; i++)
+			{
+				oslDeleteImage(bootAnim[i]);
+			}
+			firstBootInitiation();
+		}
+    }
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();	
+	return 0;
+}
+
 int main()
 {
 	SetupCallbacks(); //Setup callbacks
@@ -180,9 +287,7 @@ int main()
 	camera_click = oslLoadSoundFile("system/media/audio/ui/camera_click.wav", OSL_FMT_NONE);
 	KeypressStandard = oslLoadSoundFile("system/media/audio/ui/KeypressStandard.wav", OSL_FMT_NONE);
 	Lock = oslLoadSoundFile("system/media/audio/ui/Lock.wav", OSL_FMT_NONE);
-	LowBattery = oslLoadSoundFile("system/media/audio/ui/LowBattery.wav", OSL_FMT_NONE);
 	Unlock = oslLoadSoundFile("system/media/audio/ui/Unlock.wav", OSL_FMT_NONE);
-	WirelessChargingStarted = oslLoadSoundFile("system/media/audio/ui/WirelessChargingStarted.wav", OSL_FMT_NONE);
 
 	FILE * backgroundPathTXT;
 	
@@ -238,25 +343,9 @@ int main()
 	
 	checkGBootActivation();
 	
-	FILE * bootAnimActivation;
-	
-	if (!(fileExists("system/boot/bootAnimActivator.txt")))
-	{
-		bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
-		fprintf(bootAnimActivation, "1");
-		fclose(bootAnimActivation);
-	}
-
 	createDirs();
 	
-	//Loads our images into memory
-	loadIcons();
-	background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
-	cursor = oslLoadImageFilePNG("system/cursor/cursor.png", OSL_IN_VRAM, OSL_PF_8888);
-	navbar = oslLoadImageFile("system/home/icons/nav.png", OSL_IN_VRAM, OSL_PF_8888);
-	navbar2 = oslLoadImageFile("system/home/icons/nav2.png", OSL_IN_RAM, OSL_PF_8888);
 	quickSettings = oslLoadImageFile("system/home/menu/quickSettings.png", OSL_IN_VRAM, OSL_PF_8888);
-	notif = oslLoadImageFile("system/home/menu/notif.png", OSL_IN_RAM, OSL_PF_8888);
 	batt100 = oslLoadImageFile("system/home/icons/100.png", OSL_IN_VRAM, OSL_PF_8888);
 	batt80 = oslLoadImageFile("system/home/icons/80.png", OSL_IN_VRAM, OSL_PF_8888);
 	batt60 = oslLoadImageFile("system/home/icons/60.png", OSL_IN_VRAM, OSL_PF_8888);
@@ -265,141 +354,32 @@ int main()
 	batt10 = oslLoadImageFile("system/home/icons/10.png", OSL_IN_VRAM, OSL_PF_8888);
 	batt0 = oslLoadImageFile("system/home/icons/0.png", OSL_IN_VRAM, OSL_PF_8888);
 	battcharge = oslLoadImageFile("system/home/icons/charge.png", OSL_IN_VRAM, OSL_PF_8888);
-	pointer = oslLoadImageFilePNG("system/home/icons/pointer.png", OSL_IN_RAM, OSL_PF_8888);
-	pointer1 = oslLoadImageFilePNG("system/home/icons/pointer1.png", OSL_IN_RAM, OSL_PF_8888);
-	backicon = oslLoadImageFilePNG("system/home/icons/backicon.png", OSL_IN_RAM, OSL_PF_8888);
-	homeicon = oslLoadImageFilePNG("system/home/icons/homeicon.png", OSL_IN_RAM, OSL_PF_8888);
-	multicon = oslLoadImageFilePNG("system/home/icons/multicon.png", OSL_IN_RAM, OSL_PF_8888);
-	backicon2 = oslLoadImageFilePNG("system/home/icons/backicon2.png", OSL_IN_RAM, OSL_PF_8888);
-	homeicon2 = oslLoadImageFilePNG("system/home/icons/homeicon2.png", OSL_IN_RAM, OSL_PF_8888);
-	multicon2 = oslLoadImageFilePNG("system/home/icons/multicon2.png", OSL_IN_RAM, OSL_PF_8888);
-	welcome = oslLoadImageFilePNG("system/home/icons/welcome.png", OSL_IN_RAM, OSL_PF_8888);
-	transbackground = oslLoadImageFilePNG("system/home/icons/transbackground.png", OSL_IN_RAM, OSL_PF_8888);
-	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_VRAM, OSL_PF_8888);
-	ic_launcher_apollo = oslLoadImageFilePNG("system/app/apollo/ic_launcher_apollo.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_messenger = oslLoadImageFilePNG("system/app/messenger/ic_launcher_messenger.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_browser = oslLoadImageFile("system/app/browser/ic_launcher_browser.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_filemanager = oslLoadImageFilePNG("system/app/filemanager/ic_launcher_filemanager.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_settings = oslLoadImageFilePNG("system/settings/ic_launcher_settings.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_gallery = oslLoadImageFilePNG("system/app/gallery/ic_launcher_gallery.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_umd = oslLoadImageFilePNG("system/app/umd/ic_launcher_umd.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_calculator = oslLoadImageFilePNG("system/app/calculator/ic_launcher_calculator.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_game = oslLoadImageFilePNG("system/app/game/ic_launcher_game.png", OSL_IN_RAM, OSL_PF_8888);
-	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
-	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
-	volumeBar = oslLoadImageFilePNG("system/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
-	volumeControl = oslLoadImageFile("system/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
+	//volumeBar = oslLoadImageFilePNG("system/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
+	//volumeControl = oslLoadImageFile("system/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-	oslSetFont(Roboto);
+	oslSetFont(Roboto); //Load and set font
 	
 	SceUID modid;//, modid2;
 	
 	modid = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
 	//modid2 = pspSdkLoadStartModule("modules/sound.prx", PSP_MEMORY_PARTITION_KERNEL);
 	
-	//Debugger - Displays an error message if the following resources are missing.
-	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !pointer || !pointer1 || !backicon || !multicon || !homeicon)
-		debugDisplay();
-	
 	loadConfig();
 	
-	//Sets the cursor's original position on the screen
-	cursor->x = 240;
-	cursor->y = 136;
-
 	deleteUpdateFile(); //Delete update.zip
 	
-	setCpuBoot();
+	setCpuBoot(); //Set default CPU or load pre-existing value
+	
+	getPSPNickname(); //Get PSP name before hand
+	strcpy (pspname, nickname);
 	
 	//Main loop to run the program
 	while (!osl_quit)
 	{		
-		firstBootMessage();
-	
-		//Draws images onto the screen
-		oslStartDrawing();
+		bootAnimation();
+		firstBootInitiation();
 		
-		//Initiate the PSP's controls
-		controls();
-			
-		//Print the images onto the screen
-		oslDrawImage(background);		
-		oslDrawImageXY(ic_launcher_apollo, 105, 190);
-		oslDrawImageXY(ic_launcher_browser, 276, 190);
-		oslDrawImageXY(ic_launcher_settings, 331, 190);
-		oslDrawImageXY(ic_launcher_messenger, 160, 190);
-		oslDrawImageXY(pointer, 232, 180); 
-
-		//Sets the transparency color (black)
-		oslSetTransparentColor(RGB(0,0,0));
-		
-		appDrawerIcon();
-		
-		//Disables the transparent color
-		oslDisableTransparentColor();
-
-		navbarButtons(0);
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-		digitaltime(420,4,0,hrTime);//Draws digital time (based on your local psp time) on the top right corner.
-		battery(370,2,1);
-		androidQuickSettings();
-		oslDrawImage(cursor);
-
-		if (osl_keys->pressed.square) //Opens the power menu
-		{
-			 powermenu();
-		}
-				
-		//Launching the browser
-		if (cursor->x >= 276 && cursor->x <= 321 && cursor->y >= 190 && cursor->y <= 240 && osl_keys->pressed.cross) //Launches the internet
-		{
-			unloadIcons();
-			internet();
-		}
-		
-		if (cursor->x >= 330 && cursor->x <= 374 && cursor->y >= 190 && cursor->y <= 240 && osl_keys->pressed.cross) //Opens Gmail
-		{
-			unloadIcons();
-			settingsMenu();
-		}
-		
-		if (cursor->x >= 100 && cursor->x <= 154 && cursor->y >= 190 && cursor->y <= 240 && osl_keys->pressed.cross) //Opens music MP3 player
-		{
-			unloadIcons();
-			mp3player();
-		}
-		
-		/*Messenger
-		if (cursor->x >= 155 && cursor->x <= 210 && cursor->y >= 190 && cursor->y <= 240 && osl_keys->pressed.cross) //Opens messenger
-		{
-			unloadIcons();
-			messenger();
-		}
-		*/
-			
-		if (cursor->x >= 215 && cursor->x <= 243 && cursor->y >= 195 && cursor->y <= 230 && osl_keys->pressed.cross) //Opens app drawer
-		{
-			unloadIcons();
-			appdrawer();
-		}
-		
-		if (osl_keys->pressed.L) //Locks the screen
-		{
-			lockscreen();
-        }
-		
-		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross) // Opens multi-task menu
-		{
-			unloadIcons();
-			multitask();
-		}
-		
-		if (osl_pad.held.R && osl_keys->pressed.triangle) //Takes screenshot
-		{
-			screenshot();
-		}
-	
 		//Ends Printing and Drawing
 		oslEndDrawing(); 
 

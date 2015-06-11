@@ -73,6 +73,11 @@ int lockscreen()
 						oslDeleteImage(lockscreenBg);
 						home();
 					}
+					else if ((strcmp(tempMessage, passwordData) != 0) || (oslOskGetResult() == OSL_OSK_CANCEL))
+					{
+						oslDeleteImage(lockscreenBg);
+						lockscreen();
+					}	
 				}
 			}
 		}
@@ -95,6 +100,11 @@ int lockscreen()
 						oslDeleteImage(lockscreenBg);
 						home();
 					}
+					else if ((strcmp(tempPin, pinData) != 0) || (oslOskGetResult() == OSL_OSK_CANCEL))
+					{
+						oslDeleteImage(lockscreenBg);
+						lockscreen();
+					}	
 				}
 			}
 		}

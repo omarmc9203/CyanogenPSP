@@ -14,6 +14,12 @@ time_t		startTimer_;
 int timeState;
 int timerStart = 0;
 
+typedef struct
+{
+        clock_t measuredTime;
+        clock_t offset;
+} Timer;
+
 void startTimer() 
 {
 	//Get current time
@@ -25,7 +31,7 @@ void startTimer()
 
 void pauseTimer() 
 {
-	timerStart = 2;
+	timeState = timeState;
 }
 
 int getTimer()
@@ -325,22 +331,24 @@ int pspStopWatch()
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
-
-		if (cursor->x >= 196 && cursor->x <= 246  && cursor->y >= 208 && cursor->y <= 258 && timerStart == 1 && osl_keys->pressed.cross)
-		{
-			pauseTimer();
-			oslPlaySound(KeypressStandard, 1);  
-		}
 		
-		if (cursor->x >= 196 && cursor->x <= 246  && cursor->y >= 208 && cursor->y <= 258 && osl_keys->pressed.cross)
+		if (cursor->x >= 196 && cursor->x <= 246  && cursor->y >= 208 && cursor->y <= 258 && timerStart == 0 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			startTimer();
 		}
 		
+		else if (cursor->x >= 196 && cursor->x <= 246  && cursor->y >= 208 && cursor->y <= 258 && timerStart == 1 && osl_keys->pressed.cross)
+		{
+			pauseTimer();
+			oslPlaySound(KeypressStandard, 1);  
+		}
+		
 		if (cursor->x >= 70 && cursor->x <= 106  && cursor->y >= 216 && cursor->y <= 248 && osl_keys->pressed.cross)
 		{
 			miliSec = 0;
+			min = 0;
+			hour = 0;
 			oslPlaySound(KeypressStandard, 1);  
 			resetTimer();
 		}

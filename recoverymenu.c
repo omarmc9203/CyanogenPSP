@@ -149,11 +149,12 @@ void ShowPage4()
 
 void backupPassword()
 {	
-	char pass[5];
-	memset(pass, 0, sizeof(pass));
+	u32 pass;
+
+	char password = GetRegistryValue("/CONFIG/SYSTEM/LOCK", "password", &pass);
 	
 	FILE * configtxt = fopen(PWD, "wb"); //create config file
-	fprintf(configtxt, "Password: %s\n", GetRegistryValue("/CONFIG/SYSTEM/LOCK", "password", &pass, sizeof(pass)));
+	fprintf(configtxt, "Password: %d\n", password);
 	fclose(configtxt);	
 }
 
@@ -161,8 +162,9 @@ void backupPassword()
 void ShowPage3()
 {
     int cpu, bus;
-	char name[32], pass[5], button[256], wma[256], flash[256];
+	char button[256], wma[256], flash[256];
 	u8 kirk[4], spock[4], macaddr[512];
+	u32 pass;
 	
 	*(u32 *)kirk = chGetKirk();
 	*(u32 *)spock = chGetSpock();
@@ -183,7 +185,7 @@ void ShowPage3()
 		
 		oslDrawImageXY(recoverybg, 0, 0);
 	
-		GetRegistryValue("/CONFIG/SYSTEM/XMB", "button_assign", &value, sizeof(value));
+		GetRegistryValue("/CONFIG/SYSTEM/XMB", "button_assign", &value);
 
 		if (value == 1) 
 		{
@@ -194,7 +196,7 @@ void ShowPage3()
 			oslDrawStringf(10,100,button, "Swap buttons: No (currently: X is enter)\n");		
 		}
 	
-		GetRegistryValue("/CONFIG/MUSIC", "wma_play", &value, sizeof(value));
+		GetRegistryValue("/CONFIG/MUSIC", "wma_play", &value);
 
 		if (value == 1)
 		{
@@ -205,7 +207,7 @@ void ShowPage3()
 			oslDrawStringf(10,110,wma, "WMA:          No\n");		
 		}
 	
-		GetRegistryValue("/CONFIG/BROWSER", "flash_activated", &value, sizeof(value));
+		GetRegistryValue("/CONFIG/BROWSER", "flash_activated", &value);
 
 		if (value == 1)
 		{
@@ -215,19 +217,19 @@ void ShowPage3()
 		{
 			oslDrawStringf(10,120,flash, "Flash player: No\n\n\n");		
 		}
-
-		memset(name, 0, sizeof(name));
-		memset(pass, 0, sizeof(pass));
 		
-		chGetCpuSpeed(&cpu, &bus);
+		cpu = getCpuClock(); 
+		bus = getBusClock(); 
 		chGetMACAddress(macaddr);
+
+		char password = GetRegistryValue("/CONFIG/SYSTEM/LOCK", "password", &pass);
 	
 		oslDrawStringf(10,5,"System Information");
 
 		oslDrawStringf(10,20,"CPU Speed:    %i/%i Mhz\n", cpu, bus);
 		oslDrawStringf(10,30,"WLAN:         %s\n\n", sceWlanGetSwitchState() == 0 ? "Off" : "On");
-		oslDrawStringf(10,40,"Name:         %s\n", GetRegistryValue("/CONFIG/SYSTEM", "owner_name", &name, sizeof(name)));
-		oslDrawStringf(10,50,"Password:     %s\n", GetRegistryValue("/CONFIG/SYSTEM/LOCK", "password", &pass, sizeof(pass)));
+		oslDrawStringf(10,40,"Name:         %s\n", pspname);
+		oslDrawStringf(10,50,"Password:     %d\n", password);
 	
 		if(VerifyFile("machide.chk") == -1)
 		{
@@ -360,7 +362,7 @@ fw_version getFwVersion(fw_version *v)
 void ShowPage1()
 {
     int baryon, pommel, tachyon, fuseid, fusecfg, mb, model, type, region;
-	
+
 	recoverybg = oslLoadImageFilePNG("android_bootable_recovery/res/images/recoverybg.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	fw_version version;
@@ -394,7 +396,7 @@ void ShowPage1()
 		oslDrawStringf(10,80,"Tachyon:        0x%08X\n", tachyon);
 		oslDrawStringf(10,90,"Baryon:         0x%08X\n", baryon);
 		oslDrawStringf(10,100,"Pommel:         0x%08X\n\n", pommel);
-		oslDrawStringf(10,110,"Fuse ID:        0x%04X%08X\n", fuseid);
+		oslDrawStringf(10,110,"Fuse ID:        0x%08X\n", fuseid);
 		oslDrawStringf(10,120,"Fuse CFG:       0x%08X\n\n", fusecfg);
 		oslDrawStringf(10,130,"Region:         %s\n\n\n", Regions[region]);
 	

@@ -1,6 +1,7 @@
 #include "home.h"
 #include "appdrawer.h"
 #include "game.h"
+#include "game_icon0.h"
 #include "clock.h"
 #include "fm.h"
 #include "lock.h"
@@ -10,7 +11,6 @@
 #include "settingsmenu.h"
 #include "include/systemctrl_se.h"  
 #include "include/utils.h"
-
 
 void gameUp()
 {
@@ -596,7 +596,7 @@ int gameBoot()
 		oslEndDrawing();
 		oslEndFrame();
 		oslSyncFrame();
-		sceKernelDelayThread(10000 * 3);
+		sceKernelDelayThread(10000 * 2);
    
 		currentFrame++;
 		if(currentFrame > 19)
