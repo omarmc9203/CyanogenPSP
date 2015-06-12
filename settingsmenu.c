@@ -944,7 +944,7 @@ void storageMenu()
 	sceIoDevctl("ms0:", 0x02425818, &pbuf, sizeof(pbuf), 0, 0);
 	
 	double freeSpace = buf[1]*buf[3]*buf[4];
-	double totalSpace = buf[0]*buf[3]*buf[4];
+	//double totalSpace = buf[0]*buf[3]*buf[4];
 	
 	if (!performancebg || !highlight)
 		debugDisplay();

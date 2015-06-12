@@ -1,6 +1,7 @@
 //Parts of the Shell
 #include "apollo.h"
 #include "appdrawer.h"
+#include "language.h"
 #include "calculator.h"
 #include "clock.h"
 #include "fm.h"
@@ -178,15 +179,15 @@ void firstBootInitiation()
 			oslDrawImageXY(welcome, 0, 0);
 			
 			oslIntraFontSetStyle(Roboto, 0.8f,BLACK,0,INTRAFONT_ALIGN_LEFT);
-			oslDrawStringf(20,30, "Welcome");
+			oslDrawStringf(20,30, "%s", lang_welcome[language][0]);
 			
 			oslIntraFontSetStyle(Roboto, 0.6f,DARKGRAY,0,INTRAFONT_ALIGN_LEFT);
-			oslDrawStringf(20,60, "Use the analog stick to navigate the cursor and");
+			oslDrawStringf(20,60, "%s", lang_welcome[language][1]);
 			
-			oslDrawStringf(20,80, "press X (cross) to open the application.");
+			oslDrawStringf(20,80, "%s", lang_welcome[language][2]);
 			
 			oslIntraFontSetStyle(Roboto, 0.6f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-			oslDrawStringf(400,110, "GOT IT");
+			oslDrawStringf(400,110, "%s", lang_welcome[language][3]);
 		
 			oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 			

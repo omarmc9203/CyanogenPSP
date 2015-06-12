@@ -1,3 +1,4 @@
+const char lang_welcome[5][4][50];
 const char lang_appDrawer[5][10][25];
 const char lang_settingsMain[5][6][25];
 const char lang_settingsDisplay[5][3][25];
