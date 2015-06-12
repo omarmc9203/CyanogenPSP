@@ -292,7 +292,7 @@ int pspStopWatch()
 		
 		if (timerStart == 1)
 		{
-			oslDrawImageXY(timerPause, 200, 215);
+			//oslDrawImageXY(timerPause, 200, 215);
 			oslDrawImageXY(reset, 80, 222);
 		}
 		else 

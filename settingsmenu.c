@@ -964,7 +964,7 @@ void storageMenu()
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,80, "%s", lang_settingsStorage[language][0]); 
-		oslDrawStringf(20,100,"%s %.2f MB", lang_settingsStorage[language][1], totalSpace/1048576);
+		//oslDrawStringf(20,100,"%s %.2f MB", lang_settingsStorage[language][1], totalSpace/1048576);
 		oslDrawStringf(20,120,"%s %.2f MB", lang_settingsStorage[language][2], freeSpace/1048576);
 		
 		if (osl_keys->pressed.select)
