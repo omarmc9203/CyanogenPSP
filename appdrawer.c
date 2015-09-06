@@ -420,12 +420,14 @@ int appdrawer()
 			gameApp();
 		}
 
+		/*
 		if (cursor->x >= 400 && cursor->x <= 465 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			messenger();
 		}
+		*/
 		
 		if (cursor->x >= 10 && cursor->x <= 75 && cursor->y >= 110 && cursor->y <= 175 && osl_keys->pressed.cross)
 		{
