@@ -1156,43 +1156,44 @@ void dirBack(int n)
 	int b = 0;
 	const char * str = NULL;
 	
-	if (n == 0)
+	switch(n)
 	{
-		str = "ms0:/";
-	}
-	else if (n == 1)
-	{
-		str = "ms0:/PSP/GAME/";
-	}
-	else if (n == 2)
-	{
-		str = "ms0:/ISO/";
-	}
-	else if (n == 3)
-	{
-		str = "ms0:/MUSIC/";
-	}
-	else if (n == 4)
-	{
-		str = "ms0:/PSP/MUSIC/";
-	}
-	else if (n == 5)
-	{
-		str = "ms0:/PSP/GAME/CyanogenPSP/downloads/";
-	}
-	else if (n == 6)
-	{
-		str = "ms0:/PICTURE";
-	}
-	else if (n == 7)
-	{
-		str = "ms0:/PSP/PHOTO";
-	}
-	else if (n == 8)
-	{
-		str = "ms0:/PSP/GAME/CyanogenMod/screenshots";
-	}
+		case 0:
+			str = "ms0:/";
+			break;
 	
+		case 1:
+			str = "ms0:/PSP/GAME/";
+			break;
+		
+		case 2:
+			str = "ms0:/ISO/";
+			break;
+		
+		case 3:
+			str = "ms0:/MUSIC/";
+			break;
+		
+		case 4:
+			str = "ms0:/PSP/MUSIC/";
+			break;
+		
+		case 5:
+			str = "ms0:/PSP/GAME/CyanogenPSP/downloads/";
+			break;
+		
+		case 6:
+			str = "ms0:/PICTURE";
+			break;
+	
+		case 7:
+			str = "ms0:/PSP/PHOTO";
+			break;
+		
+		case 8:
+			str = "ms0:/PSP/GAME/CyanogenMod/screenshots";
+			break;
+	}
 	
 	if (strlen(lastDir) > strlen(str)) 
 	{
