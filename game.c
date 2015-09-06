@@ -250,7 +250,7 @@ void gameControls(int n) //Controls
 		
 		if (osl_keys->pressed.triangle) 
 		{
-			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
+			if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) {
 				curScroll = 1;
 				current = 1;
 			}
@@ -357,19 +357,19 @@ void gameControls(int n) //Controls
 	}
 	
 	if (osl_keys->pressed.circle)
-	{		
-		if(!(strcmp("ms0:/PSP/GAME", lastDir))) 
-		{
-			dirBack();
-		}
-		if(!(strcmp("ms0:/ISO", lastDir)))
-		{
-			dirBack();
-		}
-		else
+	{	
+		if((strcmp("ms0:/ISO", lastDir)==0) || (strcmp("ms0:/PSP/GAME", lastDir)==0) || (strcmp("ms0:/", lastDir)==0))
 		{
 			gameUnload();
 			gameApp();
+		}
+		else if((strcmp("ms0:/PSP/GAME/", lastDir)!=0)) 
+		{
+			dirBack(1);
+		}
+		else if((strcmp("ms0:/ISO/", lastDir)!=0))
+		{
+			dirBack(2);
 		}	
 	}
 	

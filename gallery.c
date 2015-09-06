@@ -257,27 +257,24 @@ void galleryControls() //Controls
 	}
 	
 	if (osl_keys->pressed.circle)
-	{		
-			if(!strcmp("ms0:/PICTURE", lastDir)) 
-			{
-				galleryUnload();
-				appdrawer();
-			}
-			if(!strcmp("ms0:/PSP/PHOTO", lastDir)) 
-			{
-				galleryUnload();
-				appdrawer();
-			}
-			if(!strcmp("ms0:/PSP/GAME/CyanogenMod/screenshots", lastDir)) 
-			{
-				galleryUnload();
-				appdrawer();
-			}
-			else
-			{
-				galleryUnload();
-				galleryApp();
-			}		
+	{			
+		if((strcmp("ms0:/PICTURE", lastDir)==0) || (strcmp("ms0:/PSP/PHOTO", lastDir)==0) || (strcmp("ms0:/PSP/GAME/CyanogenPSP/screenshots", lastDir)==0) || (strcmp("ms0:/", lastDir)==0))
+		{
+			galleryUnload();
+			galleryApp();
+		}
+		else if((strcmp("ms0:/PICTURE", lastDir)!=0)) 
+		{
+			dirBack(6);
+		}
+		else if((strcmp("ms0:/PSP/PHOTO", lastDir)!=0))
+		{
+			dirBack(7);
+		}	
+		else if((strcmp("ms0:/PSP/GAME/CyanogenPSP/screenshots", lastDir)!=0))
+		{
+			dirBack(8);
+		}
 	}
 	
 	if (osl_keys->pressed.square)
@@ -297,10 +294,12 @@ void galleryControls() //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP)) {
+	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP)) 
+	{
 		galleryUp();
 		timer = 25;
-	} else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN)) {
+	} else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN)) 
+	{
 		galleryDown();
 		timer = 25;
 	}

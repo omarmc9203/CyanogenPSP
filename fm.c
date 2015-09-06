@@ -465,7 +465,7 @@ int runFile(const char* path, char* type)
 	if (strcmp(type, "dotdot")==0)
 	{
 		current = 1;
-		dirBack();
+		dirBack(0);
 	}		
 	return 1;
 }
@@ -1054,7 +1054,7 @@ void dirControls() //Controls
 	
 		else
 		{
-			dirBack();
+			dirBack(0);
 		}		
 	}
 
@@ -1150,17 +1150,61 @@ char* pspFileGetParentDirectory(const char *path)
   return parent;
 }
 
-void dirBack()
+void dirBack(int n)
 {
 	int a = 0;
 	int b = 0;
-	if (strlen(lastDir) > strlen("ms0:/")) {
-		for (a=strlen(lastDir);a>=0;a--) {
-			if (lastDir[a] == '/') {
+	const char * str = NULL;
+	
+	if (n == 0)
+	{
+		str = "ms0:/";
+	}
+	else if (n == 1)
+	{
+		str = "ms0:/PSP/GAME/";
+	}
+	else if (n == 2)
+	{
+		str = "ms0:/ISO/";
+	}
+	else if (n == 3)
+	{
+		str = "ms0:/MUSIC/";
+	}
+	else if (n == 4)
+	{
+		str = "ms0:/PSP/MUSIC/";
+	}
+	else if (n == 5)
+	{
+		str = "ms0:/PSP/GAME/CyanogenPSP/downloads/";
+	}
+	else if (n == 6)
+	{
+		str = "ms0:/PICTURE";
+	}
+	else if (n == 7)
+	{
+		str = "ms0:/PSP/PHOTO";
+	}
+	else if (n == 8)
+	{
+		str = "ms0:/PSP/GAME/CyanogenMod/screenshots";
+	}
+	
+	
+	if (strlen(lastDir) > strlen(str)) 
+	{
+		for (a=strlen(lastDir);a>=0;a--) 
+		{
+			if (lastDir[a] == '/') 
+			{
 				b++;
 			}
 			lastDir[a] = '\0';
-			if (b == 1) {
+			if (b == 1) 
+			{
 				break;
 			}
 		}

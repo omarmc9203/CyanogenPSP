@@ -119,7 +119,7 @@ void oslPrintText(int x, int y, float size, char * text, OSL_COLOR color);
 void dirDisplay();
 void centerText(int centerX, int centerY, char * centerText, int centerLength);
 void dirVars();
-void dirBack();
+void dirBack(int n);
 void dirUp();
 void dirDown();
 void dirControls();

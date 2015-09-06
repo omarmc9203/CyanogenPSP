@@ -32,7 +32,7 @@ int MP3Scan(const char* path )
 	
 	if (fd) 
 	{
-		if (!(stricmp(path, "ms0:")==0 || (stricmp(path, "ms0:/")==0))) 
+		if (!(strcmp(path, "ms0:")==0 || (strcmp(path, "ms0:/")==0))) 
 		{
 			sceIoDread(fd, &g_dir);		// get rid of '.' and '..'
 			sceIoDread(fd, &g_dir);
@@ -392,7 +392,7 @@ void mp3Controls() //Controls
 		}
 		if (osl_keys->pressed.triangle) 
 		{
-			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) 
+			if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) 
 			{
 				curScroll = 1;
 				current = 1;
@@ -408,31 +408,25 @@ void mp3Controls() //Controls
 	char * ext = strrchr(folderIcons[current].filePath, '.'); 
 	
 	if (osl_keys->pressed.circle)
-	{		
-			if(!strcmp("ms0:/MUSIC", lastDir)) 
-			{
-				oslDeleteImage(mp3bg);
-				oslDeleteImage(mp3_select);
-				appdrawer();
-			}
-			if(!strcmp("ms0:/PSP/MUSIC", lastDir)) 
-			{
-				oslDeleteImage(mp3bg);
-				oslDeleteImage(mp3_select);
-				appdrawer();
-			}
-			if(!strcmp("ms0:/PSP/GAME/CyanogenMod/downloads", lastDir)) 
-			{
-				oslDeleteImage(mp3bg);
-				oslDeleteImage(mp3_select);
-				appdrawer();
-			}
-			else
-			{
-				oslDeleteImage(mp3bg);
-				oslDeleteImage(mp3_select);
-				mp3player();
-			}		
+	{			
+		if((strcmp("ms0:/MUSIC", lastDir)==0) || (strcmp("ms0:/PSP/MUSIC", lastDir)==0) || (strcmp("ms0:/PSP/GAME/CyanogenPSP/downloads", lastDir)==0) || (strcmp("ms0:/", lastDir)==0))
+		{
+			oslDeleteImage(mp3bg);
+			oslDeleteImage(mp3_select);
+			mp3player();
+		}
+		else if((strcmp("ms0:/MUSIC", lastDir)!=0)) 
+		{
+			dirBack(3);
+		}
+		else if((strcmp("ms0:/PSP/MUSIC", lastDir)!=0))
+		{
+			dirBack(4);
+		}	
+		else if((strcmp("ms0:/PSP/GAME/CyanogenPSP/downloads", lastDir)!=0))
+		{
+			dirBack(5);
+		}	
 	}
 	
 	if (((ext) != NULL) && ((strcmp(ext ,".mp3") == 0) || ((strcmp(ext ,".MP3") == 0))) && (osl_keys->pressed.cross))
