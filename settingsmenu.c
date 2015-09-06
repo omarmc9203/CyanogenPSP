@@ -245,36 +245,33 @@ int getBusClock()
 
 void pspGetModel(int x, int y)
 {
-	char pspmodel = kuKernelGetModel();
+	int pspmodel = kuKernelGetModel();
 	
-	if(pspmodel == 0)
+	switch(pspmodel)
 	{
-		oslDrawStringf(x,y,"Model: PSP 1000");
-	}
+		case 0:
+			oslDrawStringf(x,y,"Model: PSP 1000");
+			break;
    
-	else if(pspmodel == 1)
-	{
-		oslDrawStringf(x,y,"Model: PSP 2000");
-	}
+		case 1:
+			oslDrawStringf(x,y,"Model: PSP 2000");
+			break;
    
-	else if (pspmodel == 2)
-	{
-		oslDrawStringf(x,y,"Model: PSP 3000");
-	}
+		case 2:
+			oslDrawStringf(x,y,"Model: PSP 3000");
+			break;
    
-	else if(pspmodel == 3)
-	{
-		oslDrawStringf(x,y,"Model: PSP 3000");
-	}
+		case 3:
+			oslDrawStringf(x,y,"Model: PSP 3000");
+			break;
 		
-	else if (pspmodel == 4)
-	{
-		oslDrawStringf(x,y,"Model: PSP Go N1000");
-	}
+		case 4:
+			oslDrawStringf(x,y,"Model: PSP Go N1000");
+			break;
    
-	else
-	{
-		oslDrawStringf(x,y,"Model: PS Vita");
+		default:
+			oslDrawStringf(x,y,"Model: PS Vita");
+			break;
 	}
 }
 
@@ -634,23 +631,41 @@ void setCpuBoot()
 	processorInfo = fopen("system/settings/processorInfo.bin", "r");
 	fscanf(processorInfo,"%d",&processorState);
 	fclose(processorInfo);
-	
-	if (processorState == 0)
-		scePowerSetClockFrequency(20, 20, 10);
-	else if (processorState == 1)
-		scePowerSetClockFrequency(75, 75, 37);
-	else if (processorState == 2)
-		scePowerSetClockFrequency(100, 100, 50);
-	else if (processorState == 3)
-		scePowerSetClockFrequency(133, 133, 66);
-	else if (processorState == 4)
-		scePowerSetClockFrequency(222, 222, 111);
-	else if (processorState == 5)
-		scePowerSetClockFrequency(266, 266, 133);
-	else if (processorState == 6)
-		scePowerSetClockFrequency(300, 300, 150);
-	else if (processorState == 7)
-		scePowerSetClockFrequency(333, 333, 166);
+		
+	switch(processorState)
+	{
+		case 0:
+			scePowerSetClockFrequency(20, 20, 10);
+			break;
+		
+		case 1:
+			scePowerSetClockFrequency(75, 75, 37);
+			break;
+			
+		case 2:
+			scePowerSetClockFrequency(100, 100, 50);
+			break;
+		
+		case 3:
+			scePowerSetClockFrequency(133, 133, 66);
+			break;
+		
+		case 4:
+			scePowerSetClockFrequency(222, 222, 111);
+			break;
+		
+		case 5:
+			scePowerSetClockFrequency(266, 266, 133);
+			break;
+		
+		case 6:
+			scePowerSetClockFrequency(300, 300, 150);
+			break;
+		
+		case 7:
+			scePowerSetClockFrequency(333, 333, 166);
+			break;
+	}
 }
 
 void processorMenu()
