@@ -592,14 +592,14 @@ int mp3player()
 			oslDeleteImage(mp3_select);
 			mp3View("ms0:/MUSIC");
         }
-		if (MenuSelection == 2 && osl_keys->pressed.cross)
+		else if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
 			mp3View("ms0:/PSP/MUSIC");
         }
-		if (MenuSelection == 3 && osl_keys->pressed.cross)
+		else if (MenuSelection == 3 && osl_keys->pressed.cross)
         {	
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(mp3bg);

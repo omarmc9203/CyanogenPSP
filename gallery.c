@@ -430,14 +430,14 @@ int galleryApp()
 			galleryUnload();
 			galleryView("ms0:/PICTURE");
         }
-		if (MenuSelection == 2 && osl_keys->pressed.cross)
+		else if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
 			oslPlaySound(KeypressStandard, 1);  
 			galleryUnload();
 			galleryView("ms0:/PSP/PHOTO");
         
 		}
-		if (MenuSelection == 3 && osl_keys->pressed.cross)
+		else if (MenuSelection == 3 && osl_keys->pressed.cross)
         {		
 			oslPlaySound(KeypressStandard, 1);  
 			galleryUnload();
