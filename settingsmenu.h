@@ -82,6 +82,8 @@ void settingsDown();
 void settingsUpx5();
 void settingsDownx5();
 void changeFont();
+void iconPackLoad();
+void iconPackReload();
 void settingsControls(int n);
 char * settingsBrowse(const char * path, int n);
 void displaySubThemes(char * browseDirectory, int n);

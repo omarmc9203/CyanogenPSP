@@ -1194,6 +1194,7 @@ void displayThemes()
 		
 		oslDrawStringf(20,86, "%s", lang_settingsThemes[language][0]);
 		oslDrawStringf(20,140, "%s", lang_settingsThemes[language][1]);
+		oslDrawStringf(20,194, "%s", lang_settingsThemes[language][2]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
@@ -1208,7 +1209,7 @@ void displayThemes()
 			}
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawStringf(20,140, "%s", lang_settingsThemes[language][1]);
@@ -1218,6 +1219,19 @@ void displayThemes()
 				oslDeleteImage(displaybg);
 				oslDeleteImage(highlight);			
 				displaySubThemes("system/fonts", 0);
+			}
+		}
+		
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 236)
+		{
+			oslDrawImageXY(highlight, 0, 173);
+			oslDrawStringf(20,194, "%s", lang_settingsThemes[language][2]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displaySubThemes("system/icons", 2);
 			}
 		}
 
@@ -1362,6 +1376,99 @@ void changeFont() //Created a separated function for this only because deleting 
 	}
 }
 
+void iconPackLoad()
+{
+	FILE * iconPackTxt;
+	
+	if (!(fileExists("system/settings/iconpack.txt")))
+	{
+		iconPackTxt = fopen("system/settings/iconpack.txt", "w");
+		fprintf(iconPackTxt, "system/icons/Default");
+		fclose(iconPackTxt);
+	}
+	
+	iconPackTxt = fopen("system/settings/iconpack.txt", "r");
+	fscanf(iconPackTxt,"%s",appDirPath);
+	fclose(iconPackTxt);
+
+	char apolloImg[50] = "/music/ic_launcher_apollo.png";
+	
+	char browserImg[50] = "/browser/ic_launcher_browser.png";
+	char calcImg[50] = "/calculator/ic_launcher_calculator.png";
+	char clockImg[50] = "/clock/ic_launcher_clock.png";
+	char fmImg[50] = "/filemanager/ic_launcher_filemanager.png";
+	char galleryImg[50] = "/gallery/ic_launcher_gallery.png";
+	char gameImg[50] = "/game/ic_launcher_game.png";
+	char messagesImg[50] = "/messenger/ic_launcher_messenger.png";
+	char settingsImg[50] = "/settings/ic_launcher_settings.png";
+	char umdImg[50] = "/umd/ic_launcher_umd.png";
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, apolloImg); 
+	strcpy(apolloPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, browserImg); 
+	strcpy(browserPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, calcImg); 
+	strcpy(calcPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, clockImg); 
+	strcpy(clockPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, fmImg); 
+	strcpy(fmPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, galleryImg); 
+	strcpy(galleryPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, gameImg); 
+	strcpy(gamePath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, messagesImg); 
+	strcpy(messagesPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, settingsImg); 
+	strcpy(settingsPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, umdImg); 
+	strcpy(umdPath, tempData);
+}
+
+void iconPackReload()
+{
+	oslDeleteImage(ic_launcher_apollo);
+	oslDeleteImage(ic_launcher_browser);
+	oslDeleteImage(ic_launcher_calculator);
+	oslDeleteImage(ic_launcher_clock);
+	oslDeleteImage(ic_launcher_filemanager);
+	oslDeleteImage(ic_launcher_gallery);
+	oslDeleteImage(ic_launcher_game);
+	oslDeleteImage(ic_launcher_messenger);
+	oslDeleteImage(ic_launcher_settings);
+	oslDeleteImage(ic_launcher_umd);
+	
+	ic_launcher_apollo = oslLoadImageFilePNG(apolloPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_browser = oslLoadImageFile(browserPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_calculator = oslLoadImageFilePNG(calcPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_clock = oslLoadImageFilePNG(clockPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_filemanager = oslLoadImageFilePNG(fmPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_gallery = oslLoadImageFilePNG(galleryPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_game = oslLoadImageFilePNG(gamePath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_messenger = oslLoadImageFilePNG(messagesPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_settings = oslLoadImageFilePNG(settingsPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_umd = oslLoadImageFilePNG(umdPath, OSL_IN_RAM, OSL_PF_8888);
+}
+
 void settingsControls(int n) //Controls
 {
 	oslReadKeys();	
@@ -1393,7 +1500,6 @@ void settingsControls(int n) //Controls
 		if (osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1);  
-			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
 	}
 	
@@ -1413,6 +1519,19 @@ void settingsControls(int n) //Controls
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);	
 			showImage(folderIcons[current].filePath, 1);
+		}
+	}
+	
+	else if (n == 2)
+	{
+		if (osl_keys->pressed.cross)
+		{
+			strcpy(appDirPath, folderIcons[current].filePath);
+			FILE * iconPackTxt = fopen("system/settings/iconpack.txt", "w");
+			fprintf(iconPackTxt,"%s",appDirPath);
+			fclose(iconPackTxt);
+			iconPackLoad();
+			iconPackReload();
 		}
 	}
 	
@@ -1469,10 +1588,12 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 		sceCtrlReadBufferPositive(&pad, 1);
 		settingsDisplay();
 		if (n == 0)
-			settingsControls(0); //0 is to use the controls for selecting a font
+			settingsControls(0); //0 is to used for selecting a font
 		else if (n == 1)
-			settingsControls(1); // 1 is to use the controls for selecting a wallpaper
-		
+			settingsControls(1); // 1 is used for selecting a wallpaper
+		else if (n == 2)
+			settingsControls(2); // 2 is to used for selecting a folder for iconpacks
+			
 		sceDisplayWaitVblankStart();
 		
 		if (strlen(returnMe) > 4) {
@@ -1499,6 +1620,8 @@ void displaySubThemes(char * browseDirectory, int n) // n is used here to search
 		browseDirectory = settingsBrowse("system/fonts", 0); //For fonts
 	else if (n == 1)
 		browseDirectory = settingsBrowse("system/framework/framework-res/res", 1); //For wallpapers
+	else if (n == 2)
+		browseDirectory = settingsBrowse("system/icons", 2); //For wallpapers
 	
 	while (!osl_quit)
 	{
@@ -2686,6 +2809,10 @@ void settingsDeleteResources()
 
 void settingsMenu()
 {
+	struct apps activateApp;
+
+	activateApp.settings = 1;
+	
 	settingsbg = oslLoadImageFilePNG("system/settings/settingsbg.png", OSL_IN_RAM, OSL_PF_8888);
 	about = oslLoadImageFilePNG("system/settings/about.png", OSL_IN_RAM, OSL_PF_8888);
 	themes = oslLoadImageFilePNG("system/settings/themes.png", OSL_IN_RAM, OSL_PF_8888);
