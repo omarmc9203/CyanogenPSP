@@ -1391,8 +1391,9 @@ void iconPackLoad()
 	fscanf(iconPackTxt,"%s",appDirPath);
 	fclose(iconPackTxt);
 
+	char allappsImg[50] = "/allapps/ic_allapps.png";
+	char allapps_pressedImg[50] = "/allapps/ic_allapps_pressed.png";
 	char apolloImg[50] = "/music/ic_launcher_apollo.png";
-	
 	char browserImg[50] = "/browser/ic_launcher_browser.png";
 	char calcImg[50] = "/calculator/ic_launcher_calculator.png";
 	char clockImg[50] = "/clock/ic_launcher_clock.png";
@@ -1402,6 +1403,14 @@ void iconPackLoad()
 	char messagesImg[50] = "/messenger/ic_launcher_messenger.png";
 	char settingsImg[50] = "/settings/ic_launcher_settings.png";
 	char umdImg[50] = "/umd/ic_launcher_umd.png";
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, allappsImg); 
+	strcpy(allappsPath, tempData);
+	
+	strcpy(tempData, appDirPath);
+	strcat(tempData, allapps_pressedImg); 
+	strcpy(allapps_pressedPath, tempData);
 	
 	strcpy(tempData, appDirPath);
 	strcat(tempData, apolloImg); 
@@ -1449,18 +1458,16 @@ void iconPackReload()
 	oslDeleteImage(ic_launcher_apollo);
 	oslDeleteImage(ic_launcher_browser);
 	oslDeleteImage(ic_launcher_calculator);
-	oslDeleteImage(ic_launcher_clock);
 	oslDeleteImage(ic_launcher_filemanager);
 	oslDeleteImage(ic_launcher_gallery);
 	oslDeleteImage(ic_launcher_game);
 	oslDeleteImage(ic_launcher_messenger);
 	oslDeleteImage(ic_launcher_settings);
 	oslDeleteImage(ic_launcher_umd);
-	
+
 	ic_launcher_apollo = oslLoadImageFilePNG(apolloPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_browser = oslLoadImageFile(browserPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_calculator = oslLoadImageFilePNG(calcPath, OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_clock = oslLoadImageFilePNG(clockPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_filemanager = oslLoadImageFilePNG(fmPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_gallery = oslLoadImageFilePNG(galleryPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_game = oslLoadImageFilePNG(gamePath, OSL_IN_RAM, OSL_PF_8888);

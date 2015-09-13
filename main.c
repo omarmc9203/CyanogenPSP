@@ -236,7 +236,7 @@ int bootAnimation()
 	if (!(fileExists("system/boot/bootAnimActivator.txt")))
 	{
 		bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
-		fprintf(bootAnimActivation, "1");
+		fprintf(bootAnimActivation, "0");
 		fclose(bootAnimActivation);
 	}
 	

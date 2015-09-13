@@ -22,6 +22,8 @@ struct apps
 };
 
 char appDirPath[100];
+char allappsPath[250];
+char allapps_pressedPath[250];
 char apolloPath[250];
 char browserPath[250];
 char calcPath[250];
