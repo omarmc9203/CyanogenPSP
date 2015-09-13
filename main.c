@@ -113,6 +113,8 @@ void firstBootInitiation()
 	firstBootTxt = fopen("system/firstBoot.txt", "r");
 	fscanf(firstBootTxt,"%d",&firstBoot);
 	fclose(firstBootTxt);
+	
+	iconPackLoad();
 
 	//Loads our images into memory
 	loadIcons();
@@ -132,15 +134,15 @@ void firstBootInitiation()
 	welcome = oslLoadImageFilePNG("system/home/icons/welcome.png", OSL_IN_RAM, OSL_PF_8888);
 	transbackground = oslLoadImageFilePNG("system/home/icons/transbackground.png", OSL_IN_RAM, OSL_PF_8888);
 	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_VRAM, OSL_PF_8888);
-	ic_launcher_apollo = oslLoadImageFilePNG("system/app/apollo/ic_launcher_apollo.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_messenger = oslLoadImageFilePNG("system/app/messenger/ic_launcher_messenger.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_browser = oslLoadImageFile("system/app/browser/ic_launcher_browser.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_filemanager = oslLoadImageFilePNG("system/app/filemanager/ic_launcher_filemanager.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_settings = oslLoadImageFilePNG("system/settings/ic_launcher_settings.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_gallery = oslLoadImageFilePNG("system/app/gallery/ic_launcher_gallery.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_umd = oslLoadImageFilePNG("system/app/umd/ic_launcher_umd.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_calculator = oslLoadImageFilePNG("system/app/calculator/ic_launcher_calculator.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_game = oslLoadImageFilePNG("system/app/game/ic_launcher_game.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_apollo = oslLoadImageFilePNG(apolloPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_browser = oslLoadImageFile(browserPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_calculator = oslLoadImageFilePNG(calcPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_filemanager = oslLoadImageFilePNG(fmPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_gallery = oslLoadImageFilePNG(galleryPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_game = oslLoadImageFilePNG(gamePath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_messenger = oslLoadImageFilePNG(messagesPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_settings = oslLoadImageFilePNG(settingsPath, OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_umd = oslLoadImageFilePNG(umdPath, OSL_IN_RAM, OSL_PF_8888);
 	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
 	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
 	usbdebug = oslLoadImageFilePNG("system/home/icons/usbdebug.png", OSL_IN_RAM, OSL_PF_8888);
