@@ -25,7 +25,7 @@ int multitask()
 		
 		oslDrawImageXY(background, 0,0);
 		oslDrawImageXY(multi_task, 0,10);
-		
+
 		oslDrawString(130,136,"Your recent screens appear here");
 
 		digitaltime(420,4,0,hrTime);

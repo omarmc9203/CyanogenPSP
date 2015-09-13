@@ -18,7 +18,7 @@
 void appdrawer_loadImages()
 {
 	backdrop = oslLoadImageFilePNG("system/home/icons/backdrop.png", OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_clock = oslLoadImageFilePNG("system/app/clock/ic_launcher_clock.png", OSL_IN_RAM, OSL_PF_8888);
+	ic_launcher_clock = oslLoadImageFilePNG(clockPath, OSL_IN_RAM, OSL_PF_8888);
 }
 
 void appdrawer_deleteImages()
