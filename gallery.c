@@ -150,6 +150,7 @@ int showImage(char * path, int n)
 		oslClearScreen(RGB(255,255,255));
 		oslDrawImage(image);//draw image
 		oslDrawImageXY(galleryBar,0,0);
+		oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_LEFT);
 		oslDrawStringf(40,12, "%.55s", folderIcons[current].name);
 		
 		if (n == 1)
@@ -349,7 +350,7 @@ void galleryUnload()
 
 int galleryView(char * browseDirectory)
 {	
-	gallerybg = oslLoadImageFilePNG("system/app/gallery/gallerybg.png", OSL_IN_RAM, OSL_PF_8888);
+	gallerybg = oslLoadImageFilePNG(galleryBgPath, OSL_IN_RAM, OSL_PF_8888);
 	gallerySelection = oslLoadImageFilePNG("system/app/gallery/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
 
@@ -376,7 +377,7 @@ int galleryView(char * browseDirectory)
 
 int galleryApp() 
 {
-	gallerybg = oslLoadImageFilePNG("system/app/gallery/gallerybg.png", OSL_IN_RAM, OSL_PF_8888);
+	gallerybg = oslLoadImageFilePNG(galleryBgPath, OSL_IN_RAM, OSL_PF_8888);
 	gallerySelection = oslLoadImageFilePNG("system/app/gallery/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
 	
