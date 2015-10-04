@@ -47,6 +47,38 @@ struct fw_version
 	unsigned int minor;
 };
 
+char settingsBgPath[250];
+char displayBgPath[250];
+char aboutBgPath[250];
+char developerBgPath[250];
+char performanceBgPath[250];
+char performance2BgPath[250];
+char securityBgPath[250];
+char updatesBgPath[250];
+char wifiBgPath[250];
+char offSwitchPath[250];
+char onSwitchPath[250];
+
+char keyBoardBgPath[250];
+char cursorPath[250];
+
+char apolloBgPath[250];
+char nowplayingBgPath[250];
+
+char fmBgPath[250];
+char diriconPath[250];
+
+char galleryBgPath[250];
+char gameBgPath[250];
+char quickSettingsBgPath[250];
+char backiconPath[250];
+char homeiconPath[250];
+char multiconPath[250];
+char backicon2Path[250];
+char homeicon2Path[250];
+char multicon2Path[250];
+
+
 typedef struct fw_version fw_version;
 
 SceUID modules[3];
@@ -54,7 +86,7 @@ SceUID modules[3];
 int connectAPCallback(int state);
 int connectToAP(int config);
 char fontPath[100];
-char backgroundPath[100], nickname[25], pspname[25];
+char backgroundPath[100], nickname[25], pspname[25], themeDirPath[250];
 int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language, usbStat, isPlaying;
 int passProtect;
 int RJL;
@@ -82,6 +114,8 @@ void settingsDown();
 void settingsUpx5();
 void settingsDownx5();
 void changeFont();
+void themesLoad();
+void themesReload();
 void iconPackLoad();
 void iconPackReload();
 void settingsControls(int n);

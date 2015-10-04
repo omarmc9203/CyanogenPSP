@@ -19,7 +19,7 @@
 
 char name;
 int setclock;
-char cyanogenpspversion[5] = "5.2";
+char cyanogenpspversion[5] = "5.2X";
 char lang[12] = "Uk English";
 static char Settings_message[100] = "";
 
@@ -279,7 +279,7 @@ fw_version getFwVersion(fw_version *v);
 
 void aboutMenu()
 {	
-	aboutbg = oslLoadImageFilePNG("system/settings/aboutbg.png", OSL_IN_RAM, OSL_PF_8888);
+	aboutbg = oslLoadImageFilePNG(aboutBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -398,7 +398,7 @@ void aboutMenu()
 
 void updatesMenu()
 {		    
-	updatesbg = oslLoadImageFilePNG("system/settings/updatesbg.png", OSL_IN_RAM, OSL_PF_8888);
+	updatesbg = oslLoadImageFilePNG(updatesBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -494,7 +494,7 @@ void updatesMenu()
 
 void performanceMenu()
 {	
-	performancebg = oslLoadImageFilePNG("system/settings/performancebg.png", OSL_IN_RAM, OSL_PF_8888);
+	performancebg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -675,7 +675,7 @@ void processorMenu()
 	int currentState = stateOff;
 	int cpufreq, cpu, bus, state = 0;
 	
-	processorbg = oslLoadImageFilePNG("system/settings/processorbg.png", OSL_IN_RAM, OSL_PF_8888);
+	processorbg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -871,7 +871,7 @@ void processorMenu()
 
 void ramMenu()
 {	
-	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
+	performancebg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -949,7 +949,7 @@ void ramMenu()
 
 void storageMenu()
 {	
-	performancebg = oslLoadImageFilePNG("system/settings/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
+	performancebg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -1046,7 +1046,7 @@ void storageMenu()
 
 void displayMenu()
 {	
-	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -1170,7 +1170,7 @@ void displayMenu()
 
 void displayThemes()
 {	
-	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -1195,6 +1195,7 @@ void displayThemes()
 		oslDrawStringf(20,86, "%s", lang_settingsThemes[language][0]);
 		oslDrawStringf(20,140, "%s", lang_settingsThemes[language][1]);
 		oslDrawStringf(20,194, "%s", lang_settingsThemes[language][2]);
+		oslDrawStringf(20,248, "%s", lang_settingsThemes[language][3]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
@@ -1205,7 +1206,7 @@ void displayThemes()
 				oslPlaySound(KeypressStandard, 1); 
 				oslDeleteImage(displaybg);
 				oslDeleteImage(highlight);			
-				displaySubThemes("system/framework/framework-res/res", 1);
+				displaySubThemes("system/themes", 3);
 			}
 		}
 		
@@ -1218,7 +1219,7 @@ void displayThemes()
 				oslPlaySound(KeypressStandard, 1); 
 				oslDeleteImage(displaybg);
 				oslDeleteImage(highlight);			
-				displaySubThemes("system/fonts", 0);
+				displaySubThemes("system/framework/framework-res/res", 1);
 			}
 		}
 		
@@ -1226,6 +1227,19 @@ void displayThemes()
 		{
 			oslDrawImageXY(highlight, 0, 173);
 			oslDrawStringf(20,194, "%s", lang_settingsThemes[language][2]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displaySubThemes("system/fonts", 0);
+			}
+		}
+		
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 236 && cursor->y <= 272)
+		{
+			oslDrawImageXY(highlight, 0, 227);
+			oslDrawStringf(20,248, "%s", lang_settingsThemes[language][3]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1); 
@@ -1376,6 +1390,180 @@ void changeFont() //Created a separated function for this only because deleting 
 	}
 }
 
+void themesLoad()
+{
+	FILE * themesTxt;
+	
+	if (!(fileExists("system/settings/themes.txt")))
+	{
+		themesTxt = fopen("system/settings/themes.txt", "w");
+		fprintf(themesTxt, "system");
+		fclose(themesTxt);
+	}
+	
+	themesTxt = fopen("system/settings/themes.txt", "r");
+	fscanf(themesTxt,"%s", themeDirPath);
+	fclose(themesTxt);
+
+	char settingsBgImg[100] = "/settings/settingsbg.png";
+	char displayBgImg[100] = "/settings/displaybg.png";
+	char aboutBgImg[100] = "/settings/aboutbg.png";
+	char developerBgImg[100] = "/settings/developerbg.png";
+	char performanceBgImg[100] = "/settings/performancebg.png";
+	char performance2BgImg[100] = "/settings/performancebg2.png";
+	char securityBgImg[100] = "/settings/securitybg.png";
+	char updatesBgImg[100] = "/settings/updatesbg.png";
+	char wifiBgImg[100] = "/settings/wifibg.png";
+	char offSwitchImg[100] = "/settings/offswitch.png";
+	char onSwitchImg[100] = "/settings/onswitch.png";
+	
+	char apolloBgImg[100] = "/app/apollo/mp3bg.png";
+	char nowplayingBgImg[100] = "/app/apollo/nowplaying.png";
+	
+	char fmBgImg[100] = "/app/filemanager/filemanagerbg.png";
+	char diriconImg[100] = "/app/filemanager/dir.png";
+	
+	char galleryBgImg[100] = "/app/gallery/gallerybg.png";
+	char gameImg[100] = "/app/game/gamebg.png";
+	char quickSettingsBgImg[100] = "/home/menu/quickSettings.png";
+	char backiconImg[100] = "/home/icons/backicon.png";
+	char homeiconImg[100] = "/home/icons/homeicon.png";
+	char multiconImg[100] = "/home/icons/multicon.png";
+	char backicon2Img[100] = "/home/icons/backicon2.png";
+	char homeicon2Img[100] = "/home/icons/homeicon2.png";
+	char multicon2Img[100] = "/home/icons/multicon2.png";
+	
+	char cursorImg[100] = "/cursor/cursor.png";
+	char keyBoardBgImg[100] = "/settings/keyboard.png";
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, aboutBgImg); 
+	strcpy(aboutBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, developerBgImg); 
+	strcpy(developerBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, performanceBgImg); 
+	strcpy(performanceBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, performance2BgImg); 
+	strcpy(performance2BgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, securityBgImg); 
+	strcpy(securityBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, updatesBgImg); 
+	strcpy(updatesBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, wifiBgImg); 
+	strcpy(wifiBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, offSwitchImg); 
+	strcpy(offSwitchPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, onSwitchImg); 
+	strcpy(onSwitchPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, settingsBgImg); 
+	strcpy(settingsBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, displayBgImg); 
+	strcpy(displayBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, apolloBgImg); 
+	strcpy(apolloBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, nowplayingBgImg); 
+	strcpy(nowplayingBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, fmBgImg); 
+	strcpy(fmBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, diriconImg); 
+	strcpy(diriconPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, galleryBgImg); 
+	strcpy(galleryBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, gameImg); 
+	strcpy(gameBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, quickSettingsBgImg); 
+	strcpy(quickSettingsBgPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, backiconImg); 
+	strcpy(backiconPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, homeiconImg); 
+	strcpy(homeiconPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, multiconImg); 
+	strcpy(multiconPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, backicon2Img); 
+	strcpy(backicon2Path, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, homeicon2Img); 
+	strcpy(homeicon2Path, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, multicon2Img); 
+	strcpy(multicon2Path, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, cursorImg); 
+	strcpy(cursorPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, keyBoardBgImg); 
+	strcpy(keyBoardBgPath, tempData);
+}
+
+void themesReload()
+{
+	oslDeleteImage(quickSettings);
+	oslDeleteImage(backicon);
+	oslDeleteImage(homeicon);
+	oslDeleteImage(multicon);
+	oslDeleteImage(backicon2);
+	oslDeleteImage(homeicon2);
+	oslDeleteImage(multicon2);
+	oslDeleteImage(displaybg);
+	oslDeleteImage(cursor);
+
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+	quickSettings = oslLoadImageFile(quickSettingsBgPath, OSL_IN_VRAM, OSL_PF_8888);
+	backicon = oslLoadImageFilePNG(backiconPath, OSL_IN_RAM, OSL_PF_8888);
+	homeicon = oslLoadImageFilePNG(homeiconPath, OSL_IN_RAM, OSL_PF_8888);
+	multicon = oslLoadImageFilePNG(multiconPath, OSL_IN_RAM, OSL_PF_8888);
+	backicon2 = oslLoadImageFilePNG(backicon2Path, OSL_IN_RAM, OSL_PF_8888);
+	homeicon2 = oslLoadImageFilePNG(homeicon2Path, OSL_IN_RAM, OSL_PF_8888);
+	multicon2 = oslLoadImageFilePNG(multicon2Path, OSL_IN_RAM, OSL_PF_8888);
+	cursor = oslLoadImageFilePNG(cursorPath, OSL_IN_RAM, OSL_PF_8888);
+}
+
 void iconPackLoad()
 {
 	FILE * iconPackTxt;
@@ -1388,7 +1576,7 @@ void iconPackLoad()
 	}
 	
 	iconPackTxt = fopen("system/settings/iconpack.txt", "r");
-	fscanf(iconPackTxt,"%s",appDirPath);
+	fscanf(iconPackTxt,"%s", appDirPath);
 	fclose(iconPackTxt);
 
 	char allappsImg[50] = "/allapps/ic_allapps.png";
@@ -1535,10 +1723,33 @@ void settingsControls(int n) //Controls
 		{
 			strcpy(appDirPath, folderIcons[current].filePath);
 			FILE * iconPackTxt = fopen("system/settings/iconpack.txt", "w");
-			fprintf(iconPackTxt,"%s",appDirPath);
+			fprintf(iconPackTxt,"%s", appDirPath);
 			fclose(iconPackTxt);
 			iconPackLoad();
 			iconPackReload();
+		}
+	}
+	
+	else if (n == 3)
+	{
+		if (osl_keys->pressed.cross)
+		{
+			strcpy(themeDirPath, folderIcons[current].filePath);
+			FILE * themeTxt = fopen("system/settings/themes.txt", "w");
+			if (strcmp(themeDirPath, "system/themes/Default") == 0)
+			{
+				fprintf(themeTxt,"system");
+				fclose(themeTxt);
+				themesLoad();
+				themesReload();
+			}
+			else
+			{
+				fprintf(themeTxt,"%s", themeDirPath);
+				fclose(themeTxt);
+				themesLoad();
+				themesReload();
+			}
 		}
 	}
 	
@@ -1600,6 +1811,8 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 			settingsControls(1); // 1 is used for selecting a wallpaper
 		else if (n == 2)
 			settingsControls(2); // 2 is to used for selecting a folder for iconpacks
+		else if (n == 3)
+			settingsControls(3); // 3 is to used for selecting a folder for themes
 			
 		sceDisplayWaitVblankStart();
 		
@@ -1615,7 +1828,7 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 
 void displaySubThemes(char * browseDirectory, int n) // n is used here to search for fonts or wallpaper
 {	
-	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -1628,7 +1841,9 @@ void displaySubThemes(char * browseDirectory, int n) // n is used here to search
 	else if (n == 1)
 		browseDirectory = settingsBrowse("system/framework/framework-res/res", 1); //For wallpapers
 	else if (n == 2)
-		browseDirectory = settingsBrowse("system/icons", 2); //For wallpapers
+		browseDirectory = settingsBrowse("system/icons", 2); //For icon packs
+	else if (n == 3)
+		browseDirectory = settingsBrowse("system/themes", 3); //For themes
 	
 	while (!osl_quit)
 	{
@@ -1650,10 +1865,10 @@ void displayTime()
 {	
 	FILE * timeSetTxt;
 	
-	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -1788,10 +2003,10 @@ void displayMiscellaneous()
 	fscanf(bootAnimActivation,"%d",&bootAnimActivator);
 	fclose(bootAnimActivation);
 
-	displaybg = oslLoadImageFilePNG("system/settings/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -2021,10 +2236,10 @@ void securityMenu()
 	FILE * password;
 	FILE * pin;
 
-	securitybg = oslLoadImageFilePNG("system/settings/securitybg.png", OSL_IN_RAM, OSL_PF_8888);
+	securitybg = oslLoadImageFilePNG(securityBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -2141,9 +2356,9 @@ void securityMenu()
 
 void wifiMenu()
 {	
-	wifibg = oslLoadImageFilePNG("system/settings/wifibg.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	wifibg = oslLoadImageFilePNG(wifiBgPath, OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -2365,10 +2580,10 @@ void dump_memory(void)
 
 void dumpMenu()
 {
-	developerbg = oslLoadImageFilePNG("system/settings/developerbg.png", OSL_IN_RAM, OSL_PF_8888);
+	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -2498,10 +2713,10 @@ void dumpMenu()
 
 void dumpMenuMore()
 {
-	developerbg = oslLoadImageFilePNG("system/settings/developerbg.png", OSL_IN_RAM, OSL_PF_8888);
+	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -2615,10 +2830,10 @@ void dumpMenuMore()
 
 void developerMenu()
 {
-	developerbg = oslLoadImageFilePNG("system/settings/developerbg.png", OSL_IN_RAM, OSL_PF_8888);
+	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG("system/settings/offswitch.png", OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG("system/settings/onswitch.png", OSL_IN_RAM, OSL_PF_8888);
+	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
+	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -2820,7 +3035,9 @@ void settingsMenu()
 
 	activateApp.settings = 1;
 	
-	settingsbg = oslLoadImageFilePNG("system/settings/settingsbg.png", OSL_IN_RAM, OSL_PF_8888);
+	themesLoad();
+	
+	settingsbg = oslLoadImageFilePNG(settingsBgPath, OSL_IN_RAM, OSL_PF_8888);
 	about = oslLoadImageFilePNG("system/settings/about.png", OSL_IN_RAM, OSL_PF_8888);
 	themes = oslLoadImageFilePNG("system/settings/themes.png", OSL_IN_RAM, OSL_PF_8888);
 	developeroptions = oslLoadImageFilePNG("system/settings/developeroptions.png", OSL_IN_RAM, OSL_PF_8888);
