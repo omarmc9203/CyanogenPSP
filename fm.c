@@ -74,8 +74,8 @@ int copy_folder( char * source,  char * destination)
 int copymode = NOTHING_TO_COPY;
 
 static char copysource[1024];
-char oldLocation[250] = "";
-char newLocation[250] = "";
+char oldLocation[250];
+char newLocation[250];
 	
 int copyData = 0;
 int position = 0;
@@ -588,22 +588,24 @@ void OptionMenu()
 	
 		oslReadKeys();
 	
-		if ((osl_keys->pressed.cross) && (copyData == 0)) 
+		if(osl_keys->pressed.cross) 
 		{
-			strcpy(oldLocation, folderIcons[current].filePath); 
-			copyData = 1;
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(action);
-			refresh();
-		}
-		
-		else if ((osl_keys->pressed.cross) && (copyData == 1)) 
-		{
-			copy_folder(oldLocation, folderIcons[current].filePath);
-			copyData = 0;
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(action);
-			refresh();
+			if(copyData == 0)
+			{
+				strcpy(oldLocation, folderIcons[current].filePath); 
+				copyData = 1;
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(action);
+				refresh();
+			}
+			if (copyData == 1)
+			{
+				copy_folder(oldLocation, folderIcons[current].filePath);
+				copyData = 0;
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(action);
+				refresh();
+			}
 		}
 		
 		else if (osl_keys->pressed.triangle) 
@@ -1260,8 +1262,8 @@ void filemanager_unload()
 
 int filemanage(int argc, char *argv[])
 {
-	filemanagerbg = oslLoadImageFilePNG("system/app/filemanager/filemanagerbg.png", OSL_IN_RAM, OSL_PF_8888);
-	diricon = oslLoadImageFilePNG("system/app/filemanager/dir.png", OSL_IN_RAM, OSL_PF_8888);
+	filemanagerbg = oslLoadImageFilePNG(fmBgPath, OSL_IN_RAM, OSL_PF_8888);
+	diricon = oslLoadImageFilePNG(diriconPath, OSL_IN_RAM, OSL_PF_8888);
 	imageicon = oslLoadImageFilePNG("system/app/filemanager/image.png", OSL_IN_RAM, OSL_PF_8888);
 	mp3icon = oslLoadImageFilePNG("system/app/filemanager/mp3.png", OSL_IN_RAM, OSL_PF_8888);
 	txticon = oslLoadImageFilePNG("system/app/filemanager/txt.png", OSL_IN_RAM, OSL_PF_8888);

@@ -446,101 +446,36 @@ int appdrawer()
 		if (cursor->x >= 140 && cursor->x <= 205 && cursor->y >= 110 && cursor->y <= 175 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1); 
-			int i;
 			
 			while(1) 
 			{
-				if(osl_keys->pressed.circle) 
-				{
+				sceCtrlReadBufferPositive(&pad, 1);
+				if(pad.Buttons & PSP_CTRL_CROSS) 
 					break;
-				}	 
-
-				i = sceUmdCheckMedium();
-				
-				if (i == 0) 
+			}
+			
+				if (sceUmdCheckMedium() == 0) 
 				{ 
-					oslDrawStringf(10,10,"UMD not inserted, returning home");
-					oslSyncFrame();
-					sceKernelDelayThread(2*1000000);
-					home();
+					oslDrawStringf(240, 136, "Insert UMD\n"); 
 				}
-
-				i = sceUmdActivate(1, "disc0:");
-				oslDrawStringf(10,30,"Mounted UMD");
-				i = sceUmdWaitDriveStat(UMD_WAITFORINIT);
-				SceUID fd = sceIoOpen("disc0:/UMD_DATA.BIN", PSP_O_RDONLY, 0777);
+				while (sceUmdCheckMedium() == 0) 
+				{
+					sceUmdCheckMedium();
+				}
 				
+				sceUmdActivate(1, "disc0:");
+				oslDrawStringf(240, 156, "Mounted UMD\n");
+				sceUmdWaitDriveStat(UMD_WAITFORINIT);
+				SceUID fd = sceIoOpen("disc0:/UMD_DATA.BIN", PSP_O_RDONLY, 0777);
 				if(fd >= 0)
 				{
 					char game_id[11];
 					sceIoRead(fd, game_id, 10);
 					sceIoClose(fd);
 					game_id[10] = 0;
-					oslDrawStringf(10,50,"Found Game %s",game_id);
-				}
-					
+					oslDrawStringf(240, 176, "Booting %s\n", game_id);
+				}	
 				sceKernelLoadExec("disc0:/PSP_GAME/SYSDIR/BOOT.BIN",0);
-				}
-				
-				/*
-				void UMDBin() 
-				{
-					int fd;
-					fd = sceIoOpen("disc0:/UMD_DATA.BIN", PSP_O_RDONLY, 0777);
-					if(fd >= 0)
-					{
-						sceIoRead(fd, game_id, 10);
-						sceIoClose(fd);
-						game_id[10] = 0;
-					}
-
-					fd = sceIoDopen("disc0:/UMD_VIDEO/");
-					if(fd >= 0) 
-					{
-						isvideo = 1;
-					}
-					if (isvideo == 1) 
-					{
-						skinc = sceIoOpen("disc0:/UMD_VIDEO/ICON0.PNG", PSP_O_RDONLY, 0); 
-						
-						if(skinc < 0) 
-						{
-							skin = 0;
-						}
-						else 
-						{	
-							skin = 1;
-						}
-						sceIoClose(skinc);
-						
-						if (skin == 1)
-						{
-							sprintf(iconbuf,"disc0:/UMD_VIDEO/ICON0.PNG");
-							umdicon = loadImage(iconbuf);
-						}
-					}
-					else 
-					{
-						skinc = sceIoOpen("disc0:/PSP_GAME/ICON0.PNG", PSP_O_RDONLY, 0); // check existence of game icon
-						if(skinc < 0) 
-						{
-							skin = 0;
-						}
-						else 
-						{
-							skin = 1;
-						}
-						
-						sceIoClose(skinc);
-						
-						if (skin == 1) 
-						{
-							sprintf(iconbuf,"disc0:/PSP_GAME/ICON0.PNG");
-							umdicon = loadImage(iconbuf);
-						}
-					} // isvideo
-				}
-*/
 		}
 		
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)

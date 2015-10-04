@@ -21,6 +21,8 @@ int controlX = 25;
 
 int getBrightness(void);
 void setBrightness(int brightness);
+int displayEnable(void);
+int displayDisable(void);
 
 int imposeGetVolume();
 int imposeSetVolume();

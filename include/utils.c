@@ -133,7 +133,7 @@ void openOSK(char * message, char * initialMessage, int textLimit, int lang)
 	int Keyboard = 0;
 	char data[20] = "";
 	
-	OSL_IMAGE *keyboardBg = oslLoadImageFilePNG("system/settings/keyboard.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+	OSL_IMAGE *keyboardBg = oslLoadImageFilePNG(keyBoardBgPath, OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
 
 	while(!osl_quit)
 	{

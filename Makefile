@@ -22,7 +22,7 @@ STDLIBS= -losl -lpng -lz -lpspsystemctrl_user \
          -lpspnet_adhocmatching -lpspnet_adhoc -lpspnet_adhocctl -ljpeg \
 		 -lpspvram -lpspkubridge -lpspreg \
 		 -lpspusb -lpspusbstor -lpspusbdevice -lpspmp3 -lmad -lpspsystemctrl_kernel -lpspvshctrl -lpsprtc_driver -lpspreg_driver \
-		  -lpspaudiolib -lpspaudio -lpspaudiocodec\
+		 -lpspaudiolib -lpspaudio -lpspaudiocodec\
 		 
 LIBS=$(STDLIBS) $(MYLIBS)
 

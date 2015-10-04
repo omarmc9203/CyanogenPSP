@@ -515,7 +515,7 @@ void getIcon0(char* filename)
 
 int gameView(char * browseDirectory, int type)
 {	
-	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
+	gamebg = oslLoadImageFilePNG(gameBgPath, OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -615,7 +615,7 @@ int gameBoot()
 
 int gameApp() 
 {
-	gamebg = oslLoadImageFilePNG("system/app/game/gamebg.png", OSL_IN_RAM, OSL_PF_8888);
+	gamebg = oslLoadImageFilePNG(gameBgPath, OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);

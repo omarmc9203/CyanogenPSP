@@ -145,7 +145,7 @@ void MP3Play(char * path)
 {	
 	struct ID3Tag ID3;
 
-	nowplaying = oslLoadImageFilePNG("system/app/apollo/nowplaying.png", OSL_IN_RAM, OSL_PF_8888);
+	nowplaying = oslLoadImageFilePNG(nowplayingBgPath, OSL_IN_RAM, OSL_PF_8888);
 
 	if (!nowplaying)
 		debugDisplay();
@@ -248,7 +248,7 @@ void MP3Play(char * path)
 
 int soundPlay(char * path)
 {	
-	nowplaying = oslLoadImageFilePNG("system/app/apollo/nowplaying.png", OSL_IN_RAM, OSL_PF_8888);
+	nowplaying = oslLoadImageFilePNG(nowplayingBgPath, OSL_IN_RAM, OSL_PF_8888);
 	
 	OSL_SOUND * sound = oslLoadSoundFile(path, OSL_FMT_NONE);
 
@@ -509,7 +509,7 @@ char * mp3Browse(const char * path)
 
 int mp3View(char * browseDirectory)
 {	
-	mp3bg = oslLoadImageFilePNG("system/app/apollo/mp3bg.png", OSL_IN_RAM, OSL_PF_8888);
+	mp3bg = oslLoadImageFilePNG(apolloBgPath, OSL_IN_RAM, OSL_PF_8888);
 	mp3_select = oslLoadImageFilePNG("system/app/apollo/mp3_select.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -535,7 +535,7 @@ int mp3View(char * browseDirectory)
 
 int mp3player() 
 {
-	mp3bg = oslLoadImageFilePNG("system/app/apollo/mp3bg.png", OSL_IN_RAM, OSL_PF_8888);
+	mp3bg = oslLoadImageFilePNG(apolloBgPath, OSL_IN_RAM, OSL_PF_8888);
 	mp3_select = oslLoadImageFilePNG("system/app/apollo/mp3_select.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	if (!mp3bg || !mp3_select)

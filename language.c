@@ -46,13 +46,13 @@ const char lang_settingsDisplay[][3][100] =
 	{"Themes", "Time", "Miscellaneous"}
 };
 
-const char lang_settingsThemes[][3][100] = 
+const char lang_settingsThemes[][4][100] = 
 {	
-	{"Wallpaper", "Fonts", "Icon Packs"},
-	{"Fond d'écran", "Polices", "Icon Packs"},
-	{"Wallpaper", "Fonts", "Icon Packs"},
-	{"Wallpaper", "Fonts", "Icon Packs"},
-	{"Wallpaper", "Fonts", "Icon Packs"}
+	{"Style", "Wallpaper", "Fonts", "Icon Packs"},
+	{"Style", "Fond d'écran", "Polices", "Icon Packs"},
+	{"Style", "Wallpaper", "Fonts", "Icon Packs"},
+	{"Style", "Wallpaper", "Fonts", "Icon Packs"},
+	{"Style", "Wallpaper", "Fonts", "Icon Packs"}
 };
 
 const char lang_settingsTime[][1][100] = 

@@ -36,10 +36,8 @@ int initOSLib() //Initialize OsLib
 }
 
 // Functions imported from prx:
-
 int imposeGetVolume();
 int imposeSetVolume();
-
 int imposeSetBrightness(int value);
 int imposeGetBrightness();
  
@@ -119,18 +117,18 @@ void firstBootInitiation()
 	//Loads our images into memory
 	loadIcons();
 	background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
-	cursor = oslLoadImageFilePNG("system/cursor/cursor.png", OSL_IN_VRAM, OSL_PF_8888);
+	cursor = oslLoadImageFilePNG(cursorPath, OSL_IN_VRAM, OSL_PF_8888);
 	navbar2 = oslLoadImageFile("system/home/icons/nav2.png", OSL_IN_RAM, OSL_PF_8888);
 	navbar = oslLoadImageFile("system/home/icons/nav.png", OSL_IN_VRAM, OSL_PF_8888);
 	notif = oslLoadImageFile("system/home/menu/notif.png", OSL_IN_RAM, OSL_PF_8888);
 	pointer = oslLoadImageFilePNG("system/home/icons/pointer.png", OSL_IN_RAM, OSL_PF_8888);
 	pointer1 = oslLoadImageFilePNG("system/home/icons/pointer1.png", OSL_IN_RAM, OSL_PF_8888);
-	backicon = oslLoadImageFilePNG("system/home/icons/backicon.png", OSL_IN_RAM, OSL_PF_8888);
-	homeicon = oslLoadImageFilePNG("system/home/icons/homeicon.png", OSL_IN_RAM, OSL_PF_8888);
-	multicon = oslLoadImageFilePNG("system/home/icons/multicon.png", OSL_IN_RAM, OSL_PF_8888);
-	backicon2 = oslLoadImageFilePNG("system/home/icons/backicon2.png", OSL_IN_RAM, OSL_PF_8888);
-	homeicon2 = oslLoadImageFilePNG("system/home/icons/homeicon2.png", OSL_IN_RAM, OSL_PF_8888);
-	multicon2 = oslLoadImageFilePNG("system/home/icons/multicon2.png", OSL_IN_RAM, OSL_PF_8888);
+	backicon = oslLoadImageFilePNG(backiconPath, OSL_IN_RAM, OSL_PF_8888);
+	homeicon = oslLoadImageFilePNG(homeiconPath, OSL_IN_RAM, OSL_PF_8888);
+	multicon = oslLoadImageFilePNG(multiconPath, OSL_IN_RAM, OSL_PF_8888);
+	backicon2 = oslLoadImageFilePNG(backicon2Path, OSL_IN_RAM, OSL_PF_8888);
+	homeicon2 = oslLoadImageFilePNG(homeicon2Path, OSL_IN_RAM, OSL_PF_8888);
+	multicon2 = oslLoadImageFilePNG(multicon2Path, OSL_IN_RAM, OSL_PF_8888);
 	welcome = oslLoadImageFilePNG("system/home/icons/welcome.png", OSL_IN_RAM, OSL_PF_8888);
 	transbackground = oslLoadImageFilePNG("system/home/icons/transbackground.png", OSL_IN_RAM, OSL_PF_8888);
 	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_VRAM, OSL_PF_8888);
@@ -358,10 +356,10 @@ int main()
 	fclose(languageTxt);
 	
 	checkGBootActivation();
-	
 	createDirs();
+	themesLoad();
 	
-	quickSettings = oslLoadImageFile("system/home/menu/quickSettings.png", OSL_IN_VRAM, OSL_PF_8888);
+	quickSettings = oslLoadImageFile(quickSettingsBgPath, OSL_IN_VRAM, OSL_PF_8888);
 	batt100 = oslLoadImageFile("system/home/icons/100.png", OSL_IN_VRAM, OSL_PF_8888);
 	batt80 = oslLoadImageFile("system/home/icons/80.png", OSL_IN_VRAM, OSL_PF_8888);
 	batt60 = oslLoadImageFile("system/home/icons/60.png", OSL_IN_VRAM, OSL_PF_8888);
