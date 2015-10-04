@@ -1,5 +1,5 @@
 TARGET = sound
-OBJS = main.o
+OBJS = main.o sceImpose_Driver.o
 
 INCDIR =
 CFLAGS = -O2 -G0 -Wall
