@@ -30,13 +30,15 @@ What's working
 - Expanded desktop (Settings->Display)
 - Homebrew, POPS and ISO/CSO support
 - Boot Animation and Game boot toggles (Settings->Display)
+- Theme Manager
+- Icon Pack Manager
 
 What's yet to work
 =================
 - Fully functional calculator
 - Fully functional recents menu
-- Theme Manager
 - Adhoc Messenger
+- UMD
 
 What's not working
 =================
