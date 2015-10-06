@@ -228,7 +228,7 @@ ro.product.locale.language = %s\r\n\
 ro.build.user = Joel16\r\n\
 ro.product.cpu.frequency =  %d\r\n\
 ro.product.bus.frequency =  %d\r\n\
-ro.build.date = Sat Mar 08 9:31 AM EST 2015",
+ro.build.date = Sun Oct 04 9:30 AM EST 2015",
 	cyanogenpspversion, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
 	fclose(configtxt);	
 }
@@ -309,7 +309,7 @@ void aboutMenu()
 		oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
 		oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"%s %s-20150308-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+		oslDrawStringf(20,129,"%s %s-20151004-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 		oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawStringf(20,185,"%s %d.%d", lang_settingsAbout[language][5], version.major, version.minor);
 		oslDrawStringf(20,199,"%s %s", lang_settingsAbout[language][6], OSL_VERSION);
@@ -333,7 +333,7 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"%s %s-20150308-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+			oslDrawStringf(20,129,"%s %s-20151004-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 			oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
@@ -879,6 +879,10 @@ void ramMenu()
 	if (!performancebg || !highlight)
 		debugDisplay();
 	
+	OSL_MEMSTATUS ram = oslGetRamStatus();
+	int availableRam = (ram.maxAvailable/1000000);
+	int totalRam = ((20*1024*1024)/1000000);
+	
 	while (!osl_quit)
 	{
 		LowMemExit();
@@ -893,8 +897,13 @@ void ramMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawStringf(20,98,"%s %d %s\n", lang_settingsRAM[language][0], oslGetRamStatus().maxAvailable/1000000, lang_settingsRAM[language][1]); 
-	
+		oslDrawStringf(20,78,"%s %d MB (%d%%) %s\n", lang_settingsRAM[language][0], availableRam, (((availableRam) * 100)/(totalRam)), lang_settingsRAM[language][1]); 
+		
+		oslDrawFillRect(20,100,424,110,RGB(206,215,219));
+		oslDrawFillRect(20,100,((availableRam)*20.2),110,RGB(0,149,135));
+		
+		oslDrawStringf(20,122,"%d%% %s", (((20 - (availableRam)) * 100)/(totalRam)), lang_settingsRAM[language][2]);
+		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		digitaltime(381,4,0,hrTime);

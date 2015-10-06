@@ -75,11 +75,11 @@ const char lang_settingsMiscellaneous[][4][100] =
 
 const char lang_settingsPerformance[][3][100] = 
 {	
-	{"Processor", "RAM Management", "Storage Management"},
-	{"Processeur", "Gestion de la RAM", "Gestion de l'espace de stockage"},
-	{"Processor", "RAM Management", "Storage Management"},
-	{"Processor", "RAM Management", "Storage Management"},
-	{"Processor", "RAM Management", "Storage Management"}
+	{"Processor", "Memory", "Storage Management"},
+	{"Processeur", "Memory", "Gestion de l'espace de stockage"},
+	{"Processor", "Memory", "Storage Management"},
+	{"Processor", "Memory", "Storage Management"},
+	{"Processor", "Memory", "Storage Management"}
 };
 
 const char lang_settingsProcessor[][5][100] = 
@@ -91,13 +91,13 @@ const char lang_settingsProcessor[][5][100] =
 	{"Current CPU frequency", "CPU over-clock", "Press R to increase frequency and L to decrease frequency.", "Current BUS frequency"}
 };
 
-const char lang_settingsRAM[][2][100] = 
+const char lang_settingsRAM[][3][100] = 
 {	
-	{"RAM available:", "MB available"},
-	{"RAM disponible :", "Mo disponibles"},
-	{"RAM available:", "MB available"},
-	{"RAM available:", "MB available"},
-	{"RAM available:", "MB available"}
+	{"RAM available:", "available", "of RAM used"},
+	{"RAM disponible :", "disponibles", "of RAM used"},
+	{"RAM available:", "available", "of RAM used"},
+	{"RAM available:", "available", "of RAM used"},
+	{"RAM available:", "available", "of RAM used"}
 };
 
 const char lang_settingsStorage[][3][60] = 
@@ -111,11 +111,11 @@ const char lang_settingsStorage[][3][60] =
 
 const char lang_settingsAbout[][7][100] = 
 {	
-	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "OFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
-	{"Mises à jour de CyanogenPSP", "Cliquez pour voir et installer les mises à jour disponibles", "Version CyanogenPSP :", "OFFICIEL", "Adresse MAC :", "Version du noyau :", "Version de l'OSLib :"},
-	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "OFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
-	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "OFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
-	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "OFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"}
+	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "UNOFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
+	{"Mises à jour de CyanogenPSP", "Cliquez pour voir et installer les mises à jour disponibles", "Version CyanogenPSP :", "UNOFFICIEL", "Adresse MAC :", "Version du noyau :", "Version de l'OSLib :"},
+	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "UNOFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
+	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "UNOFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
+	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "UNOFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"}
 };
 
 const char lang_settingsUpdates[][1][100] = 

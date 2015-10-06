@@ -7,7 +7,7 @@ const char lang_settingsTime[5][1][100];
 const char lang_settingsMiscellaneous[5][4][100];
 const char lang_settingsPerformance[5][3][100];
 const char lang_settingsProcessor[5][5][100];
-const char lang_settingsRAM[5][2][100];
+const char lang_settingsRAM[5][3][100];
 const char lang_settingsStorage[5][3][60];
 const char lang_settingsAbout[5][7][100];
 const char lang_settingsUpdates[5][1][100];
