@@ -384,13 +384,13 @@ int appdrawer()
 			internet();
 		}
 		
-		// WIP Calculator
+		/*// WIP Calculator
 		if (cursor->x >= 75 && cursor->x <= 140 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1); 
 			appdrawer_deleteImages();
 			calculator();
-		}
+		}*/
 		
 		if (cursor->x >= 140 && cursor->x <= 205 && cursor->y >= 25 && cursor->y <= 90 && osl_keys->pressed.cross)
 		{
