@@ -1,5 +1,3 @@
-# To generate .S file:
-#    psp-build-exports -s file.exp
 # Define the exports for the prx
 PSP_BEGIN_EXPORTS
 
@@ -11,13 +9,14 @@ PSP_EXPORT_VAR_HASH(module_info)
 PSP_EXPORT_END
 
 # Export our function
-PSP_EXPORT_START(soundprx, 0, 0x4001)
+PSP_EXPORT_START(imposeDriver, 0, 0x4001)
 PSP_EXPORT_FUNC(imposeGetVolume)
 PSP_EXPORT_FUNC(imposeSetVolume)
 PSP_EXPORT_FUNC(imposeGetMute)
 PSP_EXPORT_FUNC(imposeSetMute)
 PSP_EXPORT_FUNC(imposeGetEqualizer)
 PSP_EXPORT_FUNC(imposeSetEqualizer)
+PSP_EXPORT_FUNC(imposeSetHomePopup)
 PSP_EXPORT_END
 
 PSP_END_EXPORTS
