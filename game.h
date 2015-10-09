@@ -34,6 +34,7 @@ int launchPOPsMs0(char path[]);
 int launchPOPsEf0(char path[]);
 int launchISOMs0(char path[]);
 int launchISOEf0(char path[]);
+int launchUMD(char path[]);
 void gameDisplay();
 void gameControls(int n);
 char * gameBrowse(const char * path);

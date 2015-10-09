@@ -168,6 +168,28 @@ int launchISOEf0(char path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x125, path, &param);
 }
 
+int launchUMD(char path[])
+{
+	// Load Execute Parameter
+	struct SceKernelLoadExecVSHParam param;
+	
+	// Clear Memory
+	memset(&param, 0, sizeof(param));
+	
+	// Set Common Parameters
+	param.size = sizeof(param);
+	
+	// EBOOT Path
+    char * ebootpath = "disc0:/PSP_GAME/SYSDIR/EBOOT.BIN";
+               
+    // Prepare ISO Reboot
+    param.args = strlen(ebootpath) + 1;
+    param.argp = ebootpath;
+    param.key = "game";
+
+	return sctrlKernelLoadExecVSHWithApitype(0x120, path, &param);
+}
+
 void gameDisplay()
 {	
 	oslDrawImageXY(gamebg, 0, 0);

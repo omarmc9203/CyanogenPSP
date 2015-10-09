@@ -446,36 +446,7 @@ int appdrawer()
 		if (cursor->x >= 140 && cursor->x <= 205 && cursor->y >= 110 && cursor->y <= 175 && osl_keys->pressed.cross)
 		{
 			oslPlaySound(KeypressStandard, 1); 
-			
-			while(1) 
-			{
-				sceCtrlReadBufferPositive(&pad, 1);
-				if(pad.Buttons & PSP_CTRL_CROSS) 
-					break;
-			}
-			
-				if (sceUmdCheckMedium() == 0) 
-				{ 
-					oslDrawStringf(240, 136, "Insert UMD\n"); 
-				}
-				while (sceUmdCheckMedium() == 0) 
-				{
-					sceUmdCheckMedium();
-				}
-				
-				sceUmdActivate(1, "disc0:");
-				oslDrawStringf(240, 156, "Mounted UMD\n");
-				sceUmdWaitDriveStat(UMD_WAITFORINIT);
-				SceUID fd = sceIoOpen("disc0:/UMD_DATA.BIN", PSP_O_RDONLY, 0777);
-				if(fd >= 0)
-				{
-					char game_id[11];
-					sceIoRead(fd, game_id, 10);
-					sceIoClose(fd);
-					game_id[10] = 0;
-					oslDrawStringf(240, 176, "Booting %s\n", game_id);
-				}	
-				sceKernelLoadExec("disc0:/PSP_GAME/SYSDIR/BOOT.BIN",0);
+			launchUMD("disc0:/PSP_GAME/SYSDIR/EBOOT.BIN");
 		}
 		
 		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
