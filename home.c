@@ -778,6 +778,11 @@ void homeUnloadResources()
 
 void home()
 {	
+	char message[100] = "";
+	char *updateData;
+    int dialog = OSL_DIALOG_NONE;
+	int read = 0;
+
 	loadIcons();
 	wDay = oslLoadImageFilePNG("system/widget/Day.png", OSL_IN_RAM, OSL_PF_8888);
 	wNight = oslLoadImageFile("system/widget/Night.png", OSL_IN_RAM, OSL_PF_8888);
@@ -833,6 +838,32 @@ void home()
 		//volumeController();
 		appHighlight(0);
 		oslDrawImage(cursor);
+		
+		dialog = oslGetDialogType();
+        if (dialog)
+		{
+			oslDrawDialog();
+            if (oslGetDialogStatus() == PSP_UTILITY_DIALOG_NONE)
+			{
+				oslEndDialog();
+            }
+		}
+		
+		if (dialog == OSL_DIALOG_NONE)
+		{
+			if (read == 1)
+			{
+				sceIoRemove("ms0:/PSP/GAME/CyanogenPSP/update.txt");
+				read = 0;
+			}
+			else if (fileExists("ms0:/PSP/GAME/CyanogenPSP/update.txt"))
+			{
+				read = 1;
+				updateData = ReadFile("ms0:/PSP/GAME/CyanogenPSP/update.txt");
+				oslInitMessageDialog(updateData, 0);
+				memset(message, 0, sizeof(message));
+			}
+		}
 			
 		if (osl_keys->pressed.square)
 		{
