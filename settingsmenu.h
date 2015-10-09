@@ -91,7 +91,9 @@ int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, proce
 int passProtect;
 int RJL;
 int PSPDebug;
+int updateReady;
 void onlineUpdater();
+void flashUpdate();
 void switchStatus(int n);
 void loadConfig();
 void saveConfig();

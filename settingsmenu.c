@@ -99,11 +99,6 @@ void onlineUpdater()
     int browser = 0;
 	char message[100] = "";
 	
-	recoverybg = oslLoadImageFilePNG("android_bootable_recovery/res/images/recoverybg.png", OSL_IN_RAM, OSL_PF_8888);
-	
-	if (!recoverybg)
-		debugDisplay();
-	
 	oslNetInit();
 
     while(!osl_quit)
@@ -119,26 +114,7 @@ void onlineUpdater()
                 if (oslGetBrowserStatus() == PSP_UTILITY_DIALOG_NONE)
 				{
                     oslEndBrowser();
-					oslDrawImageXY(recoverybg, 0, 0);
-					oslDrawStringf(10,10,"Flashing zip...");
-					if (fileExists("ms0:/PSP/GAME/CyanogenPSP/Boot.zip"))
-					{
-					pgeZip* zipFiles = pgeZipOpen("../Boot.zip");
-					chdir("..");
-					pgeZipExtract(zipFiles, NULL);
-					pgeZipClose(zipFiles);
-					oslDrawStringf(10,30,"Installed Successfully.");
-					oslDrawStringf(10,50,"Exiting..");
-					oslSyncFrame();
-					sceKernelDelayThread(2*1000000);
-					oslSyncFrame();
-					oslDrawStringf(10,50,"Enjoy :)");
-					sceKernelDelayThread(3*1000000);
-					oslDeleteImage(recoverybg);
-					sceIoRemove("ms0:/PSP/GAME/CyanogenPSP/Boot/system/build.prop");
-					sceKernelExitGame();
-					}
-					oslDeleteImage(recoverybg);
+					updateReady = 1;
 					aboutMenu();
                 }
             }
@@ -150,7 +126,7 @@ void onlineUpdater()
         if (!browser)
 		{
             oslReadKeys();
-            oslBrowserInit("http://raw.githubusercontent.com/joel16/CyanogenPSP-Bin/master/Boot.zip", "/PSP/GAME/CyanogenPSP", 5*1024*1024,
+            oslBrowserInit("http://downloads.sourceforge.net/project/cyanogenpsp/Updates/update.zip", "/PSP/GAME", 14*1024*1024,
                                          PSP_UTILITY_HTMLVIEWER_DISPLAYMODE_SMART_FIT,
                                          PSP_UTILITY_HTMLVIEWER_DISABLE_STARTUP_LIMITS,
                                          PSP_UTILITY_HTMLVIEWER_INTERFACEMODE_FULL,
@@ -164,6 +140,43 @@ void onlineUpdater()
 		}
     }
 	oslNetTerm();
+}
+
+void flashUpdate()
+{
+	recoverybg = oslLoadImageFilePNG("android_bootable_recovery/res/images/recoverybg.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	if (!recoverybg)
+		debugDisplay();
+	
+	while (!osl_quit)
+	{	
+		oslStartDrawing();
+		oslClearScreen(RGB(0,0,0));
+		oslDrawImageXY(recoverybg, 0, 0);
+		oslDrawStringf(10,60,"Flashing zip...");
+		if (fileExists("ms0:/PSP/GAME/update.zip"))
+		{		
+			pgeZip* zipFiles = pgeZipOpen("../update.zip");
+			chdir("..");
+			pgeZipExtract(zipFiles, NULL);
+			pgeZipClose(zipFiles);
+			oslIntraFontSetStyle(Roboto, 0.5f, WHITE,0,INTRAFONT_ALIGN_LEFT);
+			oslDrawStringf(10,80,"Installed Successfully.");
+			oslDrawStringf(10,90,"Exiting..");
+			oslSyncFrame();
+			sceKernelDelayThread(2*1000000);
+			oslSyncFrame();
+			oslDrawStringf(10,50,"Enjoy :)");
+			sceKernelDelayThread(3*1000000);
+			oslDeleteImage(recoverybg);
+			sceIoRemove("ms0:/PSP/GAME/CyanogenPSP/system/build.prop");
+			sceKernelExitGame();
+		}
+		oslEndDrawing(); 
+		oslEndFrame(); 
+		oslSyncFrame();
+	}
 }
 	
 void switchStatus(int n)
@@ -228,7 +241,7 @@ ro.product.locale.language = %s\r\n\
 ro.build.user = Joel16\r\n\
 ro.product.cpu.frequency =  %d\r\n\
 ro.product.bus.frequency =  %d\r\n\
-ro.build.date = Sun Oct 04 9:30 AM EST 2015",
+ro.build.date = Sun Oct 06 12:30 AM EST 2015",
 	cyanogenpspversion, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
 	fclose(configtxt);	
 }
@@ -291,6 +304,11 @@ void aboutMenu()
 	
 	fw_version version;
 	getFwVersion(&version);
+	
+	char message[100] = "";
+    int dialog = OSL_DIALOG_NONE;
+	
+	int updateActivation = 1;
 
 	while (!osl_quit)
 	{
@@ -344,6 +362,39 @@ void aboutMenu()
 		navbarButtons(2);
 		androidQuickSettings();
 		oslDrawImage(cursor);
+		
+		dialog = oslGetDialogType();
+        if (dialog)
+		{
+			oslDrawDialog();
+            if (oslGetDialogStatus() == PSP_UTILITY_DIALOG_NONE)
+			{
+				if (oslDialogGetResult() == OSL_DIALOG_CANCEL)
+					sprintf(message, "Cancel");
+				else if (dialog == OSL_DIALOG_MESSAGE)
+				{
+					int button = oslGetDialogButtonPressed();
+					if (button == PSP_UTILITY_MSGDIALOG_RESULT_YES)
+						flashUpdate();
+					else if (button == PSP_UTILITY_MSGDIALOG_RESULT_NO)
+						updateActivation = 0;
+						oslEndDialog();
+				}
+            oslEndDialog();
+            }
+		}
+		
+		if (dialog == OSL_DIALOG_NONE)
+		{
+			if (updateReady == 1)
+			{
+				if (updateActivation == 1)
+				{
+					oslInitMessageDialog("Update.zip has been found. Would you like to flash the update?", 1);
+					memset(message, 0, sizeof(message));
+				}
+			}
+		}
 		
 		if (osl_keys->pressed.square)
 		{
