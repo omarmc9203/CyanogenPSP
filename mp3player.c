@@ -729,7 +729,7 @@ struct ID3Tag ParseID3(char *mp3path)
       strcpy(TmpID3.ID3GenreText, genreList[(int)TmpID3.ID3GenreCode[0]].text); 
    } 
    else{ 
-      strcpy(TmpID3.ID3GenreText, ""); 
+      strcpy(TmpID3.ID3GenreText, "Untitled"); 
    } 
    TmpID3.ID3GenreText[30] = '\0'; 
 
