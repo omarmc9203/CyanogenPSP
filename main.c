@@ -34,12 +34,6 @@ int initOSLib() //Initialize OsLib
     oslSetKeyAutorepeatInterval(10);
     return 0;
 }
-
-// Functions imported from prx:
-int imposeGetVolume();
-int imposeSetVolume();
-int imposeSetBrightness(int value);
-int imposeGetBrightness();
  
 /* Exit callback */
 int exit_callback(int arg1, int arg2, void *common)
@@ -65,27 +59,6 @@ int SetupCallbacks(void)
 	thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, THREAD_ATTR_USER, 0);
 	if(thid >= 0) sceKernelStartThread(thid, 0, 0);
 	return thid;
-}
-
-void set_volume(int vol) {
-	if(vol > 30)
-		vol = 30;
-	if(vol < 0)
-		vol = 0;
-		
-	imposeSetVolume(vol);
-}
-
-void increase_volume(int n) {
-	int v = imposeGetVolume();
-	
-	set_volume(v+n);
-}
-
-void decrease_volume(int n) {
-	int v = imposeGetVolume();
-	
-	set_volume(v-n);
 }
 
 //First Boot Message
@@ -368,16 +341,17 @@ int main()
 	batt10 = oslLoadImageFile("system/home/icons/10.png", OSL_IN_VRAM, OSL_PF_8888);
 	batt0 = oslLoadImageFile("system/home/icons/0.png", OSL_IN_VRAM, OSL_PF_8888);
 	battcharge = oslLoadImageFile("system/home/icons/charge.png", OSL_IN_VRAM, OSL_PF_8888);
-	//volumeBar = oslLoadImageFilePNG("system/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
-	//volumeControl = oslLoadImageFile("system/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
+	volumeBar = oslLoadImageFilePNG("system/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
+	volumeControl = oslLoadImageFile("system/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto); //Load and set font
 	
-	SceUID modid;//, modid2;
+	SceUID kModule, kModule1, kModule2;
 	
-	modid = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
-	//modid2 = pspSdkLoadStartModule("modules/sound.prx", PSP_MEMORY_PARTITION_KERNEL);
+	kModule = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
+	kModule1 = pspSdkLoadStartModule("modules/control.prx", PSP_MEMORY_PARTITION_KERNEL);
+	kModule2 = pspSdkLoadStartModule("modules/impose.prx", PSP_MEMORY_PARTITION_KERNEL);
 	
 	loadConfig();
 	

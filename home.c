@@ -19,6 +19,8 @@ int yLine1 = -272;
 int yLine2 = -272;
 int controlX = 25;
 
+//kernel function imports
+
 int getBrightness(void);
 void setBrightness(int brightness);
 int displayEnable(void);
@@ -26,6 +28,35 @@ int displayDisable(void);
 
 int imposeGetVolume();
 int imposeSetVolume();
+
+void set_volume(int vol);
+void increase_volume(int n);
+void decrease_volume(int n);
+
+void set_volume(int vol) {
+	if(vol > 30)
+		vol = 30;
+	if(vol < 0)
+		vol = 0;
+		
+	imposeSetVolume(vol);
+}
+
+void increase_volume(int n) {
+	int v = imposeGetVolume();
+	
+	set_volume(v+n);
+}
+
+void decrease_volume(int n) {
+	int v = imposeGetVolume();
+	
+	set_volume(v-n);
+}
+
+int imposeSetHomePopup(int value);
+
+unsigned int getbuttons(); 
 
 void internet() //Draws the browser
 {
@@ -251,98 +282,172 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		oslDrawImageXY(battcharge,batx,baty);
 }
 
-//Imports
-void increase_volume(int n);
-void decrease_volume(int n);
-
+int vcontrolX;
+	
 void volumeController()
 {	
-	int llimit = 150;
-	int rlimit = 350;
-
-	int controlX = 0;
+	unsigned int kernelButtons = getbuttons(); 
+	
+	int llimit = 161;
+	int rlimit = 341;
+	
 	int volume = imposeGetVolume();
 	
 	if (volume == 0)
 	{
-		controlX = 150;
+		vcontrolX = 161;
+	}
+	else if (volume == 1)
+	{
+		vcontrolX = 167;
+	}
+	else if (volume == 2)
+	{
+		vcontrolX = 173;
 	}
 	else if (volume == 3)
 	{
-		controlX = 170;
+		vcontrolX = 179;
+	}
+	else if (volume == 4)
+	{
+		vcontrolX = 185;
+	}
+	else if (volume == 5)
+	{
+		vcontrolX = 191;
 	}
 	else if (volume == 6)
 	{
-		controlX = 190;
+		vcontrolX = 197;
+	}
+	else if (volume == 7)
+	{
+		vcontrolX = 203;
+	}
+	else if (volume == 8)
+	{
+		vcontrolX = 209;
 	}
 	else if (volume == 9)
 	{
-		controlX = 210;
+		vcontrolX = 215;
+	}
+	else if (volume == 10)
+	{
+		vcontrolX = 221;
+	}
+	else if (volume == 11)
+	{
+		vcontrolX = 227;
 	}
 	else if (volume == 12)
 	{
-		controlX = 230;
+		vcontrolX = 233;
+	}
+	else if (volume == 13)
+	{
+		vcontrolX = 239;
+	}
+	else if (volume == 14)
+	{
+		vcontrolX = 245;
 	}
 	else if (volume == 15)
 	{
-		controlX = 250;
+		vcontrolX = 251;
+	}
+	else if (volume == 16)
+	{
+		vcontrolX = 257;
+	}
+	else if (volume == 17)
+	{
+		vcontrolX = 263;
 	}
 	else if (volume == 18)
 	{
-		controlX = 270;
+		vcontrolX = 269;
+	}
+	else if (volume == 19)
+	{
+		vcontrolX = 275;
+	}
+	else if (volume == 20)
+	{
+		vcontrolX = 281;
 	}
 	else if (volume == 21)
 	{
-		controlX = 290;
+		vcontrolX = 287;
+	}
+	else if (volume == 22)
+	{
+		vcontrolX = 293;
+	}
+	else if (volume == 23)
+	{
+		vcontrolX = 299;
 	}
 	else if (volume == 24)
 	{
-		controlX = 310;
+		vcontrolX = 305;
+	}
+	else if (volume == 25)
+	{
+		vcontrolX = 311;
+	}
+	else if (volume == 26)
+	{
+		vcontrolX = 317;
 	}
 	else if (volume == 27)
 	{
-		controlX = 330;
+		vcontrolX = 323;
+	}
+	else if (volume == 28)
+	{
+		vcontrolX = 329;
+	}
+	else if (volume == 29)
+	{
+		vcontrolX = 335;
 	}
 	else if (volume == 30)
 	{
-		controlX = 350;
+		vcontrolX = 341;
 	}
-	if (osl_keys->pressed.up)
+	
+	if (kernelButtons & PSP_CTRL_VOLUP)
 	{
-		controlX += 3;
 		increase_volume(1);
 	}
-	if (osl_keys->pressed.down)
+	else if (kernelButtons & PSP_CTRL_VOLDOWN)
 	{
-		controlX -= 3;
 		decrease_volume(1);
 	}
 	
-	if (controlX <= llimit)
+	if (vcontrolX <= llimit)
 	{
-		controlX = llimit;
+		vcontrolX = llimit;
 	}
-	else if (controlX >= rlimit)
+	else if (vcontrolX >= rlimit)
 	{
-		controlX = rlimit;
+		vcontrolX = rlimit;
 	}
 	
 	if (osl_pad.held.up)
 	{
-		oslDrawImageXY(volumeBar, 97,30);
-		oslDrawImageXY(volumeControl, controlX, 54);
-		oslDrawStringf(115,75, "Vol: %d", imposeGetVolume());
-		oslSyncFrame();
-		sceKernelDelayThread(1*1000000);
+		oslDrawImageXY(volumeBar, 117,30);
+		oslDrawImageXY(volumeControl, vcontrolX, 52);
+		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
 	
 	if (osl_pad.held.down)
 	{
-		oslDrawImageXY(volumeBar, 97,30);
-		oslDrawImageXY(volumeControl, controlX, 54);
-		oslDrawStringf(115,75, "Vol: %d", imposeGetVolume());
-		oslSyncFrame();
-		sceKernelDelayThread(1*1000000);
+		oslDrawImageXY(volumeBar, 117,30);
+		oslDrawImageXY(volumeControl, vcontrolX, 52);
+		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
 }
 
@@ -835,7 +940,7 @@ void home()
 		}
 		
 		androidQuickSettings();
-		//volumeController();
+		volumeController();
 		appHighlight(0);
 		oslDrawImage(cursor);
 		
@@ -922,7 +1027,14 @@ void home()
 			oslPlaySound(KeypressStandard, 1);  
 			screenshot();
 		}
-	
+		
+		unsigned int kernelButtons = getbuttons(); 
+
+		if(kernelButtons & PSP_CTRL_HOME) 
+		{ 
+			powermenu();
+		}	 
+
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();
