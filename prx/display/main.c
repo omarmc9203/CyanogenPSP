@@ -1,12 +1,11 @@
 #include <pspsdk.h>
 #include <pspkernel.h>
 #include <pspdisplay_kernel.h>
-#include <pspimpose_driver.h>
 #include <pspsysreg.h>
 #include <pspsysmem_kernel.h>
 #include <psppower.h>
 
-PSP_MODULE_INFO("brightness", 0x1000, 1, 1);
+PSP_MODULE_INFO("display", 0x1000, 1, 1);
 PSP_MAIN_THREAD_ATTR(0);
 
 int sceDisplayEnable(void);
@@ -30,24 +29,6 @@ void setBrightness(int brightness){
     k1 = pspSdkSetK1(0);
     sceDisplaySetBrightness(brightness, 0);
     pspSdkSetK1(k1);
-}
-
-int imposeGetBrightness(){
-	u32 k1; 
-	
-    k1 = pspSdkSetK1(0);
-    int ret = sceImposeGetParam(PSP_IMPOSE_BACKLIGHT_BRIGHTNESS);
-    pspSdkSetK1(k1);
-    return ret;
-}
-
-int imposeSetBrightness(int value){
-	u32 k1; 
-
-    k1 = pspSdkSetK1(0);
-    int ret = sceImposeSetParam(PSP_IMPOSE_BACKLIGHT_BRIGHTNESS, value);
-    pspSdkSetK1(k1);
-    return ret;
 }
 
 int displayEnable(void){
