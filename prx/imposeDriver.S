@@ -10,4 +10,8 @@
 	STUB_FUNC  0x4F113DD9,imposeGetEqualizer
 	STUB_FUNC  0xB767B17B,imposeSetEqualizer
 	STUB_FUNC  0xC69E44DE,imposeSetHomePopup
+	STUB_FUNC  0x75A623EA,imposeGetBrightness
+	STUB_FUNC  0x1191DE7B,imposeSetBrightness
+	STUB_FUNC  0x43611234,imposeGetBacklightOffTime
+	STUB_FUNC  0x36715C26,imposeSetBacklightOffTime
 	STUB_END

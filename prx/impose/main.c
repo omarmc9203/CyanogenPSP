@@ -1,6 +1,8 @@
 #include <pspsdk.h>
 #include <pspkernel.h>
 #include <pspimpose_driver.h>
+#include <pspdisplay_kernel.h>
+#include <psppower.h>
 #include <pspsysmem_kernel.h>
 
 PSP_MODULE_INFO("imposeLib", 0x1006, 1, 1);
@@ -53,6 +55,34 @@ int imposeSetEqualizer(int value){
 int imposeSetHomePopup(int value){
     k1 = pspSdkSetK1(0);
     int ret = sceImposeSetHomePopup(value);
+    pspSdkSetK1(k1);
+    return ret;
+}
+
+int imposeGetBrightness(){	
+    k1 = pspSdkSetK1(0);
+    int ret = sceImposeGetParam(PSP_IMPOSE_BACKLIGHT_BRIGHTNESS);
+    pspSdkSetK1(k1);
+    return ret;
+}
+
+int imposeSetBrightness(int value){
+    k1 = pspSdkSetK1(0);
+    int ret = sceImposeSetParam(PSP_IMPOSE_BACKLIGHT_BRIGHTNESS, value);
+    pspSdkSetK1(k1);
+    return ret;
+}
+
+int imposeGetBacklightOffTime(){	
+    k1 = pspSdkSetK1(0);
+    int ret = sceImposeGetBacklightOffTime();
+    pspSdkSetK1(k1);
+    return ret;
+}
+
+int imposeSetBacklightOffTime(int value){
+    k1 = pspSdkSetK1(0);
+    int ret = sceImposeSetBacklightOffTime(value);
     pspSdkSetK1(k1);
     return ret;
 }

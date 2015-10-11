@@ -17,6 +17,10 @@ PSP_EXPORT_FUNC(imposeSetMute)
 PSP_EXPORT_FUNC(imposeGetEqualizer)
 PSP_EXPORT_FUNC(imposeSetEqualizer)
 PSP_EXPORT_FUNC(imposeSetHomePopup)
+PSP_EXPORT_FUNC(imposeGetBrightness)
+PSP_EXPORT_FUNC(imposeSetBrightness)
+PSP_EXPORT_FUNC(imposeGetBacklightOffTime)
+PSP_EXPORT_FUNC(imposeSetBacklightOffTime)
 PSP_EXPORT_END
 
 PSP_END_EXPORTS
