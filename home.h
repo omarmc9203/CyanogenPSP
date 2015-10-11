@@ -41,6 +41,7 @@ void internet();
 void debugDisplay();
 void controls();
 void battery(int batx, int baty, int n);
+void volumeController();
 void appDrawerIcon();
 void navbarButtons(int n);
 void androidQuickSettings();

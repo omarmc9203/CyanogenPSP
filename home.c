@@ -28,6 +28,10 @@ int displayDisable(void);
 
 int imposeGetVolume();
 int imposeSetVolume();
+int imposeGetBrightness();
+int imposeSetBrightness(int value);
+int imposeGetBacklightOffTime();
+int imposeSetBacklightOffTime(int value);
 
 void set_volume(int vol);
 void increase_volume(int n);
@@ -418,15 +422,6 @@ void volumeController()
 		vcontrolX = 341;
 	}
 	
-	if (kernelButtons & PSP_CTRL_VOLUP)
-	{
-		increase_volume(1);
-	}
-	else if (kernelButtons & PSP_CTRL_VOLDOWN)
-	{
-		decrease_volume(1);
-	}
-	
 	if (vcontrolX <= llimit)
 	{
 		vcontrolX = llimit;
@@ -436,15 +431,17 @@ void volumeController()
 		vcontrolX = rlimit;
 	}
 	
-	if (osl_pad.held.up)
+	if (kernelButtons & PSP_CTRL_VOLUP)
 	{
+		increase_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
 		oslDrawImageXY(volumeControl, vcontrolX, 52);
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
 	
-	if (osl_pad.held.down)
+	if (kernelButtons & PSP_CTRL_VOLDOWN)
 	{
+		decrease_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
 		oslDrawImageXY(volumeControl, vcontrolX, 52);
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
@@ -703,13 +700,13 @@ void androidQuickSettings()
 	}
 	
 	if (notif_enabled == 1)
-	{
+	{	
 		if (osl_keys->held.right)
 		{
 			controlX += 4;
 			setBrightness(getBrightness() + 1);
 		}
-		if (osl_keys->held.left)
+		else if (osl_keys->held.left)
 		{
 			controlX -= 4;
 			setBrightness(getBrightness() - 1);
@@ -896,7 +893,7 @@ void home()
 	
 	checkWidgetActivation();
 	checkEDesktopActivation();
-	
+
 	while (!osl_quit)
 	{
 		LowMemExit();
