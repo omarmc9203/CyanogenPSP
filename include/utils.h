@@ -29,6 +29,8 @@ enum colors {
 int fileExists(const char* path);
 int dirExists(const char* path);
 char* ReadFile(char *filename);
+int setFileDefaultsInt(char *path, int value, int var);
+void setFileDefaultsChar(char *path, char* data, char* var);
 void deleteUpdateFile();
 void createDirs();
 void makeMusicDir();

@@ -74,6 +74,40 @@ char* ReadFile(char *filename)
     return buffer;
 }
 
+int setFileDefaultsInt(char *path, int value, int var)
+{
+	FILE *temp;
+	 
+	if (!(fileExists(path)))
+	{
+		temp = fopen(path, "w");
+		fprintf(temp, "%d", value);
+		fclose(temp);
+	} 
+	
+	temp = fopen(path, "r");
+	fscanf(temp, "%d", &var);
+	fclose(temp);
+	
+	return var;
+}
+
+void setFileDefaultsChar(char *path, char* data, char* var)
+{
+	FILE * temp;
+	
+	if (!(fileExists(path)))
+	{
+		temp = fopen(path, "w");
+		fprintf(temp, "%s", data);
+		fclose(temp);
+	}
+	
+	temp = fopen(path, "r");
+	fscanf(temp, "%s", var);
+	fclose(temp);
+}
+
 void deleteUpdateFile()
 {
 	if (fileExists("ms0:/PSP/GAME/update.zip"))

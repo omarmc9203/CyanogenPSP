@@ -61,30 +61,13 @@ int SetupCallbacks(void)
 	return thid;
 }
 
+int firstBoot;
+
 //First Boot Message
 void firstBootInitiation()
 {	
-	int firstBoot;
+	firstBoot = setFileDefaultsInt("system/settings/firstBoot.txt", 1, firstBoot);
 
-	FILE * firstBootTxt;
-	
-	if (fileExists("system/firstBoot.txt"))
-	{
-		firstBootTxt = fopen("system/firstBoot.txt", "r");
-		fscanf(firstBootTxt,"%d",&firstBoot);
-		fclose(firstBootTxt);
-	}
-	else
-	{
-		firstBootTxt = fopen("system/firstBoot.txt", "w");
-		fprintf(firstBootTxt, "1");
-		fclose(firstBootTxt);
-	}
-	
-	firstBootTxt = fopen("system/firstBoot.txt", "r");
-	fscanf(firstBootTxt,"%d",&firstBoot);
-	fclose(firstBootTxt);
-	
 	iconPackLoad();
 
 	//Loads our images into memory
@@ -114,8 +97,6 @@ void firstBootInitiation()
 	ic_launcher_messenger = oslLoadImageFilePNG(messagesPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_settings = oslLoadImageFilePNG(settingsPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_umd = oslLoadImageFilePNG(umdPath, OSL_IN_RAM, OSL_PF_8888);
-	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
-	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
 	usbdebug = oslLoadImageFilePNG("system/home/icons/usbdebug.png", OSL_IN_RAM, OSL_PF_8888);
 	music = oslLoadImageFilePNG("system/home/icons/music.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -130,7 +111,6 @@ void firstBootInitiation()
 	
 	if (firstBoot!= 0)
 	{
-		fclose(firstBootTxt);
 	
 		while (!osl_quit)
 		{		
@@ -172,8 +152,8 @@ void firstBootInitiation()
 			oslDrawImage(cursor);
 	
 			if (cursor->x >= 388 && cursor->x <= 464 && cursor->y >= 98 && cursor->y <= 132 && osl_keys->pressed.cross)
-			{ 
-				firstBootTxt = fopen("system/firstBoot.txt", "w"); 
+			{
+				FILE * firstBootTxt = fopen("system/settings/firstBoot.txt", "w"); 
 				fprintf(firstBootTxt, "0");
 				fclose(firstBootTxt);
 				oslPlaySound(KeypressStandard, 1); 
@@ -275,58 +255,13 @@ int main()
 	KeypressStandard = oslLoadSoundFile("system/media/audio/ui/KeypressStandard.wav", OSL_FMT_NONE);
 	Lock = oslLoadSoundFile("system/media/audio/ui/Lock.wav", OSL_FMT_NONE);
 	Unlock = oslLoadSoundFile("system/media/audio/ui/Unlock.wav", OSL_FMT_NONE);
-
-	FILE * backgroundPathTXT;
 	
-	if (!(fileExists("system/settings/background.txt")))
-	{
-		backgroundPathTXT = fopen("system/settings/background.txt", "w");
-		fprintf(backgroundPathTXT, "system/framework/framework-res/res/background.png");
-		fclose(backgroundPathTXT);
-	}
+	setFileDefaultsChar("system/settings/background.txt", "system/framework/framework-res/res/background.png", backgroundPath);
+	setFileDefaultsChar("system/settings/fonts.txt", "system/fonts/Roboto.pgf", fontPath);
 	
-	backgroundPathTXT = fopen("system/settings/background.txt", "r");
-	fscanf(backgroundPathTXT,"%s",backgroundPath);
-	fclose(backgroundPathTXT);
-	
-	FILE * fontPathTXT;
-	
-	if (!(fileExists("system/settings/fonts.txt")))
-	{
-		fontPathTXT = fopen("system/settings/fonts.txt", "w");
-		fprintf(fontPathTXT, "system/fonts/Roboto.pgf");
-		fclose(fontPathTXT);
-	}
-	
-	fontPathTXT = fopen("system/settings/fonts.txt", "r");
-	fscanf(fontPathTXT,"%s",fontPath);
-	fclose(fontPathTXT);
-	
-	FILE * timeSetTxt;
-	
-	if (!(fileExists("system/app/clock/timeSet.txt")))
-	{
-		timeSetTxt = fopen("system/app/clock/timeSet.txt", "w");
-		fprintf(timeSetTxt, "0");
-		fclose(timeSetTxt);
-	}
-	
-	timeSetTxt = fopen("system/app/clock/timeSet.txt", "r");
-	fscanf(timeSetTxt,"%d", &hrTime);
-	fclose(timeSetTxt);
-	
-	FILE * languageTxt;
-	
-	if (!(fileExists("system/settings/language.txt")))
-	{
-		languageTxt = fopen("system/settings/language.txt", "w");
-		fprintf(languageTxt, "0");
-		fclose(languageTxt);
-	}
-	
-	languageTxt = fopen("system/settings/language.txt", "r");
-	fscanf(languageTxt,"%d", &language);
-	fclose(languageTxt);
+	hrTime = setFileDefaultsInt("system/app/clock/timeSet.txt", 0, hrTime);
+	language = setFileDefaultsInt("system/settings/language.txt", 0, language);
+	batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
 	
 	checkGBootActivation();
 	createDirs();
@@ -343,6 +278,10 @@ int main()
 	battcharge = oslLoadImageFile("system/home/icons/charge.png", OSL_IN_VRAM, OSL_PF_8888);
 	volumeBar = oslLoadImageFilePNG("system/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
 	volumeControl = oslLoadImageFile("system/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
+	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
+	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
+	layerC = oslLoadImageFilePNG("system/home/icons/layerC.png", OSL_IN_RAM, OSL_PF_8888);
+	layerD = oslLoadImageFilePNG("system/home/icons/layerD.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto); //Load and set font
@@ -358,6 +297,7 @@ int main()
 	deleteUpdateFile(); //Delete update.zip
 	
 	setCpuBoot(); //Set default CPU or load pre-existing value
+	setPowerManagement(); //Set default power save settings or load pre-existing values.
 	
 	getPSPNickname(); //Get PSP name before hand
 	strcpy (pspname, nickname);
