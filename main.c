@@ -276,8 +276,8 @@ int main()
 	batt10 = oslLoadImageFile("system/home/icons/10.png", OSL_IN_VRAM, OSL_PF_8888);
 	batt0 = oslLoadImageFile("system/home/icons/0.png", OSL_IN_VRAM, OSL_PF_8888);
 	battcharge = oslLoadImageFile("system/home/icons/charge.png", OSL_IN_VRAM, OSL_PF_8888);
-	volumeBar = oslLoadImageFilePNG("system/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
-	volumeControl = oslLoadImageFile("system/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
+	volumeBar = oslLoadImageFilePNG("system/home/menu/volumeBar.png", OSL_IN_RAM, OSL_PF_8888);
+	volumeControl = oslLoadImageFile("system/home/menu/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
 	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
 	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
 	layerC = oslLoadImageFilePNG("system/home/icons/layerC.png", OSL_IN_RAM, OSL_PF_8888);
