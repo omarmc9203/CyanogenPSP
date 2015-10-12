@@ -196,6 +196,11 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	
 	if (n == 0 || n == 1)
 	{
+		if (batteryM == 0)
+		{
+			oslDrawImageXY(layerC, 0, 0);
+		}
+		
 		if (batteryLife <= 99)
 		{
 			oslDrawStringf(batx+18, 4,"%d%%",batteryLife);
@@ -222,11 +227,14 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		}
 	}
 	
-	if (n == 3)
+	else if (n == 3)
 	{
 		if ((cursor->y <= 16) || (cursor->y >= 226))
 		{
-			oslDrawImageXY(layerA, 0, 0);
+			if (batteryM == 0)
+				oslDrawImageXY(layerC, 0, 0);
+			else
+				oslDrawImageXY(layerA, 0, 0);
 			y+=2;
 		}
 		
@@ -439,7 +447,7 @@ void volumeController()
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
 	
-	if (kernelButtons & PSP_CTRL_VOLDOWN)
+	else if (kernelButtons & PSP_CTRL_VOLDOWN)
 	{
 		decrease_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
@@ -460,9 +468,12 @@ void appDrawerIcon() //Draws the app drawer icon. Draws a different icon of the 
 void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on androids.
 {		
 	int y = 272, ulimit = 237, dlimit = 272;
+	
+	if (batteryM == 0 && n != 2 && n != 1)
+		n = 3;
 
 	if (n == 0)
-	{
+	{		
 		oslDrawImageXY(navbar, 109, 237);
 		
 		if (cursor->x  >= 144 && cursor->x  <= 204 && cursor->y >= 226 && cursor->y <= 271)
@@ -484,11 +495,15 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 			oslDrawImageXY(navbar,109, 237);
 	}
 	
-	if (n == 1)
+	else if (n == 1)
 	{
 		if ((cursor->y >= 226) || (cursor->y <= 16) )
 		{
-			oslDrawImageXY(layerB, 0, 237);
+			if (batteryM == 0)
+				oslDrawImageXY(layerD, 0, 237);
+			else
+				oslDrawImageXY(layerB, 0, 237);
+				
 			y-=35;
 			
 			if (y <= ulimit)
@@ -527,7 +542,7 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 		}
 	}
 	
-	if (n == 2)
+	else if (n == 2)
 	{
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75))
 		{
@@ -547,6 +562,30 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 		{
 			oslDrawImageXY(navbar2, 444, 19);
 		}
+	}
+	
+	else if (n == 3) //Powersave
+	{
+		oslDrawImageXY(layerD, 0, 237);
+		oslDrawImageXY(navbar, 109, 237);
+		
+		if (cursor->x  >= 144 && cursor->x  <= 204 && cursor->y >= 226 && cursor->y <= 271)
+			oslDrawImageXY(backicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+	
+		else
+			oslDrawImageXY(navbar,109, 237);
+	
+		if (cursor->x  >= 205 && cursor->x  <= 271 && cursor->y >= 226 && cursor->y <= 271)
+			oslDrawImageXY(homeicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+	
+		else
+			oslDrawImageXY(navbar,109, 237);
+		
+		if (cursor->x  >= 272 && cursor->x  <= 332 && cursor->y >= 226 && cursor->y <= 271)
+			oslDrawImageXY(multicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
+	
+		else
+			oslDrawImageXY(navbar,109, 237);
 	}
 }
 
@@ -838,38 +877,6 @@ void dayNightCycleWidget()
 	oslDrawImageXY(wNight, 205, 82);
 }
 
-void checkWidgetActivation()
-{
-	FILE * widgetActivation;
-
-	if (!(fileExists("system/widget/widgetactivator.txt")))
-	{
-		widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
-		fprintf(widgetActivation, "1");
-		fclose(widgetActivation);
-	}
-
-	widgetActivation = fopen("system/widget/widgetactivator.txt", "r");
-	fscanf(widgetActivation,"%d",&widgetActivator);
-	fclose(widgetActivation);
-}
-
-void checkEDesktopActivation()
-{
-	FILE * eDesktopActivation;
-
-	if (!(fileExists("system/home/eDesktopActivator.txt")))
-	{
-		eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
-		fprintf(eDesktopActivation, "0");
-		fclose(eDesktopActivation);
-	}
-
-	eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "r");
-	fscanf(eDesktopActivation,"%d",&eDesktopActivator);
-	fclose(eDesktopActivation);
-}
-
 void homeUnloadResources()
 {
 	oslDeleteImage(ic_allapps);
@@ -891,9 +898,11 @@ void home()
 	
 	oslSetFont(Roboto);
 	
-	checkWidgetActivation();
-	checkEDesktopActivation();
+	widgetActivator = setFileDefaultsInt("system/widget/widgetactivator.txt", 1, widgetActivator);
+	eDesktopActivator = setFileDefaultsInt("system/home/eDesktopActivator.txt", 0, eDesktopActivator);
 
+	unsigned int kernelButtons = getbuttons(); 
+	
 	while (!osl_quit)
 	{
 		LowMemExit();
@@ -931,9 +940,9 @@ void home()
 		}
 		else if (eDesktopActivator == 0)
 		{
-			digitaltime(420,4,0,hrTime);
 			navbarButtons(0);
 			battery(370,2,1);
+			digitaltime(420,4,0,hrTime);
 		}
 		
 		androidQuickSettings();
@@ -1024,8 +1033,6 @@ void home()
 			oslPlaySound(KeypressStandard, 1);  
 			screenshot();
 		}
-		
-		unsigned int kernelButtons = getbuttons(); 
 
 		if(kernelButtons & PSP_CTRL_HOME) 
 		{ 

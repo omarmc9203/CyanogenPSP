@@ -73,13 +73,13 @@ const char lang_settingsMiscellaneous[][4][100] =
 	{"Toggle day/night widget", "Toggle expanded desktop", "Toggle boot animation", "Toggle game boot"}
 };
 
-const char lang_settingsPerformance[][3][100] = 
+const char lang_settingsPerformance[][4][100] = 
 {	
-	{"Processor", "Memory", "Storage Management"},
-	{"Processeur", "Memory", "Gestion de l'espace de stockage"},
-	{"Processor", "Memory", "Storage Management"},
-	{"Processor", "Memory", "Storage Management"},
-	{"Processor", "Memory", "Storage Management"}
+	{"Processor", "Memory", "Storage Management", "Battery Management"},
+	{"Processeur", "Memory", "Gestion de l'espace de stockage", "Battery Management"},
+	{"Processor", "Memory", "Storage Management", "Battery Management"},
+	{"Processor", "Memory", "Storage Management", "Battery Management"},
+	{"Processor", "Memory", "Storage Management", "Battery Management"}
 };
 
 const char lang_settingsProcessor[][5][100] = 
@@ -107,6 +107,15 @@ const char lang_settingsStorage[][3][60] =
 	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
 	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
 	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"}
+};
+
+const char lang_settingsBattery[][3][60] = 
+{	
+	{"Powersave", "Balanced", "Performance"},
+	{"Powersave", "Balanced", "Performance"},
+	{"Powersave", "Balanced", "Performance"},
+	{"Powersave", "Balanced", "Performance"},
+	{"Powersave", "Balanced", "Performance"}
 };
 
 const char lang_settingsAbout[][7][100] = 
