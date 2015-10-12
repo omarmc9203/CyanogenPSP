@@ -145,7 +145,7 @@ void firstBootInitiation()
 			oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 			
 			digitaltime(420,4,0,hrTime);
-		
+			volumeController();
 			battery(370,2,1);
 			navbarButtons(0);
 			

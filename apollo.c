@@ -187,6 +187,7 @@ void MP3Play(char * path)
 		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
+		volumeController();
 		
 		if(osl_keys->pressed.select) 
 		{
@@ -279,6 +280,7 @@ int soundPlay(char * path)
 		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
+		volumeController();
 		
 		if(osl_keys->pressed.select) 
 		{
@@ -444,6 +446,8 @@ void mp3Controls() //Controls
 		}
 	}
 	
+	volumeController();
+	
 	if (osl_keys->pressed.square)
 	{
 		powermenu();
@@ -572,6 +576,7 @@ int mp3player()
 		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
+		volumeController();
 		
 		mp3_select->x = selector_image_x; //Sets the selection coordinates
         mp3_select->y = selector_image_y; //Sets the selection coordinates

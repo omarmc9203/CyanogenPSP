@@ -808,6 +808,7 @@ char *getTextFromFile()
 
 void displayTextFromFile()
 {
+	char *textData;
 	textview = oslLoadImageFilePNG("system/app/filemanager/textview.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	if (!textview)
@@ -825,13 +826,14 @@ void displayTextFromFile()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);	
+		volumeController();
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
-		if(checkTextFile(folderIcons[current].filePath) == -1)
-			oslDrawStringf(40,33,"Unable to Open");
+			
+		textData = ReadFile(folderIcons[current].filePath);	
 			
 		oslDrawStringf(40,40,folderIcons[current].name);	
-		oslDrawStringf(10,66," \n%s", getTextFromFile());	
+		oslDrawStringf(10,66," \n%s", textData);	
 
 		if(osl_keys->pressed.circle)
 		{
@@ -1038,6 +1040,8 @@ void dirControls() //Controls
 			}
 		}
 	}
+	
+	volumeController();
 	
 	char * ext = strrchr(folderIcons[current].filePath, '.'); 
 	

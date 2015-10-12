@@ -67,8 +67,9 @@ int calculator()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
-		digitaltime(420,4,0,hrTime);
 		battery(370,2,1);
+		digitaltime(420,4,0,hrTime);
+		volumeController();
 		
 		oslIntraFontSetStyle(Roboto, 0.8f,WHITE,0,0);
 

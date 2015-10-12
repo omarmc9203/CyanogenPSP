@@ -320,10 +320,11 @@ void newMessage()
 
 		oslDrawImageXY(new_message, 0, 0);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.circle)
@@ -419,10 +420,11 @@ int messenger()
 
 		oslDrawImageXY(messengerbg, 0, 0);
 
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)

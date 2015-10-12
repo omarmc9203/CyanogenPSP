@@ -363,6 +363,7 @@ void aboutMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		dialog = oslGetDialogType();
@@ -492,6 +493,7 @@ void updatesMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -632,6 +634,7 @@ void performanceMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -879,6 +882,7 @@ void processorMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -966,6 +970,7 @@ void ramMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -1063,6 +1068,7 @@ void storageMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -1215,6 +1221,7 @@ void batteryMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -1368,6 +1375,7 @@ void displayMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -1506,6 +1514,7 @@ void displayThemes()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -1927,6 +1936,8 @@ void settingsControls(int n) //Controls
 		}
 	}
 	
+	volumeController();
+	
 	char * ext = strrchr(folderIcons[current].filePath, '.'); 
 	
 	if (((ext) != NULL) && (n == 0) && ((strcmp(ext ,".pgf") == 0) || (strcmp(ext ,".PGF") == 0)))
@@ -2164,6 +2175,7 @@ void displayTime()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -2403,6 +2415,7 @@ void displayMiscellaneous()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -2531,6 +2544,7 @@ void securityMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -2643,6 +2657,7 @@ void wifiMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		
 		if (osl_keys->released.cross)
 		{
@@ -2881,6 +2896,7 @@ void dumpMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -2998,6 +3014,7 @@ void dumpMenuMore()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -3140,6 +3157,7 @@ void developerMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)
@@ -3308,6 +3326,7 @@ void settingsMenu()
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (osl_keys->pressed.square)

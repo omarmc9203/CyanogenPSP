@@ -198,6 +198,7 @@ int pspTimer()
 		battery(330,2,0);
 		navbarButtons(2);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 
 		if (osl_keys->pressed.square)
@@ -326,10 +327,11 @@ int pspStopWatch()
 
         oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 		
 		if (cursor->x >= 196 && cursor->x <= 246  && cursor->y >= 208 && cursor->y <= 258 && timerStart == 0 && osl_keys->pressed.cross)
@@ -495,10 +497,11 @@ int pspclock()
 		
         oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
 		oslDrawImage(cursor);
 
 		if (osl_keys->pressed.square)

@@ -264,9 +264,9 @@ int appdrawer()
 		}
 		else if (eDesktopActivator == 0)
 		{
-			digitaltime(420,4,0,hrTime);
 			navbarButtons(0);
 			battery(370,2,1);
+			digitaltime(420,4,0,hrTime);
 		}
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_CENTER);
@@ -313,6 +313,7 @@ int appdrawer()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		androidQuickSettings();
+		volumeController();
 		appHighlight(1);
 		oslDrawImage(cursor);
 			

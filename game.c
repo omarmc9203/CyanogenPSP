@@ -284,6 +284,8 @@ void gameControls(int n) //Controls
 		}
 	}
 	
+	volumeController();
+	
 	char * ext = strrchr(folderIcons[current].filePath, '.');
 	
 	if (n == 0) //For regular eboots
@@ -673,6 +675,7 @@ int gameApp()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);	
+		volumeController();
 		
 		gameSelection->x = selector_image_x; //Sets the selection coordinates
         gameSelection->y = selector_image_y; //Sets the selection coordinates

@@ -27,11 +27,13 @@ int multitask()
 		oslDrawImageXY(multi_task, 0,10);
 
 		oslDrawString(130,136,"Your recent screens appear here");
-
-		digitaltime(420,4,0,hrTime);
-		battery(370,2,1);
+		
 		navbarButtons(0);
+		battery(370,2,1);
+		digitaltime(420,4,0,hrTime);
 		androidQuickSettings();
+		volumeController();
+		
 		oslDrawImage(cursor);
 		
 		if (osl_pad.held.square)
