@@ -5,7 +5,6 @@
 #include "lock.h"
 #include "recoverymenu.h"
 #include "settingsmenu.h"
-//#include <scepower.h>
 
 void powermenu()
 {	
