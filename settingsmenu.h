@@ -36,7 +36,8 @@
 
 //declaration
 OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *displaybg, *performancebg, *wifibg, *developerbg, *about, *highlight, 
-		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *security, *securitybg, *music;
+		  *developeroptions, *themes, *wifi, *processorbg, *cpuset, *check, *updatesbg, *performance, *recoverybg, *security, *securitybg, *music,
+		  *select, *deselect;
 
 //definition of our sounds
 OSL_SOUND *tone;
@@ -87,7 +88,7 @@ int connectAPCallback(int state);
 int connectToAP(int config);
 char fontPath[100];
 char backgroundPath[100], nickname[25], pspname[25], themeDirPath[250];
-int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language, usbStat, isPlaying;
+int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language, usbStat, isPlaying, batteryM;
 int passProtect;
 int RJL;
 int PSPDebug;
@@ -108,6 +109,8 @@ void setCpuBoot();
 void processorMenu();
 void ramMenu();
 void storageMenu();
+void batteryMenu();
+void setPowerManagement();
 void displayMenu();
 void displayThemes();
 void settingsDisplay();

@@ -25,6 +25,8 @@ static char Settings_message[100] = "";
 
 char buffer[100] = "";
 
+int imposeSetBrightness(int value);
+
 int connectAPCallback(int state) //Internet stuff
 {
     oslStartDrawing();
@@ -357,9 +359,9 @@ void aboutMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -486,9 +488,9 @@ void updatesMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -567,14 +569,15 @@ void performanceMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
 
-		oslDrawStringf(15,103, "%s", lang_settingsPerformance[language][0]);
-		oslDrawStringf(15,166, "%s", lang_settingsPerformance[language][1]);
-		oslDrawStringf(15,240, "%s", lang_settingsPerformance[language][2]);
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 75 && cursor->y <= 133)
+		oslDrawStringf(20,86, "%s", lang_settingsPerformance[language][0]);
+		oslDrawStringf(20,140, "%s", lang_settingsPerformance[language][1]);
+		oslDrawStringf(20,194, "%s", lang_settingsPerformance[language][2]);
+		oslDrawStringf(20,248, "%s", lang_settingsPerformance[language][3]);
+
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
-			oslDrawImageXY(highlight, 0, 86);
-			oslDrawStringf(15,103, "%s", lang_settingsPerformance[language][0]);
+			oslDrawImageXY(highlight, 0, 63);
+			oslDrawStringf(20,86, "%s", lang_settingsPerformance[language][0]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -583,11 +586,11 @@ void performanceMenu()
 				processorMenu();
 			}
 		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 135 && cursor->y <= 191)
+
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156)
 		{
-			oslDrawImageXY(highlight, 0, 144);
-			oslDrawStringf(15,166, "%s", lang_settingsPerformance[language][1]);
+			oslDrawImageXY(highlight, 0, 118);
+			oslDrawStringf(20,140, "%s", lang_settingsPerformance[language][1]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -596,11 +599,11 @@ void performanceMenu()
 				ramMenu();
 			}
 		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 229 && cursor->y <= 272)
+
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215)
 		{
-			oslDrawImageXY(highlight, 0, 229);
-			oslDrawStringf(15,240, "%s", lang_settingsPerformance[language][2]);
+			oslDrawImageXY(highlight, 0, 173);
+			oslDrawStringf(20,194, "%s", lang_settingsPerformance[language][2]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -610,11 +613,24 @@ void performanceMenu()
 			}
 		}
 		
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272)
+		{
+			oslDrawImageXY(highlight, 0, 227);
+			oslDrawStringf(20,248, "%s", lang_settingsPerformance[language][3]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(highlight);
+				oslDeleteImage(performancebg);
+				batteryMenu();
+			}
+		}
+		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -669,20 +685,9 @@ void performanceMenu()
 }
 
 void setCpuBoot()
-{
-	FILE * processorInfo;
+{	
+	processorState = setFileDefaultsInt("system/settings/processorInfo.bin", 4, processorState);
 	
-	if (!(fileExists("system/settings/processorInfo.bin")))
-	{
-		processorInfo = fopen("system/settings/processorInfo.bin", "w");
-		fprintf(processorInfo, "4");
-		fclose(processorInfo);
-	}
-
-	processorInfo = fopen("system/settings/processorInfo.bin", "r");
-	fscanf(processorInfo,"%d",&processorState);
-	fclose(processorInfo);
-		
 	switch(processorState)
 	{
 		case 0:
@@ -870,9 +875,9 @@ void processorMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -957,9 +962,9 @@ void ramMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -1054,9 +1059,9 @@ void storageMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -1104,6 +1109,192 @@ void storageMenu()
 	}
 }
 
+void batteryMenu()
+{	
+	FILE * batteryManagement;
+
+	performancebg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	select = oslLoadImageFilePNG("system/settings/select.png", OSL_IN_RAM, OSL_PF_8888);
+	deselect = oslLoadImageFilePNG("system/settings/deselect.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+	
+	oslSetFont(Roboto);
+
+	if (!performancebg || !highlight)
+		debugDisplay();
+
+	while (!osl_quit)
+	{
+		LowMemExit();
+		
+		oslStartDrawing();
+		
+		oslClearScreen(RGB(0,0,0));
+		
+		controls();	
+
+		oslDrawImageXY(performancebg, 0, 0);
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+
+		oslDrawStringf(20,86, "%s", lang_settingsBattery[language][0]);
+		oslDrawStringf(20,140, "%s", lang_settingsBattery[language][1]);
+		oslDrawStringf(20,194, "%s", lang_settingsBattery[language][2]);
+
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
+		{
+			oslDrawImageXY(highlight, 0, 63);
+			oslDrawStringf(20,86, "%s", lang_settingsBattery[language][0]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);
+				batteryManagement = fopen("system/settings/battery.txt", "w"); 
+				fprintf(batteryManagement, "0");
+				fclose(batteryManagement);
+				batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+				setPowerManagement();
+			}
+		}
+
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156)
+		{
+			oslDrawImageXY(highlight, 0, 118);
+			oslDrawStringf(20,140, "%s", lang_settingsBattery[language][1]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);
+				batteryManagement = fopen("system/settings/battery.txt", "w"); 
+				fprintf(batteryManagement, "1");
+				fclose(batteryManagement);
+				batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+				setPowerManagement();
+			}
+		}
+
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215)
+		{
+			oslDrawImageXY(highlight, 0, 173);
+			oslDrawStringf(20,194, "%s", lang_settingsBattery[language][2]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);
+				batteryManagement = fopen("system/settings/battery.txt", "w"); 
+				fprintf(batteryManagement, "2");
+				fclose(batteryManagement);
+				batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+				setPowerManagement();
+			}
+		}
+		
+		switch(batteryM)
+		{
+			case 0:
+				oslDrawImageXY(select, 400, 80);
+				oslDrawImageXY(deselect, 400, 135);
+				oslDrawImageXY(deselect, 400, 190);
+				break;
+	
+			case 1:
+				oslDrawImageXY(select, 400, 135);
+				oslDrawImageXY(deselect, 400, 80);
+				oslDrawImageXY(deselect, 400, 190);
+				break;
+			
+			case 2:
+				oslDrawImageXY(select, 400, 190);
+				oslDrawImageXY(deselect, 400, 80);
+				oslDrawImageXY(deselect, 400, 135);
+				break;
+		}
+		
+		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+		
+		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
+		androidQuickSettings();
+		oslDrawImage(cursor);
+		
+		if (osl_keys->pressed.square)
+		{
+			powermenu();
+		}
+		
+		if (osl_keys->pressed.L)
+		{
+			oslPlaySound(Lock, 1);  
+			lockscreen();
+        }
+		
+		if (osl_keys->pressed.circle)
+		{
+			oslDeleteImage(highlight);
+			oslDeleteImage(performancebg);
+			oslDeleteImage(select);
+			oslDeleteImage(deselect);
+			performanceMenu();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(highlight);
+			oslDeleteImage(performancebg);
+			oslDeleteImage(select);
+			oslDeleteImage(deselect);
+			performanceMenu();
+		}
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(highlight);
+			oslDeleteImage(performancebg);
+			oslDeleteImage(select);
+			oslDeleteImage(deselect);
+			home();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+		{	
+			oslPlaySound(KeypressStandard, 1);  
+			multitask();
+		}
+		
+		if (osl_pad.held.R && osl_keys->pressed.triangle)
+		{
+			screenshot();
+		}
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();	
+	}
+}
+
+void setPowerManagement()
+{
+	switch(batteryM)
+	{
+		case 0:
+			processorState = 4;
+			setCpuBoot();
+			imposeSetBrightness(0);
+			break;
+	
+		case 1:
+			processorState = 4;
+			setCpuBoot();
+			break;
+			
+		case 2:
+			processorState = 7;
+			setCpuBoot();
+			break;
+	}
+}
+
 void displayMenu()
 {	
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
@@ -1145,7 +1336,7 @@ void displayMenu()
 			}
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawStringf(20,140, "%s", lang_settingsDisplay[language][1]);
@@ -1158,7 +1349,7 @@ void displayMenu()
 			}
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 228)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215)
 		{
 			oslDrawImageXY(highlight, 0, 173);
 			oslDrawStringf(20,195, "%s", lang_settingsDisplay[language][2]);
@@ -1173,9 +1364,9 @@ void displayMenu()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -1270,7 +1461,7 @@ void displayThemes()
 			}
 		}
 		
-		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawStringf(20,140, "%s", lang_settingsThemes[language][1]);
@@ -1283,7 +1474,7 @@ void displayThemes()
 			}
 		}
 		
-		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 236)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215)
 		{
 			oslDrawImageXY(highlight, 0, 173);
 			oslDrawStringf(20,194, "%s", lang_settingsThemes[language][2]);
@@ -1296,7 +1487,7 @@ void displayThemes()
 			}
 		}
 		
-		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 236 && cursor->y <= 272)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272)
 		{
 			oslDrawImageXY(highlight, 0, 227);
 			oslDrawStringf(20,248, "%s", lang_settingsThemes[language][3]);
@@ -1311,9 +1502,9 @@ void displayThemes()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -1451,19 +1642,8 @@ void changeFont() //Created a separated function for this only because deleting 
 }
 
 void themesLoad()
-{
-	FILE * themesTxt;
-	
-	if (!(fileExists("system/settings/themes.txt")))
-	{
-		themesTxt = fopen("system/settings/themes.txt", "w");
-		fprintf(themesTxt, "system");
-		fclose(themesTxt);
-	}
-	
-	themesTxt = fopen("system/settings/themes.txt", "r");
-	fscanf(themesTxt,"%s", themeDirPath);
-	fclose(themesTxt);
+{	
+	setFileDefaultsChar("system/settings/themes.txt", "system", themeDirPath);
 
 	char settingsBgImg[100] = "/settings/settingsbg.png";
 	char displayBgImg[100] = "/settings/displaybg.png";
@@ -1626,18 +1806,7 @@ void themesReload()
 
 void iconPackLoad()
 {
-	FILE * iconPackTxt;
-	
-	if (!(fileExists("system/settings/iconpack.txt")))
-	{
-		iconPackTxt = fopen("system/settings/iconpack.txt", "w");
-		fprintf(iconPackTxt, "system/icons/Default");
-		fclose(iconPackTxt);
-	}
-	
-	iconPackTxt = fopen("system/settings/iconpack.txt", "r");
-	fscanf(iconPackTxt,"%s", appDirPath);
-	fclose(iconPackTxt);
+	setFileDefaultsChar("system/settings/iconpack.txt", "system/icons/Default", appDirPath);
 
 	char allappsImg[50] = "/allapps/ic_allapps.png";
 	char allapps_pressedImg[50] = "/allapps/ic_allapps_pressed.png";
@@ -1991,9 +2160,9 @@ void displayTime()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -2098,19 +2267,19 @@ void displayMiscellaneous()
 			oslDrawStringf(20,86, "%s", lang_settingsMiscellaneous[language][0]);
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156)
 		{
 			oslDrawImageXY(highlight, 0, 118);
 			oslDrawStringf(20,140, "%s", lang_settingsMiscellaneous[language][1]);
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 227)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215)
 		{
 			oslDrawImageXY(highlight, 0, 173);
 			oslDrawStringf(20,195, "%s", lang_settingsMiscellaneous[language][2]);
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 228 && cursor->y <= 272)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272)
 		{
 			oslDrawImageXY(highlight, 0, 228);
 			oslDrawStringf(20,245, "%s", lang_settingsMiscellaneous[language][3]);
@@ -2122,7 +2291,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(offswitch,350,80);
 			
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
+			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
@@ -2136,7 +2305,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(onswitch,350,80);
 		
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
+			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
@@ -2150,7 +2319,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(offswitch,350,133);
 			
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177 && osl_keys->pressed.cross)
+			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
@@ -2164,7 +2333,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(onswitch,350,133);
 		
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 177 && osl_keys->pressed.cross)
+			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
@@ -2178,7 +2347,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(offswitch,350,186);
 			
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 227 && osl_keys->pressed.cross)
+			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
@@ -2192,7 +2361,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(onswitch,350,186);
 		
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 178 && cursor->y <= 227 && osl_keys->pressed.cross)
+			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
@@ -2206,7 +2375,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(offswitch,350,236);
 			
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 228 && cursor->y <= 272 && osl_keys->pressed.cross)
+			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
@@ -2220,7 +2389,7 @@ void displayMiscellaneous()
 		{
 			oslDrawImageXY(onswitch,350,236);
 		
-			if(cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 228 && cursor->y <= 272 && osl_keys->pressed.cross)
+			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
@@ -2230,9 +2399,9 @@ void displayMiscellaneous()
 			}
 		}
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -2358,9 +2527,9 @@ void securityMenu()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -2470,9 +2639,9 @@ void wifiMenu()
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		switchStatus(3);
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		
 		if (osl_keys->released.cross)
@@ -2708,9 +2877,9 @@ void dumpMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -2825,9 +2994,9 @@ void dumpMenuMore()
 
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -2967,9 +3136,9 @@ void developerMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
@@ -3135,9 +3304,9 @@ void settingsMenu()
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
-		digitaltime(381,4,0,hrTime);
-		battery(330,2,0);
 		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
 		androidQuickSettings();
 		oslDrawImage(cursor);
 		
