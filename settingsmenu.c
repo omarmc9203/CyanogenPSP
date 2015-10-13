@@ -25,7 +25,11 @@ static char Settings_message[100] = "";
 
 char buffer[100] = "";
 
+//kernel function imports
+
 int imposeSetBrightness(int value);
+int startLoadModule(char *module);
+int stopUnloadModule(SceUID modID);
 
 int connectAPCallback(int state) //Internet stuff
 {
@@ -1282,24 +1286,32 @@ void batteryMenu()
 
 void setPowerManagement()
 {
+	FILE * processorInfo = fopen("system/settings/processorInfo.bin", "w");
+	
 	switch(batteryM)
 	{
 		case 0:
 			processorState = 4;
+			fprintf(processorInfo, "%d", processorState);
 			setCpuBoot();
 			imposeSetBrightness(0);
 			break;
 	
 		case 1:
 			processorState = 4;
+			fprintf(processorInfo, "%d", processorState);
 			setCpuBoot();
+			imposeSetBrightness(1);
 			break;
 			
 		case 2:
 			processorState = 7;
+			fprintf(processorInfo, "%d", processorState);
 			setCpuBoot();
 			break;
 	}
+	
+	fclose(processorInfo);
 }
 
 void displayMenu()
@@ -3119,7 +3131,7 @@ void developerMenu()
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				RJL = 1;
-				modules[0] = LoadStartModule("modules/RemoteJoyLite.prx");
+				modules[0] = startLoadModule("modules/RemoteJoyLite.prx");
 			}
 		}
 		
@@ -3132,7 +3144,7 @@ void developerMenu()
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				PSPDebug = 1;
-				modules[1] = LoadStartModule("modules/psplink.prx");
+				modules[1] = startLoadModule("modules/psplink.prx");
 			}
 		}
 		
@@ -3213,12 +3225,12 @@ void developerMenu()
 
 		if(RJL == 1 && osl_keys->pressed.triangle)
 		{
-			StopUnloadModule(modules[0]);
+			stopUnloadModule(modules[0]);
 		}
 
 		if(PSPDebug == 1  && osl_keys->pressed.triangle)
 		{	
-			StopUnloadModule(modules[1]);
+			stopUnloadModule(modules[1]);
 		}
 	oslEndDrawing(); 
     oslEndFrame(); 

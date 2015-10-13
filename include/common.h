@@ -42,8 +42,6 @@ void USB_Toggle();
 void Error(char *fmt, ...);
 int WriteFile(char *file, void *buf, int size);
 int VerifyFile(char *file);
-int LoadStartModule(char *path);
-int StopUnloadModule(SceUID modID);
 u32 GetBatSer();
 void SetBatSer(u16 ser1, u16 ser2);
 int GetBatType();

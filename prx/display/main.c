@@ -53,12 +53,10 @@ int displayDisable(void){
     return ret;
 }
 
-int module_start(SceSize args, void *argp) 
-{
+int module_start(SceSize args, void *argp){
 	return 0;
 }
 
-int module_stop()
-{
+int module_stop(){
 	return 0;
 }

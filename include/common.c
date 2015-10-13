@@ -132,30 +132,6 @@ int VerifyFile(char *file)
 	return 0;
 }
 
-int LoadStartModule(char *path)
-{
-    u32 loadResult;
-    u32 startResult;
-    int status;
-
-    loadResult = kuKernelLoadModule(path, 0, NULL);
-    if (loadResult & 0x80000000)
-       return -1;
-       
-    startResult = sceKernelStartModule(loadResult, 0, NULL, &status, NULL);
-    if (loadResult != startResult)
-       return -2;
-    return loadResult;
-}
-
-int StopUnloadModule(SceUID modID)
-{
-    int status = 0;
-    sceKernelStopModule(modID, 0, NULL, &status, NULL);
-    sceKernelUnloadModule(modID);
-	return 0;
-}
-
 //Battery
 //By raing3 
 u32 GetBatSer()
