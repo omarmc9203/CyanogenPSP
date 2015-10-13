@@ -384,7 +384,6 @@ int folderScan(const char* path )
 		if (!(stricmp(path, "ms0:")==0 || (stricmp(path, "ms0:/")==0))) 
 		{
 			sceIoDread(fd, &g_dir);		// get rid of '.' and '..'
-			sceIoDread(fd, &g_dir);
 
 			// Create our own '..'
 			folderIcons[1].active = 1; 
@@ -1262,6 +1261,10 @@ void filemanager_unload()
 	oslDeleteImage(binaryicon);
 	oslDeleteImage(videoicon);
 	oslDeleteImage(archiveicon);
+	oslDeleteImage(layerD);
+	oslDeleteImage(ic_launcher_clock);
+	ic_launcher_clock = oslLoadImageFilePNG(clockPath, OSL_IN_RAM, OSL_PF_8888);
+	layerD = oslLoadImageFilePNG("system/home/icons/layerD.png", OSL_IN_RAM, OSL_PF_8888);	
 }
 
 int filemanage(int argc, char *argv[])
