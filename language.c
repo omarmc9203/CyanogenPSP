@@ -18,7 +18,7 @@ const char lang_welcome[][4][100] =
 	{"Witamy", "Użyj analoga by poruszać kursorem", "i przyciśnij X by otworzyć aplikację.", "Zrozumiałem"},
 	{"Willkommen", "Benutze den Analog-Stick um den Cursor zu navigieren und", "drücke X (Kreuz) um die Anwendung zu öffnen.", "VERSTANDEN"},
 	{"Welkom", "Gebruik de joystick om de aanwijzer te bewegen en", "druk X (kruisje) om de toepassing te openen.", "GOT IT"},
-	{"Welcome", "Use the analog stick to navigate the cursor and", "press X (cross) to open the application.", "GOT IT"},
+	{"Bienvenido", "Use el stick análogo para navegar con el cursor y", "presione X para abrir la aplicación", "ENTENDIDO"},
 	{"Welcome", "Use the analog stick to navigate the cursor and", "press X (cross) to open the application.", "GOT IT"}
 };
 
@@ -30,7 +30,7 @@ const char lang_appDrawer[][10][100] =
 	{"Przeglądarka", "Kalkulator", "Zegar", "Manager", "Galeria", "Gry", "Wiadomości", "Muzyka", "Ustawienia", "UMD"},
 	{"Browser", "Taschenrechner", "Uhr", "Manager", "Galerie", "Spiel", "Nachrichten", "Musik", "Einstellungen", "UMD"},
 	{"Browser", "Rekenmachine", "Klok", " Beheerder", "Gallerij", "Spel", "Berichten", "Muziek", "Instellingen", "UMD"},
-	{"Navegador", "Calculadora", "Reloj", "Explorador", "galería", "Juegos", "Mensajes", "música", "Opciones", "UMD"},
+	{"Navegador", "Calculadora", "Reloj", "Gestión", "Galería", "Juegos", "Mensajes", "Música", "Ajustes", "UMD"},
 	{"Ð±Ñ€Ð°ÑƒÐ·ÐµÑ€", "ÐºÐ°Ð»ÑŒÐºÑƒÐ»ÑÑ‚Ð¾Ñ€", "Ñ‡Ð°ÑÑ‹", "Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€", " Ð³Ð°Ð»ÐµÑ€ÐµÑ", "Ð¸Ð³Ñ€Ð°", "ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ", "Ð¼ÑƒÐ·Ñ‹ÐºÐ°", " Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸", "UMD"}
 };
 
@@ -41,7 +41,7 @@ const char lang_settingsMain[][6][100] =
 	{"Wi-Fi", "Zabezpieczenia", "Wyświetlacz", "Wydajność", "Opcje developerskie", "O programie"},
 	{"Wi-Fi", "Sicherheit", "Bildschirm", "Leistung", "Entwickler Optionen", "Über"},
 	{"Wi-Fi", "Beveiliging", "Scherm", "Prestaties", "Opties voor ontwikkelaars", "Over"},
-	{"Wi-Fi", "Security", "Display", "Performance", "Developer Options", "About"},
+	{"Wi-Fi", "Seguridad", "Pantalla", "Rendimiento", "Opciones de Desarrollador", "Acerca de"},
 	{"Wi-Fi", "Security", "Display", "Performance", "Developer Options", "About"}
 };
 
@@ -52,7 +52,7 @@ const char lang_settingsDisplay[][3][100] =
 	{"Motywy", "Czas", "Różne"},
 	{"Themen", "Uhrzeit", "Allgemein"},
 	{"Thema's", "Tijd", "Diversen"},
-	{"Themes", "Time", "Miscellaneous"},
+	{"Temas", "Tiempo", "Miscelaneo"},
 	{"Themes", "Time", "Miscellaneous"}
 };
 
@@ -63,7 +63,7 @@ const char lang_settingsThemes[][4][100] =
 	{"Wygląd", "Tapeta", "Czcionki", "Paczki ikon"},
 	{"Designs", "Hintergründe", "Schriftarten", "Symbole"},
 	{"Stijl", "Achtergrond", "Lettertypes", "Pictogrammen"},
-	{"Style", "Wallpaper", "Fonts", "Icon Packs"},
+	{"Estilo", "Fondo de Pantalla", "Fuentes", "Paquete de Iconos"},
 	{"Style", "Wallpaper", "Fonts", "Icon Packs"}
 };
 
@@ -74,7 +74,7 @@ const char lang_settingsTime[][1][100] =
 	{"Użyj czasu 24-godzinnego"},
 	{"24-Stunden format nutzen"},
 	{"24-uurs klok gebruiken "},
-	{"Use 24-hour format"},
+	{"Usar formato de 24 horas"},
 	{"Use 24-hour format"}
 };
 
@@ -85,7 +85,7 @@ const char lang_settingsMiscellaneous[][4][100] =
 	{"Użyj widgetu day/night", "Użyj pulpitu rozszerzonego", "Użyj animacji bootowania", "Użyj animacji uruchamiania gry"},
 	{"Tag/Nacht-Widget ein-/ausschalten", "Erweiterten Desktop ein-/ausschalten", "Startanimation ein-/ausschalten", "Spielstart ein-/ausschalten"},
 	{"Schakel tussen dag/nacht widget", "Uitgebreide desktop aan/uit", "Opstart animatie aan/uit", "Game boot aan/uit"},
-	{"Toggle day/night widget", "Toggle expanded desktop", "Toggle boot animation", "Toggle game boot"},
+	{"Usar widget de día/noche", "Usar escritorio expandido","Activar animación de inicio", "Activar inicio del juego"},
 	{"Toggle day/night widget", "Toggle expanded desktop", "Toggle boot animation", "Toggle game boot"}
 };
 
@@ -96,7 +96,7 @@ const char lang_settingsPerformance[][4][100] =
 	{"Procesor", "Pamięć", "Zarządzanie pamięcią", "Zarządzanie baterią"},
 	{"Prozessor", "Arbeitsspeicher", "Speicherverwaltung", "Akku"},
 	{"Processor", "Geheugen", "Opslag Beheer", "Accu Beheer"},
-	{"Processor", "Memory", "Storage Management", "Battery Management"},
+	{"Procesador", "Memoria", "Gestión de Almacenamiento", "Gestión de la Batería"},
 	{"Processor", "Memory", "Storage Management", "Battery Management"}
 };
 
@@ -107,7 +107,7 @@ const char lang_settingsProcessor[][5][100] =
 	{"Częstotliwość CPU", "Podkręcanie CPU", "Naduś R by zwiększyć, a L by zmniejszyć częstotliwość", "Częstotliwość magistarli"},
 	{"Derzeitige CPU frequenz", "CPU übertakten", "Drücke R um die Frequenz zu erhöhen und L um die Frequenz zu senken.", "Derzeitige BUS frequenz"},
 	{"Huidige CPU kloksnelheid", "CPU overclock", "Druk R om de kloksnelheid te verhogen en L om het te verlagen.", "Huidige BUS snelheid"},
-	{"Current CPU frequency", "CPU over-clock", "Press R to increase frequency and L to decrease frequency.", "Current BUS frequency"},
+	{"Frecuencia actual de la CPU", "Over-clock de CPU", "Presione R para aumentar la frecuencia y L para disminuir la frecuencia", "Frecuencia actual de BUS"},
 	{"Current CPU frequency", "CPU over-clock", "Press R to increase frequency and L to decrease frequency.", "Current BUS frequency"}
 };
 
@@ -118,7 +118,7 @@ const char lang_settingsRAM[][3][100] =
 	{"Dotępny RAM:", "wolne", "RAM-u użyte"},
 	{"RAM verfügbar:", "verfügbar", "des RAMs genutzt"},
 	{"RAM vrij:", "beschikbaar", "RAM in gebruik"},
-	{"RAM available:", "available", "of RAM used"},
+	{"Memoria RAM disponible:", "disponible", "de la memoria RAM utilizada"},
 	{"RAM available:", "available", "of RAM used"}
 };
 
@@ -129,7 +129,7 @@ const char lang_settingsStorage[][3][60] =
 	{"Naciśnij Select by podłączyć pamięc USB", "Całkowita ilość pamięci", "Wolna pamieć"},
 	{"Drücke Select, um den USB-Speicher ein-/auszuschalten", "Gesamptspeicher kapazität:", "Verfügbar:"},
 	{"Druk select om van massaopslag te wisselen", "Totale opslagruimte:", "Beschikbaare opslagruimte:"},
-	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
+	{"Presione Select para activar el Almacenamiento Masivo USB", "Capacidad de almacenamiento total:", "Capacidad de almacenamiento disponible:"},
 	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"}
 };
 
@@ -140,7 +140,7 @@ const char lang_settingsBattery[][3][60] =
 	{"Oszcz. baterii", "Zbalansowane", "Wydajność"},
 	{"Energiesparmodus", "Balanced", "Leistung"},
 	{"Accubesparing", "Gebalanceerd", "Prestatie"},
-	{"Powersave", "Balanced", "Performance"},
+	{"Ahorro de Energía", "Balanceado", "Alto Rendimiento"},
 	{"Powersave", "Balanced", "Performance"}
 };
 
@@ -151,7 +151,7 @@ const char lang_settingsAbout[][7][100] =
 	{"Aktualizacje CyanogenPSP", "Naciśnij aby sprawdzić/zainstalować aktualizacje", "Wersja CyanogenPSP:", "UNOFFICIAL", "Adres Mac:", "Wersja jądra:", "Wersja OSLib:"},
 	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "INOFFIZIELL", "Mac Adresse:", "Kernel version:", "OSLib version:"},
 	{"CyanogenPSP updates", "Klik om updates weer te geven/installeren", "CyanogenPSP versie:", "NIET OFFICIEEL", "Mac Adres:", "Kernel versie:", "OSLib versie:"},
-	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "UNOFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
+	{"Actualizaciones de CyanogenPSP", "Haga click para ver o instalar actualizaciones", "Versión de CyanogenPSP:", "NO OFICIAL", "Dirección MAC:", "Versión del Kernel:", "Versión del OSLib:"},
 	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "UNOFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"}
 };
 
@@ -162,7 +162,7 @@ const char lang_settingsUpdates[][1][100] =
 	{"Sprawdź aktualizacje"},
 	{"Auf Updates prüfen"},
 	{"Updates zoeken"},
-	{"Check for updates"},
+	{"Buscar actualizaciones"},
 	{"Check for updates"}
 };
 
@@ -173,7 +173,7 @@ const char lang_settingsSecuirty[][2][100] =
 	{"Zabezp. hasłem", "Zabezpieczenie PIN"},
 	{"Passwortsperre", "Pinsperre"},
 	{"Wachtwoord vergrendeling", "PIN vergrendeling"},
-	{"Password lock", "Pin lock"},
+	{"Bloqueo con contraseña", "Bloqueo con PIN"},
 	{"Password lock", "Pin lock"}
 };
 
@@ -184,7 +184,7 @@ const char lang_settingsWifi[][3][100] =
 	{"Nie znaleziono konfig. Wi-Fi", "Przełącz włącznik WLAN", "Naciśnij w góre/w dół aby wybrać konfigurację"},
 	{"Keine WLAN-Einstellungen gefunden", "Bitte schalte den WLAN-Schalter ein", "Drücke Hoch oder Runter, um durch deine WLAN-Einstellungen zu navigieren"},
 	{"Geen WiFi configuratie gevonden", "Schakel Wlan knop in alsjeblieft", "Druk omhoog of omlaag om een Wifi-instelling te selecteren"},
-	{"No WiFi configuration found", "Please turn on the Wlan switch", "Press up or down to navigate through your Wifi configurations"},
+	{"No se encontró una configuración de Wi-Fi", "Por favor activa el interruptor del Wi-Fi", "Presiona arriba o abajo para navegar por tus configuraciones de Wi-Fi"},
 	{"No WiFi configuration found", "Please turn on the Wlan switch", "Press up or down to navigate through your Wifi configurations"}
 };
 
@@ -195,7 +195,7 @@ const char lang_settingsDeveloperOptions[][5][100] =
 	{"Włącz RemoteJoy Lite", "Wyświetla obraz z PSP na komputerze po USB", "Naciśnij trójkąt by wyłączyć, może powodować crashe", "Włącz debugowanie USB", "Narzędzia do zgrywania"},
 	{"Remote Joy Lite ein-/ausschalten", "Zeigt den Bildschirm deiner PSP via USB auf deinem Computer an", "Drücke Dreieck zum deaktivieren, sonst könnte das Programm abstürzen", "USB-Debugging ein-/ausschalten", "Sicherungstools"},
 	{"Remote Joy Lite aan/uit", "Geeft je PSP scherm weer op je computer via USB", "Druk driehoek om dit uit te schalelen anders kan dit programma crashen", "USB debugging aan/uit", "Dumping tools"},
-	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Press triangle to disable or it may cause the program to crash", "Toggle USB debugging", "Dumping tools"},
+	{"Usar Remote Joy Lite", "Muestra la imagen de la pantalla de tu PSP en tu PC vía USB", "Presiona Triangulo para desactivarlo o podria causar que la aplicación se detenga", "Activar depuración de USB", "Opciones de volcado/extracción"},
 	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Press triangle to disable or it may cause the program to crash", "Toggle USB debugging", "Dumping tools"}
 };
 
@@ -206,7 +206,7 @@ const char lang_settingsDump[][9][100] =
 	{"Zgraj Flash 0", "Zgraj Flash 1", "Więcej", "Zgraj UMD boot.bin", "Zgraj Memory", "Włóż UMD", "Włożony dysk", "Znaleziono game", "Zgrywanie 28Mega z"},
 	{"Flash 0 sichern", "Flash 1 sichern", "Mehr", "UMD boot.bin sichern", "Speicher sichern", "UMD einlegen", "Eingehängte Disc", "Spiel gefunden", "Sichere 28MB von"},
 	{"Dump Flash 0", "Dump Flash 1", "Meer", "Dump UMD boot.bin", "Dump Geheugen", "Plaats UMD", "Geplaatste schijf", "Spel gevonden", "Dumping 28Megs van"},
-	{"Dump Flash 0", "Dump Flash 1", "More", "Dump UMD boot.bin", "Dump Memory", "Insert UMD", "Mounted disc", "Found game", "Dumping 28Megs from"},
+	{"Extraer Flash 0", "Extraer Flash 1", "Más", "Extraer boot.bin del UMD", "Volcar Memoria", "Insertar UMD", "Disco Leído", "Se ha encontrado un juego", "Extrayendo 28Megas de"},
 	{"Dump Flash 0", "Dump Flash 1", "More", "Dump UMD boot.bin", "Dump Memory", "Insert UMD", "Mounted disc", "Found game", "Dumping 28Megs from"}
 };
 
@@ -217,6 +217,6 @@ const char lang_quickSettings[][5][100] =
 	{"Wi-Fi", "Oszcz. energii", "Zbalansowane", "Wydajność", "Ekran blokady"},
 	{"WLAN", "Energiesparmodus", "Ausgeglichen", "Leistung", "Bildschirmsperre"},
 	{"Wi-Fi", "Accubesparing", "Gebalanceerd", "Prestatie", "Vergrendelscherm"},
-	{"Wi-Fi", "Power save", "Balanced", "Performance", "Lockscreen"},
+	{"Wi-Fi", "Ahorro de Energía", "Balanceado", "Alto Rendimiento", "Pantalla de Bloqueo"},
 	{"Wi-Fi", "Power save", "Balanced", "Performance", "Lockscreen"}
 };
