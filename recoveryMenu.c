@@ -302,7 +302,7 @@ void ShowPage2()
 		oslDrawStringf(10,80,"Battery Status:  %s\n", scePowerIsBatteryCharging() == 1 ? "Charging" : "Using");
 		oslDrawStringf(10,90,"Battery %%:       %i%%\n\n", scePowerGetBatteryLifePercent() < 0 ? 0 : scePowerGetBatteryLifePercent());
 		oslDrawStringf(10,100,"Hours Left:   %i:%02i\n\n", scePowerGetBatteryLifeTime() < 0 ? 0 : (scePowerGetBatteryLifeTime() / 60), scePowerGetBatteryLifeTime() < 0 ? 0 : (scePowerGetBatteryLifeTime() - (scePowerGetBatteryLifeTime() / 60 * 60)));
-		oslDrawStringf(10,110,"Battery Temp:    %iºC\n", scePowerGetBatteryTemp() < 0 ? 0 : scePowerGetBatteryTemp());
+		oslDrawStringf(10,110,"Battery Temp:    %iÂºC\n", scePowerGetBatteryTemp() < 0 ? 0 : scePowerGetBatteryTemp());
 		oslDrawStringf(10,120,"Battery Voltage: %0.3fV\n\n", scePowerGetBatteryVolt() < 0 ? 0 : (float)scePowerGetBatteryVolt() / 1000.0);
 		oslDrawStringf(10,130,"Remain Capacity: %i mAh\n", scePowerGetBatteryRemainCapacity() < 0 ? 0 : scePowerGetBatteryRemainCapacity()); //From raing3s psppower
 	
