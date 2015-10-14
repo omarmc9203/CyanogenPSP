@@ -4,7 +4,7 @@
 // Thanks Raing3 for his psppower lib.
 #include "common.h"
 #include "utils.h"
-#include "../home.h"
+#include "../homeMenu.h"
 
 char version_txt[256];
 char *file;

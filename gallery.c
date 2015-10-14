@@ -1,13 +1,13 @@
-#include "home.h"
+#include "homeMenu.h"
 #include "clock.h"
 #include "gallery.h"
-#include "appdrawer.h"
-#include "settingsmenu.h"
+#include "appDrawer.h"
+#include "settingsMenu.h"
 #include "screenshot.h"
-#include "lock.h"
-#include "multi.h"
-#include "power_menu.h"
-#include "fm.h"
+#include "lockScreen.h"
+#include "recentsMenu.h"
+#include "powerMenu.h"
+#include "fileManager.h"
 #include "include/utils.h"
 
 void galleryUp()
@@ -46,7 +46,7 @@ void galleryDisplay()
 {	
 	oslDrawImageXY(gallerybg, 0, 0);
 	oslDrawImageXY(gallerySelection,15,(current - curScroll)*56+GALLERY_CURR_DISPLAY_Y);
-	oslDrawStringf(25,18,"Album");
+	oslDrawStringf(25,25,"Album");
 	
 	battery(370,2,1);
 	digitaltime(420,4,0,hrTime);
@@ -82,6 +82,8 @@ void galleryDisplay()
 
 int changeWallpaper()
 {
+	FILE * backgroundPathTXT;
+	
 	wallpaper = oslLoadImageFilePNG("system/app/gallery/wallpaper.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	if (!wallpaper)
@@ -103,10 +105,13 @@ int changeWallpaper()
 	{
 		oslDeleteImage(background);
 		oslPlaySound(KeypressStandard, 1);  
-		FILE * backgroundPathTXT = fopen("system/settings/background.txt", "w");
+		backgroundPathTXT = fopen("system/settings/background.txt", "w");
 		fprintf(backgroundPathTXT,"%s", folderIcons[current].filePath);
 		fclose(backgroundPathTXT);
-		background = oslLoadImageFile(folderIcons[current].filePath, OSL_IN_RAM, OSL_PF_8888);
+		backgroundPathTXT = fopen("system/settings/background.txt", "r");
+		fscanf(backgroundPathTXT,"%s", backgroundPath);
+		fclose(backgroundPathTXT);
+		background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
 		oslDeleteImage(wallpaper);
 		return 1;
 	}
@@ -162,6 +167,8 @@ int showImage(char * path, int n)
 			}
 		}
 		
+		volumeController();
+		
 		oslEndDrawing(); 
 		oslEndFrame(); 
 		oslSyncFrame();	
@@ -213,43 +220,44 @@ void galleryControls() //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) 
+	if (osl_keys->pressed.down) 
 	{
-		if (osl_keys->pressed.down) 
-		{
-			galleryDown();
-			timer = 0;
-		}
-		if (osl_keys->pressed.up) 
-		{
-			galleryUp();
-			timer = 0;
-		}
+		galleryDown();
+		timer = 0;
+	}
+	if (osl_keys->pressed.up) 
+	{
+		galleryUp();
+		timer = 0;
+	}
 		
-		if (osl_keys->pressed.right) 
-		{
-			galleryDownx5();
-			timer = 0;
-		}
-		else if (osl_keys->pressed.left) 
-		{
-			galleryUpx5();	
-			timer = 0;
-		}
+	if (osl_keys->pressed.right) 
+	{
+		galleryDownx5();
+		timer = 0;
+	}
+	else if (osl_keys->pressed.left) 
+	{
+		galleryUpx5();	
+		timer = 0;
+	}
 		
-		if (osl_keys->pressed.triangle) 
+	if (osl_keys->pressed.triangle) 
+	{
+		if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) 
 		{
-			if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) {
-				curScroll = 1;
-				current = 1;
-			}
-		}
-		if (osl_keys->pressed.cross) 
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
+			curScroll = 1;
+			current = 1;
 		}
 	}
+
+	if (osl_keys->pressed.cross) 
+	{
+		oslPlaySound(KeypressStandard, 1);  
+		openDir(folderIcons[current].filePath, folderIcons[current].fileType);
+	}
+	
+	volumeController();
 	
 	if (osl_keys->pressed.cross)
 	{
@@ -295,19 +303,21 @@ void galleryControls() //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP)) 
+	if ((timer > 30) && (osl_keys->pressed.up)) 
 	{
 		galleryUp();
 		timer = 25;
-	} else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN)) 
+	} 
+	else if ((timer > 30) && (osl_keys->pressed.down)) 
 	{
 		galleryDown();
 		timer = 25;
 	}
-
-	if (current < 1) current = 1; // Stop the ">" from moving past the minimum files
-	if (current > MAX_FILES) current = MAX_FILES; // Stop the ">" from moving past the max files
-
+	
+	if (current < 1) 
+		current = 1;
+	if (current > MAX_FILES) 
+		current = MAX_FILES;
 }
 
 // Just call 'path' with whichever path you want it to start off in
@@ -324,8 +334,6 @@ char * galleryBrowse(const char * path)
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
-		oldpad = pad;
-		sceCtrlReadBufferPositive(&pad, 1);
 		galleryDisplay();
 		galleryControls();
 		
@@ -403,7 +411,7 @@ int galleryApp()
 		oslReadKeys();
 		oslClearScreen(RGB(0,0,0));	
 		oslDrawImageXY(gallerybg, 0, 0);
-		oslDrawStringf(25,18,"Album");
+		oslDrawStringf(25,25,"Album");
 		oslDrawImage(gallerySelection);
 		
 		oslDrawStringf(25,89,"PICTURE");
@@ -412,6 +420,7 @@ int galleryApp()
 		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
+		volumeController();
 		
 		gallerySelection->x = selector_image_x; //Sets the selection coordinates
         gallerySelection->y = selector_image_y; //Sets the selection coordinates

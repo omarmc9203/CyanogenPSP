@@ -1,20 +1,20 @@
-#include "settingsmenu.h"
+#include "settingsMenu.h"
 #include "language.h"
 #include "include/pgeZip.h"
 #include "include/ram.h"
 #include "include/utils.h"
 #include "include/pspusbdevice.h"
 #include "include/common.h"
-#include "home.h"
-#include "appdrawer.h"
-#include "fm.h"
+#include "homeMenu.h"
+#include "appDrawer.h"
+#include "fileManager.h"
 #include "clock.h"
-#include "game.h"
+#include "gameLauncher.h"
 #include "gallery.h"
-#include "lock.h"
-#include "multi.h"
-#include "power_menu.h"
-#include "recoverymenu.h"
+#include "lockScreen.h"
+#include "recentsMenu.h"
+#include "powerMenu.h"
+#include "recoveryMenu.h"
 #include "screenshot.h"
 
 char name;
@@ -770,11 +770,11 @@ void processorMenu()
 			oslDrawStringf(20,145, "%s", lang_settingsProcessor[language][2]);
 		}
 		
-		if (osl_keys->pressed.L)
+		if (osl_keys->pressed.L && batteryM != 0)
 		{
 			currentState = stateUnderClock;
 		}
-		else if (osl_keys->pressed.R)
+		else if (osl_keys->pressed.R && batteryM != 0)
 		{
 			currentState = stateOverClock;
 		}
@@ -1918,34 +1918,31 @@ void settingsControls(int n) //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) 
+	if (osl_keys->pressed.down)
 	{
-		if (osl_keys->pressed.down)
-		{
-			settingsDown();
-			timer = 0;
-		}
-		else if (osl_keys->pressed.up)
-		{
-			settingsUp();
-			timer = 0;
-		}
+		settingsDown();
+		timer = 0;
+	}
+	else if (osl_keys->pressed.up)
+	{
+		settingsUp();
+		timer = 0;
+	}
 		
-		if (osl_keys->pressed.right)
-		{
-			settingsDownx5();
-			timer = 0;
-		}
-		else if (osl_keys->pressed.left)
-		{
-			settingsUpx5();	
-			timer = 0;
-		}
+	if (osl_keys->pressed.right)
+	{
+		settingsDownx5();
+		timer = 0;
+	}
+	else if (osl_keys->pressed.left)
+	{
+		settingsUpx5();	
+		timer = 0;
+	}
 		
-		if (osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-		}
+	if (osl_keys->pressed.cross)
+	{
+		oslPlaySound(KeypressStandard, 1);  
 	}
 	
 	volumeController();
@@ -1965,6 +1962,8 @@ void settingsControls(int n) //Controls
 		{
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);	
+			oslDeleteImage(select);
+			oslDeleteImage(deselect);
 			showImage(folderIcons[current].filePath, 1);
 		}
 	}
@@ -2009,6 +2008,8 @@ void settingsControls(int n) //Controls
 	{	
 		oslDeleteImage(displaybg);
 		oslDeleteImage(highlight);
+		oslDeleteImage(select);
+		oslDeleteImage(deselect);
 		displayThemes();
 	}
 	
@@ -2029,17 +2030,21 @@ void settingsControls(int n) //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP)) {
+	if ((timer > 30) && (osl_keys->pressed.up)) 
+	{
 		dirDown();
 		timer = 25;
-	} else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN)) {
+	} 
+	else if ((timer > 30) && (osl_keys->pressed.down))
+	{
 		dirDown();
 		timer = 25;
 	}
 
-	if (current < 1) current = 1; // Stop the ">" from moving past the minimum files
-	if (current > MAX_FILES) current = MAX_FILES; // Stop the ">" from moving past the max files
-
+	if (current < 1) 
+		current = 1;
+	if (current > MAX_FILES) 
+		current = MAX_FILES;
 }
 
 char * settingsBrowse(const char * path, int n) // n is used here to search for fonts or wallpaper
@@ -2054,8 +2059,6 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
-		oldpad = pad;
-		sceCtrlReadBufferPositive(&pad, 1);
 		settingsDisplay();
 		if (n == 0)
 			settingsControls(0); //0 is to used for selecting a font
@@ -2082,6 +2085,8 @@ void displaySubThemes(char * browseDirectory, int n) // n is used here to search
 {	
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	select = oslLoadImageFilePNG("system/settings/select.png", OSL_IN_RAM, OSL_PF_8888);
+	deselect = oslLoadImageFilePNG("system/settings/deselect.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -3086,8 +3091,10 @@ void dumpMenuMore()
 	}	
 }
 
+SceUID modules[3];
+
 void developerMenu()
-{
+{	
 	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);

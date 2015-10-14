@@ -1,10 +1,10 @@
-#include "home.h"
+#include "homeMenu.h"
 #include "clock.h"
 #include "screenshot.h"
-#include "power_menu.h"
-#include "lock.h"
-#include "recoverymenu.h"
-#include "settingsmenu.h"
+#include "powerMenu.h"
+#include "lockScreen.h"
+#include "recoveryMenu.h"
+#include "settingsMenu.h"
 
 void powermenu()
 {	

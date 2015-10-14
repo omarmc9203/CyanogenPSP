@@ -1,11 +1,11 @@
 #include "clock.h"
-#include "appdrawer.h"
-#include "home.h"
-#include "lock.h"
-#include "multi.h"
-#include "power_menu.h"
+#include "appDrawer.h"
+#include "homeMenu.h"
+#include "lockScreen.h"
+#include "recentsMenu.h"
+#include "powerMenu.h"
 #include "screenshot.h"
-#include "settingsmenu.h"
+#include "settingsMenu.h"
 #include "include/utils.h"
 
 time_t		currentTime;

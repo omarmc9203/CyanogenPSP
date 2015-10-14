@@ -1,4 +1,7 @@
 #include <pspkernel.h>
+#include <sys/unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <oslib/oslib.h>
 
 //PSP USB
@@ -26,9 +29,6 @@ enum colors {
     BLACK = 0xFF000000
 };
 
-int fileExists(const char* path);
-int dirExists(const char* path);
-char* ReadFile(char *filename);
 int setFileDefaultsInt(char *path, int value, int var);
 void setFileDefaultsChar(char *path, char* data, char* var);
 void deleteUpdateFile();

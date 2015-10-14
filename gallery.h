@@ -18,8 +18,6 @@
 
 OSL_IMAGE *gallerybg, *gallerySelection, *galleryThumbnail, *galleryBar, *wallpaper;
 
-SceCtrlData pad, oldpad;
-
 void galleryUp();
 void galleryDown();
 void galleryUpx5();

@@ -1,20 +1,19 @@
 //Parts of the Shell
-#include "apollo.h"
-#include "appdrawer.h"
+#include "musicPlayer.h"
+#include "appDrawer.h"
 #include "language.h"
 #include "calculator.h"
 #include "clock.h"
-#include "fm.h"
-#include "game.h"
-#include "home.h"
-#include "lock.h"
+#include "fileManager.h"
+#include "gameLauncher.h"
+#include "homeMenu.h"
+#include "lockScreen.h"
 #include "main.h"
-#include "multi.h"
-#include "mp3player.h"
+#include "recentsMenu.h"
 #include "messenger.h"
-#include "power_menu.h"
-#include "recoverymenu.h"
-#include "settingsmenu.h"
+#include "powerMenu.h"
+#include "recoveryMenu.h"
+#include "settingsMenu.h"
 
 #include "screenshot.h"
 #include "include/ram.h"
@@ -91,7 +90,6 @@ void firstBootInitiation()
 	ic_launcher_apollo = oslLoadImageFilePNG(apolloPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_browser = oslLoadImageFile(browserPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_calculator = oslLoadImageFilePNG(calcPath, OSL_IN_RAM, OSL_PF_8888);
-	ic_launcher_clock = oslLoadImageFilePNG(clockPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_filemanager = oslLoadImageFilePNG(fmPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_gallery = oslLoadImageFilePNG(galleryPath, OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_game = oslLoadImageFilePNG(gamePath, OSL_IN_RAM, OSL_PF_8888);

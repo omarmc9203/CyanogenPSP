@@ -1,14 +1,14 @@
-#include "apollo.h"
-#include "appdrawer.h"
-#include "home.h"
+#include "musicPlayer.h"
+#include "appDrawer.h"
+#include "homeMenu.h"
 #include "clock.h"
-#include "fm.h"
-#include "lock.h"
-#include "mp3player.h"
-#include "multi.h"
-#include "power_menu.h"
+#include "fileManager.h"
+#include "lockScreen.h"
+#include "mp3Lib.h"
+#include "recentsMenu.h"
+#include "powerMenu.h"
 #include "screenshot.h"
-#include "settingsmenu.h"
+#include "settingsMenu.h"
 #include "include/utils.h"
 
 int MP3Scan(const char* path )
@@ -221,6 +221,7 @@ void MP3Play(char * path)
 			releaseAudioCh();
 			oslDeleteImage(nowplaying);
 			isPlaying = 0;
+			setCpuBoot(); //Restore previous CPU state
 			return;
 		}
 		
@@ -369,42 +370,42 @@ void mp3FileDisplay()
 void mp3Controls() //Controls
 {
 	oslReadKeys();	
-
-	if (pad.Buttons != oldpad.Buttons) 
+	
+	if (osl_keys->pressed.down) 
 	{
-		if (osl_keys->pressed.down) 
+		mp3Down();
+		timer = 0;
+	}
+	else if (osl_keys->pressed.up) 
+	{
+		mp3Up();
+		timer = 0;
+	}
+	
+	if (osl_keys->pressed.right) 
+	{
+		mp3Downx5();
+		timer = 0;
+	}
+	if (osl_keys->pressed.left) 
+	{
+		mp3Upx5();
+		timer = 0;
+	}
+	
+	if (osl_keys->pressed.triangle) 
+	{
+		if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) 
 		{
-			mp3Down();
-			timer = 0;
+			curScroll = 1;
+			current = 1;
 		}
-		else if (osl_keys->pressed.up) 
-		{
-			mp3Up();
-			timer = 0;
-		}
-		if (osl_keys->pressed.right) 
-		{
-			mp3Downx5();
-			timer = 0;
-		}
-		if (osl_keys->pressed.left) 
-		{
-			mp3Upx5();
-			timer = 0;
-		}
-		if (osl_keys->pressed.triangle) 
-		{
-			if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) 
-			{
-				curScroll = 1;
-				current = 1;
-			}
-		}
-		if (osl_keys->pressed.cross) 
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
-		}
+	}
+	
+	if (osl_keys->pressed.cross) 
+	{
+		oslPlaySound(KeypressStandard, 1); 
+		openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 	}
 	
 	char * ext = strrchr(folderIcons[current].filePath, '.'); 
@@ -465,19 +466,21 @@ void mp3Controls() //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP)) 
+	if ((timer > 30) && (osl_keys->pressed.up)) 
 	{
 		mp3Up();
 		timer = 25;
 	}
-	else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN)) 
+	else if ((timer > 30) && (osl_keys->pressed.down)) 
 	{
 		mp3Down();
 		timer = 25;
 	}
 
-	if (current < 1) current = 1; // Stop the ">" from moving past the minimum files
-	if (current > MAX_FILES) current = MAX_FILES; // Stop the ">" from moving past the max files
+	if (current < 1) 
+		current = 1;
+	if (current > MAX_FILES) 
+		current = MAX_FILES;
 
 }
 
@@ -493,8 +496,6 @@ char * mp3Browse(const char * path)
 		oslStartDrawing();
 		oslClearScreen(RGB(0,0,0));	
 
-		oldpad = pad;
-		sceCtrlReadBufferPositive(&pad, 1);
 		mp3FileDisplay();
 		mp3Controls();
 		

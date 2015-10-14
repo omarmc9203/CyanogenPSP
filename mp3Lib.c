@@ -1,4 +1,4 @@
-// mp3player.c: MP3 Player Implementation in C for Sony PSP
+// mp3Lib.c: MP3 Player Implementation in C for Sony PSP
 //
 ////////////////////////////////////////////////////////////////////////////
 
@@ -13,14 +13,13 @@
 #include <stdio.h>
 #include <errno.h>
 #include <pspaudiolib.h>
-#include "mp3player.h"
+#include "mp3Lib.h"
 
 #define min(a,b) (((a)<(b))?(a):(b))
 #define max(a,b) (((a)>(b))?(a):(b))
 #define MadErrorString(x) mad_stream_errorstr(x)
 #define INPUT_BUFFER_SIZE	(5*8192)
 #define OUTPUT_BUFFER_SIZE	2048	/* Must be an integer multiple of 4. */
-
 
 /* This table represents the subband-domain filter characteristics. It
 * is initialized by the ParseArgs() function and is used as

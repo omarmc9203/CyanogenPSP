@@ -1,15 +1,15 @@
-#include "home.h"
-#include "game.h"
-#include "appdrawer.h"
-#include "apollo.h"
-#include "fm.h"
+#include "homeMenu.h"
+#include "gameLauncher.h"
+#include "appDrawer.h"
+#include "musicPlayer.h"
+#include "fileManager.h"
 #include "clock.h"
 #include "gallery.h"
-#include "lock.h"
-#include "multi.h"
-#include "power_menu.h"
+#include "lockScreen.h"
+#include "recentsMenu.h"
+#include "powerMenu.h"
 #include "include/pgeZip.h"
-#include "settingsmenu.h"
+#include "settingsMenu.h"
 #include "screenshot.h"
 #include "include/utils.h"
 
@@ -358,6 +358,103 @@ int copy_folder_recursive(char * a, char * b)
 	// Open Error
 	else return -1;
 }
+
+int fileExists(const char* path)
+{
+	SceUID dir = sceIoOpen(path, PSP_O_RDONLY, 0777);
+	if (dir >= 0)
+	{
+		sceIoClose(dir);
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+int dirExists(const char* path)
+{
+	SceUID dir = sceIoDopen(path);
+	if (dir >= 0)
+	{
+		sceIoDclose(dir);
+		return 1;
+	}
+	else 
+	{
+		return 0;
+	}
+}
+
+long getFileSize(const char * fileName) 
+{ 
+	struct stat file; 
+    if(!stat(fileName, &file)) 
+	{ 
+		return file.st_size; 
+    } 
+    return 0; 
+} 
+
+char* ReadFile(char *filename)
+{
+	char *buffer = NULL;
+	int string_size,read_size;
+	FILE *handler = fopen(filename,"r");
+
+	if (handler)
+	{
+		//seek the last byte of the file
+		fseek(handler,0,SEEK_END);
+		//offset from the first to the last byte, or in other words, filesize
+		string_size = ftell (handler);
+		//go back to the start of the file
+		rewind(handler);
+
+		//allocate a string that can hold it all
+		buffer = (char*) malloc (sizeof(char) * (string_size + 1) );
+		//read it all in one operation
+		read_size = fread(buffer,sizeof(char),string_size,handler);
+		//fread doesnt set it so put a \0 in the last position
+		//and buffer is now officialy a string
+		buffer[string_size] = '\0';
+
+		if (string_size != read_size) 
+		{
+			//something went wrong, throw away the memory and set
+			//the buffer to NULL
+			free(buffer);
+			buffer = NULL;
+		}
+	}
+	fclose(handler);
+    return buffer;
+}
+
+SceUID dirId;
+int dirStatus = 1;
+char * fileName;
+
+int IsNextDir()
+{
+	return FIO_S_ISDIR(g_dir.d_stat.st_mode);
+}
+
+char* GetNextFileName()
+{
+	if (dirStatus > 0)
+	{
+		if(dirStatus >= 0)strcpy(fileName, g_dir.d_name);
+	}
+	return fileName;
+}
+
+int ChangeDir(const char* path)
+{
+	return sceIoChdir(path);
+}
+
 
 int folderScan(const char* path )
 {
@@ -742,26 +839,24 @@ int deleteRecursive(char path[]) //Thanks Moonchild!
 
    if ((dfd = sceIoDopen(path)) > 0)
    {
-      SceIoDirent dir;
+      memset(&g_dir, 0, sizeof(SceIoDirent));
 
-      memset(&dir, 0, sizeof(SceIoDirent));
-
-      while (sceIoDread(dfd, &dir) > 0)
+      while (sceIoDread(dfd, &g_dir) > 0)
       {
          char filePath[512];
 
-         if(FIO_S_ISDIR(dir.d_stat.st_mode))
+         if(FIO_S_ISDIR(g_dir.d_stat.st_mode))
          {
-            if (dir.d_name[0] != '.')
+            if (g_dir.d_name[0] != '.')
             {
-               sprintf(filePath, "%s%s/", path, dir.d_name);
+               sprintf(filePath, "%s%s/", path, g_dir.d_name);
                deleteRecursive(filePath);
             }
          }
          else
          {     
             strcpy(filePath, path);
-            strcat(filePath, dir.d_name);
+            strcat(filePath, g_dir.d_name);
             
             //Do something with the files found here     
             sceIoRemove(filePath);
@@ -1005,38 +1100,39 @@ void dirControls() //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) 
+	if (osl_keys->pressed.down) 
 	{
-		if (osl_keys->pressed.down) 
+		dirDown();
+		timer = 0;
+	}
+	else if (osl_keys->pressed.up) 
+	{
+		dirUp();
+		timer = 0;
+	}
+	
+	if (osl_keys->pressed.right) 
+	{
+		dirDownx5();
+		timer = 0;
+	}
+	else if (osl_keys->pressed.left) 
+	{
+		dirUpx5();
+		timer = 0;
+	}
+	
+	if (osl_keys->pressed.cross) 
+	{
+		oslPlaySound(KeypressStandard, 1);  
+		runFile(folderIcons[current].filePath, folderIcons[current].fileType);
+	}
+	
+	if (osl_keys->pressed.triangle) 
+	{
+		if (copyData == 1)
 		{
-			dirDown();
-			timer = 0;
-		}
-		else if (osl_keys->pressed.up) 
-		{
-			dirUp();
-			timer = 0;
-		}
-		if (osl_keys->pressed.right) 
-		{
-			dirDownx5();
-			timer = 0;
-		}
-		else if (osl_keys->pressed.left) 
-		{
-			dirUpx5();
-			timer = 0;
-		}
-		if (osl_keys->pressed.cross) 
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			runFile(folderIcons[current].filePath, folderIcons[current].fileType);
-		}
-		if (osl_keys->pressed.triangle) 
-		{
-			if (copyData == 1){
-				paste();
-			}
+			paste();
 		}
 	}
 	
@@ -1056,7 +1152,6 @@ void dirControls() //Controls
 			filemanager_unload();
 			appdrawer();
 		}
-	
 		else
 		{
 			dirBack(0);
@@ -1130,16 +1225,21 @@ void dirControls() //Controls
 	}	
 	
 	timer++;
-	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP)) {
+	if ((timer > 30) && (osl_keys->pressed.up)) 
+	{
 		dirUp();
 		timer = 25;
-	} else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN)) {
+	} 
+	else if ((timer > 30) && (osl_keys->pressed.down)) 
+	{
 		dirDown();
 		timer = 25;
 	}
 
-	if (current < 1) current = 1; // Stop the ">" from moving past the minimum files
-	if (current > MAX_FILES) current = MAX_FILES; // Stop the ">" from moving past the max files
+	if (current < 1) 
+		current = 1;
+	if (current > MAX_FILES) 
+		current = MAX_FILES;
 }
 
 char* pspFileGetParentDirectory(const char *path)
@@ -1231,14 +1331,13 @@ char * dirBrowse(const char * path)
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
-		oldpad = pad;
-		sceCtrlReadBufferPositive(&pad, 1);
 		dirDisplay();
 		dirControls();
 		
 		sceDisplayWaitVblankStart();
 		
-		if (strlen(returnMe) > 4) {
+		if (strlen(returnMe) > 4) 
+		{
 			break;
 		}
 		oslEndDrawing(); 
@@ -1260,11 +1359,7 @@ void filemanager_unload()
 	oslDeleteImage(documenticon);
 	oslDeleteImage(binaryicon);
 	oslDeleteImage(videoicon);
-	oslDeleteImage(archiveicon);
-	oslDeleteImage(layerD);
-	oslDeleteImage(ic_launcher_clock);
-	ic_launcher_clock = oslLoadImageFilePNG(clockPath, OSL_IN_RAM, OSL_PF_8888);
-	layerD = oslLoadImageFilePNG("system/home/icons/layerD.png", OSL_IN_RAM, OSL_PF_8888);	
+	oslDeleteImage(archiveicon);	
 }
 
 int filemanage(int argc, char *argv[])

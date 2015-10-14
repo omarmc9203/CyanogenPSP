@@ -2,16 +2,16 @@
 // Thanks DAX for his ipl_update.prx
 // Thanks Yoti for his libpspident.a
 // Thanks Raing3 for his psppower lib.
-#include "recoverymenu.h"
+#include "recoveryMenu.h"
 #include "modules/ipl_update.h"
 #include "modules/batman.h"
 #include "modules/kuman.h"
 #include "include/common.h"
 #include "include/utils.h"
-#include "home.h"
+#include "homeMenu.h"
 #include "kuman_header.h"
 #include "systemctrl_se.h"
-#include "settingsmenu.h"
+#include "settingsMenu.h"
 
 extern void CheckerPrintf(char *fmt, ...);
 

@@ -1,12 +1,13 @@
-#include "home.h"
+#include "homeMenu.h"
 #include "language.h"
-#include "appdrawer.h"
-#include "apollo.h"
+#include "appDrawer.h"
+#include "musicPlayer.h"
 #include "clock.h"
-#include "lock.h"
-#include "multi.h"
-#include "power_menu.h"
-#include "settingsmenu.h"
+#include "fileManager.h"
+#include "lockScreen.h"
+#include "recentsMenu.h"
+#include "powerMenu.h"
+#include "settingsMenu.h"
 #include "screenshot.h"
 #include "include/utils.h"
 
@@ -901,7 +902,7 @@ void home()
 	widgetActivator = setFileDefaultsInt("system/widget/widgetactivator.txt", 1, widgetActivator);
 	eDesktopActivator = setFileDefaultsInt("system/home/eDesktopActivator.txt", 0, eDesktopActivator);
 
-	unsigned int kernelButtons = getbuttons(); 
+	//unsigned int kernelButtons = getbuttons(); 
 	
 	while (!osl_quit)
 	{
@@ -921,7 +922,7 @@ void home()
 		appDrawerIcon();
 		
 		if (widgetActivator == 1)
-		dayNightCycleWidget();
+			dayNightCycleWidget();
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
@@ -1034,10 +1035,10 @@ void home()
 			screenshot();
 		}
 
-		if(kernelButtons & PSP_CTRL_HOME) 
+		/*if(kernelButtons & PSP_CTRL_HOME) 
 		{ 
 			powermenu();
-		}	 
+		}*/
 
 	oslEndDrawing(); 
     oslEndFrame(); 

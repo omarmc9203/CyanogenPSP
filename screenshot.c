@@ -1,4 +1,5 @@
-#include "home.h"
+#include "fileManager.h"
+#include "homeMenu.h"
 #include "include/utils.h"
 #include "screenshot.h"
 

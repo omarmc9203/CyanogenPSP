@@ -1,14 +1,14 @@
-#include "home.h"
-#include "appdrawer.h"
-#include "game.h"
+#include "homeMenu.h"
+#include "appDrawer.h"
+#include "gameLauncher.h"
 #include "game_icon0.h"
 #include "clock.h"
-#include "fm.h"
-#include "lock.h"
-#include "multi.h"
-#include "power_menu.h"
+#include "fileManager.h"
+#include "lockScreen.h"
+#include "recentsMenu.h"
+#include "powerMenu.h"
 #include "screenshot.h"
-#include "settingsmenu.h"
+#include "settingsMenu.h"
 #include "include/systemctrl_se.h"  
 #include "include/utils.h"
 
@@ -190,6 +190,8 @@ int launchUMD(char path[])
 	return sctrlKernelLoadExecVSHWithApitype(0x120, path, &param);
 }
 
+char gPath[400] = "ms0:/PSP/GAME/";
+
 void gameDisplay()
 {	
 	oslDrawImageXY(gamebg, 0, 0);
@@ -198,9 +200,32 @@ void gameDisplay()
 	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 	battery(370,2,1);
 	digitaltime(420,4,0,hrTime);
-	
+
+	/*if (IsNextDir())
+	{
+		strcat(gPath, GetNextFileName());
+		ChangeDir(gPath);
+		if (fileExists("EBOOT.PBP"))
+		{
+			getIcon0("EBOOT.PBP");
+			if(icon0!=NULL)
+			{	
+				oslDrawImageXY(icon0, 326,118);
+			}
+		}
+	}*/
+		
 	/*
-	if (folderIcons[i].active == 1) 
+	char * ext = strrchr(folderIcons[current].filePath, '.');
+	
+	if(((ext) != NULL) && (strcmp(ext ,".PBP") == 0))
+	{
+		icon0 = processPBP(folderIcons[current].filePath);
+		oslDrawImageXY(icon0, 326,118);
+	}	
+	*/
+
+	/*if (folderIcons[i].active == 1) 
 	{
 		getIcon0(folderIcons[current].filePath);
 		if(icon0!=NULL)
@@ -212,8 +237,7 @@ void gameDisplay()
 	else if (folderIcons[i].active == 0)
 	{
 		oslDeleteImage(icon0);
-	}
-	*/
+	}*/
 	
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_GAME_DISPLAY+curScroll;i++) 
@@ -246,42 +270,41 @@ void gameControls(int n) //Controls
 {
 	oslReadKeys();	
 
-	if (pad.Buttons != oldpad.Buttons) 
+	if (osl_keys->pressed.down) 
 	{
-		if (osl_keys->pressed.down) 
-		{
-			gameDown();
-			timer = 0;
-		}
-		else if (osl_keys->pressed.up) 
-		{
-			gameUp();
-			timer = 0;
-		}
+		gameDown();
+		timer = 0;
+	}
+	else if (osl_keys->pressed.up) 
+	{
+		gameUp();
+		timer = 0;
+	}	
+	
+	if (osl_keys->pressed.right) 
+	{
+		gameDownx5();
+		timer = 0;
+	}
+	else if (osl_keys->pressed.left) 
+	{
+		gameUpx5();	
+		timer = 0;
+	}
 		
-		if (osl_keys->pressed.right) 
+	if (osl_keys->pressed.triangle) 
+	{
+		if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) 
 		{
-			gameDownx5();
-			timer = 0;
+			curScroll = 1;
+			current = 1;
 		}
-		else if (osl_keys->pressed.left) 
-		{
-			gameUpx5();	
-			timer = 0;
-		}
-		
-		if (osl_keys->pressed.triangle) 
-		{
-			if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) {
-				curScroll = 1;
-				current = 1;
-			}
-		}
-		if (osl_keys->pressed.cross) 
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
-		}
+	}
+	
+	if (osl_keys->pressed.cross) 
+	{
+		oslPlaySound(KeypressStandard, 1);  
+		openDir(folderIcons[current].filePath, folderIcons[current].fileType);
 	}
 	
 	volumeController();
@@ -414,17 +437,21 @@ void gameControls(int n) //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP)) {
+	if ((timer > 30) && (osl_keys->pressed.up))
+	{
 		gameUp();
 		timer = 25;
-	} else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN)) {
+	} 
+	else if ((timer > 30) && (osl_keys->pressed.down)) 
+	{
 		gameDown();
 		timer = 25;
 	}
 
-	if (current < 1) current = 1; // Stop the ">" from moving past the minimum files
-	if (current > MAX_FILES) current = MAX_FILES; // Stop the ">" from moving past the max files
-
+	if (current < 1) 
+		current = 1;
+	if (current > MAX_FILES) 
+		current = MAX_FILES;
 }
 
 // Just call 'path' with whichever path you want it to start off in
@@ -440,8 +467,6 @@ char * gameBrowse(const char * path)
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
-		oldpad = pad;
-		sceCtrlReadBufferPositive(&pad, 1);
 		gameDisplay();
 		gameControls(0);
 		
@@ -469,8 +494,6 @@ char * popsBrowse(const char * path)
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
-		oldpad = pad;
-		sceCtrlReadBufferPositive(&pad, 1);
 		gameDisplay();
 		gameControls(1);
 		
@@ -535,6 +558,138 @@ void getIcon0(char* filename)
     }
     
 	sceIoClose(fd);
+}
+
+char *filename[8] = {"PARAM.SFO", "ICON0.PNG", "ICON1.PMF", "UNKNOWN.PNG", "PIC1.PNG", "SND0.AT3", "UNKNOWN.PSP", "UNKNOWN.PSAR"}; 
+
+OSL_IMAGE * processPBP(const char * path) { 
+
+	OSL_IMAGE * imgSource; 
+	OSL_IMAGE * imgDefault; 
+    
+	char curPath[512]; 
+	getcwd(curPath, 512); 
+	char loadImg[512]; 
+	sprintf(loadImg, "%s/icon0.png", curPath); 
+	int theSize = 0; 
+	
+	int loop0, total_size; 
+	FILE *infile, *outfile; 
+	HEADER header; 
+
+	infile = fopen(path, "rb"); 
+
+	fseek(infile, 0, SEEK_END); total_size = ftell(infile); fseek(infile, 0, SEEK_SET); 
+
+	if (fread(&header, sizeof(HEADER), 1, infile) < 0) 
+	{ 
+		printf("ERROR: Could not read the input file header. \n"); 
+		return NULL; 
+	} 
+
+	if (header.signature[0] != 0x00) 
+	{ 
+		printf("ERROR: Input file is not a PBP file. \n"); 
+		return NULL; 
+	} 
+	else if (header.signature[1] != 0x50) 
+	{ 
+		printf("ERROR: Input file is not a PBP file. \n"); 
+		return NULL; 
+	} 
+	else if (header.signature[2] != 0x42)
+	{ 	
+		printf("ERROR: Input file is not a PBP file. \n"); 
+		return NULL; 
+	} 
+	else if (header.signature[3] != 0x50) 
+	{ 
+		printf("ERROR: Input file is not a PBP file. \n"); 
+		return NULL; 
+	} 
+
+	#ifdef __BIG_ENDIAN__ 
+	for (loop0=0;loop0<2;loop0++) 
+	{ 
+		header.offset[loop0] = NXSwapInt(header.offset[loop0]); 
+    } 
+	#endif 
+
+	// loop0 = 0 is the param.sfo (reads the data then erases, because you have to loop or it ***** up) 
+	// loop0 = 1 is the icon0.png (reads the data, spits out a file; we load, then delete it) 
+	for (loop0=0; loop0<2; loop0++) 
+	{ 
+		void *buffer; int size; 
+        
+		size = header.offset[loop0 + 1] - header.offset[loop0]; 
+		
+		buffer = malloc(size); 
+		if (buffer == NULL) 
+		{ 
+			printf("ERROR: Could not allocate the section data buffer. (%d)\n", size); 
+			return NULL; 
+		} 
+
+		if (fread(buffer, size, 1, infile) < 0) 
+		{ 
+			printf("ERROR: Could not read in the section data.\n"); 
+			return NULL; 
+		} 
+
+		if (loop0==1) 
+		{ 
+			// WTF (works great until after loading 10 homebrews!?) 
+			// Mess up is happening here 
+			outfile = fopen(filename[loop0], "wb");          
+			if (outfile == NULL)
+			{ 
+				printf("ERROR: Could not open the output file. (%s)\n", filename[loop0]); 
+				return NULL; 
+			} 
+			// Mess up is happening here 
+
+			if (fwrite(buffer, size, 1, outfile) < 0) 
+			{ 
+				printf("ERROR: Could not write out the section data.\n"); 
+				return NULL; 
+			} 
+        
+			if (fclose(outfile) < 0) 
+			{ 
+				printf("ERROR: Could not close the output file.\n"); 
+				return NULL; 
+			} 
+		} 
+		free(buffer); 
+	} 
+	
+	if (fclose(infile) < 0) 
+	{ 
+		printf("ERROR: Could not close the input file.\n"); 
+		return NULL; 
+	}
+
+	theSize = getFileSize(loadImg); 
+	printf("%02d \n", theSize); // Debug 
+
+	if (theSize > 0) 
+	{ 
+		imgSource = oslLoadImageFilePNG(loadImg, OSL_IN_RAM, OSL_PF_8888); 
+		if (!(imgSource)) 
+		{ 
+			sceIoRemove(loadImg); 
+			imgDefault = oslLoadImageFilePNG("system/app/game/default.png", OSL_IN_RAM, OSL_PF_8888); 
+			return (imgDefault); 
+		} 
+	} 
+	else 
+	{ 
+		sceIoRemove(loadImg); 
+		imgDefault = oslLoadImageFilePNG("system/app/game/default.png.png", OSL_IN_RAM, OSL_PF_8888);  
+		return (imgDefault); 
+	} 
+	sceIoRemove(loadImg); 
+	return (imgSource); 
 }
 
 int gameView(char * browseDirectory, int type)
@@ -695,13 +850,13 @@ int gameApp()
 			gameUnload();
 			gameView("ms0:/PSP/GAME", 0); //PSP Homebrew
         }
-		if (MenuSelection == 2 && osl_keys->pressed.cross)
+		else if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
 			oslPlaySound(KeypressStandard, 1);  
 			gameUnload();
 			gameView("ms0:/ISO", 0); //ISO backups
         }
-		if (MenuSelection == 3 && osl_keys->pressed.cross)
+		else if (MenuSelection == 3 && osl_keys->pressed.cross)
         {		
 			oslPlaySound(KeypressStandard, 1);  
 			gameUnload();

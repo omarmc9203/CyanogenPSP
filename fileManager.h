@@ -87,7 +87,6 @@ int curScroll;
 char lastDir[512];
 int timer;
 char returnMe[512];
-SceCtrlData pad, oldpad;
 
 int copy_bytes(SceUID source, SceUID destination, unsigned bytes);
 int copy_folder(char * source, char * destination);
@@ -95,7 +94,13 @@ void copy(int flag);
 int paste(void);
 int copy_file(char * a, char * b);
 int copy_folder_recursive(char * a, char * b);
-
+int fileExists(const char* path);
+int dirExists(const char* path);
+long getFileSize(const char * fileName);
+char* ReadFile(char *filename);
+int IsNextDir();
+char* GetNextFileName();
+int ChangeDir(const char* path);
 
 int folderScan(const char* path);
 int runFile(const char* path, char* type );
