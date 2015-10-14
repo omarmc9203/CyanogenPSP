@@ -54,7 +54,7 @@ const char lang_settingsDisplay[][3][100] =
 const char lang_settingsThemes[][4][100] = 
 {	
 	{"Style", "Wallpaper", "Fonts", "Icon Packs"},
-	{"Style", "Fond d'écran", "Polices", "Icon Packs"},
+	{"Style", "Fond d'écran", "Polices", "Pack d'icones"},
 	{"Wygląd", "Tapeta", "Czcionki", "Paczki ikon"},
 	{"Style", "Wallpaper", "Schriftart", "Icon Packs"},
 	{"Style", "Wallpaper", "Fonts", "Icon Packs"},
@@ -84,7 +84,7 @@ const char lang_settingsMiscellaneous[][4][100] =
 const char lang_settingsPerformance[][4][100] = 
 {	
 	{"Processor", "Memory", "Storage Management", "Battery Management"},
-	{"Processeur", "Memory", "Gestion de l'espace de stockage", "Battery Management"},
+	{"Procceseur", "Memoire vive", "Gestion du stockage", "Gestion de la batterie"},
 	{"Procesor", "Pamięć", "Zarządzanie pamięcią", "Zarządzanie baterią"},
 	{"Prozessor", "Arbeitsspeicher", "Speicherverwaltung", "Akku"},
 	{"Processor", "Memory", "Storage Management", "Battery Management"},
@@ -104,7 +104,7 @@ const char lang_settingsProcessor[][5][100] =
 const char lang_settingsRAM[][3][100] = 
 {	
 	{"RAM available:", "available", "of RAM used"},
-	{"RAM disponible :", "disponibles", "of RAM used"},
+	{"RAM disponible :", "disponibles", "de la RAM utilisée"},
 	{"Dotępny RAM:", "wolne", "RAM-u użyte"},
 	{"RAM verfügbar:", "verfügbar", "of RAM used"},
 	{"RAM available:", "available", "of RAM used"},
@@ -124,7 +124,7 @@ const char lang_settingsStorage[][3][60] =
 const char lang_settingsBattery[][3][60] = 
 {	
 	{"Powersave", "Balanced", "Performance"},
-	{"Powersave", "Balanced", "Performance"},
+	{"Economie d'énergie", "Equilibré", "Hautes performances"},
 	{"Oszcz. baterii", "Zbalansowane", "Wydajność"},
 	{"Energiesparmodus", "Balanced", "Leistung"},
 	{"Powersave", "Balanced", "Performance"},
