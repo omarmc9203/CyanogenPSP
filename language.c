@@ -61,7 +61,7 @@ const char lang_settingsThemes[][4][100] =
 	{"Style", "Wallpaper", "Fonts", "Icon Packs"},
 	{"Style", "Fond d'écran", "Polices", "Pack d'icones"},
 	{"Wygląd", "Tapeta", "Czcionki", "Paczki ikon"},
-	{"Style", "Wallpaper", "Schriftart", "Icon Packs"},
+	{"Designs", "Hintergründe", "Schriftarten", "Symbole"},
 	{"Stijl", "Achtergrond", "Lettertypes", "Pictogrammen"},
 	{"Style", "Wallpaper", "Fonts", "Icon Packs"},
 	{"Style", "Wallpaper", "Fonts", "Icon Packs"}
@@ -83,7 +83,7 @@ const char lang_settingsMiscellaneous[][4][100] =
 	{"Toggle day/night widget", "Toggle expanded desktop", "Toggle boot animation", "Toggle game boot"},
 	{"Basculer entre le widget jour/nuit", "Activer/Désactiver le bureau étendu", "Activer/Désactiver l'animation de démarrage", "Activer/Désactiver le l'animation de démarrage de jeu"},
 	{"Użyj widgetu day/night", "Użyj pulpitu rozszerzonego", "Użyj animacji bootowania", "Użyj animacji uruchamiania gry"},
-	{"Toggle day/night widget", "Toggle expanded desktop", "Toggle boot animation", "Toggle game boot"},
+	{"Tag/Nacht-Widget ein-/ausschalten", "Erweiterten Desktop ein-/ausschalten", "Startanimation ein-/ausschalten", "Spielstart ein-/ausschalten"},
 	{"Schakel tussen dag/nacht widget", "Uitgebreide desktop aan/uit", "Opstart animatie aan/uit", "Game boot aan/uit"},
 	{"Toggle day/night widget", "Toggle expanded desktop", "Toggle boot animation", "Toggle game boot"},
 	{"Toggle day/night widget", "Toggle expanded desktop", "Toggle boot animation", "Toggle game boot"}
@@ -116,7 +116,7 @@ const char lang_settingsRAM[][3][100] =
 	{"RAM available:", "available", "of RAM used"},
 	{"RAM disponible :", "disponibles", "de la RAM utilisée"},
 	{"Dotępny RAM:", "wolne", "RAM-u użyte"},
-	{"RAM verfügbar:", "verfügbar", "of RAM used"},
+	{"RAM verfügbar:", "verfügbar", "des RAMs genutzt"},
 	{"RAM vrij:", "beschikbaar", "RAM in gebruik"},
 	{"RAM available:", "available", "of RAM used"},
 	{"RAM available:", "available", "of RAM used"}
@@ -127,7 +127,7 @@ const char lang_settingsStorage[][3][60] =
 	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
 	{"Appuyez sur Select pour activer/désactiver le mode clé USB", "Capacité de stockage totale :", "Capacité de stockage disponible :"},
 	{"Naciśnij Select by podłączyć pamięc USB", "Całkowita ilość pamięci", "Wolna pamieć"},
-	{"Press select to toggle USB mass storage", "Gesamptspeicher kapazität:", "Verfügbar:"},
+	{"Drücke Select, um den USB-Speicher ein-/auszuschalten", "Gesamptspeicher kapazität:", "Verfügbar:"},
 	{"Druk select om van massaopslag te wisselen", "Totale opslagruimte:", "Beschikbaare opslagruimte:"},
 	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"},
 	{"Press select to toggle USB mass storage", "Total storage capacity:", "Available storage capacity:"}
@@ -182,7 +182,7 @@ const char lang_settingsWifi[][3][100] =
 	{"No WiFi configuration found", "Please turn on the Wlan switch", "Press up or down to navigate through your Wifi configurations"},
 	{"Aucune configuration Wi-Fi n'a été trouvée", "Veuillez activer le WLAN à l'aide du commutateur", "Appuyez sur haut ou bas pour vous déplacer à travers vos configurations Wi-Fi"},
 	{"Nie znaleziono konfig. Wi-Fi", "Przełącz włącznik WLAN", "Naciśnij w góre/w dół aby wybrać konfigurację"},
-	{"Keine WiFi einstellungen gefunden", "Please turn on the Wlan switch", "Press up or down to navigate through your Wifi configurations"},
+	{"Keine WLAN-Einstellungen gefunden", "Bitte schalte den WLAN-Schalter ein", "Drücke Hoch oder Runter, um durch deine WLAN-Einstellungen zu navigieren"},
 	{"Geen WiFi configuratie gevonden", "Schakel Wlan knop in alsjeblieft", "Druk omhoog of omlaag om een Wifi-instelling te selecteren"},
 	{"No WiFi configuration found", "Please turn on the Wlan switch", "Press up or down to navigate through your Wifi configurations"},
 	{"No WiFi configuration found", "Please turn on the Wlan switch", "Press up or down to navigate through your Wifi configurations"}
@@ -193,7 +193,7 @@ const char lang_settingsDeveloperOptions[][5][100] =
 	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Press triangle to disable or it may cause the program to crash", "Toggle USB debugging", "Dumping tools"},
 	{"Activer/Désactiver Remote Joy Lite", "Affiche l'écran de votre PSP sur votre ordinateur par USB", "Appuyez sur triangle pour le désactiver, ou il risque de faire planter le programme", "Activer/Désactiver le débogage par USB'", "Dumping tools"},
 	{"Włącz RemoteJoy Lite", "Wyświetla obraz z PSP na komputerze po USB", "Naciśnij trójkąt by wyłączyć, może powodować crashe", "Włącz debugowanie USB", "Narzędzia do zgrywania"},
-	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Press triangle to disable or it may cause the program to crash", "Toggle USB debugging", "Dumping tools"},
+	{"Remote Joy Lite ein-/ausschalten", "Zeigt den Bildschirm deiner PSP via USB auf deinem Computer an", "Drücke Dreieck zum deaktivieren, sonst könnte das Programm abstürzen", "USB-Debugging ein-/ausschalten", "Sicherungstools"},
 	{"Remote Joy Lite aan/uit", "Geeft je PSP scherm weer op je computer via USB", "Druk driehoek om dit uit te schalelen anders kan dit programma crashen", "USB debugging aan/uit", "Dumping tools"},
 	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Press triangle to disable or it may cause the program to crash", "Toggle USB debugging", "Dumping tools"},
 	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Press triangle to disable or it may cause the program to crash", "Toggle USB debugging", "Dumping tools"}
@@ -204,7 +204,7 @@ const char lang_settingsDump[][9][100] =
 	{"Dump Flash 0", "Dump Flash 1", "More", "Dump UMD boot.bin", "Dump Memory", "Insert UMD", "Mounted disc", "Found game", "Dumping 28Megs from"},
 	{"Sauvegarder le Flash 0", "Sauvegarder le Flash 1", "Plus", "Sauvegarder le boot.bin de l'UMD", "Sauvegarder la mémoire", "Insérer un UMD", "Disque monté", "Jeu trouvé", "Sauvegarde de 28 Mo de"},
 	{"Zgraj Flash 0", "Zgraj Flash 1", "Więcej", "Zgraj UMD boot.bin", "Zgraj Memory", "Włóż UMD", "Włożony dysk", "Znaleziono game", "Zgrywanie 28Mega z"},
-	{"Dump Flash 0", "Dump Flash 1", "Mehr", "Dump UMD boot.bin", "Dump Memory", "UMD einlegen", "Mounted disc", "Spiel gefunden", "Dumping 28Megs from"},
+	{"Flash 0 sichern", "Flash 1 sichern", "Mehr", "UMD boot.bin sichern", "Speicher sichern", "UMD einlegen", "Eingehängte Disc", "Spiel gefunden", "Sichere 28MB von"},
 	{"Dump Flash 0", "Dump Flash 1", "Meer", "Dump UMD boot.bin", "Dump Geheugen", "Plaats UMD", "Geplaatste schijf", "Spel gevonden", "Dumping 28Megs van"},
 	{"Dump Flash 0", "Dump Flash 1", "More", "Dump UMD boot.bin", "Dump Memory", "Insert UMD", "Mounted disc", "Found game", "Dumping 28Megs from"},
 	{"Dump Flash 0", "Dump Flash 1", "More", "Dump UMD boot.bin", "Dump Memory", "Insert UMD", "Mounted disc", "Found game", "Dumping 28Megs from"}
@@ -215,7 +215,7 @@ const char lang_quickSettings[][5][100] =
 	{"Wi-Fi", "Power save", "Balanced", "Performance", "Lockscreen"},
 	{"Wi-Fi", "Économie de batterie", "Équilibrée", "Performance", "Écran de verrouillage"},
 	{"Wi-Fi", "Oszcz. energii", "Zbalansowane", "Wydajność", "Ekran blokady"},
-	{"Wi-Fi", "Energiesparmodus", "Balanced", "Leistung", "Bildschirmsperre"},
+	{"WLAN", "Energiesparmodus", "Ausgeglichen", "Leistung", "Bildschirmsperre"},
 	{"Wi-Fi", "Accubesparing", "Gebalanceerd", "Prestatie", "Vergrendelscherm"},
 	{"Wi-Fi", "Power save", "Balanced", "Performance", "Lockscreen"},
 	{"Wi-Fi", "Power save", "Balanced", "Performance", "Lockscreen"}
