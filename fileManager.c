@@ -481,6 +481,7 @@ int folderScan(const char* path )
 		if (!(stricmp(path, "ms0:")==0 || (stricmp(path, "ms0:/")==0))) 
 		{
 			sceIoDread(fd, &g_dir);		// get rid of '.' and '..'
+			sceIoDread(fd, &g_dir);
 
 			// Create our own '..'
 			folderIcons[1].active = 1; 
@@ -1100,39 +1101,40 @@ void dirControls() //Controls
 {
 	oslReadKeys();	
 
-	if (osl_keys->pressed.down) 
+	if (pad.Buttons != oldpad.Buttons) 
 	{
-		dirDown();
-		timer = 0;
-	}
-	else if (osl_keys->pressed.up) 
-	{
-		dirUp();
-		timer = 0;
-	}
-	
-	if (osl_keys->pressed.right) 
-	{
-		dirDownx5();
-		timer = 0;
-	}
-	else if (osl_keys->pressed.left) 
-	{
-		dirUpx5();
-		timer = 0;
-	}
-	
-	if (osl_keys->pressed.cross) 
-	{
-		oslPlaySound(KeypressStandard, 1);  
-		runFile(folderIcons[current].filePath, folderIcons[current].fileType);
-	}
-	
-	if (osl_keys->pressed.triangle) 
-	{
-		if (copyData == 1)
+		if (osl_keys->pressed.down) 
 		{
-			paste();
+			dirDown();
+			timer = 0;
+		}
+		else if (osl_keys->pressed.up) 
+		{
+			dirUp();
+			timer = 0;
+		}	
+	
+		if (osl_keys->pressed.right) 
+		{
+			dirDownx5();
+			timer = 0;
+		}
+		else if (osl_keys->pressed.left) 
+		{
+			dirUpx5();
+			timer = 0;
+		}
+		
+		if (osl_keys->pressed.triangle) 
+		{
+			curScroll = 1;
+			current = 1;
+		}
+	
+		if (osl_keys->pressed.cross) 
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			runFile(folderIcons[current].filePath, folderIcons[current].fileType);
 		}
 	}
 	
@@ -1225,12 +1227,12 @@ void dirControls() //Controls
 	}	
 	
 	timer++;
-	if ((timer > 30) && (osl_keys->pressed.up)) 
+	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
 	{
 		dirUp();
 		timer = 25;
 	} 
-	else if ((timer > 30) && (osl_keys->pressed.down)) 
+	else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN))
 	{
 		dirDown();
 		timer = 25;
@@ -1331,6 +1333,8 @@ char * dirBrowse(const char * path)
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
+		oldpad = pad;
+		sceCtrlReadBufferPositive(&pad, 1);
 		dirDisplay();
 		dirControls();
 		

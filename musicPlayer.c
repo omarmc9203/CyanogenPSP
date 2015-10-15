@@ -371,42 +371,44 @@ void mp3Controls() //Controls
 {
 	oslReadKeys();	
 	
-	if (osl_keys->pressed.down) 
+	if (pad.Buttons != oldpad.Buttons) 
 	{
-		mp3Down();
-		timer = 0;
-	}
-	else if (osl_keys->pressed.up) 
-	{
-		mp3Up();
-		timer = 0;
-	}
+		if (osl_keys->pressed.down) 
+		{
+			mp3Down();
+			timer = 0;
+		}
+		else if (osl_keys->pressed.up) 
+		{
+			mp3Up();
+			timer = 0;
+		}
 	
-	if (osl_keys->pressed.right) 
-	{
-		mp3Downx5();
-		timer = 0;
-	}
-	if (osl_keys->pressed.left) 
-	{
-		mp3Upx5();
-		timer = 0;
-	}
+		if (osl_keys->pressed.right) 
+		{
+			mp3Downx5();
+			timer = 0;
+		}
+		else if (osl_keys->pressed.left) 
+		{
+			mp3Upx5();
+			timer = 0;
+		}
 	
-	if (osl_keys->pressed.triangle) 
-	{
-		if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) 
+		if (osl_keys->pressed.triangle) 
 		{
 			curScroll = 1;
 			current = 1;
 		}
+	
+		if (osl_keys->pressed.cross) 
+		{
+			oslPlaySound(KeypressStandard, 1); 
+			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
+		}
 	}
 	
-	if (osl_keys->pressed.cross) 
-	{
-		oslPlaySound(KeypressStandard, 1); 
-		openDir(folderIcons[current].filePath, folderIcons[current].fileType);
-	}
+	volumeController();
 	
 	char * ext = strrchr(folderIcons[current].filePath, '.'); 
 	
@@ -447,8 +449,6 @@ void mp3Controls() //Controls
 		}
 	}
 	
-	volumeController();
-	
 	if (osl_keys->pressed.square)
 	{
 		powermenu();
@@ -466,12 +466,12 @@ void mp3Controls() //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (osl_keys->pressed.up)) 
+	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
 	{
 		mp3Up();
 		timer = 25;
 	}
-	else if ((timer > 30) && (osl_keys->pressed.down)) 
+	else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN))
 	{
 		mp3Down();
 		timer = 25;
@@ -494,7 +494,10 @@ char * mp3Browse(const char * path)
 		LowMemExit();
 	
 		oslStartDrawing();
+		
 		oslClearScreen(RGB(0,0,0));	
+		oldpad = pad;
+		sceCtrlReadBufferPositive(&pad, 1);
 
 		mp3FileDisplay();
 		mp3Controls();

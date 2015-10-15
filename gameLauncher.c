@@ -296,11 +296,8 @@ void gameControls(int n) //Controls
 		
 		if (osl_keys->pressed.triangle) 
 		{
-			if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) 
-			{
-				curScroll = 1;
-				current = 1;
-			}
+			curScroll = 1;
+			current = 1;
 		}
 	
 		if (osl_keys->pressed.cross) 

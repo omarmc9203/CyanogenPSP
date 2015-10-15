@@ -38,6 +38,8 @@
 
 OSL_IMAGE 	*filemanagerbg, *diricon, *imageicon, *mp3icon, *txticon, *unknownicon, *documenticon, *binaryicon, *videoicon, *archiveicon, *bar, 
 			*deletion, *action, *textview,  *gallerybar;
+			
+SceCtrlData pad, oldpad;
 
 // Current Path
 char cwd[1024];

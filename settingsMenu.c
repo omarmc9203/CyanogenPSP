@@ -1918,31 +1918,40 @@ void settingsControls(int n) //Controls
 {
 	oslReadKeys();	
 
-	if (osl_keys->pressed.down)
+	if (pad.Buttons != oldpad.Buttons) 
 	{
-		settingsDown();
-		timer = 0;
-	}
-	else if (osl_keys->pressed.up)
-	{
-		settingsUp();
-		timer = 0;
-	}
+		if (osl_keys->pressed.down)
+		{
+			settingsDown();
+			timer = 0;
+		}
+		else if (osl_keys->pressed.up)
+		{
+			settingsUp();
+			timer = 0;
+		}
 		
-	if (osl_keys->pressed.right)
-	{
-		settingsDownx5();
-		timer = 0;
-	}
-	else if (osl_keys->pressed.left)
-	{
-		settingsUpx5();	
-		timer = 0;
-	}
+		if (osl_keys->pressed.right)
+		{
+			settingsDownx5();
+			timer = 0;
+		}
+		else if (osl_keys->pressed.left)
+		{
+			settingsUpx5();	
+			timer = 0;
+		}
 		
-	if (osl_keys->pressed.cross)
-	{
-		oslPlaySound(KeypressStandard, 1);  
+		if (osl_keys->pressed.triangle) 
+		{
+			curScroll = 1;
+			current = 1;
+		}
+		
+		if (osl_keys->pressed.cross)
+		{
+			oslPlaySound(KeypressStandard, 1);  
+		}
 	}
 	
 	volumeController();
@@ -2030,12 +2039,12 @@ void settingsControls(int n) //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (osl_keys->pressed.up)) 
+	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
 	{
 		dirDown();
 		timer = 25;
 	} 
-	else if ((timer > 30) && (osl_keys->pressed.down))
+	else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN))
 	{
 		dirDown();
 		timer = 25;
@@ -2059,7 +2068,10 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
+		oldpad = pad;
+		sceCtrlReadBufferPositive(&pad, 1);
 		settingsDisplay();
+		
 		if (n == 0)
 			settingsControls(0); //0 is to used for selecting a font
 		else if (n == 1)
@@ -3104,7 +3116,7 @@ void developerMenu()
 	
 	if (!developerbg || !highlight)
 		debugDisplay();
-
+		
 	while (!osl_quit)
 	{
 		LowMemExit();

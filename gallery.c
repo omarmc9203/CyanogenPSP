@@ -220,45 +220,45 @@ void galleryControls() //Controls
 {
 	oslReadKeys();	
 
-	if (osl_keys->pressed.down) 
+	if (pad.Buttons != oldpad.Buttons) 
 	{
-		galleryDown();
-		timer = 0;
-	}
-	if (osl_keys->pressed.up) 
-	{
-		galleryUp();
-		timer = 0;
-	}
+		if (osl_keys->pressed.down) 
+		{
+			galleryDown();
+			timer = 0;
+		}
+		if (osl_keys->pressed.up) 
+		{
+			galleryUp();
+			timer = 0;
+		}
 		
-	if (osl_keys->pressed.right) 
-	{
-		galleryDownx5();
-		timer = 0;
-	}
-	else if (osl_keys->pressed.left) 
-	{
-		galleryUpx5();	
-		timer = 0;
-	}
+		if (osl_keys->pressed.right) 
+		{
+			galleryDownx5();
+			timer = 0;
+		}
+		else if (osl_keys->pressed.left) 
+		{
+			galleryUpx5();	
+			timer = 0;
+		}
 		
-	if (osl_keys->pressed.triangle) 
-	{
-		if (!(stricmp(lastDir, "ms0:")==0) || (stricmp(lastDir, "ms0:/")==0)) 
+		if (osl_keys->pressed.triangle) 
 		{
 			curScroll = 1;
 			current = 1;
 		}
-	}
 
-	if (osl_keys->pressed.cross) 
-	{
-		oslPlaySound(KeypressStandard, 1);  
-		openDir(folderIcons[current].filePath, folderIcons[current].fileType);
+		if (osl_keys->pressed.cross) 
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
+		}
 	}
 	
 	volumeController();
-	
+		
 	if (osl_keys->pressed.cross)
 	{
 		oslPlaySound(KeypressStandard, 1);  
@@ -303,12 +303,12 @@ void galleryControls() //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (osl_keys->pressed.up)) 
+	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
 	{
 		galleryUp();
 		timer = 25;
 	} 
-	else if ((timer > 30) && (osl_keys->pressed.down)) 
+	else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN))
 	{
 		galleryDown();
 		timer = 25;
@@ -326,7 +326,6 @@ char * galleryBrowse(const char * path)
 	folderScan(path);
 	dirVars();
 
-	
 	while (!osl_quit)
 	{		
 		LowMemExit();
@@ -334,6 +333,8 @@ char * galleryBrowse(const char * path)
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
+		oldpad = pad;
+		sceCtrlReadBufferPositive(&pad, 1);
 		galleryDisplay();
 		galleryControls();
 		
