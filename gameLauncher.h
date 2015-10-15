@@ -23,6 +23,8 @@
 OSL_IMAGE *gamebg, *gameSelection, *icon0, *gameAnim[20];
 OSL_FONT *Roboto;
 
+SceCtrlData pad, oldpad;
+
 typedef struct
 {
 	char signature[4];

@@ -270,41 +270,44 @@ void gameControls(int n) //Controls
 {
 	oslReadKeys();	
 
-	if (osl_keys->pressed.down) 
+	if (pad.Buttons != oldpad.Buttons) 
 	{
-		gameDown();
-		timer = 0;
-	}
-	else if (osl_keys->pressed.up) 
-	{
-		gameUp();
-		timer = 0;
-	}	
-	
-	if (osl_keys->pressed.right) 
-	{
-		gameDownx5();
-		timer = 0;
-	}
-	else if (osl_keys->pressed.left) 
-	{
-		gameUpx5();	
-		timer = 0;
-	}
-		
-	if (osl_keys->pressed.triangle) 
-	{
-		if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) 
+		if (osl_keys->pressed.down) 
 		{
-			curScroll = 1;
-			current = 1;
+			gameDown();
+			timer = 0;
 		}
-	}
+		else if (osl_keys->pressed.up) 
+		{
+			gameUp();
+			timer = 0;
+		}	
 	
-	if (osl_keys->pressed.cross) 
-	{
-		oslPlaySound(KeypressStandard, 1);  
-		openDir(folderIcons[current].filePath, folderIcons[current].fileType);
+		if (osl_keys->pressed.right) 
+		{
+			gameDownx5();
+			timer = 0;
+		}
+		else if (osl_keys->pressed.left) 
+		{
+			gameUpx5();	
+			timer = 0;
+		}
+		
+		if (osl_keys->pressed.triangle) 
+		{
+			if (!(strcmp(lastDir, "ms0:")==0) || (strcmp(lastDir, "ms0:/")==0)) 
+			{
+				curScroll = 1;
+				current = 1;
+			}
+		}
+	
+		if (osl_keys->pressed.cross) 
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			openDir(folderIcons[current].filePath, folderIcons[current].fileType);
+		}
 	}
 	
 	volumeController();
@@ -437,12 +440,12 @@ void gameControls(int n) //Controls
 	}
 	
 	timer++;
-	if ((timer > 30) && (osl_keys->pressed.up))
+	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
 	{
 		gameUp();
 		timer = 25;
 	} 
-	else if ((timer > 30) && (osl_keys->pressed.down)) 
+	else if ((timer > 30) && (pad.Buttons & PSP_CTRL_DOWN))
 	{
 		gameDown();
 		timer = 25;
@@ -467,6 +470,8 @@ char * gameBrowse(const char * path)
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
+		oldpad = pad;
+		sceCtrlReadBufferPositive(&pad, 1);
 		gameDisplay();
 		gameControls(0);
 		
@@ -494,6 +499,8 @@ char * popsBrowse(const char * path)
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));	
+		oldpad = pad;
+		sceCtrlReadBufferPositive(&pad, 1);
 		gameDisplay();
 		gameControls(1);
 		

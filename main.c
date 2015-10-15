@@ -285,12 +285,11 @@ int main()
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto); //Load and set font
 	
-	SceUID kModule, kModule1, kModule2, kModule3;
+	SceUID kModule, kModule1, kModule2;
 	
 	kModule = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
 	kModule1 = pspSdkLoadStartModule("modules/control.prx", PSP_MEMORY_PARTITION_KERNEL);
 	kModule2 = pspSdkLoadStartModule("modules/impose.prx", PSP_MEMORY_PARTITION_KERNEL);
-	kModule3 = pspSdkLoadStartModule("modules/module.prx", PSP_MEMORY_PARTITION_KERNEL);
 	
 	loadConfig();
 	
