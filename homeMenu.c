@@ -904,6 +904,11 @@ void home()
 
 	//unsigned int kernelButtons = getbuttons(); 
 	
+	if (fileExists("ms0:/PSP/GAME/CyanogenPSP/update.txt"))
+		read = 1;
+	else 
+		read = 0;
+	
 	while (!osl_quit)
 	{
 		LowMemExit();
@@ -965,18 +970,18 @@ void home()
 		{
 			if (read == 1)
 			{
+				updateData = readTextFromFile("ms0:/PSP/GAME/CyanogenPSP/update.txt");
+				oslInitMessageDialog(updateData, 0);
+				memset(message, 0, sizeof(message));
+				read = 2;
+			}		
+			else if (read == 2)
+			{
 				sceIoRemove("ms0:/PSP/GAME/CyanogenPSP/update.txt");
 				read = 0;
 			}
-			else if (fileExists("ms0:/PSP/GAME/CyanogenPSP/update.txt"))
-			{
-				read = 1;
-				updateData = ReadFile("ms0:/PSP/GAME/CyanogenPSP/update.txt");
-				oslInitMessageDialog(updateData, 0);
-				memset(message, 0, sizeof(message));
-			}
 		}
-			
+		
 		if (osl_keys->pressed.square)
 		{
 			powermenu();
