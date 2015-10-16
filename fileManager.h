@@ -82,13 +82,15 @@ File dirScan[MAX_FILES];
 
 SceIoDirent g_dir;
 
-char *file;
 int i;
 int current;
 int curScroll;
 char lastDir[512];
 int timer;
 char returnMe[512];
+/* Define a write buffer */
+char write_buffer[128*1024];
+char read_buffer[128*1024];
 
 int copy_bytes(SceUID source, SceUID destination, unsigned bytes);
 int copy_folder(char * source, char * destination);
@@ -99,13 +101,12 @@ int copy_folder_recursive(char * a, char * b);
 int fileExists(const char* path);
 int dirExists(const char* path);
 long getFileSize(const char * fileName);
-char* ReadFile(char *filename);
 int IsNextDir();
 char* GetNextFileName();
 int ChangeDir(const char* path);
 
 int folderScan(const char* path);
-int runFile(const char* path, char* type );
+int runFile(const char* path, char* type);
 int openDir(const char* path, char* type);
 void build_path(char *output, const char *root, const char *path, int append);
 void write_file(const char *read_loc, const char *write_loc, const char *name);
@@ -117,8 +118,8 @@ void DeleteFile(char path[]);
 int deleteRecursive(char path[]); //Thanks Moonchild!
 void fcopy(char * source);
 void fpaste(char * destination);
-int checkTextFile(char *textfile);
-char *getTextFromFile();
+int checkTextFile(char *path);
+char * readTextFromFile(char *path);
 void displayTextFromFile();
 void dirUpx5();
 void dirDownx5();

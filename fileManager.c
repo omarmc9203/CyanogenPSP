@@ -397,41 +397,6 @@ long getFileSize(const char * fileName)
     return 0; 
 } 
 
-char* ReadFile(char *filename)
-{
-	char *buffer = NULL;
-	int string_size,read_size;
-	FILE *handler = fopen(filename,"r");
-
-	if (handler)
-	{
-		//seek the last byte of the file
-		fseek(handler,0,SEEK_END);
-		//offset from the first to the last byte, or in other words, filesize
-		string_size = ftell (handler);
-		//go back to the start of the file
-		rewind(handler);
-
-		//allocate a string that can hold it all
-		buffer = (char*) malloc (sizeof(char) * (string_size + 1) );
-		//read it all in one operation
-		read_size = fread(buffer,sizeof(char),string_size,handler);
-		//fread doesnt set it so put a \0 in the last position
-		//and buffer is now officialy a string
-		buffer[string_size] = '\0';
-
-		if (string_size != read_size) 
-		{
-			//something went wrong, throw away the memory and set
-			//the buffer to NULL
-			free(buffer);
-			buffer = NULL;
-		}
-	}
-	fclose(handler);
-    return buffer;
-}
-
 SceUID dirId;
 int dirStatus = 1;
 char * fileName;
@@ -454,7 +419,6 @@ int ChangeDir(const char* path)
 {
 	return sceIoChdir(path);
 }
-
 
 int folderScan(const char* path )
 {
@@ -599,9 +563,6 @@ void build_path(char *output, const char *root, const char *path, int append)
 
 	*output++ = 0;
 }
-
-/* Define a write buffer */
-char write_buffer[128*1024];
 
 void write_file(const char *read_loc, const char *write_loc, const char *name)
 {
@@ -873,37 +834,25 @@ int deleteRecursive(char path[]) //Thanks Moonchild!
   return 1;
 }
 
-int checkTextFile(char *textfile)
+char * readTextFromFile(char *path)
 {
-	SceUID fd = sceIoOpen(textfile, PSP_O_RDONLY, 0777);
+	memset(read_buffer, 0, sizeof(read_buffer));
+	SceUID fd = sceIoOpen(path, PSP_O_RDONLY, 0777);
 	
 	if(fd < 0)
-	   return -1;
-
-	sceIoClose(fd);
+	   return NULL;
 	
-	file = textfile;
-
-	return 0;
-}
-
-char text_File[] = "";
-
-char *getTextFromFile()
-{
-	memset(text_File, 0, sizeof(text_File));
-	SceUID fd = sceIoOpen(file, PSP_O_RDONLY, 0777);
-	
-	sceIoRead(fd, text_File, 255);
+	int endOfFile = sceIoLseek(fd, 0, PSP_SEEK_END);
+	sceIoLseek(fd, 0, PSP_SEEK_SET);
+	sceIoRead(fd, read_buffer, endOfFile);
 
 	sceIoClose(fd);
 
-	return text_File;
+	return read_buffer;
 }
 
 void displayTextFromFile()
 {
-	char *textData;
 	textview = oslLoadImageFilePNG("system/app/filemanager/textview.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	if (!textview)
@@ -923,15 +872,14 @@ void displayTextFromFile()
 		digitaltime(420,4,0,hrTime);	
 		volumeController();
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);	
 			
-		textData = ReadFile(folderIcons[current].filePath);	
-			
-		oslDrawStringf(40,40,folderIcons[current].name);	
-		oslDrawStringf(10,66," \n%s", textData);	
+		oslDrawStringf(40,40, folderIcons[current].name);	
+		oslDrawStringf(10,66," \n%s", readTextFromFile(folderIcons[current].filePath));
 
 		if(osl_keys->pressed.circle)
 		{
+			free(read_buffer);
 			oslDeleteImage(textview);
 			return;
 		}	
@@ -1207,7 +1155,7 @@ void dirControls() //Controls
 	if (((ext) != NULL) && ((strcmp(ext ,".txt") == 0) || ((strcmp(ext ,".TXT") == 0)) || ((strcmp(ext ,".c") == 0)) || ((strcmp(ext ,".h") == 0)) || ((strcmp(ext ,".cpp") == 0)) || ((strcmp(ext ,".bin") == 0))) && (osl_keys->pressed.cross))
 	{
 		oslPlaySound(KeypressStandard, 1);  
-		displayTextFromFile(folderIcons[current].filePath);
+		displayTextFromFile();
 	}
 	
 	if (osl_keys->pressed.square)
