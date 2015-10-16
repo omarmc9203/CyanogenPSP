@@ -1341,6 +1341,7 @@ void displayMenu()
 		oslDrawStringf(20,86, "%s", lang_settingsDisplay[language][0]);
 		oslDrawStringf(20,140, "%s", lang_settingsDisplay[language][1]);
 		oslDrawStringf(20,195, "%s", lang_settingsDisplay[language][2]);
+		oslDrawStringf(20,245, "%s", lang_settingsDisplay[language][3]);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
@@ -1372,6 +1373,19 @@ void displayMenu()
 		{
 			oslDrawImageXY(highlight, 0, 173);
 			oslDrawStringf(20,195, "%s", lang_settingsDisplay[language][2]);
+			if (osl_keys->pressed.cross)
+			{	
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displaySubThemes("system/settings/language", 4);
+			}
+		}
+		
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272)
+		{
+			oslDrawImageXY(highlight, 0, 228);
+			oslDrawStringf(20,245, "%s", lang_settingsDisplay[language][3]);
 			if (osl_keys->pressed.cross)
 			{	
 				oslPlaySound(KeypressStandard, 1); 
@@ -1660,6 +1674,32 @@ void changeFont() //Created a separated function for this only because deleting 
 		oslSetFont(Roboto);
 		return;
 	}
+}
+
+int changeLanguage() //Created a separated function for this only because deleting a font while its in use causes it to crash.
+{
+	if (strcmp(folderIcons[current].filePath, "system/settings/language/English") == 0)
+		language = 0;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/French") == 0)
+		language = 1;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Polish") == 0)
+		language = 2;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/German") == 0)
+		language = 3;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Dutch") == 0)
+		language = 4;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Spanish") == 0)
+		language = 5;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Portuguese") == 0)
+		language = 6;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/BrazilianPortuguese") == 0)
+		language = 7;
+	
+	FILE * languagePath = fopen("system/settings/language.txt", "w");
+	fprintf(languagePath, "%d", language);
+	fclose(languagePath);
+	
+	return language;
 }
 
 void themesLoad()
@@ -2013,6 +2053,24 @@ void settingsControls(int n) //Controls
 		}
 	}
 	
+	else if (n == 4)
+	{
+		if (osl_keys->pressed.cross)
+		{
+			changeLanguage();
+			language = setFileDefaultsInt("system/settings/language.txt", 0, language);
+		}
+	}
+	
+	if (osl_keys->pressed.circle && n == 4)
+	{	
+		oslDeleteImage(displaybg);
+		oslDeleteImage(highlight);
+		oslDeleteImage(select);
+		oslDeleteImage(deselect);
+		displayMenu();
+	}
+	
 	if (osl_keys->pressed.circle)
 	{	
 		oslDeleteImage(displaybg);
@@ -2080,6 +2138,8 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 			settingsControls(2); // 2 is to used for selecting a folder for iconpacks
 		else if (n == 3)
 			settingsControls(3); // 3 is to used for selecting a folder for themes
+		else if (n == 4)
+			settingsControls(4); // 4 is to used for selecting a language
 			
 		sceDisplayWaitVblankStart();
 		
@@ -2113,6 +2173,8 @@ void displaySubThemes(char * browseDirectory, int n) // n is used here to search
 		browseDirectory = settingsBrowse("system/icons", 2); //For icon packs
 	else if (n == 3)
 		browseDirectory = settingsBrowse("system/themes", 3); //For themes
+	else if (n == 4)
+		browseDirectory = settingsBrowse("system/settings/language", 4); //For language
 	
 	while (!osl_quit)
 	{

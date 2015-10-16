@@ -117,6 +117,7 @@ void settingsDown();
 void settingsUpx5();
 void settingsDownx5();
 void changeFont();
+int changeLanguage();
 void themesLoad();
 void themesReload();
 void iconPackLoad();
