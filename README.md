@@ -6,32 +6,34 @@ This is a program that allows you to do everything a PSP can do with a little mo
 
 What's working
 =================
-- Cursor (analog buttons)
-- Home Menu
-- Touch tones, when pressing the cross button on an app/widget
+- Touch tones, when pressing the cross button on an app or button.
 - Battery Status (Displays the battery percentage, by using icons)
-- App Drawer - View and launch apps
 - Recovery menu - Can be launched from the power menu
 - Lockscreen
 - Navbar functions, for returning home or back to the previous menu
 - Power menu (Allows access to exit to XMB, and launch recovery)
-- Added digital time
-- Added USB Toggle in Settings->Performance->Storage Management, and recovery menu
-- Revamped Settings menu, making it much similar to Cyanogenmod's
-- Added screenshots (Use R + X to take a screenshot)
+- USB toggle in Settings->Performance->Storage Management, and recovery menu
+- Screenshots (Use R + X to take a screenshot)
 - Integrated RemoteJoyLite (Settings->Developer Options)
 - Music player - Supports MP3, BGM, WAV, AT3 and MOD files
-- Quick Settings (Drop down menu)
-- File Manager - Delete files and folders, open text file, view pictures and play music files
-- Internet Browser - NetFront default PSP browser
-- OTA Updates - Settings->About->CyanogenPSP Updates (WiFi only obviously)
-- Gallery App - Allows you to view pictures, and set as wallpaper (Press square to bring up the wallpaper prompt)
-- Dumping Menu - Dump UMD boot.bin, flash 0, flash 1 and memory
+- Quick settings (Drop down menu)
+- File manager - Delete files and folders, open text file, view pictures and play music files
+- Internet browser - NetFront default PSP browser
+- OTA updates - (Settings->About->CyanogenPSP Updates)
+- Gallery app - Allows you to view pictures, and set as wallpaper (Press square to bring up the wallpaper prompt) [JPG, PNG and GIF]
+- Dumping menu - Dump UMD boot.bin, flash 0, flash 1 and memory
 - Expanded desktop (Settings->Display)
-- Homebrew, POPS and ISO/CSO support
-- Boot Animation and Game boot toggles (Settings->Display)
-- Theme Manager
-- Icon Pack Manager
+- Homebrew, POPS and ISO/CSO support (Game Menu)
+- Boot animation and game boot toggles (Settings->Display->Miscellaneous)
+- Status icons
+- Custom wallpaper support
+- Custom font support
+- Theme manager (Settings->Display->Themes->Styles)
+- Icon pack manager (Settings->Display->Themes->Icon Packs)
+- Volume Control
+- Brightness slider under quick settings. Use left/right to navigate the brightness scale.
+- Battery management settings - (Powersave, Balanced and Performance)
+- Multi language support (Settings->Display->Language) Available languages can be found here: https://www.transifex.com/cyanogenpsp/cyanogenpsp/
 
 What's yet to work
 =================
