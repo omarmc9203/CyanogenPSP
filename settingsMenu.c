@@ -1694,6 +1694,8 @@ int changeLanguage() //Created a separated function for this only because deleti
 		language = 6;
 	else if (strcmp(folderIcons[current].filePath, "system/settings/language/BrazilianPortuguese") == 0)
 		language = 7;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Norwegian") == 0)
+		language = 8;
 	
 	FILE * languagePath = fopen("system/settings/language.txt", "w");
 	fprintf(languagePath, "%d", language);
@@ -3354,7 +3356,7 @@ void settingsHighlight()
 	if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 211 && cursor->y <= 267)
 	{
 		oslDrawImageXY(about, 226, 211);
-		oslDrawStringf(280,233,"%s", lang_settingsMain[language][5]);
+		oslDrawStringf(280,234,"%s", lang_settingsMain[language][5]);
 	}
 }
 

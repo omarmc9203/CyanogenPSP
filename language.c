@@ -10,6 +10,7 @@
 	5. Spanish
 	6. Portuguese
 	7. Brazilian Portuguese
+	8. Norwegian
 */
 
 const char lang_welcome[][4][100] = 
@@ -21,7 +22,8 @@ const char lang_welcome[][4][100] =
 	{"Welkom", "Gebruik de joystick om de aanwijzer te bewegen en", "druk X (kruisje) om de toepassing te openen.", "GOT IT"},
 	{"Bienvenido", "Use el stick análogo para navegar con el cursor y", "presione X para abrir la aplicación", "ENTENDIDO"},
 	{"Bem vindo", "Use o analogico para navegar o cursor e", "pressione X para abrir a aplicação", "ENTENDIDO"},
-	{"Bem-vindo(a)", "Use a manete analógica para mover o cursor e", "aperte X para abrir a aplicação.", "ENTENDIDO"}
+	{"Bem-vindo(a)", "Use a manete analógica para mover o cursor e", "aperte X para abrir a aplicação.", "ENTENDIDO"},
+	{"Velkommen", "Bruk den analoge spaken for å flytte på pekeren og", "trykk X (kryss) for å åpne applikasjonen.", "SKJØNNER"}
 };
 
 
@@ -34,7 +36,8 @@ const char lang_appDrawer[][10][100] =
 	{"Browser", "Rekenmachine", "Klok", " Beheerder", "Gallerij", "Spel", "Berichten", "Muziek", "Instellingen", "UMD"},
 	{"Navegador", "Calculadora", "Reloj", "Gestión", "Galería", "Juegos", "Mensajes", "Música", "Ajustes", "UMD"},
 	{"Navegador", "Calculadora", "Relógio", "Gerenciador", "Galeria", "Jogo", "Mensagens", "Música", "Opções", "UMD"},
-	{"Navegador", "Calculadora", "Relógio", "Gerenciador", "Galeria", "Jogo", "Mensagens", "Música", "Definições", "UMD"}
+	{"Navegador", "Calculadora", "Relógio", "Gerenciador", "Galeria", "Jogo", "Mensagens", "Música", "Definições", "UMD"},
+	{"Nettleser", "Kalkulator", "Klokke", "Filbehandler", "Galleri", "Spill", "Meldinger", "Musikk", "Instillinger", "UMD"}
 };
 
 const char lang_settingsMain[][6][100] = 
@@ -46,7 +49,8 @@ const char lang_settingsMain[][6][100] =
 	{"Wi-Fi", "Beveiliging", "Scherm", "Prestaties", "Opties voor ontwikkelaars", "Over"},
 	{"Wi-Fi", "Seguridad", "Pantalla", "Rendimiento", "Opciones de Desarrollador", "Acerca de"},
 	{"Wi-Fi", "Segurança", "Tela", "Desempenho", "Opções de desenvolvedor", "Sobre"},
-	{"Wi-Fi", "Segurança", "Exibição", "Desempenho", "Opções de Desenvolvedor", "Sobre"}
+	{"Wi-Fi", "Segurança", "Exibição", "Desempenho", "Opções de Desenvolvedor", "Sobre"},
+	{"Wi-Fi", "Sikkerhet", "Skjerm", "Ytelse", "Utviklervalg", "Om"}
 };
 
 const char lang_settingsDisplay[][4][100] = 
@@ -58,7 +62,8 @@ const char lang_settingsDisplay[][4][100] =
 	{"Thema's", "Tijd", "Taal", "Diversen"},
 	{"Temas", "Tiempo", "Idioma", "Miscelaneo"},
 	{"Temas", "Tempo", "Idioma", "Variados"},
-	{"Temas", "Horário", "Idioma", "Miscelâneas"}
+	{"Temas", "Horário", "Idioma", "Miscelâneas"},
+	{"Temaer", "Tid", "Diverse"}
 };
 
 const char lang_settingsThemes[][4][100] = 
@@ -70,7 +75,8 @@ const char lang_settingsThemes[][4][100] =
 	{"Stijl", "Achtergrond", "Lettertypes", "Pictogrammen"},
 	{"Estilo", "Fondo de Pantalla", "Fuentes", "Paquete de Iconos"},
 	{"Estilo", "Papel de parede", "Fontes", "Pacotes de ícones"},
-	{"Estilo", "Papel de Parede", "Fontes", "Pacotes de Ícones"}
+	{"Estilo", "Papel de Parede", "Fontes", "Pacotes de Ícones"},
+	{"Stil", "Bakgrunnsbilde", "Skrifter", "Ikon-pakker"}
 };
 
 const char lang_settingsTime[][1][100] = 
@@ -82,7 +88,8 @@ const char lang_settingsTime[][1][100] =
 	{"24-uurs klok gebruiken "},
 	{"Usar formato de 24 horas"},
 	{"Usar formato de 24 horas"},
-	{"Usar formato 24 horas"}
+	{"Usar formato 24 horas"},
+	{"Bruk 24-timers format"}
 };
 
 const char lang_settingsMiscellaneous[][4][100] =
@@ -94,7 +101,8 @@ const char lang_settingsMiscellaneous[][4][100] =
 	{"Schakel tussen dag/nacht widget", "Uitgebreide desktop aan/uit", "Opstart animatie aan/uit", "Game boot aan/uit"},
 	{"Usar widget de día/noche", "Usar escritorio expandido","Activar animación de inicio", "Activar inicio del juego"},
 	{"Alternar widget dia/noite", "Alternar area de trabalho expandida", "Alternar animação de boot", "Alternar animação de boot de jogo"},
-	{"Alternar widget de dia/noite", "Alternar área de trabalho expandida", "Alternar animação de boot", "Alternar boot de jogo"}
+	{"Alternar widget de dia/noite", "Alternar área de trabalho expandida", "Alternar animação de boot", "Alternar boot de jogo"},
+	{"Veksle dag/natt modul", "Veksle utvidet skrivebord", "Veklse oppstarts-animasjon", "Veksle spill-oppstart"}
 };
 
 const char lang_settingsPerformance[][4][100] = 
@@ -106,7 +114,8 @@ const char lang_settingsPerformance[][4][100] =
 	{"Processor", "Geheugen", "Opslag Beheer", "Accu Beheer"},
 	{"Procesador", "Memoria", "Gestión de Almacenamiento", "Gestión de la Batería"},
 	{"Processador", "Memoria", "Armazenamento", "Bateria"},
-	{"Processador", "Memória", "Gestão de Armazenamento", "Gestão de Bateria"}
+	{"Processador", "Memória", "Gestão de Armazenamento", "Gestão de Bateria"},
+	{"Prosessor", "Minne", "Administrer lagring", "Administrer batteri"}
 };
 
 const char lang_settingsProcessor[][5][100] = 
@@ -118,7 +127,8 @@ const char lang_settingsProcessor[][5][100] =
 	{"Huidige CPU kloksnelheid", "CPU overclock", "Druk R om de kloksnelheid te verhogen en L om het te verlagen.", "Huidige BUS snelheid"},
 	{"Frecuencia actual de la CPU", "Over-clock de CPU", "Presione R para aumentar la frecuencia y L para disminuir la frecuencia", "Frecuencia actual de BUS"},
 	{"Frenquencia atual da CPU", "Overclock da CPU", "Pressione R para aumentar a frequencia e L para diminui-la.", "Frequencia atual de BUS"},
-	{"Atual frequência da CPU", "Overclock da CPU", "Aperte R para aumentar a frequência e L para diminuí-la.", "Atual frequência do BUS"}
+	{"Atual frequência da CPU", "Overclock da CPU", "Aperte R para aumentar a frequência e L para diminuí-la.", "Atual frequência do BUS"},
+	{"Nåværende CPU-frekvens", "CPU over-klokking", "Trykk R for å øke frekvensen og L for å senke frekvensen.", "Nåværende bussfrekvens"}
 };
 
 const char lang_settingsRAM[][3][100] = 
@@ -130,7 +140,8 @@ const char lang_settingsRAM[][3][100] =
 	{"RAM vrij:", "beschikbaar", "RAM in gebruik"},
 	{"Memoria RAM disponible:", "disponible", "de la memoria RAM utilizada"},
 	{"RAM disponível:", "disponível", "de RAM usada"},
-	{"RAM disponível:", "disponíveis", "de RAM usada"}
+	{"RAM disponível:", "disponíveis", "de RAM usada"},
+	{"Tilgjengelig RAM:", "tilgjengelig", "av RAM brukt"}
 };
 
 const char lang_settingsStorage[][3][100] = 
@@ -142,7 +153,8 @@ const char lang_settingsStorage[][3][100] =
 	{"Druk select om van massaopslag te wisselen", "Totale opslagruimte:", "Beschikbaare opslagruimte:"},
 	{"Presione Select para activar el Almacenamiento Masivo USB", "Capacidad de almacenamiento total:", "Capacidad de almacenamiento disponible:"},
 	{"Pressione Select para alternar o armazenamento em massa USB", "Capacidade de armazenamento total:", "Capacidade de armazenamento disponível:"},
-	{"Aperte select para alternar o dispositivo de armazenmanento USB", "Capacidade total de armazenamento:", "Capacidade de armazenamento disponível:"}
+	{"Aperte select para alternar o dispositivo de armazenmanento USB", "Capacidade total de armazenamento:", "Capacidade de armazenamento disponível:"},
+	{"Trykk select for å veksle USB masselagring", "Total lagringskapasitet:", "Tilgjengelig lagringskapasitet:"}
 };
 
 const char lang_settingsBattery[][3][60] = 
@@ -154,7 +166,8 @@ const char lang_settingsBattery[][3][60] =
 	{"Accubesparing", "Gebalanceerd", "Prestatie"},
 	{"Ahorro de Energía", "Balanceado", "Alto Rendimiento"},
 	{"Powersave", "Balanciado", "Desempenho"},
-	{"Econômico", "Equilibrado", "Desempenhado"}
+	{"Econômico", "Equilibrado", "Desempenhado"},
+	{"Strømsparing", "Balansert", "Ytelse"}
 };
 
 const char lang_settingsAbout[][7][100] = 
@@ -166,7 +179,8 @@ const char lang_settingsAbout[][7][100] =
 	{"CyanogenPSP updates", "Klik om updates weer te geven/installeren", "CyanogenPSP versie:", "NIET OFFICIEEL", "Mac Adres:", "Kernel versie:", "OSLib versie:"},
 	{"Actualizaciones de CyanogenPSP", "Haga click para ver o instalar actualizaciones", "Versión de CyanogenPSP:", "NO OFICIAL", "Dirección MAC:", "Versión del Kernel:", "Versión del OSLib:"},
 	{"Atualizações CyanogenPSP", "Clique para, ver ou instalar atualizações disponiveis", "versão CyanogenPSP:", "NÃO-OFICIAL", "Endereço MAC:", "Versão do kernel:", "Versão OSLIB:"},
-	{"Atualizações do CyanogenPSP", "Clique para, ver ou instalar atualizações disponíveis", "Versão do CyanogenPSP:", "NÃO-OFICIAL", "Endereço Mac:", "Versão do Kernel:", "Versão do OSLib:"}
+	{"Atualizações do CyanogenPSP", "Clique para, ver ou instalar atualizações disponíveis", "Versão do CyanogenPSP:", "NÃO-OFICIAL", "Endereço Mac:", "Versão do Kernel:", "Versão do OSLib:"},
+	{"CyanogenPSP oppdateringer", "Trykk for, vis eller installer tilgjengelige oppdateringer", "CyanogenPSP versjon:", "UOFFISIELL", "Mac Adresse:", "Kernel versjon:", "OSLib versjon:"}
 };
 
 const char lang_settingsUpdates[][1][100] = 
@@ -178,7 +192,8 @@ const char lang_settingsUpdates[][1][100] =
 	{"Updates zoeken"},
 	{"Buscar actualizaciones"},
 	{"Procurar por atualizações"},
-	{"Checar por atualizações"}
+	{"Checar por atualizações"},
+	{"Se etter oppdateringer"}
 };
 
 const char lang_settingsSecuirty[][2][100] = 
@@ -190,7 +205,8 @@ const char lang_settingsSecuirty[][2][100] =
 	{"Wachtwoord vergrendeling", "PIN vergrendeling"},
 	{"Bloqueo con contraseña", "Bloqueo con PIN"},
 	{"Trava por senha", "Trava por PIN"},
-	{"Trava de senha", "Trava de pino"}
+	{"Trava de senha", "Trava de pino"},
+	{"Passordlås", "Pin-lås"}
 };
 
 const char lang_settingsWifi[][3][100] = 
@@ -202,7 +218,8 @@ const char lang_settingsWifi[][3][100] =
 	{"Geen WiFi configuratie gevonden", "Schakel Wlan knop in alsjeblieft", "Druk omhoog of omlaag om een Wifi-instelling te selecteren"},
 	{"No se encontró una configuración de Wi-Fi", "Por favor activa el interruptor del Wi-Fi", "Presiona arriba o abajo para navegar por tus configuraciones de Wi-Fi"},
 	{"Nenhuma configuração de WiFi encontrada", "Favor ligar o Wlan", "Pressione cima ou baixo para navegar suas configurações de WiFi"},
-	{"Nenhuma configuração de WiFi encontrada", "Por favor, ative o Wlan", "Use os botões direcionais (cima/baixo) para navegar através de suas configurações de Wifi"}
+	{"Nenhuma configuração de WiFi encontrada", "Por favor, ative o Wlan", "Use os botões direcionais (cima/baixo) para navegar através de suas configurações de Wifi"},
+	{"Ingen WiFi konfigurasjon funnet", "Vennligst slå på Wlan bryteren", "Trykk opp eller ned for å navigere dine Wifi konfigurasjoner"}
 };
 
 const char lang_settingsDeveloperOptions[][5][100] = 
@@ -214,7 +231,8 @@ const char lang_settingsDeveloperOptions[][5][100] =
 	{"Remote Joy Lite aan/uit", "Geeft je PSP scherm weer op je computer via USB", "Druk driehoek om dit uit te schalelen anders kan dit programma crashen", "USB debugging aan/uit", "Dumping tools"},
 	{"Usar Remote Joy Lite", "Muestra la imagen de la pantalla de tu PSP en tu PC vía USB", "Presiona Triangulo para desactivarlo o podria causar que la aplicación se detenga", "Activar depuración de USB", "Opciones de volcado/extracción"},
 	{"Alternar Remote Joy Lite", "Exibe a tela do seu PSP no seu PC por um cabo USB", "Pressione triangulo para desabilitar ou pode causar um crash", "Alternar depuração USB", "Ferramentas de dumping"},
-	{"Alternar Remote Joy Lite", "Exibir a tela de seu PSP em seu computador via USB", "Aperte triângulo para desabilitar ou isto pode causar o encerramento súbito do aplicativo", "Alternar depuração de USB", "Ferramentas de Dumping"}
+	{"Alternar Remote Joy Lite", "Exibir a tela de seu PSP em seu computador via USB", "Aperte triângulo para desabilitar ou isto pode causar o encerramento súbito do aplicativo", "Alternar depuração de USB", "Ferramentas de Dumping"},
+	{"Veksle Remote Joy Lite", "Viser PSP skjermen på din PC gjennom USB", "Trykk trekant for å deaktivere, ellers kan det føre til at programmet krasjer", "Veksle USB feilsøking", "Dumping tools"}
 };
 
 const char lang_settingsDump[][9][100] = 
@@ -226,7 +244,8 @@ const char lang_settingsDump[][9][100] =
 	{"Dump Flash 0", "Dump Flash 1", "Meer", "Dump UMD boot.bin", "Dump Geheugen", "Plaats UMD", "Geplaatste schijf", "Spel gevonden", "Dumping 28Megs van"},
 	{"Extraer Flash 0", "Extraer Flash 1", "Más", "Extraer boot.bin del UMD", "Volcar Memoria", "Insertar UMD", "Disco Leído", "Se ha encontrado un juego", "Extrayendo 28Megas de"},
 	{"Dump Flash 0", "Dump Flash 1", "Mais", "Dump UMD boot.bin", "Memoria Dump", "Insira um UMD", "Disco montado", "Jogo encontrado", "Dumping 28Megs de"},
-	{"Despejar Flash 0", "Despejar Flash 1", "Mais", "Despejar boot.bin do UMD", "Despejar Memória", "Insira o UMD", "Disco montado", "Jogo encontrado", "Despejando 28Megs de"}
+	{"Despejar Flash 0", "Despejar Flash 1", "Mais", "Despejar boot.bin do UMD", "Despejar Memória", "Insira o UMD", "Disco montado", "Jogo encontrado", "Despejando 28Megs de"},
+	{"Dump Flash 0", "Dump Flash 1", "Mer", "Dump UMD boot.bin", "Dump Minne", "Sett inn UMD", "Montert plate", "Spill funnet", "Dumper 28Megs fra"}
 };
 
 const char lang_quickSettings[][5][100] = 
@@ -238,5 +257,6 @@ const char lang_quickSettings[][5][100] =
 	{"Wi-Fi", "Accubesparing", "Gebalanceerd", "Prestatie", "Vergrendelscherm"},
 	{"Wi-Fi", "Ahorro de Energía", "Balanceado", "Alto Rendimiento", "Pantalla de Bloqueo"},
 	{"Wi-Fi", "Power save", "Balanceado", "Desempenho", "Tela de lock"},
-	{"Wi-Fi", "Modo econômico", "Equilibrado", "Desempenhado", "Bloqueio de tela"}
+	{"Wi-Fi", "Modo econômico", "Equilibrado", "Desempenhado", "Bloqueio de tela"},
+	{"Wi-Fi", "Strømsparing", "Balansert", "Ytelse", "Låseskjerm"}
 };
