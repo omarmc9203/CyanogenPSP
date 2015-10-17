@@ -17,7 +17,7 @@ What's working
 - Integrated RemoteJoyLite (Settings->Developer Options)
 - Music player - Supports MP3, BGM, WAV, AT3 and MOD files
 - Quick settings (Drop down menu)
-- File manager - Delete files and folders, open text file, view pictures and play music files
+- File manager - Delete files and folders, open text files, view pictures and play music files, rename files/folders and create new folders.
 - Internet browser - NetFront default PSP browser
 - OTA updates - (Settings->About->CyanogenPSP Updates)
 - Gallery app - Allows you to view pictures, and set as wallpaper (Press square to bring up the wallpaper prompt) [JPG, PNG and GIF]
@@ -25,6 +25,7 @@ What's working
 - Expanded desktop (Settings->Display)
 - Homebrew, POPS and ISO/CSO support (Game Menu)
 - Boot animation and game boot toggles (Settings->Display->Miscellaneous)
+- Security settings - Pin and password lock.
 - Status icons
 - Custom wallpaper support
 - Custom font support
