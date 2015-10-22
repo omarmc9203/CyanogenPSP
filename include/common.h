@@ -33,13 +33,13 @@ int chDetectOFW();
 int chDetectCFW();
 int chDetectMotherboard();
 
-void CheckerPrintf(char *fmt, ...);
-void xmbExit();
+void exitToXMB();
 void exitToGUI();
-void shutdownDevice();
+void deviceShutdown();
 void deviceStandby();
 void USB_Toggle();
-void Error(char *fmt, ...);
+int loadStartModule(char *module);
+int stopUnloadModule(SceUID modID);
 int WriteFile(char *file, void *buf, int size);
 int VerifyFile(char *file);
 u32 GetBatSer();

@@ -8,25 +8,10 @@
 
 char version_txt[256];
 char *file;
-int MainScreenColor;
 
 u32 value;
 
-//Checker func
-void CheckerPrintf(char *fmt, ...)
-{
-	va_list list;
-	char msg[256];	
-
-	va_start(list, fmt);
-	vsprintf(msg, fmt, list);
-	va_end(list);
-
-	pspDebugScreenPrintf(" ");
-	pspDebugScreenPrintf(msg);
-}
-
-void xmbExit()
+void exitToXMB()
 {
 	sceIoRemove("ipl_update.prx");
 	sceIoRemove("batman.prx");
@@ -42,7 +27,7 @@ void exitToGUI()
 	home();
 }
 
-void shutdownDevice()
+void deviceShutdown()
 {
 	scePowerRequestStandby();
 }
@@ -67,36 +52,20 @@ void USB_Toggle()
 	}
 }
 
-//Error
-void Error(char *fmt, ...)
+int loadStartModule(char *module)
 {
-	va_list list;
-	char msg[256];	
+	SceUID modID = sceKernelLoadModule(module, 0, NULL);
+	if(modID >= 0)
+		sceKernelStartModule(modID, strlen(module)+1, module, NULL, NULL);
+	return modID;
+}
 
-	va_start(list, fmt);
-	vsprintf(msg, fmt, list);
-	va_end(list);
-
-	CheckerPrintf("\n");
-	CheckerPrintf(msg);
-	
-	CheckerPrintf("\n\n");
-	CheckerPrintf("Press X to exit...\n");
-	
-	sceKernelDelayThread(30000);
-	
-	while (1)
-	{
-		SceCtrlData pad;
-		sceCtrlReadBufferPositive(&pad, 1);
-
-		if (pad.Buttons & PSP_CTRL_CROSS)
-			break;
-
-		sceKernelDelayThread(10000);
-	}
-	
-	xmbExit();
+int stopUnloadModule(SceUID modID)
+{
+    int status;
+    sceKernelStopModule(modID, 0, NULL, &status, NULL);
+    sceKernelUnloadModule(modID);
+    return 0;
 }
 
 //File helper
@@ -112,7 +81,7 @@ int WriteFile(char *file, void *buf, int size)
 	int written = sceIoWrite(fd, buf, size);
 	
 	if(written < 0)
-	   Error("Cannot write %s", file);
+	   oslDrawStringf(10,210,"Cannot write %s", file);
 
 	sceIoClose(fd);
 	
@@ -144,7 +113,7 @@ u32 GetBatSer()
 
 void SetBatSer(u16 ser1, u16 ser2)
 {
-	if(GetBatSer() == (ser2 & 0xFFFF) + ((ser1 & 0xFFFF)*0x10000)) Error("The current battery serial is already set to 0x%04X%04X. There is no need to change the battery serial.", ser1, ser2);
+	if(GetBatSer() == (ser2 & 0xFFFF) + ((ser1 & 0xFFFF)*0x10000)) oslDrawStringf(10,210, "The current battery serial is already set to 0x%04X%04X. There is no need to change the battery serial.", ser1, ser2);
 
 	u16 BatSer[2];
 	BatSer[0] = ser1;
@@ -158,7 +127,7 @@ void SetBatSer(u16 ser1, u16 ser2)
 	
 	chWriteSerial(BatSer);
 
-	if(GetBatSer() != (BatSer[1] & 0xFFFF) + ((BatSer[0] & 0xFFFF)*0x10000)) Error("Unable to write to the Battery EEPROM.");
+	if(GetBatSer() != (BatSer[1] & 0xFFFF) + ((BatSer[0] & 0xFFFF)*0x10000)) oslDrawStringf(10,210, "Unable to write to the Battery EEPROM.");
 }
 
 int GetBatType()
@@ -251,11 +220,11 @@ void swap_buttons()
 
     if(value) 
     {
-        CheckerPrintf("Done!, Enter button is now X");		
+        oslDrawStringf(10,210, "Done!, Enter button is now X");		
 	} 
 	else 
 	{
-        CheckerPrintf("Done!, Enter button is now O");	
+        oslDrawStringf(10,210, "Done!, Enter button is now O");	
     }
 }
 
@@ -265,12 +234,12 @@ void active_wma()
 
 	if (value == 1)
 	{
-		CheckerPrintf("WMA is already activated.");
+		oslDrawStringf(10,210, "WMA is already activated.");
 	}
 	else
 	{
 		SetRegistryValue("/CONFIG/MUSIC", "wma_play", 1);
-		CheckerPrintf("WMA activated.");
+		oslDrawStringf(10,210, "WMA activated.");
 	}
 }
 
@@ -280,35 +249,35 @@ void active_flash()
 
 	if(value == 1)
 	{
-		CheckerPrintf("Flash player is already activated.");
+		oslDrawStringf(10,210, "Flash player is already activated.");
 	}
 	else
 	{
 		SetRegistryValue("/CONFIG/BROWSER", "flash_activated", 1);
         SetRegistryValue("/CONFIG/BROWSER", "flash_play", 1);
-	    CheckerPrintf("Flash player activated.");
+	    oslDrawStringf(10,210, "Flash player activated.");
 	}
 }
 
 void fake_name()
 {
-	CheckerPrintf("Setting random name...");
+	oslDrawStringf(10,210, "Setting random name...");
 	value = chGetFakeName(20, 3465);
 	SetRegistryValue("/CONFIG/SYSTEM", "owner_name", value);
     sceKernelDelayThread(2000000);
-	CheckerPrintf("Done");
+	oslDrawStringf(10,220, "Done");
 }
 
 void hide_mac()
 {
-	CheckerPrintf("Hidding MAC address...");
+	oslDrawStringf(10,210, "Hidding MAC address...");
 	
 	int hidemac = chHideMACAddress("machide.chk");
 	if(hidemac == -1) 
-	   Error("Cannot hide MAC address");
-	   
-    sceKernelDelayThread(2000000);
-	CheckerPrintf("Done");
+		oslDrawStringf(10,220, "Cannot hide MAC address"); 
+	
+	sceKernelDelayThread(2000000);
+	oslDrawStringf(10,220, "Done");
 }
 
 //Version.txt
