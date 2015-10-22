@@ -302,7 +302,7 @@ void ShowPage2()
 		oslDrawStringf(10,80,"Battery Status:  %s\n", scePowerIsBatteryCharging() == 1 ? "Charging" : "Using");
 		oslDrawStringf(10,90,"Battery %%:       %i%%\n\n", scePowerGetBatteryLifePercent() < 0 ? 0 : scePowerGetBatteryLifePercent());
 		oslDrawStringf(10,100,"Hours Left:   %i:%02i\n\n", scePowerGetBatteryLifeTime() < 0 ? 0 : (scePowerGetBatteryLifeTime() / 60), scePowerGetBatteryLifeTime() < 0 ? 0 : (scePowerGetBatteryLifeTime() - (scePowerGetBatteryLifeTime() / 60 * 60)));
-		oslDrawStringf(10,110,"Battery Temp:    %iÂºC\n", scePowerGetBatteryTemp() < 0 ? 0 : scePowerGetBatteryTemp());
+		oslDrawStringf(10,110,"Battery Temp:    %iºC\n", scePowerGetBatteryTemp() < 0 ? 0 : scePowerGetBatteryTemp());
 		oslDrawStringf(10,120,"Battery Voltage: %0.3fV\n\n", scePowerGetBatteryVolt() < 0 ? 0 : (float)scePowerGetBatteryVolt() / 1000.0);
 		oslDrawStringf(10,130,"Remain Capacity: %i mAh\n", scePowerGetBatteryRemainCapacity() < 0 ? 0 : scePowerGetBatteryRemainCapacity()); //From raing3s psppower
 	
@@ -476,6 +476,9 @@ int ConfigurationMenu()
 	while (!osl_quit)
 	{
 		LowMemExit();
+		
+		selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
+        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
 
 		oslStartDrawing();	
 	
@@ -484,20 +487,14 @@ int ConfigurationMenu()
 		oslClearScreen(RGB(0,0,0));
 			
 		oslDrawImageXY(recoverybg, 0, 0);
-		oslDrawImage(Selector);
+		oslDrawImageXY(Selector, selector_image_x, selector_image_y);
 		
 		oslDrawStringf(10,60,"Go back");
 		oslDrawStringf(10,80,"Advanced configuration");
 		oslDrawStringf(10,100,"General configuration");
 		oslDrawStringf(10,120,"System");
 		oslDrawStringf(10,140,"Battery");
-	
-		Selector->x = selector_image_x; //Sets the selection coordinates
-        Selector->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        
+
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
         
@@ -567,6 +564,9 @@ int ShowAdvancedCnfMenu()
 	{
 		LowMemExit();
 		
+		selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
+        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
+		
 		oslStartDrawing();	
 		
 		oslReadKeys();
@@ -574,7 +574,7 @@ int ShowAdvancedCnfMenu()
 		oslClearScreen(RGB(0,0,0));
 			
 		oslDrawImageXY(recoverybg, 0, 0);
-		oslDrawImage(Selector);
+		oslDrawImageXY(Selector, selector_image_x, selector_image_y);
 
 		oslDrawStringf(10,60,"Go back");
 		oslDrawStringf(10,80,"Plain modules in UMD/ISO     (currently: %s)", config.umdactivatedplaincheck ? "enabled" : "disabled");
@@ -582,13 +582,7 @@ int ShowAdvancedCnfMenu()
 		oslDrawStringf(10,120,"XMB plugins                  (currently: %s)", config.xmbplugins ? "disabled" : "enabled");
 		oslDrawStringf(10,140,"GAME plugins                 (currently: %s)", config.gameplugins ? "disabled" : "enabled");
 		oslDrawStringf(10,160,"POPS plugins                 (currently: %s)", config.popsplugins ? "disabled" : "enabled");
-	
-		Selector->x = selector_image_x; //Sets the selection coordinates
-        Selector->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        
+		
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
         
@@ -667,6 +661,9 @@ int ShowCnfMenu()
 	while (!osl_quit)
 	{
 		LowMemExit();
+		
+		selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
+        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
   
 		oslStartDrawing();	
 		
@@ -675,7 +672,7 @@ int ShowCnfMenu()
 		oslClearScreen(RGB(0,0,0));
 		
 		oslDrawImageXY(recoverybg, 0, 0);
-		oslDrawImage(Selector);
+		oslDrawImageXY(Selector, selector_image_x, selector_image_y);
 
 		oslDrawStringf(10,60,"Go back");
 		oslDrawStringf(10,80,"Autoboot program at /PSP/GAME/BOOT/ (currently: %s)", config.startupprog ? "Enabled" : "Disabled");
@@ -687,12 +684,6 @@ int ShowCnfMenu()
 		oslDrawStringf(10,200,"Use version.txt                (currently: %s)", config.useversiontxt ? "Enabled" : "Disabled");
 		oslDrawStringf(10,220,"Use Slim colors on Classic PSP (currently: %s)", config.slimcolors ? "Enabled" : "Disabled");
 		oslDrawStringf(10,240,"Hide MAC address               (currently: %s)", config.hidemac ? "Enabled" : "Disabled");
-
-		Selector->x = selector_image_x; //Sets the selection coordinates
-        Selector->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
         
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
@@ -845,6 +836,9 @@ int ShowSystemMenu()
 	{
 		LowMemExit();
 		
+		selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
+        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
+		
 		oslStartDrawing();	
 		
 		oslReadKeys();
@@ -852,7 +846,7 @@ int ShowSystemMenu()
 		oslClearScreen(RGB(0,0,0));
 		
 		oslDrawImageXY(recoverybg, 0, 0);
-		oslDrawImage(Selector);
+		oslDrawImageXY(Selector, selector_image_x, selector_image_y);
 	
 		oslDrawStringf(10,60,"Go back");
 		oslDrawStringf(10,80,"Swap buttons");
@@ -860,13 +854,7 @@ int ShowSystemMenu()
 		oslDrawStringf(10,120,"Activate flash player");
 		oslDrawStringf(10,140,"Use fake name");
 		oslDrawStringf(10,160,"Hide MAC address");
-	
-		Selector->x = selector_image_x; //Sets the selection coordinates
-        Selector->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        
+
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
         
@@ -956,6 +944,9 @@ int ShowBatteryMenu()
 	while (!osl_quit)
 	{
 		LowMemExit();
+		
+		selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
+        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
 
 		oslStartDrawing();	
 		
@@ -964,20 +955,14 @@ int ShowBatteryMenu()
 		oslClearScreen(RGB(0,0,0));
 		
 		oslDrawImageXY(recoverybg, 0, 0);
-		oslDrawImage(Selector);
+		oslDrawImageXY(Selector, selector_image_x, selector_image_y);
 	
 		oslDrawStringf(10,60,"Go back");
 		oslDrawStringf(10,80,"Make battery pandora");
 		oslDrawStringf(10,100,"Make battery autoBoot");
 		oslDrawStringf(10,120,"Make battery normal");
 		oslDrawStringf(10,140,"Dump battery serial to file");
-	
-		Selector->x = selector_image_x; //Sets the selection coordinates
-        Selector->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        
+
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
         
@@ -1093,6 +1078,9 @@ int mainRecoveryMenu()
 	while (!osl_quit)
 	{
 		LowMemExit();
+		
+		selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
+        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
   
 		oslStartDrawing();	
 
@@ -1101,7 +1089,7 @@ int mainRecoveryMenu()
 		oslClearScreen(RGB(0,0,0));
 		
 		oslDrawImageXY(recoverybg, 0, 0);
-		oslDrawImage(Selector);
+		oslDrawImageXY(Selector, selector_image_x, selector_image_y);
 		
 		oslDrawStringf(10,60,"Toggle USB");
 		oslDrawStringf(10,80,"System information");
@@ -1112,12 +1100,6 @@ int mainRecoveryMenu()
 		oslDrawStringf(10,180,"Exit to XMB");
 		oslDrawStringf(10,200,"Standby");
 		oslDrawStringf(10,220,"Shutdown device");
-		
-		Selector->x = selector_image_x; //Sets the selection coordinates
-        Selector->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(selector_xDistance*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(selector_yDistance*MenuSelection); //Determines where the selection image is drawn for each selection
         
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
@@ -1164,7 +1146,7 @@ int mainRecoveryMenu()
 		
 		else if (MenuSelection == 7 && osl_keys->pressed.cross)
 		{
-			xmbExit();
+			exitToXMB();
 		}
 		
 		else if (MenuSelection == 8 && osl_keys->pressed.cross)
@@ -1174,7 +1156,7 @@ int mainRecoveryMenu()
 		
 		else if (MenuSelection == 9 && osl_keys->pressed.cross)
 		{
-			shutdownDevice();
+			deviceShutdown();
 		}
 		
 		oslEndDrawing(); 

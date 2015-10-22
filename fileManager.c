@@ -1286,12 +1286,9 @@ char * dirBrowse(const char * path)
 		dirDisplay();
 		dirControls();
 		
-		sceDisplayWaitVblankStart();
-		
 		if (strlen(returnMe) > 4) 
-		{
-			break;
-		}
+			break;	
+			
 		oslEndDrawing(); 
         oslEndFrame(); 
 		oslSyncFrame();
