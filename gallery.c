@@ -191,17 +191,38 @@ int showImage(char * path, int n)
 		}
 		
 		if (osl_keys->pressed.circle) 
-		{
-			oslDeleteImage(image);
-			oslDeleteImage(galleryBar);
-			
+		{			
 			if (n == 1)
 			{
+				oslDeleteImage(image);
+				oslDeleteImage(galleryBar);
 				displaySubThemes("system/framework/framework-res/res", 1);
+			}
+			
+			else if (selection == 1)
+			{
+				oslDeleteImage(image);
+				oslDeleteImage(galleryBar);
+				galleryView("ms0:/PICTURE");
+			}
+			else if (selection == 2)
+			{
+				oslDeleteImage(image);
+				oslDeleteImage(galleryBar);
+				galleryView("ms0:/PSP/PHOTO");
+			}
+				
+			else if (selection == 3)
+			{
+				oslDeleteImage(image);
+				oslDeleteImage(galleryBar);
+				galleryView("ms0:/PSP/GAME/CyanogenPSP/screenshots");
 			}
 			
 			else
 			{
+				oslDeleteImage(image);
+				oslDeleteImage(galleryBar);
 				return 1;
 			}
 		}
@@ -262,6 +283,7 @@ void galleryControls() //Controls
 	if (osl_keys->pressed.cross)
 	{
 		oslPlaySound(KeypressStandard, 1);  
+		galleryUnload();
 		showImage(folderIcons[current].filePath, 0);
 	}
 	
@@ -337,12 +359,10 @@ char * galleryBrowse(const char * path)
 		sceCtrlReadBufferPositive(&pad, 1);
 		galleryDisplay();
 		galleryControls();
-		
-		sceDisplayWaitVblankStart();
-		
-		if (strlen(returnMe) > 4) {
+
+		if (strlen(returnMe) > 4) 
 			break;
-		}
+		
 		oslEndDrawing(); 
         oslEndFrame(); 
 		oslSyncFrame();	
@@ -402,18 +422,20 @@ int galleryApp()
 	int selector_image_x; //Determines the starting x position of the selection
 	int selector_image_y = 26; //Determines the starting y position of the selection
 	int numMenuItems = 3; //Amount of items in the menu
-	int selection = 0;
 
 	while (!osl_quit)
 	{		
 		LowMemExit();
+		
+		selector_image_x = selector_x+(galley_xSelection*MenuSelection); //Determines where the selection image is drawn for each selection
+        selector_image_y = selector_y+(galley_ySelection*MenuSelection); //Determines where the selection image is drawn for each selection
 	
 		oslStartDrawing();
 		oslReadKeys();
 		oslClearScreen(RGB(0,0,0));	
 		oslDrawImageXY(gallerybg, 0, 0);
 		oslDrawStringf(25,25,"Album");
-		oslDrawImage(gallerySelection);
+		oslDrawImageXY(gallerySelection, selector_image_x, selector_image_y);
 		
 		oslDrawStringf(25,89,"PICTURE");
 		oslDrawStringf(25,145,"PSP/PHOTO");
@@ -422,12 +444,6 @@ int galleryApp()
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
 		volumeController();
-		
-		gallerySelection->x = selector_image_x; //Sets the selection coordinates
-        gallerySelection->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(galley_xSelection*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(galley_ySelection*MenuSelection); //Determines where the selection image is drawn for each selection
         
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
@@ -437,19 +453,22 @@ int galleryApp()
 		
 		if (MenuSelection == 1 && osl_keys->pressed.cross)
         {		
+			selection = 1;
 			oslPlaySound(KeypressStandard, 1);  
 			galleryUnload();
 			galleryView("ms0:/PICTURE");
         }
 		else if (MenuSelection == 2 && osl_keys->pressed.cross)
         {		
+			selection = 2;
 			oslPlaySound(KeypressStandard, 1);  
 			galleryUnload();
 			galleryView("ms0:/PSP/PHOTO");
         
 		}
 		else if (MenuSelection == 3 && osl_keys->pressed.cross)
-        {		
+        {	
+			selection = 3;
 			oslPlaySound(KeypressStandard, 1);  
 			galleryUnload();
 			galleryView("ms0:/PSP/GAME/CyanogenPSP/screenshots");
