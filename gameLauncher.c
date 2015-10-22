@@ -471,12 +471,10 @@ char * gameBrowse(const char * path)
 		sceCtrlReadBufferPositive(&pad, 1);
 		gameDisplay();
 		gameControls(0);
+
+		if (strlen(returnMe) > 4) 
+			break;	
 		
-		sceDisplayWaitVblankStart();
-		
-		if (strlen(returnMe) > 4) {
-			break;
-		}
 		oslEndDrawing(); 
         oslEndFrame(); 
 		oslSyncFrame();	
@@ -501,11 +499,9 @@ char * popsBrowse(const char * path)
 		gameDisplay();
 		gameControls(1);
 		
-		sceDisplayWaitVblankStart();
+		if (strlen(returnMe) > 4) 
+			break;		
 		
-		if (strlen(returnMe) > 4) {
-			break;
-		}
 		oslEndDrawing(); 
         oslEndFrame(); 
 		oslSyncFrame();	
@@ -520,7 +516,7 @@ void gameUnload()
 }
 
 const OSL_VIRTUALFILENAME __image_ram_files[] = {
-	{"ram:/Media/icon0.png", (void*)icon0_png, sizeof(icon0_png), &VF_MEMORY}
+	{"system/app/game/default.png", (void*)icon0_png, sizeof(icon0_png), &VF_MEMORY}
 };
 
 unsigned int size_icon0_png = 8939;
@@ -531,11 +527,11 @@ void getIcon0(char* filename)
     int icon0Offset, icon1Offset;
     char file[256];
     sprintf(file,"%s/eboot.pbp",filename);
-    SceUID fd = sceIoOpen(file, 0x0001/*O_RDONLY*/, 0777);
+    SceUID fd = sceIoOpen(file, PSP_O_RDONLY, 0777);
 	
     if(fd < 0)
 	{
-		icon0 = oslLoadImageFilePNG("ram:/Media/icon0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+		icon0 = oslLoadImageFilePNG("system/app/game/default.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
         return;
     }
 	
@@ -558,7 +554,7 @@ void getIcon0(char* filename)
 	
 	else
 	{
-        icon0 = oslLoadImageFilePNG("ram:/Media/icon0.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
+        icon0 = oslLoadImageFilePNG("system/app/game/default.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_8888);
     }
     
 	sceIoClose(fd);
@@ -700,7 +696,7 @@ int gameView(char * browseDirectory, int type)
 {	
 	gamebg = oslLoadImageFilePNG(gameBgPath, OSL_IN_RAM, OSL_PF_8888);
 	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
-
+	
 	oslSetFont(Roboto);
 
 	if (type == 0)
@@ -820,12 +816,15 @@ int gameApp()
 	{		
 		LowMemExit();
 	
+		selector_image_x = selector_x+(game_xSelection*MenuSelection); //Determines where the selection image is drawn for each selection
+		selector_image_y = selector_y+(game_ySelection*MenuSelection); //Determines where the selection image is drawn for each selection
+	
 		oslStartDrawing();
 		oslReadKeys();
 		oslClearScreen(RGB(0,0,0));	
 		oslDrawImageXY(gamebg, 0, 0);
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
-		oslDrawImage(gameSelection);
+		oslDrawImageXY(gameSelection, selector_image_x, selector_image_y);
 		
 		oslDrawStringf(20,87,"GAME");
 		oslDrawStringf(20,150,"ISO/CSO");
@@ -835,12 +834,6 @@ int gameApp()
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);	
 		volumeController();
-		
-		gameSelection->x = selector_image_x; //Sets the selection coordinates
-        gameSelection->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(game_xSelection*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(game_ySelection*MenuSelection); //Determines where the selection image is drawn for each selection
         
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
