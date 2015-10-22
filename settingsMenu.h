@@ -33,7 +33,7 @@
 #define SETTINGS_DISPLAY_X			20 // X value of where the filebrowser is displayed.
 #define SETTINGS_DISPLAY_Y			82 // Y value of the filebrowser is displayed.
 #define SETTINGS_CURR_DISPLAY_Y     62 
-#define SELECT_ICON_DISPLAY_Y      80 
+#define SELECT_ICON_DISPLAY_Y       80 
 
 //declaration
 OSL_IMAGE *settingsbg, *cursor, *usbdebug, *aboutbg, *offswitch, *onswitch, *displaybg, *performancebg, *wifibg, *developerbg, *about, *highlight, 

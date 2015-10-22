@@ -19,17 +19,14 @@
 
 char name;
 int setclock;
-char cyanogenpspversion[5] = "5.2X";
+char cyanogenpspversion[5] = "5.3";
 char lang[12] = "Uk English";
 static char Settings_message[100] = "";
 
 char buffer[100] = "";
 
 //kernel function imports
-
 int imposeSetBrightness(int value);
-int startLoadModule(char *module);
-int stopUnloadModule(SceUID modID);
 
 int connectAPCallback(int state) //Internet stuff
 {
@@ -247,7 +244,7 @@ ro.product.locale.language = %s\r\n\
 ro.build.user = Joel16\r\n\
 ro.product.cpu.frequency =  %d\r\n\
 ro.product.bus.frequency =  %d\r\n\
-ro.build.date = Sun Oct 06 12:30 AM EST 2015",
+ro.build.date = Tue Oct 20 8:30 PM EST 2015",
 	cyanogenpspversion, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
 	fclose(configtxt);	
 }
@@ -333,7 +330,7 @@ void aboutMenu()
 		oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
 		oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"%s %s-20151004-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+		oslDrawStringf(20,129,"%s %s-20151020-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 		oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawStringf(20,185,"%s %d.%d", lang_settingsAbout[language][5], version.major, version.minor);
 		oslDrawStringf(20,199,"%s %s", lang_settingsAbout[language][6], OSL_VERSION);
@@ -357,7 +354,7 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"%s %s-20151004-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+			oslDrawStringf(20,129,"%s %s-20151020-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 			oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
@@ -738,7 +735,7 @@ void processorMenu()
 	int currentState = stateOff;
 	int cpufreq, cpu, bus, state = 0;
 	
-	processorbg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
+	processorbg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -765,7 +762,7 @@ void processorMenu()
 		
 		if (cursor->x >= 16 && cursor->x <= 480 && cursor->y >= 118 && cursor->y <= 174)
 		{
-			oslDrawImageXY(highlight, 0, 122);
+			oslDrawImageXY(highlight, 0, 118);
 			oslDrawStringf(20,128, "%s", lang_settingsProcessor[language][1]);
 			oslDrawStringf(20,145, "%s", lang_settingsProcessor[language][2]);
 		}
@@ -2002,7 +1999,7 @@ void settingsControls(int n) //Controls
 	
 	if (((ext) != NULL) && (n == 0) && ((strcmp(ext ,".pgf") == 0) || (strcmp(ext ,".PGF") == 0)))
 	{
-		if (osl_keys->pressed.cross)
+		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			changeFont();
 		}
@@ -2013,15 +2010,13 @@ void settingsControls(int n) //Controls
 		{
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);	
-			oslDeleteImage(select);
-			oslDeleteImage(deselect);
 			showImage(folderIcons[current].filePath, 1);
 		}
 	}
 	
 	else if (n == 2)
 	{
-		if (osl_keys->pressed.cross)
+		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			strcpy(appDirPath, folderIcons[current].filePath);
 			FILE * iconPackTxt = fopen("system/settings/iconpack.txt", "w");
@@ -2034,7 +2029,7 @@ void settingsControls(int n) //Controls
 	
 	else if (n == 3)
 	{
-		if (osl_keys->pressed.cross)
+		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			strcpy(themeDirPath, folderIcons[current].filePath);
 			FILE * themeTxt = fopen("system/settings/themes.txt", "w");
@@ -2057,7 +2052,7 @@ void settingsControls(int n) //Controls
 	
 	else if (n == 4)
 	{
-		if (osl_keys->pressed.cross)
+		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			changeLanguage();
 			language = setFileDefaultsInt("system/settings/language.txt", 0, language);
@@ -2068,8 +2063,6 @@ void settingsControls(int n) //Controls
 	{	
 		oslDeleteImage(displaybg);
 		oslDeleteImage(highlight);
-		oslDeleteImage(select);
-		oslDeleteImage(deselect);
 		displayMenu();
 	}
 	
@@ -2077,8 +2070,6 @@ void settingsControls(int n) //Controls
 	{	
 		oslDeleteImage(displaybg);
 		oslDeleteImage(highlight);
-		oslDeleteImage(select);
-		oslDeleteImage(deselect);
 		displayThemes();
 	}
 	
@@ -2143,11 +2134,9 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 		else if (n == 4)
 			settingsControls(4); // 4 is to used for selecting a language
 			
-		sceDisplayWaitVblankStart();
-		
-		if (strlen(returnMe) > 4) {
+		if (strlen(returnMe) > 4) 
 			break;
-		}
+			
 		oslEndDrawing(); 
         oslEndFrame(); 
 		oslSyncFrame();
@@ -2159,8 +2148,6 @@ void displaySubThemes(char * browseDirectory, int n) // n is used here to search
 {	
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	select = oslLoadImageFilePNG("system/settings/select.png", OSL_IN_RAM, OSL_PF_8888);
-	deselect = oslLoadImageFilePNG("system/settings/deselect.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -3214,7 +3201,7 @@ void developerMenu()
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				RJL = 1;
-				modules[0] = startLoadModule("modules/RemoteJoyLite.prx");
+				modules[0] = loadStartModule("modules/RemoteJoyLite.prx");
 			}
 		}
 		
@@ -3227,7 +3214,7 @@ void developerMenu()
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				PSPDebug = 1;
-				modules[1] = startLoadModule("modules/psplink.prx");
+				modules[1] = loadStartModule("modules/psplink.prx");
 			}
 		}
 		
