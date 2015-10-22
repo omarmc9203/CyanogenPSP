@@ -275,7 +275,6 @@ int soundPlay(char * path)
 		
 		oslDrawImageXY(nowplaying, 0, 0);
 		oslDrawStringf(240,76, "%.28s", folderIcons[current].name);
-		//display_mp3_info(folderIcons[current].name);
 		
 		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
@@ -502,15 +501,12 @@ char * mp3Browse(const char * path)
 		mp3FileDisplay();
 		mp3Controls();
 		
-		sceDisplayWaitVblankStart();
-		
 		if (strlen(returnMe) > 4) 
-		{
-			break;
-		}
-	oslEndDrawing(); 
-    oslEndFrame(); 
-	oslSyncFrame();	
+			break;	
+			
+		oslEndDrawing(); 
+		oslEndFrame(); 
+		oslSyncFrame();	
 	}
 	return returnMe;
 }
@@ -562,6 +558,9 @@ int mp3player()
 	while (!osl_quit)
 	{		
 		LowMemExit();
+		
+		selector_image_x = selector_x+(mp3XSelection*MenuSelection); //Determines where the selection image is drawn for each selection
+        selector_image_y = selector_y+(mp3YSelection*MenuSelection); //Determines where the selection image is drawn for each selection
 	
 		oslStartDrawing();
 		oslReadKeys();
@@ -570,7 +569,7 @@ int mp3player()
 		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 		
 		oslDrawImageXY(mp3bg, 0, 0);
-		oslDrawImage(mp3_select);
+		oslDrawImageXY(mp3_select, selector_image_x, selector_image_y);
 		
 		oslDrawStringf(20,108,"MUSIC");
 		oslDrawStringf(20,163,"PSP/MUSIC");
@@ -582,12 +581,6 @@ int mp3player()
 		digitaltime(420,4,0,hrTime);
 		volumeController();
 		
-		mp3_select->x = selector_image_x; //Sets the selection coordinates
-        mp3_select->y = selector_image_y; //Sets the selection coordinates
-        
-        selector_image_x = selector_x+(mp3XSelection*MenuSelection); //Determines where the selection image is drawn for each selection
-        selector_image_y = selector_y+(mp3YSelection*MenuSelection); //Determines where the selection image is drawn for each selection
-        
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
         
