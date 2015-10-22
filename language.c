@@ -63,7 +63,7 @@ const char lang_settingsDisplay[][4][100] =
 	{"Temas", "Tiempo", "Idioma", "Miscelaneo"},
 	{"Temas", "Tempo", "Idioma", "Variados"},
 	{"Temas", "Horário", "Idioma", "Miscelâneas"},
-	{"Temaer", "Tid", "Diverse"}
+	{"Temaer", "Tid", "språk", "Diverse"}
 };
 
 const char lang_settingsThemes[][4][100] = 
