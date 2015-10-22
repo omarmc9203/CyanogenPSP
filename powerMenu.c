@@ -31,7 +31,6 @@ void powermenu()
 		oslDrawImageXY(ic_launcher_browser, 276, 190);
 		oslDrawImageXY(ic_launcher_settings, 331, 190);
 		oslDrawImageXY(ic_launcher_messenger, 160, 190);
-		oslDrawImageXY(pointer, 231, 180);
 		navbarButtons(0);
 		oslDrawImageXY(power, 102, 41);		
 		
