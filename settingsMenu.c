@@ -1677,10 +1677,12 @@ int changeLanguage() //Created a separated function for this only because deleti
 		language = 5;
 	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Portuguese") == 0)
 		language = 6;
-	else if (strcmp(folderIcons[current].filePath, "system/settings/language/BrazilianPortuguese") == 0)
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Brazilian-Portuguese") == 0)
 		language = 7;
 	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Norwegian") == 0)
 		language = 8;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Romanian") == 0)
+		language = 9;
 	
 	FILE * languagePath = fopen("system/settings/language.bin", "w");
 	fprintf(languagePath, "%d", language);
@@ -1691,7 +1693,7 @@ int changeLanguage() //Created a separated function for this only because deleti
 
 void themesLoad()
 {	
-	setFileDefaultsChar("system/settings/themes.bin", "system", themeDirPath);
+	setFileDefaultsChar("system/settings/theme.bin", "system", themeDirPath);
 
 	char settingsBgImg[100] = "/settings/settingsbg.png";
 	char displayBgImg[100] = "/settings/displaybg.png";
@@ -2020,7 +2022,7 @@ void settingsControls(int n) //Controls
 		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			strcpy(themeDirPath, folderIcons[current].filePath);
-			FILE * themeTxt = fopen("system/settings/themes.bin", "w");
+			FILE * themeTxt = fopen("system/settings/theme.bin", "w");
 			if (strcmp(themeDirPath, "system/themes/Default") == 0)
 			{
 				fprintf(themeTxt,"system");
@@ -2374,7 +2376,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				widgetActivation = fopen("system/widget/widgetactivator.bin", "w");
+				widgetActivation = fopen("system/widget/widgetActivator.bin", "w");
 				widgetActivator = 1;
 				fprintf(widgetActivation, "1");
 				fclose(widgetActivation);
@@ -2388,7 +2390,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				widgetActivation = fopen("system/widget/widgetactivator.bin", "w");
+				widgetActivation = fopen("system/widget/widgetActivator.bin", "w");
 				widgetActivator = 0;
 				fprintf(widgetActivation, "0");
 				fclose(widgetActivation);
