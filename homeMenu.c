@@ -440,6 +440,8 @@ void volumeController()
 		vcontrolX = rlimit;
 	}
 	
+	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+	
 	if (kernelButtons & PSP_CTRL_VOLUP)
 	{
 		increase_volume(1);
