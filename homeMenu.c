@@ -603,32 +603,34 @@ void androidQuickSettings()
 	
 	battery(374,yPos2-2,2);
 	getDayOfWeek(15,yPos2+5,1);
-	getMonthOfYear(88,yPos2+5);
+	getMonthOfYear(70,yPos2+5);
+	
+	oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_CENTER);
 
-	oslDrawStringf(137,yLine1, "%s", lang_quickSettings[language][0]);
-	oslDrawStringf(335,yPos2, "%d%%",scePowerGetBatteryLifePercent());
-	oslDrawStringf(415,yPos2, "%.7s", pspname);
+	oslDrawStringf(150,yLine1, "%s", lang_quickSettings[language][0]);
+	oslDrawStringf(350,yPos2, "%d%%",scePowerGetBatteryLifePercent());
+	oslDrawStringf(435,yPos2, "%.7s", pspname);
 	
 	int cpu = getCpuClock();
 	
 	if (cpu <= 133)
 	{
-		oslDrawStringf(285,yLine1, "%s", lang_quickSettings[language][1]);
+		oslDrawStringf(320,yLine1, "%s", lang_quickSettings[language][1]);
 	}
 	else if (cpu >= 300)
 	{
-		oslDrawStringf(284,yLine1, "%s", lang_quickSettings[language][3]);
+		oslDrawStringf(320,yLine1, "%s", lang_quickSettings[language][3]);
 	}
 	else 
 	{
-		oslDrawStringf(292,yLine1, "%s", lang_quickSettings[language][2]);
+		oslDrawStringf(320,yLine1, "%s", lang_quickSettings[language][2]);
 	}
 		
-	oslDrawStringf(202,yLine2, "%s", lang_quickSettings[language][4]);
+	oslDrawStringf(235,yLine2, "%s", lang_quickSettings[language][4]);
 	
 	oslDrawImageXY(control,controlX,yPos2+66);	
 		
-	digitaltime(15,yPos1,53,hrTime);
+	digitaltime(25,yPos1,53,hrTime);
 	
 	if (getBrightness() == 10)
 	{
