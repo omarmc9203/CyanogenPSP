@@ -5,16 +5,16 @@
 #include "lockScreen.h"
 #include "recoveryMenu.h"
 #include "settingsMenu.h"
+#include "include/utils.h"
 
 void powermenu()
 {	
 	
-	power = oslLoadImageFilePNG("system/home/menu/power.png", OSL_IN_RAM, OSL_PF_8888);
-	power1 = oslLoadImageFilePNG("system/home/menu/power1.png", OSL_IN_RAM, OSL_PF_8888);
-	recovery1 = oslLoadImageFilePNG("system/home/menu/recovery1.png", OSL_IN_RAM, OSL_PF_8888);
-	screenshot1 = oslLoadImageFilePNG("system/home/menu/screenshot1.png", OSL_IN_RAM, OSL_PF_8888);
+	power = oslLoadImageFilePNG("system/home/menu/powerMenu.png", OSL_IN_RAM, OSL_PF_8888);
+	powerSelection = oslLoadImageFilePNG("system/home/menu/powerSelection.png", OSL_IN_RAM, OSL_PF_8888);
+	recoverySelection = oslLoadImageFilePNG("system/home/menu/recoverySelection.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	if (!power || !power1 || !recovery1 || !screenshot1)
+	if (!power || !powerSelection || !recoverySelection)
 		debugDisplay();
 
 	while (!osl_quit)
@@ -32,47 +32,42 @@ void powermenu()
 		oslDrawImageXY(ic_launcher_settings, 331, 190);
 		oslDrawImageXY(ic_launcher_messenger, 160, 190);
 		navbarButtons(0);
-		oslDrawImageXY(power, 102, 41);		
+		oslDrawImageXY(power, 100, 61);		
+		
+		oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, 0);
 		
 		digitaltime(420,4,0,hrTime);
 		battery(370,2,1);
 		
-		if (cursor->x >= 116 && cursor->x <= 364 && cursor->y >= 47 && cursor->y <= 106) 
+		oslIntraFontSetStyle(Roboto, 0.75f, BLACK, 0, 0);
+		oslDrawStringf(165, 100, "Power off");
+		oslDrawStringf(165, 165, "Recovery");
+		
+		if (cursor->x >= 116 && cursor->x <= 364 && cursor->y >= 55 && cursor->y <= 125) 
 		{
-			oslDrawImageXY(power1, 102, 47);
+			oslDrawImageXY(powerSelection, 100, 60);
+			oslDrawStringf(165, 100, "Power off");
+			oslDrawStringf(165, 165, "Recovery");
 			if (osl_keys->pressed.cross)
 			{	
 				oslPlaySound(KeypressStandard, 1);  
 				sceKernelExitGame();
 			}
 		}
-		if (cursor->x >= 116 && cursor->x <= 364 && cursor->y >= 106 && cursor->y <= 165) 
+		if (cursor->x >= 116 && cursor->x <= 364 && cursor->y >= 126 && cursor->y <= 200) 
 		{
-			oslDrawImageXY(recovery1, 102, 106);
+			oslDrawImageXY(recoverySelection, 100, 60);
+			oslDrawStringf(165, 100, "Power off");
+			oslDrawStringf(165, 165, "Recovery");
 			if (osl_keys->pressed.cross)
 			{	
 				oslPlaySound(KeypressStandard, 1);  
 				oslSyncFrame();
 				sceKernelDelayThread(3*1000000);
 				oslDeleteImage(power);
-				oslDeleteImage(power1);
-				oslDeleteImage(recovery1);
-				oslDeleteImage(screenshot1);
+				oslDeleteImage(powerSelection);
+				oslDeleteImage(recoverySelection);
 				mainRecoveryMenu();
-			}
-		}
-		if (cursor->x >= 116 && cursor->x <= 364 && cursor->y >= 165 && cursor->y <= 224) 
-		{
-			oslDrawImageXY(screenshot1, 102, 165);
-			if (osl_keys->pressed.cross)
-			{	
-				oslPlaySound(KeypressStandard, 1);  
-				oslDeleteImage(power);
-				oslDeleteImage(power1);
-				oslDeleteImage(recovery1);
-				oslDeleteImage(screenshot1);
-				return;
-				screenshot();
 			}
 		}
 		
@@ -81,9 +76,8 @@ void powermenu()
 		if (osl_keys->pressed.circle)
 		{	
 			oslDeleteImage(power);
-			oslDeleteImage(power1);
-			oslDeleteImage(recovery1);
-			oslDeleteImage(screenshot1);
+			oslDeleteImage(powerSelection);
+			oslDeleteImage(recoverySelection);
 			return;
 		}
 		
