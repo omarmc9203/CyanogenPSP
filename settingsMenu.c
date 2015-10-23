@@ -1683,6 +1683,8 @@ int changeLanguage() //Created a separated function for this only because deleti
 		language = 8;
 	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Romanian") == 0)
 		language = 9;
+	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Italian") == 0)
+		language = 10;
 	
 	FILE * languagePath = fopen("system/settings/language.bin", "w");
 	fprintf(languagePath, "%d", language);
