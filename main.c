@@ -139,7 +139,7 @@ void langControls()
 	if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 	{
 		oslPlaySound(KeypressStandard, 1); 
-		language = setFileDefaultsInt("system/settings/language.txt", 0, language);
+		language = setFileDefaultsInt("system/settings/language.bin", 0, language);
 		oslDeleteImage(langSelection);
 		firstBootInitiation();
 	}
@@ -227,7 +227,7 @@ int firstBoot;
 //First Boot Message
 void firstBootInitiation()
 {	
-	firstBoot = setFileDefaultsInt("system/settings/firstBoot.txt", 1, firstBoot);
+	firstBoot = setFileDefaultsInt("system/settings/boot.bin", 1, firstBoot);
 
 	iconPackLoad();
 
@@ -310,7 +310,7 @@ void firstBootInitiation()
 	
 			if (cursor->x >= 388 && cursor->x <= 464 && cursor->y >= 98 && cursor->y <= 132 && osl_keys->pressed.cross)
 			{
-				FILE * firstBootTxt = fopen("system/settings/firstBoot.txt", "w"); 
+				FILE * firstBootTxt = fopen("system/settings/boot.bin", "w"); 
 				fprintf(firstBootTxt, "0");
 				fclose(firstBootTxt);
 				oslPlaySound(KeypressStandard, 1); 
@@ -340,8 +340,8 @@ int bootAnimation()
 {
 	int currentFrame = 0, i = 0;
 	
-	bootAnimActivator = setFileDefaultsInt("system/boot/bootAnimActivator.txt", 0, bootAnimActivator);
-	firstBoot = setFileDefaultsInt("system/settings/firstBoot.txt", 1, firstBoot);
+	bootAnimActivator = setFileDefaultsInt("system/boot/bootAnimActivator.bin", 0, bootAnimActivator);
+	firstBoot = setFileDefaultsInt("system/settings/boot.bin", 1, firstBoot);
 	
 	if (bootAnimActivator != 1)
 	{
@@ -412,12 +412,12 @@ int main()
 	Lock = oslLoadSoundFile("system/media/audio/ui/Lock.wav", OSL_FMT_NONE);
 	Unlock = oslLoadSoundFile("system/media/audio/ui/Unlock.wav", OSL_FMT_NONE);
 	
-	setFileDefaultsChar("system/settings/background.txt", "system/framework/framework-res/res/background.png", backgroundPath);
-	setFileDefaultsChar("system/settings/fonts.txt", "system/fonts/Roboto.pgf", fontPath);
+	setFileDefaultsChar("system/settings/background.bin", "system/framework/framework-res/res/background.png", backgroundPath);
+	setFileDefaultsChar("system/settings/font.bin", "system/fonts/Roboto.pgf", fontPath);
 	
-	hrTime = setFileDefaultsInt("system/app/clock/timeSet.txt", 0, hrTime);
-	language = setFileDefaultsInt("system/settings/language.txt", 0, language);
-	batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+	hrTime = setFileDefaultsInt("system/app/clock/timeSet.bin", 0, hrTime);
+	language = setFileDefaultsInt("system/settings/language.bin", 0, language);
+	batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 	
 	checkGBootActivation();
 	createDirs();
@@ -447,8 +447,6 @@ int main()
 	kModule = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
 	kModule1 = pspSdkLoadStartModule("modules/control.prx", PSP_MEMORY_PARTITION_KERNEL);
 	kModule2 = pspSdkLoadStartModule("modules/impose.prx", PSP_MEMORY_PARTITION_KERNEL);
-	
-	loadConfig();
 	
 	deleteUpdateFile(); //Delete update.zip
 	

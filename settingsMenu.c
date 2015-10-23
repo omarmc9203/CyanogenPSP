@@ -222,18 +222,6 @@ void switchStatus(int n)
 	}
 }
 
-void loadConfig()
-{	
-	//load/open file
-	FILE * configtxt = fopen(configFile, "rb");
-
-	if(!configtxt) 
-		return saveConfig();
-	
-	//close file
-	fclose(configtxt);
-}
-
 void saveConfig()
 {
 	FILE * configtxt = fopen(configFile, "wb"); //create config file if it doesn't exist.
@@ -1125,7 +1113,7 @@ void batteryMenu()
 	select = oslLoadImageFilePNG("system/settings/select.png", OSL_IN_RAM, OSL_PF_8888);
 	deselect = oslLoadImageFilePNG("system/settings/deselect.png", OSL_IN_RAM, OSL_PF_8888);
 	
-	batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+	batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 	
 	oslSetFont(Roboto);
 
@@ -1157,10 +1145,10 @@ void batteryMenu()
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);
-				batteryManagement = fopen("system/settings/battery.txt", "w"); 
+				batteryManagement = fopen("system/settings/battery.bin", "w"); 
 				fprintf(batteryManagement, "0");
 				fclose(batteryManagement);
-				batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+				batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 				setPowerManagement();
 			}
 		}
@@ -1172,10 +1160,10 @@ void batteryMenu()
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);
-				batteryManagement = fopen("system/settings/battery.txt", "w"); 
+				batteryManagement = fopen("system/settings/battery.bin", "w"); 
 				fprintf(batteryManagement, "1");
 				fclose(batteryManagement);
-				batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+				batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 				setPowerManagement();
 			}
 		}
@@ -1187,10 +1175,10 @@ void batteryMenu()
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);
-				batteryManagement = fopen("system/settings/battery.txt", "w"); 
+				batteryManagement = fopen("system/settings/battery.bin", "w"); 
 				fprintf(batteryManagement, "2");
 				fclose(batteryManagement);
-				batteryM = setFileDefaultsInt("system/settings/battery.txt", 1, batteryM);
+				batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 				setPowerManagement();
 			}
 		}
@@ -1664,7 +1652,7 @@ void changeFont() //Created a separated function for this only because deleting 
 	{		
 		oslDeleteFont(Roboto);
 		oslPlaySound(KeypressStandard, 1);  
-		FILE * fontPathTXT = fopen("system/settings/fonts.txt", "w");
+		FILE * fontPathTXT = fopen("system/settings/font.bin", "w");
 		fprintf(fontPathTXT,"%s", folderIcons[current].filePath);
 		fclose(fontPathTXT);
 		Roboto = oslLoadIntraFontFile(folderIcons[current].filePath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
@@ -1694,7 +1682,7 @@ int changeLanguage() //Created a separated function for this only because deleti
 	else if (strcmp(folderIcons[current].filePath, "system/settings/language/Norwegian") == 0)
 		language = 8;
 	
-	FILE * languagePath = fopen("system/settings/language.txt", "w");
+	FILE * languagePath = fopen("system/settings/language.bin", "w");
 	fprintf(languagePath, "%d", language);
 	fclose(languagePath);
 	
@@ -1703,7 +1691,7 @@ int changeLanguage() //Created a separated function for this only because deleti
 
 void themesLoad()
 {	
-	setFileDefaultsChar("system/settings/themes.txt", "system", themeDirPath);
+	setFileDefaultsChar("system/settings/themes.bin", "system", themeDirPath);
 
 	char settingsBgImg[100] = "/settings/settingsbg.png";
 	char displayBgImg[100] = "/settings/displaybg.png";
@@ -1866,7 +1854,7 @@ void themesReload()
 
 void iconPackLoad()
 {
-	setFileDefaultsChar("system/settings/iconpack.txt", "system/icons/Default", appDirPath);
+	setFileDefaultsChar("system/settings/iconpack.bin", "system/icons/Default", appDirPath);
 
 	char allappsImg[50] = "/allapps/ic_allapps.png";
 	char allapps_pressedImg[50] = "/allapps/ic_allapps_pressed.png";
@@ -2019,7 +2007,7 @@ void settingsControls(int n) //Controls
 		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			strcpy(appDirPath, folderIcons[current].filePath);
-			FILE * iconPackTxt = fopen("system/settings/iconpack.txt", "w");
+			FILE * iconPackTxt = fopen("system/settings/iconpack.bin", "w");
 			fprintf(iconPackTxt,"%s", appDirPath);
 			fclose(iconPackTxt);
 			iconPackLoad();
@@ -2032,7 +2020,7 @@ void settingsControls(int n) //Controls
 		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			strcpy(themeDirPath, folderIcons[current].filePath);
-			FILE * themeTxt = fopen("system/settings/themes.txt", "w");
+			FILE * themeTxt = fopen("system/settings/themes.bin", "w");
 			if (strcmp(themeDirPath, "system/themes/Default") == 0)
 			{
 				fprintf(themeTxt,"system");
@@ -2055,7 +2043,7 @@ void settingsControls(int n) //Controls
 		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			changeLanguage();
-			language = setFileDefaultsInt("system/settings/language.txt", 0, language);
+			language = setFileDefaultsInt("system/settings/language.bin", 0, language);
 		}
 	}
 	
@@ -2229,7 +2217,7 @@ void displayTime()
 				{
 					oslPlaySound(KeypressStandard, 1);
 					hrTime = 1;
-					timeSetTxt = fopen("system/app/clock/timeSet.txt", "w");
+					timeSetTxt = fopen("system/app/clock/timeSet.bin", "w");
 					fprintf(timeSetTxt, "%d", hrTime);
 					fclose(timeSetTxt);
 				}
@@ -2242,7 +2230,7 @@ void displayTime()
 				{
 					oslPlaySound(KeypressStandard, 1);
 					hrTime = 0;
-					timeSetTxt = fopen("system/app/clock/timeSet.txt", "w");
+					timeSetTxt = fopen("system/app/clock/timeSet.bin", "w");
 					fprintf(timeSetTxt, "%d", hrTime);
 					fclose(timeSetTxt);
 				}
@@ -2320,7 +2308,7 @@ void displayMiscellaneous()
 	FILE * bootAnimActivation;
 	FILE * gBootActivation;
 	
-	bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "r");
+	bootAnimActivation = fopen("system/boot/bootAnimActivator.bin", "r");
 	fscanf(bootAnimActivation,"%d",&bootAnimActivator);
 	fclose(bootAnimActivation);
 
@@ -2386,7 +2374,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
+				widgetActivation = fopen("system/widget/widgetactivator.bin", "w");
 				widgetActivator = 1;
 				fprintf(widgetActivation, "1");
 				fclose(widgetActivation);
@@ -2400,7 +2388,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				widgetActivation = fopen("system/widget/widgetactivator.txt", "w");
+				widgetActivation = fopen("system/widget/widgetactivator.bin", "w");
 				widgetActivator = 0;
 				fprintf(widgetActivation, "0");
 				fclose(widgetActivation);
@@ -2414,7 +2402,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
+				eDesktopActivation = fopen("system/home/eDesktopActivator.bin", "w");
 				eDesktopActivator = 1;
 				fprintf(eDesktopActivation, "1");
 				fclose(eDesktopActivation);
@@ -2428,7 +2416,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				eDesktopActivation = fopen("system/home/eDesktopActivator.txt", "w");
+				eDesktopActivation = fopen("system/home/eDesktopActivator.bin", "w");
 				eDesktopActivator = 0;
 				fprintf(eDesktopActivation, "0");
 				fclose(eDesktopActivation);
@@ -2442,7 +2430,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
+				bootAnimActivation = fopen("system/boot/bootAnimActivator.bin", "w");
 				bootAnimActivator = 1;
 				fprintf(bootAnimActivation, "1");
 				fclose(bootAnimActivation);
@@ -2456,7 +2444,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				bootAnimActivation = fopen("system/boot/bootAnimActivator.txt", "w");
+				bootAnimActivation = fopen("system/boot/bootAnimActivator.bin", "w");
 				bootAnimActivator = 0;
 				fprintf(bootAnimActivation, "0");
 				fclose(bootAnimActivation);
@@ -2470,7 +2458,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
+				gBootActivation = fopen("system/app/game/boot/gBootActivator.bin", "w");
 				gBootActivator = 1;
 				fprintf(gBootActivation, "1");
 				fclose(gBootActivation);
@@ -2484,7 +2472,7 @@ void displayMiscellaneous()
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
+				gBootActivation = fopen("system/app/game/boot/gBootActivator.bin", "w");
 				gBootActivator = 0;
 				fprintf(gBootActivation, "0");
 				fclose(gBootActivation);

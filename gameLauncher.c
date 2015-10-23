@@ -729,14 +729,14 @@ void checkGBootActivation()
 {
 	FILE * gBootActivation;
 
-	if (!(fileExists("system/app/game/boot/gBootActivator.txt")))
+	if (!(fileExists("system/app/game/boot/gBootActivator.bin")))
 	{
-		gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "w");
+		gBootActivation = fopen("system/app/game/boot/gBootActivator.bin", "w");
 		fprintf(gBootActivation, "1");
 		fclose(gBootActivation);
 	}
 
-	gBootActivation = fopen("system/app/game/boot/gBootActivator.txt", "r");
+	gBootActivation = fopen("system/app/game/boot/gBootActivator.bin", "r");
 	fscanf(gBootActivation,"%d",&gBootActivator);
 	fclose(gBootActivation);
 }

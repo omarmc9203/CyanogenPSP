@@ -899,8 +899,8 @@ void home()
 	
 	oslSetFont(Roboto);
 	
-	widgetActivator = setFileDefaultsInt("system/widget/widgetactivator.txt", 1, widgetActivator);
-	eDesktopActivator = setFileDefaultsInt("system/home/eDesktopActivator.txt", 0, eDesktopActivator);
+	widgetActivator = setFileDefaultsInt("system/widget/widgetActivator.bin", 1, widgetActivator);
+	eDesktopActivator = setFileDefaultsInt("system/home/eDesktopActivator.bin", 0, eDesktopActivator);
 
 	//unsigned int kernelButtons = getbuttons(); 
 	

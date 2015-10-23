@@ -94,7 +94,6 @@ int updateReady;
 void onlineUpdater();
 void flashUpdate();
 void switchStatus(int n);
-void loadConfig();
 void saveConfig();
 int getCpuClock();
 int getBusClock();
