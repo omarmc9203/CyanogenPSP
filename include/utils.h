@@ -30,7 +30,7 @@ enum colors {
 };
 
 int setFileDefaultsInt(char *path, int value, int var);
-void setFileDefaultsChar(char *path, char* data, char* var);
+char * setFileDefaultsChar(char path[], char data[], char var[]);
 void deleteUpdateFile();
 void createDirs();
 void makeMusicDir();

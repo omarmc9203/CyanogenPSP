@@ -446,6 +446,7 @@ void volumeController()
 	{
 		increase_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
+		oslDrawFillRect(165, 56, vcontrolX+5, 58, RGB(130, 209, 203));	
 		oslDrawImageXY(volumeControl, vcontrolX, 52);
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
@@ -454,7 +455,8 @@ void volumeController()
 	{
 		decrease_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
-		oslDrawImageXY(volumeControl, vcontrolX, 52);
+		oslDrawFillRect(165, 56, vcontrolX+5, 58, RGB(130, 209, 203));
+		oslDrawImageXY(volumeControl, vcontrolX, 52);	
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
 }
@@ -630,7 +632,8 @@ void androidQuickSettings()
 		
 	oslDrawStringf(235,yLine2, "%s", lang_quickSettings[language][4]);
 	
-	oslDrawImageXY(control,controlX,yPos2+66);	
+	oslDrawFillRect(40, yPos2+85, controlX+10, yPos2+87, RGB(128, 203, 196));	
+	oslDrawImageXY(control,controlX,yPos2+66);
 		
 	digitaltime(25,yPos1,53,hrTime);
 	

@@ -222,21 +222,6 @@ void switchStatus(int n)
 	}
 }
 
-void saveConfig()
-{
-	FILE * configtxt = fopen(configFile, "wb"); //create config file if it doesn't exist.
-	fprintf(configtxt,
-"ro.build.version.release = %s\r\n\
-ro.product.model = %d\r\n\
-ro.product.locale.language = %s\r\n\
-ro.build.user = Joel16\r\n\
-ro.product.cpu.frequency =  %d\r\n\
-ro.product.bus.frequency =  %d\r\n\
-ro.build.date = Tue Oct 20 8:30 PM EST 2015",
-	cyanogenpspversion, kuKernelGetModel(),lang,getCpuClock(),getBusClock());
-	fclose(configtxt);	
-}
-
 int getCpuClock()
 {
     return scePowerGetCpuClockFrequency();
@@ -318,7 +303,7 @@ void aboutMenu()
 		oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
 		oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"%s %s-20151020-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+		oslDrawStringf(20,129,"%s %s-20151023-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 		oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawStringf(20,185,"%s %d.%d", lang_settingsAbout[language][5], version.major, version.minor);
 		oslDrawStringf(20,199,"%s %s", lang_settingsAbout[language][6], OSL_VERSION);
@@ -342,7 +327,7 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"%s %s-20151020-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+			oslDrawStringf(20,129,"%s %s-20151023-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 			oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
@@ -948,8 +933,8 @@ void ramMenu()
 		
 		oslDrawStringf(20,78,"%s %d MB (%d%%) %s\n", lang_settingsRAM[language][0], availableRam, (((availableRam) * 100)/(totalRam)), lang_settingsRAM[language][1]); 
 		
-		oslDrawFillRect(20,100,424,110,RGB(206,215,219));
-		oslDrawFillRect(20,100,((availableRam)*20.2),110,RGB(0,149,135));
+		oslDrawFillRect(20, 100, 424, 110, RGB(206, 215, 219));
+		oslDrawFillRect(20, 100, ((availableRam)*20.2), 110, RGB(0, 149, 135));
 		
 		oslDrawStringf(20,122,"%d%% %s", (((20 - (availableRam)) * 100)/(totalRam)), lang_settingsRAM[language][2]);
 		
@@ -1695,7 +1680,7 @@ int changeLanguage() //Created a separated function for this only because deleti
 
 void themesLoad()
 {	
-	setFileDefaultsChar("system/settings/theme.bin", "system", themeDirPath);
+	strcpy(themeDirPath, setFileDefaultsChar("system/settings/theme.bin", "system", themeDirPath));
 
 	char settingsBgImg[100] = "/settings/settingsbg.png";
 	char displayBgImg[100] = "/settings/displaybg.png";
@@ -1858,8 +1843,8 @@ void themesReload()
 
 void iconPackLoad()
 {
-	setFileDefaultsChar("system/settings/iconpack.bin", "system/icons/Default", appDirPath);
-
+	strcpy(appDirPath, setFileDefaultsChar("system/settings/iconpack.bin", "system/icons/Default", appDirPath));
+	
 	char allappsImg[50] = "/allapps/ic_allapps.png";
 	char allapps_pressedImg[50] = "/allapps/ic_allapps_pressed.png";
 	char apolloImg[50] = "/music/ic_launcher_apollo.png";

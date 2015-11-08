@@ -105,12 +105,10 @@ int changeWallpaper()
 	{
 		oslDeleteImage(background);
 		oslPlaySound(KeypressStandard, 1);  
-		backgroundPathTXT = fopen("system/settings/background.txt", "w");
+		backgroundPathTXT = fopen("system/settings/background.bin", "w");
 		fprintf(backgroundPathTXT,"%s", folderIcons[current].filePath);
 		fclose(backgroundPathTXT);
-		backgroundPathTXT = fopen("system/settings/background.txt", "r");
-		fscanf(backgroundPathTXT,"%s", backgroundPath);
-		fclose(backgroundPathTXT);
+		strcpy(backgroundPath, setFileDefaultsChar("system/settings/background.bin", "system/framework/framework-res/res/background.png", backgroundPath));
 		background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
 		oslDeleteImage(wallpaper);
 		return 1;

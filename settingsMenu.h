@@ -94,7 +94,6 @@ int updateReady;
 void onlineUpdater();
 void flashUpdate();
 void switchStatus(int n);
-void saveConfig();
 int getCpuClock();
 int getBusClock();
 void pspGetModel(int x, int y);

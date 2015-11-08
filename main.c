@@ -329,9 +329,8 @@ void firstBootInitiation()
 	{
 		oslDeleteImage(welcome);
 		oslDeleteImage(transbackground);
-		oslDeleteImage(welcome);
-		oslDeleteImage(transbackground);
 		unloadIcons();
+		lockscreen();
 		home();
 	}
 }
@@ -412,8 +411,8 @@ int main()
 	Lock = oslLoadSoundFile("system/media/audio/ui/Lock.wav", OSL_FMT_NONE);
 	Unlock = oslLoadSoundFile("system/media/audio/ui/Unlock.wav", OSL_FMT_NONE);
 	
-	setFileDefaultsChar("system/settings/background.bin", "system/framework/framework-res/res/background.png", backgroundPath);
-	setFileDefaultsChar("system/settings/font.bin", "system/fonts/Roboto.pgf", fontPath);
+	strcpy(backgroundPath, setFileDefaultsChar("system/settings/background.bin", "system/framework/framework-res/res/background.png", backgroundPath));
+	strcpy(fontPath, setFileDefaultsChar("system/settings/font.bin", "system/fonts/Roboto.pgf", fontPath));
 	
 	hrTime = setFileDefaultsInt("system/app/clock/timeSet.bin", 0, hrTime);
 	language = setFileDefaultsInt("system/settings/language.bin", 0, language);

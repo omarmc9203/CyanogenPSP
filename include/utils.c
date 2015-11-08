@@ -30,7 +30,7 @@ int setFileDefaultsInt(char *path, int value, int var)
 	return var;
 }
 
-void setFileDefaultsChar(char *path, char* data, char* var)
+char * setFileDefaultsChar(char path[], char data[], char var[])
 {
 	FILE * temp;
 	
@@ -44,6 +44,8 @@ void setFileDefaultsChar(char *path, char* data, char* var)
 	temp = fopen(path, "r");
 	fscanf(temp, "%s", var);
 	fclose(temp);
+	
+	return var;
 }
 
 void deleteUpdateFile()
