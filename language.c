@@ -13,9 +13,11 @@
 	8. Norwegian
 	9. Romanian 
 	10. Italian
+	11. Russian
+	12. Ukrainian
 */
 
-const char lang_welcome[][4][100] = 
+const char lang_welcome[][4][120] = 
 {	
 	{"Welcome", "Use the analog stick to navigate the cursor and", "press X (cross) to open the application.", "GOT IT"},
 	{"Bienvenue", "Utilisez le stick analogique pour déplacer le curseur et", "pressez le bouton X (croix) pour ouvrir l'application.", "OK"},
@@ -27,7 +29,9 @@ const char lang_welcome[][4][100] =
 	{"Bem-vindo(a)", "Use a manete analógica para mover o cursor e", "aperte X para abrir a aplicação.", "ENTENDIDO"},
 	{"Velkommen", "Bruk den analoge spaken for å flytte på pekeren og", "trykk X (kryss) for å åpne applikasjonen.", "SKJØNNER"},
 	{"Bine ai venit", "Folosește joystickul pentru a naviga și", "apasă X pentru a deschide o aplicație", "AM ÎNȚELES"},
-	{"Benvenuto", "Usa lo stick analogico per muovere il cursore e", "premi X (croce) per aprire l'applicazione.", "HO CAPITO"}
+	{"Benvenuto", "Usa lo stick analogico per muovere il cursore e", "premi X (croce) per aprire l'applicazione.", "HO CAPITO"},
+	{"Приветствую", "Используйте аналоговый стик для управления курсором и", "нажмите X (крест) для открытия программы.", "Я понял"},
+	{"Вітаю", "Використовуйте аналоговий стік для керування курсором і", "натисніть X (хрест) для відкриття програми.", "Я зрозумів"}
 };
 
 
@@ -43,7 +47,9 @@ const char lang_appDrawer[][10][100] =
 	{"Navegador", "Calculadora", "Relógio", "Gerenciador", "Galeria", "Jogo", "Mensagens", "Música", "Definições", "UMD"},
 	{"Nettleser", "Kalkulator", "Klokke", "Filbehandler", "Galleri", "Spill", "Meldinger", "Musikk", "Instillinger", "UMD"},
 	{"Internet", "Calculator", "Ceas", "Fișiere", "Galerie", "Joc", "Mesaje", "Muzică", "Setări", "UMD"},
-	{"Browser", "Calcolatrice", "Orologio", "Manager", "Galleria", "Giochi", "Messaggi", "Musica", "Impostazioni", "UMD"}
+	{"Browser", "Calcolatrice", "Orologio", "Manager", "Galleria", "Giochi", "Messaggi", "Musica", "Impostazioni", "UMD"},
+	{"Браузер", "Калькулятор", "Часы", "Проводник", "Галерея", "Игра", "Сообщения", "Музыка", "Настройки", "UMD"},
+	{"Браузер", "Калькулятор", "Годинник", "Провідник", "Галерея", "Гра", "Повідомлення", "Музика", "Налаштування", "UMD"}
 };
 
 const char lang_settingsMain[][6][100] = 
@@ -58,7 +64,9 @@ const char lang_settingsMain[][6][100] =
 	{"Wi-Fi", "Segurança", "Exibição", "Desempenho", "Opções de Desenvolvedor", "Sobre"},
 	{"Wi-Fi", "Sikkerhet", "Skjerm", "Ytelse", "Utviklervalg", "Om"},
 	{"Wi-Fi", "Securitate", "Ecran", "Performanță", "Opțiuni dezvoltator", "Despre consolă"},
-	{"Wi-Fi", "Sicurezza", "Display", "Performance", "Opzione sviluppatore", "Informazioni"}
+	{"Wi-Fi", "Sicurezza", "Display", "Performance", "Opzione sviluppatore", "Informazioni"},
+	{"Wi-Fi", "Безопасность", "Дисплей", "Производительность", "Настройки разработчика", "О программе"},
+	{"Wi-Fi", "Безпека", "Дисплей", "Продуктивність", "Налаштування розробника", "Про програму"}
 };
 
 const char lang_settingsDisplay[][4][100] = 
@@ -73,7 +81,9 @@ const char lang_settingsDisplay[][4][100] =
 	{"Temas", "Horário", "Idioma", "Miscelâneas"},
 	{"Temaer", "Tid", "språk", "Diverse"},
 	{"Teme", "Ceas", "Limbă", "Diverse"},
-	{"Temi", "Ora", "lingua", "Varie"}
+	{"Temi", "Ora", "lingua", "Varie"},
+	{"Темы", "Время", "язык", "Разное"},
+	{"Теми", "Час", "мови", "Різне"}
 };
 
 const char lang_settingsThemes[][4][100] = 
@@ -88,7 +98,9 @@ const char lang_settingsThemes[][4][100] =
 	{"Estilo", "Papel de Parede", "Fontes", "Pacotes de Ícones"},
 	{"Stil", "Bakgrunnsbilde", "Skrifter", "Ikon-pakker"},
 	{"Stil", "Fundal", "Fonturi", "Pachete de pictograme"},
-	{"Stile", "Sfondo", "Fonts", "Pacchetti di icone"}
+	{"Stile", "Sfondo", "Fonts", "Pacchetti di icone"},
+	{"Стиль", "Обои", "Шрифты", "Наборы иконок"},
+	{"Стиль", "Шпалери", "Шрифт", "Пакети іконок"}
 };
 
 const char lang_settingsTime[][1][100] = 
@@ -103,7 +115,9 @@ const char lang_settingsTime[][1][100] =
 	{"Usar formato 24 horas"},
 	{"Bruk 24-timers format"},
 	{"Folosește formatul de 24 de ore"},
-	{"Usa il formato 24 ore"}
+	{"Usa il formato 24 ore"},
+	{"24-часовой формат"},
+	{"24-годинний формат"}
 };
 
 const char lang_settingsMiscellaneous[][4][100] =
@@ -118,7 +132,9 @@ const char lang_settingsMiscellaneous[][4][100] =
 	{"Alternar widget de dia/noite", "Alternar área de trabalho expandida", "Alternar animação de boot", "Alternar boot de jogo"},
 	{"Veksle dag/natt modul", "Veksle utvidet skrivebord", "Veklse oppstarts-animasjon", "Veksle spill-oppstart"},
 	{"Activează widgetul de zi/noapte", "Activează desktop extins", "Activează animația de pornire", "Activează pornirea în joc"},
-	{"Attiva il widget giorno/notte", "Attiva il desktop espanso", "Attiva animazione di avvio", "Attiva il boot del gioco"}
+	{"Attiva il widget giorno/notte", "Attiva il desktop espanso", "Attiva animazione di avvio", "Attiva il boot del gioco"},
+	{"Вкл. виджет дня/ночи", "Вкл. расширенный рабочий стол", "Вкл. анимацию загрузки", "Вкл. анимацию при запуске игры"},
+	{"Увм. віджет дня/ночі", "Увм. розширений робочий стіл", "Увм. анімацію загрузки", "Увм. анімацію при запуску гри"}
 };
 
 const char lang_settingsPerformance[][4][100] = 
@@ -133,7 +149,9 @@ const char lang_settingsPerformance[][4][100] =
 	{"Processador", "Memória", "Gestão de Armazenamento", "Gestão de Bateria"},
 	{"Prosessor", "Minne", "Administrer lagring", "Administrer batteri"},
 	{"Procesor", "Memorie", "Gestionarea memoriei", "Gestionarea bateriei"},
-	{"Processore", "Memoria", "Gestione dello spazio", "Gestione della batteria"}
+	{"Processore", "Memoria", "Gestione dello spazio", "Gestione della batteria"},
+	{"Процессор", "Память", "Управление памятью", "Управление электропитанием"},
+	{"Процесор", "Пам'ять", "Керування памя'ттю", "Керування батареєю"}
 };
 
 const char lang_settingsProcessor[][5][100] = 
@@ -148,7 +166,9 @@ const char lang_settingsProcessor[][5][100] =
 	{"Atual frequência da CPU", "Overclock da CPU", "Aperte R para aumentar a frequência e L para diminuí-la.", "Atual frequência do BUS"},
 	{"Nåværende CPU-frekvens", "CPU over-klokking", "Trykk R for å øke frekvensen og L for å senke frekvensen.", "Nåværende bussfrekvens"},
 	{"Frecvența actuală a CPU", "Creșterea frecvenței CPU", "Apasă R pentru a crește frecvența și L pentru a descrește frecvența.", "Frecvența actuală a BUS"},
-	{"Frequenza CPU attuale", "Over-clock CPU", "Premi R per incrementare la frequenza e L per diminuire la frequenza.", "Frequenza attuale BUS"}
+	{"Frequenza CPU attuale", "Over-clock CPU", "Premi R per incrementare la frequenza e L per diminuire la frequenza.", "Frequenza attuale BUS"},
+	{"Текущая частота ЦПУ", "Разгон ЦПУ", "Нажмите R для увеличения частоты и L для уменьшения.", "Текущая частота шины"},
+	{"Поточна частота ЦП", "Розгін ЦП", "Натисніть R для збільшення частоти та L для зменшення.", "Поточна частота шини"}
 };
 
 const char lang_settingsRAM[][3][100] = 
@@ -163,7 +183,9 @@ const char lang_settingsRAM[][3][100] =
 	{"RAM disponível:", "disponíveis", "de RAM usada"},
 	{"Tilgjengelig RAM:", "tilgjengelig", "av RAM brukt"},
 	{"RAM disponibil:", "disponibil", "de RAM utilizat"},
-	{"RAM disponibile:", "disponibile", "di RAM usata"}
+	{"RAM disponibile:", "disponibile", "di RAM usata"},
+	{"Доступно ОЗУ:", "доступно", "ОЗУ используется"},
+	{"Доступно RAM:", "доступно", "RAM використовується"}
 };
 
 const char lang_settingsStorage[][3][100] = 
@@ -178,7 +200,9 @@ const char lang_settingsStorage[][3][100] =
 	{"Aperte select para alternar o dispositivo de armazenmanento USB", "Capacidade total de armazenamento:", "Capacidade de armazenamento disponível:"},
 	{"Trykk select for å veksle USB masselagring", "Total lagringskapasitet:", "Tilgjengelig lagringskapasitet:"},
 	{"Apasă SELECT pentru a activa stocarea USB", "Capacitate de stocare totală:", "Capacitate de stocare disponibilă:"},
-	{"Premi select per attivare memoria di massa USB", "Capacità totale della memoria:", "Capacità di archiviazione disponibile"}
+	{"Premi select per attivare memoria di massa USB", "Capacità totale della memoria:", "Capacità di archiviazione disponibile"},
+	{"Нажмите SELECT для переключения на USB накопитель", "Полный объём памяти:", "Доступный объём памяти:"},
+	{"Натисніть SELECT для переключення на USB накопичувач", "Повний об'єм пам'яті:", "Доступний об'єм пам'яті:"}
 };
 
 const char lang_settingsBattery[][3][60] = 
@@ -193,7 +217,9 @@ const char lang_settingsBattery[][3][60] =
 	{"Econômico", "Equilibrado", "Desempenhado"},
 	{"Strømsparing", "Balansert", "Ytelse"},
 	{"Economisire", "Echilibrat", "Performanță"},
-	{"Risparmio energetico", "Bilanciato", "Prestazioni"}
+	{"Risparmio energetico", "Bilanciato", "Prestazioni"},
+	{"Энергосберегающий", "Сбаланированный", "Производительность"},
+	{"Енергозберігаючий", "Збалансований", "Продуктивність"}
 };
 
 const char lang_settingsAbout[][7][100] = 
@@ -208,7 +234,9 @@ const char lang_settingsAbout[][7][100] =
 	{"Atualizações do CyanogenPSP", "Clique para, ver ou instalar atualizações disponíveis", "Versão do CyanogenPSP:", "NÃO-OFICIAL", "Endereço Mac:", "Versão do Kernel:", "Versão do OSLib:"},
 	{"CyanogenPSP oppdateringer", "Trykk for, vis eller installer tilgjengelige oppdateringer", "CyanogenPSP versjon:", "UOFFISIELL", "Mac Adresse:", "Kernel versjon:", "OSLib versjon:"},
 	{"Actualizări CyanogenPSP", "Apasă pentru a vedea și instala actualizări disponibile", "Versiune CyanogenPSP:", "NEOFICIAL", "Adresă Mac:", "Versiune de kernel:", "Versiune de OSLib:"},
-	{"Aggiornamenti CyanogenPSP", "Clicca per, vedere o installare gli aggiornamenti disponibili", "Versione CyanogenPSP:", "NON UFFICIALE", "Indirizzo MAC:", "Versione kernel:", "Versione OSLib:"}
+	{"Aggiornamenti CyanogenPSP", "Clicca per, vedere o installare gli aggiornamenti disponibili", "Versione CyanogenPSP:", "NON UFFICIALE", "Indirizzo MAC:", "Versione kernel:", "Versione OSLib:"},
+	{"Обновления CyanogenPSP", "Нажмите для проверки или установки обновлений", "Версия CyanogenPSP:", "UNOFFICIAL", "MAC-адрес:", "Версия ядра:", "Версия OSLib:"},
+	{"Оновлення CyanogenPSP", "Натисніть, щоб перевірити і встановити оновлення", "Версія CyanogenPSP:", "UNOFFICIAL", "MAC-адрес:", "Версія ядра:", "Версія OSLib:"}
 };
 
 const char lang_settingsUpdates[][1][100] = 
@@ -223,7 +251,9 @@ const char lang_settingsUpdates[][1][100] =
 	{"Checar por atualizações"},
 	{"Se etter oppdateringer"},
 	{"Caută actualizări"},
-	{"Ricerca aggiornamenti"}
+	{"Ricerca aggiornamenti"},
+	{"Проверить обновления"},
+	{"Перевірити оновлення"}
 };
 
 const char lang_settingsSecuirty[][2][100] = 
@@ -238,7 +268,9 @@ const char lang_settingsSecuirty[][2][100] =
 	{"Trava de senha", "Trava de pino"},
 	{"Passordlås", "Pin-lås"},
 	{"Blocare cu parolă", "Blocare cu PIN"},
-	{"Blocco con password", "Blocco con PIN"}
+	{"Blocco con password", "Blocco con PIN"},
+	{"Защита паролем", "Защита PIN-кодом"},
+	{"Захист паролем", "Захист PIN-кодом"}
 };
 
 const char lang_settingsWifi[][3][100] = 
@@ -253,10 +285,12 @@ const char lang_settingsWifi[][3][100] =
 	{"Nenhuma configuração de WiFi encontrada", "Por favor, ative o Wlan", "Use os botões direcionais (cima/baixo) para navegar através de suas configurações de Wifi"},
 	{"Ingen WiFi konfigurasjon funnet", "Vennligst slå på Wlan bryteren", "Trykk opp eller ned for å navigere dine Wifi konfigurasjoner"},
 	{"Nicio configurație WiFi găsită", "Glisează butonul de WLAN", "Apasă sus sau jos pentru a naviga configurațiile de WiFi"},
-	{"Nessuna configurazione WiFi trovata", "Prego, accendere l'interuttore Wlan", "Premi su o giù per navigare tra le tue impostazioni WiFi"}
+	{"Nessuna configurazione WiFi trovata", "Prego, accendere l'interuttore Wlan", "Premi su o giù per navigare tra le tue impostazioni WiFi"},
+	{"Не найдено конфигураций Wi-Fi", "Пожалуйста, вкл. WLAN переключатель", "Нажмите вверх/вниз для выбора конфигурации Wi-Fi"},
+	{"Не знайдено конфігурацій Wi-Fi", "Будь ласка, вкл. WLAN перемикач", "Натисніть вверх/вниз для вибору конфігурацій Wi-Fi"}
 };
 
-const char lang_settingsDeveloperOptions[][5][100] = 
+const char lang_settingsDeveloperOptions[][5][150] = 
 {	
 	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Press triangle to disable or it may cause the program to crash", "Toggle USB debugging", "Dumping tools"},
 	{"Activer/Désactiver Remote Joy Lite", "Affiche l'écran de votre PSP sur votre ordinateur par USB", "Appuyez sur triangle pour le désactiver, ou il risque de faire planter le programme", "Activer/Désactiver le débogage par USB'", "Dumping tools"},
@@ -268,7 +302,9 @@ const char lang_settingsDeveloperOptions[][5][100] =
 	{"Alternar Remote Joy Lite", "Exibir a tela de seu PSP em seu computador via USB", "Aperte triângulo para desabilitar ou isto pode causar o encerramento súbito do aplicativo", "Alternar depuração de USB", "Ferramentas de Dumping"},
 	{"Veksle Remote Joy Lite", "Viser PSP skjermen på din PC gjennom USB", "Trykk trekant for å deaktivere, ellers kan det føre til at programmet krasjer", "Veksle USB feilsøking", "Dumping tools"},
 	{"Activează Remote Joy Lite", "Afișează ecranul PSPului pe calculator prin USB", "Apasă pe triunghi pentru a-l dezactiva, altfel poate cauza erori în programe", "Activează depanarea prin USB", "Unelte pentru descărcare"},
-	{"Attiva Remote Joy Lite", "Visualizza la tua schermata PSP sul tuo computer tramite USB", "Premi triangolo per disabilitalo o potrebbe far crashare il programma", "Attiva debug USB", "Strumenti di salvataggio"}
+	{"Attiva Remote Joy Lite", "Visualizza la tua schermata PSP sul tuo computer tramite USB", "Premi triangolo per disabilitalo o potrebbe far crashare il programma", "Attiva debug USB", "Strumenti di salvataggio"},
+	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Нажмите треугольник для отключения, или это может привести к поломке программы", "Включить отладку USB", "Инструменты считывания"},
+	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Натисніть трикутник для відключення, або це може викликати несправності програми", "Ввімкнути налагодження USB", "Інструменти зчитування"}
 };
 
 const char lang_settingsDump[][9][100] = 
@@ -283,7 +319,9 @@ const char lang_settingsDump[][9][100] =
 	{"Despejar Flash 0", "Despejar Flash 1", "Mais", "Despejar boot.bin do UMD", "Despejar Memória", "Insira o UMD", "Disco montado", "Jogo encontrado", "Despejando 28Megs de"},
 	{"Dump Flash 0", "Dump Flash 1", "Mer", "Dump UMD boot.bin", "Dump Minne", "Sett inn UMD", "Montert plate", "Spill funnet", "Dumper 28Megs fra"},
 	{"Descarcă Flash 0", "Descarcă Flash 1", "Mai multe", "Descarcă UMD boot.bin", "Descarcă memoria", "Introdu un UMD", "Disc montat", "Joc găsit", "Se descarcă 28Mega din"},
-	{"Dump Flash 0", "Dump Flash 1", "Altro", "Dump UMD boot.bin", "Dump Memoria", "Inserisci UMD", "Disco montato", "Trovato gioco", "Salvando 28Megs da"}
+	{"Dump Flash 0", "Dump Flash 1", "Altro", "Dump UMD boot.bin", "Dump Memoria", "Inserisci UMD", "Disco montato", "Trovato gioco", "Salvando 28Megs da"},
+	{"Считать Flash 0", "Считать Flash 1", "Больше", "Считать UMD boot.bin", "Считать память", "Вставьте UMD", "Монтирование диска", "Найдена игра", "Считать 28Megs с"},
+	{"Зчитати Flash 0", "Зчитати Flash 1", "Більше", "Зчитати UMD boot.bin", "Зчитати пам'ять", "Вставте UMD", "Монтування диску", "Знайдено гру", "Зчитати 28Megs з"}
 };
 
 const char lang_quickSettings[][5][100] = 
@@ -298,5 +336,7 @@ const char lang_quickSettings[][5][100] =
 	{"Wi-Fi", "Modo econômico", "Equilibrado", "Desempenhado", "Bloqueio de tela"},
 	{"Wi-Fi", "Strømsparing", "Balansert", "Ytelse", "Låseskjerm"},
 	{"Wi-Fi", "Economisire", "Echilibrat", "Performanță", "Ecran de pornire"},
-	{"Wi-Fi", "Risparmio energetico", "Bilanciato", "Prestazioni", "Blocca schermo"}
+	{"Wi-Fi", "Risparmio energetico", "Bilanciato", "Prestazioni", "Blocca schermo"},
+	{"Wi-Fi", "Энергосберегающий", "Сбалансированный", "Производительность", "Блокировка экрана"},
+	{"Wi-Fi", "Енергозберігаючий", "Збалансований", "Продуктивність", "Блокування екрану"}
 };
