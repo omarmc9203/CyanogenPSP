@@ -393,11 +393,7 @@ int appdrawer()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			screenshot();
-		}
+		captureScreenshot();
 				
 		oslEndDrawing(); 
         oslEndFrame(); 

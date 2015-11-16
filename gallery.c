@@ -225,10 +225,8 @@ int showImage(char * path, int n)
 			}
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	}
 	//delete image
 	oslDeleteImage(image);	
@@ -317,10 +315,7 @@ void galleryControls() //Controls
 		lockscreen();
     }
 	
-	if (osl_pad.held.R && osl_keys->pressed.triangle)
-	{
-		screenshot();
-	}
+	captureScreenshot();
 	
 	timer++;
 	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
@@ -489,10 +484,7 @@ int galleryApp()
 			lockscreen();
 		}
 	
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 		oslEndDrawing(); 
         oslEndFrame(); 

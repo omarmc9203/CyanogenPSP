@@ -351,10 +351,7 @@ void newMessage()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 		if (cursor->x >= 7 && cursor->x <= 435 && cursor->y >= 55 && cursor->y <= 86 && osl_keys->pressed.cross)
 		{
@@ -462,10 +459,7 @@ int messenger()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 		if (cursor->x >= 385 && cursor->x <= 428 && cursor->y >= 210 && cursor->y <= 258 && osl_keys->pressed.cross)
 		{

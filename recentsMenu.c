@@ -74,10 +74,7 @@ int multitask()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_pad.held.triangle)
-		{
-			screenshot();
-		}		
+		captureScreenshot();	
 	
 	oslEndDrawing(); 
     oslEndFrame(); 

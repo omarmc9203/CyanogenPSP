@@ -59,8 +59,6 @@ void decrease_volume(int n) {
 	set_volume(v-n);
 }
 
-int imposeSetHomePopup(int value);
-
 unsigned int getbuttons(); 
 
 void internet() //Draws the browser
@@ -909,7 +907,7 @@ void home()
 	widgetActivator = setFileDefaultsInt("system/widget/widgetActivator.bin", 1, widgetActivator);
 	eDesktopActivator = setFileDefaultsInt("system/home/eDesktopActivator.bin", 0, eDesktopActivator);
 
-	//unsigned int kernelButtons = getbuttons(); 
+	unsigned int kernelButtons = getbuttons(); 
 	
 	if (fileExists("ms0:/PSP/GAME/CyanogenPSP/update.txt"))
 		read = 1;
@@ -1040,16 +1038,12 @@ void home()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			screenshot();
-		}
+		captureScreenshot();
 
-		/*if(kernelButtons & PSP_CTRL_HOME) 
+		if(kernelButtons & PSP_CTRL_HOME) 
 		{ 
 			powermenu();
-		}*/
+		}
 
 	oslEndDrawing(); 
     oslEndFrame(); 

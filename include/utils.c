@@ -179,10 +179,8 @@ void openOSK(char * message, char * initialMessage, int textLimit, int lang)
 		Keyboard = 0; 
 		
 		oslReadKeys();
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		
+		captureScreenshot();
 	}
 	oslEndFrame();
     skip = oslSyncFrame();

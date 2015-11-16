@@ -123,10 +123,7 @@ int lockscreen()
 			}
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 	oslEndDrawing(); 
     oslEndFrame(); 

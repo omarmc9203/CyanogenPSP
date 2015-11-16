@@ -6,10 +6,10 @@
 #include "recoveryMenu.h"
 #include "settingsMenu.h"
 #include "include/utils.h"
+#include "prx/scepower.h"
 
 void powermenu()
 {	
-	
 	power = oslLoadImageFilePNG("system/home/menu/powerMenu.png", OSL_IN_RAM, OSL_PF_8888);
 	powerSelection = oslLoadImageFilePNG("system/home/menu/powerSelection.png", OSL_IN_RAM, OSL_PF_8888);
 	recoverySelection = oslLoadImageFilePNG("system/home/menu/recoverySelection.png", OSL_IN_RAM, OSL_PF_8888);
@@ -48,11 +48,17 @@ void powermenu()
 			oslDrawImageXY(powerSelection, 100, 60);
 			oslDrawStringf(165, 100, "Power off");
 			oslDrawStringf(165, 165, "Recovery");
+			
 			if (osl_keys->pressed.cross)
 			{	
 				oslPlaySound(KeypressStandard, 1);  
 				sceKernelExitGame();
 			}
+			/*else if (osl_pad.held.cross)
+			{
+				scePowerRequestColdReset(0);
+				scePowerRequestColdReset(50000);
+			}*/
 		}
 		if (cursor->x >= 116 && cursor->x <= 364 && cursor->y >= 126 && cursor->y <= 200) 
 		{
@@ -81,10 +87,7 @@ void powermenu()
 			return;
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 		oslEndDrawing(); 
 		oslEndFrame(); 

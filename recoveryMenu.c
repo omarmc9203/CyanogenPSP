@@ -8,6 +8,7 @@
 #include "modules/kuman.h"
 #include "include/common.h"
 #include "include/utils.h"
+#include "prx/scepower.h"
 #include "homeMenu.h"
 #include "kuman_header.h"
 #include "systemctrl_se.h"
@@ -1095,11 +1096,12 @@ int mainRecoveryMenu()
 		oslDrawStringf(10,80,"System information");
 		oslDrawStringf(10,100,"Configuration");
         oslDrawStringf(10,120,"Show version.txt");
-		oslDrawStringf(10,140,"Plugins");
-		oslDrawStringf(10,160,"Exit");
-		oslDrawStringf(10,180,"Exit to XMB");
-		oslDrawStringf(10,200,"Standby");
-		oslDrawStringf(10,220,"Shutdown device");
+		//oslDrawStringf(10,140,"Plugins");
+		oslDrawStringf(10,140,"Exit");
+		oslDrawStringf(10,160,"Exit to XMB");
+		oslDrawStringf(10,180,"Standby");
+		oslDrawStringf(10,200,"Shutdown device");
+		oslDrawStringf(10,220,"Reboot to XMB");
         
         if (osl_keys->pressed.down) MenuSelection++; //Moves the selector down
         if (osl_keys->pressed.up) MenuSelection--; //Moves the selector up
@@ -1135,7 +1137,7 @@ int mainRecoveryMenu()
 			ShowVersionTxt();
 		}
 		
-		else if (MenuSelection == 6 && osl_keys->pressed.cross)
+		else if (MenuSelection == 5 && osl_keys->pressed.cross)
 		{
 			unloadRecoveryMenuRes();
 			oslDeleteFont(roboto);
@@ -1144,19 +1146,25 @@ int mainRecoveryMenu()
 			home();
 		}
 		
-		else if (MenuSelection == 7 && osl_keys->pressed.cross)
+		else if (MenuSelection == 6 && osl_keys->pressed.cross)
 		{
 			exitToXMB();
 		}
 		
-		else if (MenuSelection == 8 && osl_keys->pressed.cross)
+		else if (MenuSelection == 7 && osl_keys->pressed.cross)
 		{
 			deviceStandby();
 		}
 		
-		else if (MenuSelection == 9 && osl_keys->pressed.cross)
+		else if (MenuSelection == 8 && osl_keys->pressed.cross)
 		{
 			deviceShutdown();
+		}
+		
+		else if (MenuSelection == 9 && osl_keys->pressed.cross)
+		{
+			scePowerRequestColdReset(0);
+			scePowerRequestColdReset(50000);
 		}
 		
 		oslEndDrawing(); 

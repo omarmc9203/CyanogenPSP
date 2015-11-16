@@ -431,10 +431,7 @@ void gameControls(int n) //Controls
 		lockscreen();
     }
 	
-	if (osl_pad.held.R && osl_keys->pressed.triangle)
-	{
-		screenshot();
-	}
+	captureScreenshot();
 	
 	timer++;
 	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
@@ -877,10 +874,7 @@ int gameApp()
 			lockscreen();
 		}
 	
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 		oslEndDrawing(); 
         oslEndFrame(); 

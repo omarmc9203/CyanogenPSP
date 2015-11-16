@@ -137,10 +137,8 @@ void onlineUpdater()
 			memset(message, 0, sizeof(message));
 
         }
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		
+		captureScreenshot();
     }
 	oslNetTerm();
 }
@@ -307,7 +305,7 @@ void aboutMenu()
 		oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawStringf(20,185,"%s %d.%d", lang_settingsAbout[language][5], version.major, version.minor);
 		oslDrawStringf(20,199,"%s %s", lang_settingsAbout[language][6], OSL_VERSION);
-		oslDrawStringf(20,213,"joellovesanna@psp #1");
+		oslDrawStringf(20,213,"Developer: Joel16");
 
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 62 && cursor->y <= 119)
 		{
@@ -413,10 +411,7 @@ void aboutMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 	oslEndDrawing(); 
     oslEndFrame(); 
@@ -510,10 +505,8 @@ void updatesMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -651,10 +644,8 @@ void performanceMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -893,10 +884,8 @@ void processorMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -981,10 +970,8 @@ void ramMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -1079,10 +1066,8 @@ void storageMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -1244,10 +1229,8 @@ void batteryMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -1413,10 +1396,8 @@ void displayMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -1552,10 +1533,8 @@ void displayThemes()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -2065,10 +2044,7 @@ void settingsControls(int n) //Controls
 		lockscreen();
     }
 	
-	if (osl_pad.held.R && osl_keys->pressed.triangle)
-	{
-		screenshot();
-	}
+	captureScreenshot();
 	
 	timer++;
 	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
@@ -2284,10 +2260,8 @@ void displayTime()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -2524,10 +2498,8 @@ void displayMiscellaneous()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -2648,10 +2620,8 @@ void securityMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -2781,10 +2751,8 @@ void wifiMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}	
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -3006,10 +2974,7 @@ void dumpMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 	oslEndDrawing(); 
     oslEndFrame(); 
@@ -3124,10 +3089,7 @@ void dumpMenuMore()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 	oslEndDrawing(); 
     oslEndFrame(); 
@@ -3269,10 +3231,7 @@ void developerMenu()
 			multitask();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 
 		if(RJL == 1 && osl_keys->pressed.triangle)
 		{
@@ -3471,10 +3430,8 @@ void settingsMenu()
 			aboutMenu();
 		}
 
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	

@@ -16,8 +16,8 @@ int timerStart = 0;
 
 typedef struct
 {
-        clock_t measuredTime;
-        clock_t offset;
+	clock_t measuredTime;
+    clock_t offset;
 } Timer;
 
 void startTimer() 
@@ -249,10 +249,8 @@ int pspTimer()
 			home();
 		}
 
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();
@@ -415,10 +413,8 @@ int pspStopWatch()
 			home();
 		}
 
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();
@@ -562,10 +558,8 @@ int pspclock()
 			pspStopWatch();
 		}
 		
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();

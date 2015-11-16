@@ -3,7 +3,20 @@
 #include "include/utils.h"
 #include "screenshot.h"
 
+unsigned int getbuttons();
+
 int lastNumber = -1;
+
+void captureScreenshot()
+{
+	unsigned int kernelButtons = getbuttons(); 
+	
+	if(kernelButtons & PSP_CTRL_NOTE)
+	{ 
+		oslPlaySound(KeypressStandard, 1);  
+		screenshot();
+	}
+}
 
 void genScreenshotFileName(int lastNumber, char *fileName, const char *ext) //Change the file name starting from 0001
 {
