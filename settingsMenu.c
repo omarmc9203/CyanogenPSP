@@ -1966,7 +1966,7 @@ void settingsControls(int n) //Controls
 	}
 	else if (((ext) != NULL) && (n == 1) && ((strcmp(ext ,".png") == 0) || (strcmp(ext ,".jpg") == 0) || (strcmp(ext ,".jpeg") == 0) || (strcmp(ext ,".gif") == 0) || (strcmp(ext ,".PNG") == 0) || (strcmp(ext ,".JPG") == 0) || (strcmp(ext ,".JPEG") == 0) || (strcmp(ext ,".GIF") == 0)))
 	{
-		if (osl_keys->pressed.cross)
+		if ((osl_keys->pressed.cross) && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 		{
 			oslDeleteImage(displaybg);
 			oslDeleteImage(highlight);	
