@@ -301,7 +301,7 @@ void aboutMenu()
 		oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
 		oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"%s %s-20151023-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+		oslDrawStringf(20,129,"%s %s-20151116-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 		oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawStringf(20,185,"%s %d.%d", lang_settingsAbout[language][5], version.major, version.minor);
 		oslDrawStringf(20,199,"%s %s", lang_settingsAbout[language][6], OSL_VERSION);
@@ -325,7 +325,7 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"%s %s-20151023-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+			oslDrawStringf(20,129,"%s %s-20151116-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 			oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
@@ -1686,6 +1686,7 @@ void themesLoad()
 	char galleryBgImg[100] = "/app/gallery/gallerybg.png";
 	char gameImg[100] = "/app/game/gamebg.png";
 	char quickSettingsBgImg[100] = "/home/menu/quickSettings.png";
+	char backdropImg[100] = "/home/icons/backdrop.png";
 	char backiconImg[100] = "/home/icons/backicon.png";
 	char homeiconImg[100] = "/home/icons/homeicon.png";
 	char multiconImg[100] = "/home/icons/multicon.png";
@@ -1791,6 +1792,10 @@ void themesLoad()
 	strcpy(tempData, themeDirPath);
 	strcat(tempData, multicon2Img); 
 	strcpy(multicon2Path, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, backdropImg); 
+	strcpy(backdropPath, tempData);
 	
 	strcpy(tempData, themeDirPath);
 	strcat(tempData, cursorImg); 

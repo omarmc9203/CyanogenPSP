@@ -73,6 +73,7 @@ char diriconPath[250];
 char galleryBgPath[250];
 char gameBgPath[250];
 char quickSettingsBgPath[250];
+char backdropPath[250];
 char backiconPath[250];
 char homeiconPath[250];
 char multiconPath[250];
