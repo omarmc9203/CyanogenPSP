@@ -189,14 +189,19 @@ int showImage(char * path, int n)
 		}
 		
 		if (osl_keys->pressed.circle) 
-		{			
-			if (n == 1)
+		{		
+			if (n == 0)
+			{
+				oslDeleteImage(image);
+				oslDeleteImage(galleryBar);
+				return 1;
+			}
+			else if (n == 1)
 			{
 				oslDeleteImage(image);
 				oslDeleteImage(galleryBar);
 				displaySubThemes("system/framework/framework-res/res", 1);
 			}
-			
 			else if (selection == 1)
 			{
 				oslDeleteImage(image);
@@ -216,7 +221,6 @@ int showImage(char * path, int n)
 				oslDeleteImage(galleryBar);
 				galleryView("ms0:/PSP/GAME/CyanogenPSP/screenshots");
 			}
-			
 			else
 			{
 				oslDeleteImage(image);
