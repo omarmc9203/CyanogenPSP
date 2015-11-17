@@ -202,25 +202,26 @@ int showImage(char * path, int n)
 				oslDeleteImage(galleryBar);
 				displaySubThemes("system/framework/framework-res/res", 1);
 			}
-			else if (selection == 1)
+			
+			else if ((n == 2) && (selection == 1))
 			{
 				oslDeleteImage(image);
 				oslDeleteImage(galleryBar);
 				galleryView("ms0:/PICTURE");
 			}
-			else if (selection == 2)
+			else if ((n == 2) && (selection == 2))
 			{
 				oslDeleteImage(image);
 				oslDeleteImage(galleryBar);
 				galleryView("ms0:/PSP/PHOTO");
 			}
-				
-			else if (selection == 3)
+			else if ((n == 2) && (selection == 3))
 			{
 				oslDeleteImage(image);
 				oslDeleteImage(galleryBar);
 				galleryView("ms0:/PSP/GAME/CyanogenPSP/screenshots");
 			}
+			
 			else
 			{
 				oslDeleteImage(image);
@@ -284,7 +285,7 @@ void galleryControls() //Controls
 	{
 		oslPlaySound(KeypressStandard, 1);  
 		galleryUnload();
-		showImage(folderIcons[current].filePath, 0);
+		showImage(folderIcons[current].filePath, 2);
 	}
 	
 	if (osl_keys->pressed.circle)
