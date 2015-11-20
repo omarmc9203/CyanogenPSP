@@ -233,8 +233,6 @@ int appdrawer()
 		
 		oslDrawImage(background);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-		
 		if (eDesktopActivator == 1)
 		{
 			navbarButtons(1);
@@ -255,7 +253,7 @@ int appdrawer()
 			digitaltime(420,4,0,hrTime);
 		}
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_CENTER);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_CENTER);
 		oslDrawImageXY(backdrop, 1, 15);
 		oslDrawImageXY(ic_launcher_browser, browser_x, 40);
 		oslDrawStringf(browser_text_x, 90, "%s", lang_appDrawer[language][0]);
@@ -278,7 +276,6 @@ int appdrawer()
 		oslDrawImageXY(ic_launcher_umd, umd_x, 132);
 		oslDrawStringf(umd_text_x, 185, "%s", lang_appDrawer[language][9]);
 
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		androidQuickSettings();
 		volumeController();
 		appHighlight(1);

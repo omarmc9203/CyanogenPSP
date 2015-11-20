@@ -65,8 +65,6 @@ int calculator()
 
 		oslDrawImageXY(calcbackground, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
 		volumeController();

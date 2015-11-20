@@ -162,7 +162,7 @@ void flashUpdate()
 			chdir("..");
 			pgeZipExtract(zipFiles, NULL);
 			pgeZipClose(zipFiles);
-			oslIntraFontSetStyle(Roboto, 0.5f, WHITE,0,INTRAFONT_ALIGN_LEFT);
+			oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, INTRAFONT_ALIGN_LEFT);
 			oslDrawStringf(10,80,"Installed Successfully.");
 			oslDrawStringf(10,90,"Exiting..");
 			oslSyncFrame();
@@ -267,7 +267,7 @@ fw_version getFwVersion(fw_version *v);
 void aboutMenu()
 {	
 	aboutbg = oslLoadImageFilePNG(aboutBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -296,7 +296,7 @@ void aboutMenu()
 
 		oslDrawImageXY(aboutbg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
 		oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
@@ -328,8 +328,6 @@ void aboutMenu()
 			oslDrawStringf(20,129,"%s %s-20151116-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 			oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 		
 		navbarButtons(2);
 		battery(330,2,0);
@@ -422,7 +420,7 @@ void aboutMenu()
 void updatesMenu()
 {		    
 	updatesbg = oslLoadImageFilePNG(updatesBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -441,7 +439,7 @@ void updatesMenu()
 
 		oslDrawImageXY(updatesbg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,93, "%s", lang_settingsUpdates[language][0]);
 
@@ -455,9 +453,7 @@ void updatesMenu()
 				onlineUpdater();
 			}
 		}
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -517,7 +513,7 @@ void updatesMenu()
 void performanceMenu()
 {	
 	performancebg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -536,7 +532,7 @@ void performanceMenu()
 
 		oslDrawImageXY(performancebg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,86, "%s", lang_settingsPerformance[language][0]);
 		oslDrawStringf(20,140, "%s", lang_settingsPerformance[language][1]);
@@ -594,9 +590,7 @@ void performanceMenu()
 				batteryMenu();
 			}
 		}
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -700,7 +694,7 @@ void processorMenu()
 	int cpufreq, cpu, bus, state = 0;
 	
 	processorbg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -719,7 +713,7 @@ void processorMenu()
 		
 		oslDrawImageXY(processorbg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,76, "%s", lang_settingsProcessor[language][0]);
 		oslDrawStringf(20,128, "%s", lang_settingsProcessor[language][1]);
@@ -840,9 +834,7 @@ void processorMenu()
 		oslDrawStringf(20,202,"%d MHz", cpu);
 		oslDrawStringf(20,241, "%s", lang_settingsProcessor[language][3]);
 		oslDrawStringf(20,254,"%d MHz", bus);
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -895,7 +887,7 @@ void processorMenu()
 void ramMenu()
 {	
 	performancebg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -918,7 +910,7 @@ void ramMenu()
 		
 		oslDrawImageXY(performancebg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,78,"%s %d MB (%d%%) %s\n", lang_settingsRAM[language][0], availableRam, (((availableRam) * 100)/(totalRam)), lang_settingsRAM[language][1]); 
 		
@@ -926,9 +918,7 @@ void ramMenu()
 		oslDrawFillRect(20, 100, ((availableRam)*20.2), 110, RGB(0, 149, 135));
 		
 		oslDrawStringf(20,122,"%d%% %s", (((20 - (availableRam)) * 100)/(totalRam)), lang_settingsRAM[language][2]);
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -981,7 +971,7 @@ void ramMenu()
 void storageMenu()
 {	
 	performancebg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	
@@ -1007,7 +997,7 @@ void storageMenu()
 		
 		oslDrawImageXY(performancebg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,80, "%s", lang_settingsStorage[language][0]); 
 		//oslDrawStringf(20,100,"%s %.2f MB", lang_settingsStorage[language][1], totalSpace/1048576);
@@ -1023,8 +1013,6 @@ void storageMenu()
 			disableUsb();
 		}
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -1079,15 +1067,15 @@ void batteryMenu()
 	FILE * batteryManagement;
 
 	performancebg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
-	select = oslLoadImageFilePNG("system/settings/select.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	select = oslLoadImageFilePNG(selectPath, OSL_IN_RAM, OSL_PF_8888);
 	deselect = oslLoadImageFilePNG("system/settings/deselect.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 	
 	oslSetFont(Roboto);
 
-	if (!performancebg || !highlight)
+	if (!performancebg || !highlight || !select || !deselect)
 		debugDisplay();
 
 	while (!osl_quit)
@@ -1102,7 +1090,7 @@ void batteryMenu()
 
 		oslDrawImageXY(performancebg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,86, "%s", lang_settingsBattery[language][0]);
 		oslDrawStringf(20,140, "%s", lang_settingsBattery[language][1]);
@@ -1173,9 +1161,7 @@ void batteryMenu()
 				oslDrawImageXY(deselect, 400, 135);
 				break;
 		}
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -1270,7 +1256,7 @@ void setPowerManagement()
 void displayMenu()
 {	
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -1287,7 +1273,7 @@ void displayMenu()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -1348,8 +1334,6 @@ void displayMenu()
 			}
 		}
 
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -1407,7 +1391,7 @@ void displayMenu()
 void displayThemes()
 {	
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -1424,7 +1408,7 @@ void displayThemes()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -1468,7 +1452,7 @@ void displayThemes()
 				oslPlaySound(KeypressStandard, 1); 
 				oslDeleteImage(displaybg);
 				oslDeleteImage(highlight);			
-				displaySubThemes("system/fonts", 0);
+				displayFontMenu();
 			}
 		}
 		
@@ -1485,8 +1469,6 @@ void displayThemes()
 			}
 		}
 
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -1541,12 +1523,290 @@ void displayThemes()
 	}
 }
 
+void displayFontMenu()
+{	
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+
+	oslSetFont(Roboto);
+
+	if (!displaybg)
+		debugDisplay();
+
+	while (!osl_quit)
+	{
+		LowMemExit();
+	
+		oslStartDrawing();
+		
+		oslClearScreen(RGB(0,0,0));
+		
+		controls();	
+		
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+
+		oslDrawImageXY(displaybg, 0, 0);
+		
+		oslDrawStringf(20,86, "%s", lang_settingsFonts[language][0]);
+		oslDrawStringf(20,140, "%s", lang_settingsFonts[language][1]);
+		
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
+		{
+			oslDrawImageXY(highlight, 0, 63);
+			oslDrawStringf(20,86, "%s", lang_settingsFonts[language][0]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displaySubThemes("system/fonts", 0);
+			}
+		}
+		
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156)
+		{
+			oslDrawImageXY(highlight, 0, 118);
+			oslDrawStringf(20,140, "%s", lang_settingsFonts[language][1]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(displaybg);
+				oslDeleteImage(highlight);			
+				displayFontSizeMenu();
+			}
+		}
+
+		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
+		androidQuickSettings();
+		volumeController();
+		oslDrawImage(cursor);
+		
+		if (osl_keys->pressed.square)
+		{
+			powermenu();
+		}
+		
+		if (osl_keys->pressed.L)
+		{
+			oslPlaySound(Lock, 1);  
+			lockscreen();
+        }
+		
+		if (osl_keys->pressed.circle)
+		{
+			oslDeleteImage(displaybg);
+			oslDeleteImage(highlight);
+			displayThemes();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(displaybg);
+			oslDeleteImage(highlight);
+			displayThemes();
+		}
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(displaybg);
+			oslDeleteImage(highlight);
+			home();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+		{	
+			multitask();
+		}
+		
+		captureScreenshot();
+		
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();	
+	}
+}
+
+void displayFontSizeMenu()
+{	
+	FILE * fontManagement;
+	int tempFontData = fontSize;
+
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	select = oslLoadImageFilePNG(selectPath, OSL_IN_RAM, OSL_PF_8888);
+	deselect = oslLoadImageFilePNG("system/settings/deselect.png", OSL_IN_RAM, OSL_PF_8888);
+	
+	fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 0.5, fontSize);
+	
+	if (fontSize == 0.4)
+		tempFontData = 0;
+	else if (fontSize == 0.5)
+		tempFontData = 1;
+	else if (fontSize == 0.6)
+		tempFontData = 2;
+	
+	oslSetFont(Roboto);
+
+	if (!displaybg || !highlight || !select || !deselect)
+		debugDisplay();
+
+	while (!osl_quit)
+	{
+		LowMemExit();
+		
+		oslStartDrawing();
+		
+		oslClearScreen(RGB(0,0,0));
+		
+		controls();	
+
+		oslDrawImageXY(displaybg, 0, 0);
+		
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+
+		oslDrawStringf(20,86, "%s", lang_settingsFonts[language][2]);
+		oslDrawStringf(20,140, "%s", lang_settingsFonts[language][3]);
+		oslDrawStringf(20,194, "%s", lang_settingsFonts[language][4]);
+
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
+		{
+			oslDrawImageXY(highlight, 0, 63);
+			oslDrawStringf(20,86, "%s", lang_settingsFonts[language][2]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);
+				fontManagement = fopen("system/settings/fontSize.bin", "w"); 
+				fprintf(fontManagement, "0.4");
+				fclose(fontManagement);
+				tempFontData = 0;
+				fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 1, fontSize);
+				setPowerManagement();
+			}
+		}
+
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156)
+		{
+			oslDrawImageXY(highlight, 0, 118);
+			oslDrawStringf(20,140, "%s", lang_settingsFonts[language][3]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);
+				fontManagement = fopen("system/settings/fontSize.bin", "w"); 
+				fprintf(fontManagement, "0.5");
+				fclose(fontManagement);
+				tempFontData = 1;
+				fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 1, fontSize);
+				setPowerManagement();
+			}
+		}
+
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215)
+		{
+			oslDrawImageXY(highlight, 0, 173);
+			oslDrawStringf(20,194, "%s", lang_settingsFonts[language][4]);
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);
+				fontManagement = fopen("system/settings/fontSize.bin", "w"); 
+				fprintf(fontManagement, "0.6");
+				fclose(fontManagement);
+				tempFontData = 2;
+				fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 1, fontSize);
+				setPowerManagement();
+			}
+		}
+		
+		switch(tempFontData)
+		{
+			case 0:
+				oslDrawImageXY(select, 400, 80);
+				oslDrawImageXY(deselect, 400, 135);
+				oslDrawImageXY(deselect, 400, 190);
+				break;
+	
+			case 1:
+				oslDrawImageXY(select, 400, 135);
+				oslDrawImageXY(deselect, 400, 80);
+				oslDrawImageXY(deselect, 400, 190);
+				break;
+			
+			case 2:
+				oslDrawImageXY(select, 400, 190);
+				oslDrawImageXY(deselect, 400, 80);
+				oslDrawImageXY(deselect, 400, 135);
+				break;
+		}
+
+		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
+		androidQuickSettings();
+		volumeController();
+		oslDrawImage(cursor);
+		
+		if (osl_keys->pressed.square)
+		{
+			powermenu();
+		}
+		
+		if (osl_keys->pressed.L)
+		{
+			oslPlaySound(Lock, 1);  
+			lockscreen();
+        }
+		
+		if (osl_keys->pressed.circle)
+		{
+			oslDeleteImage(highlight);
+			oslDeleteImage(displaybg);
+			oslDeleteImage(select);
+			oslDeleteImage(deselect);
+			displayFontMenu();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(highlight);
+			oslDeleteImage(displaybg);
+			oslDeleteImage(select);
+			oslDeleteImage(deselect);
+			displayFontMenu();
+		}
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(highlight);
+			oslDeleteImage(displaybg);
+			oslDeleteImage(select);
+			oslDeleteImage(deselect);
+			home();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+		{	
+			oslPlaySound(KeypressStandard, 1);  
+			multitask();
+		}
+		
+		captureScreenshot();
+		
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();	
+	}
+}
+
 void settingsDisplay()
 {	
 	oslDrawImageXY(displaybg, 0, 0);
 	oslDrawImageXY(highlight,0,(current - curScroll)*56+SETTINGS_CURR_DISPLAY_Y);
-	
-	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+
 	battery(330,2,0);
 	digitaltime(381,4,0,hrTime);
 	
@@ -1572,7 +1832,7 @@ void settingsDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) 
 		{
-			oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 			oslDrawStringf(SETTINGS_DISPLAY_X, (i - curScroll)*55+SETTINGS_DISPLAY_Y, "%.56s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
@@ -1665,6 +1925,7 @@ void themesLoad()
 {	
 	strcpy(themeDirPath, setFileDefaultsChar("system/settings/theme.bin", "system", themeDirPath));
 
+	char highlightImg[100] = "/settings/highlight.png";
 	char settingsBgImg[100] = "/settings/settingsbg.png";
 	char displayBgImg[100] = "/settings/displaybg.png";
 	char aboutBgImg[100] = "/settings/aboutbg.png";
@@ -1676,6 +1937,14 @@ void themesLoad()
 	char wifiBgImg[100] = "/settings/wifibg.png";
 	char offSwitchImg[100] = "/settings/offswitch.png";
 	char onSwitchImg[100] = "/settings/onswitch.png";
+	char selectImg[100] = "/settings/select.png";
+	
+	char aboutImg[100] = "/settings/about.png";
+	char developerImg[100] = "/settings/developeroptions.png";
+	char performanceImg[100] = "/settings/performance.png";
+	char securityImg[100] = "/settings/security.png";
+	char themesImg[100] = "/settings/themes.png";
+	char wifiImg[100] = "/settings/wifi.png";
 	
 	char apolloBgImg[100] = "/app/apollo/mp3bg.png";
 	char nowplayingBgImg[100] = "/app/apollo/nowplaying.png";
@@ -1696,6 +1965,10 @@ void themesLoad()
 	
 	char cursorImg[100] = "/cursor/cursor.png";
 	char keyBoardBgImg[100] = "/settings/keyboard.png";
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, highlightImg); 
+	strcpy(highlightPath, tempData);
 	
 	strcpy(tempData, themeDirPath);
 	strcat(tempData, aboutBgImg); 
@@ -1732,6 +2005,34 @@ void themesLoad()
 	strcpy(tempData, themeDirPath);
 	strcat(tempData, onSwitchImg); 
 	strcpy(onSwitchPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, selectImg); 
+	strcpy(selectPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, aboutImg); 
+	strcpy(aboutPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, developerImg); 
+	strcpy(developerPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, performanceImg); 
+	strcpy(performancePath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, securityImg); 
+	strcpy(securityPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, themesImg); 
+	strcpy(themesPath, tempData);
+	
+	strcpy(tempData, themeDirPath);
+	strcat(tempData, wifiImg); 
+	strcpy(wifiPath, tempData);
 	
 	strcpy(tempData, themeDirPath);
 	strcat(tempData, settingsBgImg); 
@@ -2024,14 +2325,19 @@ void settingsControls(int n) //Controls
 		}
 	}
 	
-	if (osl_keys->pressed.circle && n == 4)
+	if (osl_keys->pressed.circle && n == 0)
+	{	
+		oslDeleteImage(displaybg);
+		oslDeleteImage(highlight);
+		displayFontMenu();
+	}
+	else if (osl_keys->pressed.circle && n == 4)
 	{	
 		oslDeleteImage(displaybg);
 		oslDeleteImage(highlight);
 		displayMenu();
 	}
-	
-	if (osl_keys->pressed.circle)
+	else if (osl_keys->pressed.circle)
 	{	
 		oslDeleteImage(displaybg);
 		oslDeleteImage(highlight);
@@ -2109,7 +2415,7 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 void displaySubThemes(char * browseDirectory, int n) // n is used here to search for fonts or wallpaper
 {	
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -2148,7 +2454,7 @@ void displayTime()
 	FILE * timeSetTxt;
 	
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -2167,7 +2473,7 @@ void displayTime()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -2211,8 +2517,6 @@ void displayTime()
 			}
 		}
 
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -2285,7 +2589,7 @@ void displayMiscellaneous()
 	fclose(bootAnimActivation);
 
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -2304,7 +2608,7 @@ void displayMiscellaneous()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -2336,8 +2640,6 @@ void displayMiscellaneous()
 			oslDrawImageXY(highlight, 0, 228);
 			oslDrawStringf(20,245, "%s", lang_settingsMiscellaneous[language][3]);
 		}
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
 
 		if (widgetActivator == 0)
 		{
@@ -2517,7 +2819,7 @@ void securityMenu()
 	FILE * pin;
 
 	securitybg = oslLoadImageFilePNG(securityBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -2539,7 +2841,7 @@ void securityMenu()
 		oslDrawImageXY(securitybg, 0, 0);
 		
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,83, "%s", lang_settingsSecuirty[language][0]); 
 		oslDrawStringf(20,144, "%s", lang_settingsSecuirty[language][1]); 
@@ -2575,9 +2877,7 @@ void securityMenu()
 				fclose(pin);
 			}
 		}
-
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-
+		
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -2675,7 +2975,7 @@ void wifiMenu()
 
 		oslDrawImageXY(wifibg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		if (enabled)
 		{
@@ -2685,9 +2985,7 @@ void wifiMenu()
         }
 		
 		oslDrawStringf(10, 220, Settings_message);
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		switchStatus(3);
 		navbarButtons(2);
 		battery(330,2,0);
@@ -2770,7 +3068,7 @@ void DumpBootBin(void)
 	int i;
 	int fd;
 
-	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+	oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, INTRAFONT_ALIGN_LEFT);
 	i = sceUmdCheckMedium();
 	if(i == 0)
 	{
@@ -2844,7 +3142,7 @@ void dump_memory(void)
 {
 	int fd;
 
-	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+	oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, INTRAFONT_ALIGN_LEFT);
 	oslDrawStringf(4,5,"%s 0x8400000\n", lang_settingsDump[language][8]);
 	fd = sceIoOpen("ms0:/MEMORY.BIN", PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);
 	if(fd >= 0)
@@ -2859,7 +3157,7 @@ void dump_memory(void)
 void dumpMenu()
 {
 	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -2881,7 +3179,7 @@ void dumpMenu()
 		oslDrawImageXY(developerbg, 0, 0);
 		switchStatus(2);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,123, "%s", lang_settingsDump[language][0]);
 		oslDrawStringf(20,181, "%s", lang_settingsDump[language][1]);
@@ -2923,9 +3221,7 @@ void dumpMenu()
 				dumpMenuMore();
 			}
 		}
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -2990,7 +3286,7 @@ void dumpMenu()
 void dumpMenuMore()
 {
 	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -3012,7 +3308,7 @@ void dumpMenuMore()
 		oslDrawImageXY(developerbg, 0, 0);
 		switchStatus(2);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,123, "%s", lang_settingsDump[language][3]);
 		oslDrawStringf(20,181, "%s", lang_settingsDump[language][4]);
@@ -3039,8 +3335,6 @@ void dumpMenuMore()
 			}
 		}
 
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -3107,7 +3401,7 @@ SceUID modules[3];
 void developerMenu()
 {	
 	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG("system/settings/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -3130,7 +3424,7 @@ void developerMenu()
 		
 		switchStatus(2);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(10,107, "%s", lang_settingsDeveloperOptions[language][0]);
 		oslDrawStringf(10,121, "%s", lang_settingsDeveloperOptions[language][1]);
@@ -3180,9 +3474,7 @@ void developerMenu()
 				dumpMenu();
 			}
 		}
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);
@@ -3263,7 +3555,7 @@ void settingsHighlight()
 		
 	if (cursor->x >= 226 && cursor->x <= 442 && cursor->y >= 98 && cursor->y <= 154)
 	{
-		oslDrawImageXY(security, 222, 101);
+		oslDrawImageXY(security, 221, 102);
 		oslDrawStringf(280,120,"%s", lang_settingsMain[language][1]);
 	}
 	
@@ -3312,12 +3604,12 @@ void settingsMenu()
 	themesLoad();
 	
 	settingsbg = oslLoadImageFilePNG(settingsBgPath, OSL_IN_RAM, OSL_PF_8888);
-	about = oslLoadImageFilePNG("system/settings/about.png", OSL_IN_RAM, OSL_PF_8888);
-	themes = oslLoadImageFilePNG("system/settings/themes.png", OSL_IN_RAM, OSL_PF_8888);
-	developeroptions = oslLoadImageFilePNG("system/settings/developeroptions.png", OSL_IN_RAM, OSL_PF_8888);
-	wifi = oslLoadImageFilePNG("system/settings/wifi.png", OSL_IN_RAM, OSL_PF_8888);
-	security = oslLoadImageFilePNG("system/settings/security.png", OSL_IN_RAM, OSL_PF_8888);
-	performance = oslLoadImageFilePNG("system/settings/performance.png", OSL_IN_RAM, OSL_PF_8888);
+	about = oslLoadImageFilePNG(aboutPath, OSL_IN_RAM, OSL_PF_8888);
+	themes = oslLoadImageFilePNG(themesPath, OSL_IN_RAM, OSL_PF_8888);
+	developeroptions = oslLoadImageFilePNG(developerPath, OSL_IN_RAM, OSL_PF_8888);
+	wifi = oslLoadImageFilePNG(wifiPath, OSL_IN_RAM, OSL_PF_8888);
+	security = oslLoadImageFilePNG(securityPath, OSL_IN_RAM, OSL_PF_8888);
+	performance = oslLoadImageFilePNG(performancePath, OSL_IN_RAM, OSL_PF_8888);
 	
 	oslSetFont(Roboto);
 
@@ -3336,7 +3628,7 @@ void settingsMenu()
 
 		oslDrawImageXY(settingsbg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(50,120,"%s", lang_settingsMain[language][0]);
 		oslDrawStringf(280,120,"%s", lang_settingsMain[language][1]);
@@ -3346,9 +3638,7 @@ void settingsMenu()
 		oslDrawStringf(280,234,"%s", lang_settingsMain[language][5]);
 		
 		settingsHighlight();
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
-		
+
 		navbarButtons(2);
 		battery(330,2,0);
 		digitaltime(381,4,0,hrTime);

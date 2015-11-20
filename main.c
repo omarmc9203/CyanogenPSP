@@ -43,7 +43,7 @@ void langDisplay()
 	oslIntraFontSetStyle(Roboto, 0.65f, WHITE, 0, INTRAFONT_ALIGN_LEFT);
 	oslDrawStringf(20, 110, "%s", lang_welcome[language][0]);
 	
-	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+	oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_LEFT);
 	digitaltime(420,4,0,hrTime);
 	battery(370,2,1);		
 	
@@ -256,7 +256,7 @@ void firstBootInitiation()
 			appDrawerIcon();
 			oslDisableTransparentColor();
 		
-			oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+			oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_LEFT);
 			
 			digitaltime(420,4,0,hrTime);
 			volumeController();
@@ -390,6 +390,7 @@ int main()
 	hrTime = setFileDefaultsInt("system/app/clock/timeSet.bin", 0, hrTime);
 	language = setFileDefaultsInt("system/settings/language.bin", 0, language);
 	batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
+	fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 0.5, fontSize);
 	
 	checkGBootActivation();
 	createDirs();

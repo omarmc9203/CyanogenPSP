@@ -75,6 +75,7 @@ void galleryDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) 
 		{	
+			oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, 0);
 			oslDrawStringf(GALLERY_DISPLAY_X, (i - curScroll)*55+GALLERY_DISPLAY_Y, "%.52s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
@@ -95,7 +96,7 @@ int changeWallpaper()
 
 	controls();	
 	
-	oslIntraFontSetStyle(Roboto, 0.5f, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+	oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 	
 	oslDrawImageXY(wallpaper, 65, 67);
 	oslDrawStringf(110,95,"Set picture as wallpaper?");
@@ -153,7 +154,7 @@ int showImage(char * path, int n)
 		oslClearScreen(RGB(255,255,255));
 		oslDrawImage(image);//draw image
 		oslDrawImageXY(galleryBar,0,0);
-		oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, INTRAFONT_ALIGN_LEFT);
 		oslDrawStringf(40,12, "%.55s", folderIcons[current].name);
 		
 		if (n == 1)
@@ -382,7 +383,6 @@ int galleryView(char * browseDirectory)
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 
 	char * Directory = galleryBrowse(browseDirectory);
 
@@ -409,7 +409,6 @@ int galleryApp()
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5f, RGBA(255,255,255,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 	
 	if (!gallerybg || !gallerySelection || !galleryThumbnail)
 		debugDisplay();
@@ -427,6 +426,8 @@ int galleryApp()
 		
 		selector_image_x = selector_x+(galley_xSelection*MenuSelection); //Determines where the selection image is drawn for each selection
         selector_image_y = selector_y+(galley_ySelection*MenuSelection); //Determines where the selection image is drawn for each selection
+	
+		oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, 0);
 	
 		oslStartDrawing();
 		oslReadKeys();

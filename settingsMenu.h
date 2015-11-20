@@ -49,6 +49,7 @@ struct fw_version
 	unsigned int minor;
 };
 
+char highlightPath[250];
 char settingsBgPath[250];
 char displayBgPath[250];
 char aboutBgPath[250];
@@ -60,6 +61,14 @@ char updatesBgPath[250];
 char wifiBgPath[250];
 char offSwitchPath[250];
 char onSwitchPath[250];
+char selectPath[250];
+
+char aboutPath[250];
+char developerPath[250];
+char performancePath[250];
+char securityPath[250];
+char themesPath[250];
+char wifiPath[250];
 
 char keyBoardBgPath[250];
 char cursorPath[250];
@@ -88,6 +97,7 @@ int connectToAP(int config);
 char fontPath[100];
 char backgroundPath[100], nickname[25], pspname[25], themeDirPath[250];
 int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language, usbStat, isPlaying, batteryM;
+float fontSize;
 int passProtect;
 int RJL;
 int PSPDebug;
@@ -99,7 +109,6 @@ int getCpuClock();
 int getBusClock();
 void pspGetModel(int x, int y);
 void aboutMenu();
-void easterEgg();
 void updatesMenu();
 void performanceMenu();
 void setCpuBoot();
@@ -110,6 +119,8 @@ void batteryMenu();
 void setPowerManagement();
 void displayMenu();
 void displayThemes();
+void displayFontMenu();
+void displayFontSizeMenu();
 void settingsDisplay();
 void settingsUp();
 void settingsDown();

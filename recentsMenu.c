@@ -26,6 +26,7 @@ int multitask()
 		oslDrawImageXY(background, 0,0);
 		oslDrawImageXY(multi_task, 0,10);
 
+		oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, 0);
 		oslDrawString(130,136,"Your recent screens appear here");
 		
 		navbarButtons(0);

@@ -30,6 +30,24 @@ int setFileDefaultsInt(char *path, int value, int var)
 	return var;
 }
 
+float setFileDefaultsFloat(char *path, float value, float var)
+{
+	FILE *temp;
+	 
+	if (!(fileExists(path)))
+	{
+		temp = fopen(path, "w");
+		fprintf(temp, "%f", value);
+		fclose(temp);
+	} 
+	
+	temp = fopen(path, "r");
+	fscanf(temp, "%f", &var);
+	fclose(temp);
+	
+	return var;
+}
+
 char * setFileDefaultsChar(char path[], char data[], char var[])
 {
 	FILE * temp;

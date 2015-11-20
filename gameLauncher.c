@@ -196,8 +196,7 @@ void gameDisplay()
 {	
 	oslDrawImageXY(gamebg, 0, 0);
 	oslDrawImageXY(gameSelection,-2,(current - curScroll)*63+GAME_CURR_DISPLAY_Y);
-	
-	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+
 	battery(370,2,1);
 	digitaltime(420,4,0,hrTime);
 
@@ -260,7 +259,7 @@ void gameDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) 
 		{
-			oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 			oslDrawStringf(GAME_DISPLAY_X, (i - curScroll)*63+GAME_DISPLAY_Y, "%.41s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it
 		}
 	}
@@ -820,14 +819,13 @@ int gameApp()
 		oslReadKeys();
 		oslClearScreen(RGB(0,0,0));	
 		oslDrawImageXY(gamebg, 0, 0);
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		oslDrawImageXY(gameSelection, selector_image_x, selector_image_y);
 		
 		oslDrawStringf(20,87,"GAME");
 		oslDrawStringf(20,150,"ISO/CSO");
 		oslDrawStringf(20,213,"POPS");
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,INTRAFONT_ALIGN_LEFT);
+
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);	
 		volumeController();

@@ -32,9 +32,7 @@ void powermenu()
 		oslDrawImageXY(ic_launcher_settings, 331, 190);
 		oslDrawImageXY(ic_launcher_messenger, 160, 190);
 		navbarButtons(0);
-		oslDrawImageXY(power, 100, 61);		
-		
-		oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, 0);
+		oslDrawImageXY(power, 100, 61);
 		
 		digitaltime(420,4,0,hrTime);
 		battery(370,2,1);

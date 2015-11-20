@@ -96,9 +96,9 @@ void digitaltime(int x, int y, int color, int hr) //color == 0 is white, color =
 	sceRtcGetCurrentClockLocalTime(&time);
 	
 	if (color == 0)
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		oslIntraFontSetStyle(Roboto, 0.5, WHITE, 0, 0);
 	else if (color == 1)
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+		oslIntraFontSetStyle(Roboto, 0.5, BLACK, 0, 0);
 		
 	if (hr == 0)
 	{
@@ -135,7 +135,7 @@ void centerClock(int n)
 			time.hour = 12;
 	}
 	
-    oslIntraFontSetStyle(Roboto, 1.7f,WHITE,0,INTRAFONT_ALIGN_CENTER);
+    oslIntraFontSetStyle(Roboto, 1.7f, WHITE, 0, INTRAFONT_ALIGN_CENTER);
 	
 	if (n==0)
 	{
@@ -188,11 +188,11 @@ int pspTimer()
 		if (time.hour == 00)
 			time.hour = 12;
 		
-		oslIntraFontSetStyle(Roboto, 0.6f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
+		oslIntraFontSetStyle(Roboto, 0.6f, WHITE, BLACK, INTRAFONT_ALIGN_CENTER);
 		
 		oslDrawStringf(224,110,"%d\n", getTimer());
 
-        oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+        oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, 0);
 
 		digitaltime(381,4,0,hrTime);
 		battery(330,2,0);
@@ -297,7 +297,7 @@ int pspStopWatch()
 		else 
 			oslDrawImageXY(timerPlay, 200, 215);
 			
-		oslIntraFontSetStyle(Roboto, 0.7f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
+		oslIntraFontSetStyle(Roboto, 0.7f, WHITE, BLACK, INTRAFONT_ALIGN_CENTER);
 		
 		oslDrawStringf(224,110,"%d %d %d %d\n", hour, min, getTimer(), miliSec);
 		
@@ -323,7 +323,7 @@ int pspStopWatch()
 			min = 0;
 		}
 
-        oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+        oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, 0);
 
 		navbarButtons(2);
 		battery(330,2,0);
@@ -478,7 +478,7 @@ int pspclock()
 		
         centerClock(0);
 		
-		oslIntraFontSetStyle(Roboto, 0.6f,WHITE,BLACK,INTRAFONT_ALIGN_CENTER);
+		oslIntraFontSetStyle(Roboto, 0.6f, WHITE, BLACK, INTRAFONT_ALIGN_CENTER);
 		
 		if (hrTime == 0)
 		{			
@@ -490,8 +490,6 @@ int pspclock()
 		
 		getDayOfWeek(190,156,2);
 		getMonthOfYear(265,156);
-		
-        oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
 		navbarButtons(2);
 		battery(330,2,0);

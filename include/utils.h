@@ -26,10 +26,11 @@ enum colors {
     LITEGRAY = 0xFFBFBFBF,
     GRAY =  0xFF7F7F7F,
     DARKGRAY = 0xFF3F3F3F,
-    BLACK = 0xFF000000
+    BLACK = 0xFF000000,
 };
 
 int setFileDefaultsInt(char *path, int value, int var);
+float setFileDefaultsFloat(char *path, float value, float var);
 char * setFileDefaultsChar(char path[], char data[], char var[]);
 void deleteUpdateFile();
 void createDirs();

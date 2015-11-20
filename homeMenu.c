@@ -193,6 +193,8 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	
 	batteryLife = scePowerGetBatteryLifePercent(); //Gets battery percentage
 	
+	oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_LEFT);
+	
 	if (n == 0 || n == 1)
 	{
 		if (batteryM == 0)
@@ -438,7 +440,7 @@ void volumeController()
 		vcontrolX = rlimit;
 	}
 	
-	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+	oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, 0);
 	
 	if (kernelButtons & PSP_CTRL_VOLUP)
 	{
@@ -869,12 +871,12 @@ void dayNightCycleWidget()
 			time.hour = 12;
 	}
 	
-    oslIntraFontSetStyle(Roboto, 1.7f,WHITE,0,INTRAFONT_ALIGN_CENTER);
+    oslIntraFontSetStyle(Roboto, 1.7f, WHITE, 0, INTRAFONT_ALIGN_CENTER);
 	oslDrawStringf(235,70,"%2d:%02d", time.hour, time.minutes);
 		
-	oslIntraFontSetStyle(Roboto, 0.4f,WHITE,0,INTRAFONT_ALIGN_CENTER);
-	getMonthOfYear(302,102);
-	getDayOfWeek(196,102,2);
+	oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_CENTER);
+	getMonthOfYear(312,102);
+	getDayOfWeek(195,102,2);
 	
 	if (time.hour < 6)
 	oslDrawImageXY(wDay, 210, 82);
@@ -932,8 +934,6 @@ void home()
 		
 		if (widgetActivator == 1)
 			dayNightCycleWidget();
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		if (eDesktopActivator == 1)
 		{

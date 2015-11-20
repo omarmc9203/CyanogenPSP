@@ -41,12 +41,12 @@ int lockscreen()
 		
 		centerClock(1);
 		
-		oslIntraFontSetStyle(Roboto, 0.4f,WHITE,0,0);
+		oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, 0);
 		getDayOfWeek(180,90,1);
 		getMonthOfYear(250,90);
 		//oslDrawStringf(20,20,"%d",passProtect); //Used for debugging only
 
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+		oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, 0);
 		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);

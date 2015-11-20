@@ -172,7 +172,7 @@ void MP3Play(char * path)
 
 		oslReadKeys();
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
 		oslDrawStringf(240,76, "Playing: %.19s", folderIcons[current].name);
@@ -182,9 +182,7 @@ void MP3Play(char * path)
 		oslDrawStringf(240,136, "Album: %.21s", ID3.ID3Album);
 		oslDrawStringf(240,156, "Year: %.22s", ID3.ID3Year);
 		oslDrawStringf(240,176, "Genre: %.21s", ID3.ID3GenreText);
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
-		
+
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
 		volumeController();
@@ -271,12 +269,10 @@ int soundPlay(char * path)
 
 		oslReadKeys();
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
 		oslDrawStringf(240,76, "%.28s", folderIcons[current].name);
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
@@ -330,7 +326,7 @@ int soundPlay(char * path)
 
 void mp3FileDisplay()
 {
-	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+	oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
 
 	oslDrawImageXY(mp3bg, 0, 0);
 	oslDrawImageXY(mp3_select,8,(current - curScroll)*55+MP3_CURR_DISPLAY_Y);
@@ -360,7 +356,6 @@ void mp3FileDisplay()
 			oslDrawStringf(MP3_DISPLAY_X, (i - curScroll)*55+MP3_DISPLAY_Y, "%.68s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
-	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 
 	battery(370,2,1);
 	digitaltime(420,4,0,hrTime);
@@ -517,7 +512,6 @@ int mp3View(char * browseDirectory)
 	mp3_select = oslLoadImageFilePNG("system/app/apollo/mp3_select.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
 	char * Directory = mp3Browse(browseDirectory);
 
@@ -566,7 +560,7 @@ int mp3player()
 		oslReadKeys();
 		oslClearScreen(RGB(0,0,0));	
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
 		
 		oslDrawImageXY(mp3bg, 0, 0);
 		oslDrawImageXY(mp3_select, selector_image_x, selector_image_y);
@@ -574,8 +568,6 @@ int mp3player()
 		oslDrawStringf(20,108,"MUSIC");
 		oslDrawStringf(20,163,"PSP/MUSIC");
 		oslDrawStringf(20,218,"PSP/GAME/CyanogenPSP/Downloads");
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
 		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);

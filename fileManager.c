@@ -866,13 +866,12 @@ void displayTextFromFile()
 		
 		oslClearScreen(RGB(0,0,0));
 		oslDrawImageXY(textview,0,0);
-		
-		oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);	
 		volumeController();
 		
-		oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);	
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);	
 			
 		oslDrawStringf(40,40, folderIcons[current].name);	
 		oslDrawStringf(10,66," \n%s", readTextFromFile(folderIcons[current].filePath));
@@ -954,7 +953,7 @@ void dirDownx5()
 
 void dirDisplay()
 {	
-	oslIntraFontSetStyle(Roboto, 0.5f,WHITE,0,0);
+	oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, 0);
 
 	oslDrawImageXY(filemanagerbg, 0, 0);
 	oslDrawStringf(86, 30, "%.34s",lastDir); // Displays the current directory.
@@ -963,7 +962,7 @@ void dirDisplay()
 	battery(370,2,1);
 	digitaltime(420,4,0,hrTime);
 	
-	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
+	oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
 
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_DISPLAY+curScroll;i++) {
@@ -1323,7 +1322,6 @@ int filemanage(int argc, char *argv[])
 	archiveicon = oslLoadImageFilePNG("system/app/filemanager/archiveicon.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,0);
 
 	if (!filemanagerbg || !diricon || !imageicon || !mp3icon || !txticon || !unknownicon || !bar || !documenticon || !binaryicon || !videoicon || !archiveicon)
 		debugDisplay();

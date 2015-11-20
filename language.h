@@ -3,6 +3,7 @@ const char lang_appDrawer[13][10][100];
 const char lang_settingsMain[13][6][100];
 const char lang_settingsDisplay[13][4][100];
 const char lang_settingsThemes[13][4][100];
+const char lang_settingsFonts[13][5][100];
 const char lang_settingsTime[13][1][100];
 const char lang_settingsMiscellaneous[13][4][100];
 const char lang_settingsPerformance[13][4][100];

@@ -17,7 +17,7 @@ int message1()
     int skip = 0;
 
     oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5f,BLACK,0,INTRAFONT_ALIGN_LEFT);
+	oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 	
     while(!osl_quit)
     {
@@ -401,7 +401,6 @@ int messenger()
 		debugDisplay();
 	
 	oslSetFont(Roboto);
-	oslIntraFontSetStyle(Roboto, 0.5, RGBA(0,0,0,255), RGBA(0,0,0,0), INTRAFONT_ALIGN_LEFT);
 		
 	while (!osl_quit)
 	{
@@ -410,6 +409,8 @@ int messenger()
 		oslStartDrawing();	
 		
 		oslClearScreen(RGB(0,0,0));
+		
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		
 		controls();	
 

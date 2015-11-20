@@ -103,6 +103,23 @@ const char lang_settingsThemes[][4][100] =
 	{"Стиль", "Шпалери", "Шрифт", "Пакети іконок"}
 };
 
+const char lang_settingsFonts[][5][100] = 
+{	
+	{"Font Style", "Font Size", "Small", "Medium", "Large"},
+	{"Le style de police", "Taille de police", "Petit", "Moyen", "Grand"},
+	{"Krój czcionki", "Rozmiar czcionki", "Mały", "Średni", "duże"},
+	{"Schriftstil", "Schriftgröße", "Klein", "Medium", "große"},
+	{"Lettertype", "Letter grootte", "Klein", "Medium", "Groot"},
+	{"Estilo de fuente", "Tamaño de fuente", "Pequeña", "Medio", "Gran"},
+	{"Estilo da fonte", "Tamanho da fonte", "Pequena", "Médio", "Grande"},
+	{"Estilo da fonte", "Tamanho da fonte", "Pequena", "Médio", "Grande"},
+	{"Skriftstil", "Font-størrelse", "Liten", "Medium", "Stor"},
+	{"Stilul fontului", "Marimea fontului", "Mic", "Mediu", "Mare"},
+	{"Stile carattere", "Dimensione del carattere", "Piccolo", "Media", "Di grandi dimensioni"},
+	{"Стиль шрифта", "Размер шрифта", "Маленький", "средний", "большой"},
+	{"стиль шрифту", "Розмір шрифту", "невеликий", "середній", "великий"}
+};
+
 const char lang_settingsTime[][1][100] = 
 {	
 	{"Use 24-hour format"},
