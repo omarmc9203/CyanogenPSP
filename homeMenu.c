@@ -208,7 +208,7 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		}
 		else  if (batteryLife > 99)
 		{
-			oslDrawStringf(batx+16, 4,"%d%%",batteryLife);
+			oslDrawStringf(batx+10, 4,"%d%%",batteryLife);
 		}
 		
 		if (usbStat == 1)
@@ -246,13 +246,11 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		
 		if (batteryLife <= 99)
 		{
-			baty = y;
-			oslDrawStringf(batx+18, y+2,"%d%%",batteryLife);
+			oslDrawStringf(batx+18, 4,"%d%%",batteryLife);
 		}
 		else  if (batteryLife > 99)
 		{
-			baty = y;
-			oslDrawStringf(batx+16, y+2,"%d%%",batteryLife);
+			oslDrawStringf(batx+10, 4,"%d%%",batteryLife);
 		}
 		
 		if (usbStat == 1)
@@ -632,7 +630,7 @@ void androidQuickSettings()
 		
 	oslDrawStringf(235,yLine2, "%s", lang_quickSettings[language][4]);
 	
-	oslDrawFillRect(40, yPos2+85, controlX+10, yPos2+87, RGB(128, 203, 196));	
+	oslDrawFillRect(40, yPos2+85, controlX+10, yPos2+87, RGB(130, 209, 203));	
 	oslDrawImageXY(control,controlX,yPos2+66);
 		
 	digitaltime(25,yPos1,53,hrTime);
