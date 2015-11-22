@@ -49,7 +49,7 @@ const char lang_appDrawer[][10][100] =
 	{"Internet", "Calculator", "Ceas", "Fișiere", "Galerie", "Joc", "Mesaje", "Muzică", "Setări", "UMD"},
 	{"Browser", "Calcolatrice", "Orologio", "Manager", "Galleria", "Giochi", "Messaggi", "Musica", "Impostazioni", "UMD"},
 	{"Браузер", "Калькулятор", "Часы", "Проводник", "Галерея", "Игра", "Сообщения", "Музыка", "Настройки", "UMD"},
-	{"Браузер", "Калькулятор", "Годинник", "Провідник", "Галерея", "Гра", "Повідомлення", "Музика", "Налаштування", "UMD"}
+	{"Браузер", "Калькулятор", "Час", "Провідник", "Галерея", "Ігри", "SMS", "Музика", "Настройки", "UMD"}
 };
 
 const char lang_settingsMain[][6][100] = 
@@ -66,7 +66,7 @@ const char lang_settingsMain[][6][100] =
 	{"Wi-Fi", "Securitate", "Ecran", "Performanță", "Opțiuni dezvoltator", "Despre consolă"},
 	{"Wi-Fi", "Sicurezza", "Display", "Performance", "Opzione sviluppatore", "Informazioni"},
 	{"Wi-Fi", "Безопасность", "Дисплей", "Производительность", "Настройки разработчика", "О программе"},
-	{"Wi-Fi", "Безпека", "Дисплей", "Продуктивність", "Налаштування розробника", "Про програму"}
+	{"Wi-Fi", "Безпека", "Дисплей", "Продуктивність", "Спец. настройки", "Про програму"}
 };
 
 const char lang_settingsDisplay[][4][100] = 
@@ -82,8 +82,8 @@ const char lang_settingsDisplay[][4][100] =
 	{"Temaer", "Tid", "språk", "Diverse"},
 	{"Teme", "Ceas", "Limbă", "Diverse"},
 	{"Temi", "Ora", "lingua", "Varie"},
-	{"Темы", "Время", "язык", "Разное"},
-	{"Теми", "Час", "мови", "Різне"}
+	{"Темы", "Время", "Язык﻿", "Разное"},
+	{"Теми", "Час", "Мови﻿", "Різне"}
 };
 
 const char lang_settingsThemes[][4][100] = 
@@ -116,8 +116,8 @@ const char lang_settingsFonts[][5][100] =
 	{"Skriftstil", "Font-størrelse", "Liten", "Medium", "Stor"},
 	{"Stilul fontului", "Marimea fontului", "Mic", "Mediu", "Mare"},
 	{"Stile carattere", "Dimensione del carattere", "Piccolo", "Media", "Di grandi dimensioni"},
-	{"Стиль шрифта", "Размер шрифта", "Маленький", "средний", "большой"},
-	{"стиль шрифту", "Розмір шрифту", "невеликий", "середній", "великий"}
+	{"Стиль шрифта", "Размер шрифта", "Малый", "Средний", "Большой"},
+	{"Стиль шрифту", "Розмір шрифту", "Малий", "Середній", "Великий"}
 };
 
 const char lang_settingsTime[][1][100] = 
@@ -320,8 +320,8 @@ const char lang_settingsDeveloperOptions[][5][150] =
 	{"Veksle Remote Joy Lite", "Viser PSP skjermen på din PC gjennom USB", "Trykk trekant for å deaktivere, ellers kan det føre til at programmet krasjer", "Veksle USB feilsøking", "Dumping tools"},
 	{"Activează Remote Joy Lite", "Afișează ecranul PSPului pe calculator prin USB", "Apasă pe triunghi pentru a-l dezactiva, altfel poate cauza erori în programe", "Activează depanarea prin USB", "Unelte pentru descărcare"},
 	{"Attiva Remote Joy Lite", "Visualizza la tua schermata PSP sul tuo computer tramite USB", "Premi triangolo per disabilitalo o potrebbe far crashare il programma", "Attiva debug USB", "Strumenti di salvataggio"},
-	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Нажмите треугольник для отключения, или это может привести к поломке программы", "Включить отладку USB", "Инструменты считывания"},
-	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Натисніть трикутник для відключення, або це може викликати несправності програми", "Ввімкнути налагодження USB", "Інструменти зчитування"}
+	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Нажмите треугольник для откл., или может быть поломка", "Включить отладку USB", "Инструменты считывания"},
+	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Натисніть трикутник для відкл., або можуть бути несправності", "Ввімкнути налагодження USB", "Інструменти зчитування"}
 };
 
 const char lang_settingsDump[][9][100] = 
