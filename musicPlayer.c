@@ -509,7 +509,7 @@ char * mp3Browse(const char * path)
 int mp3View(char * browseDirectory)
 {	
 	mp3bg = oslLoadImageFilePNG(apolloBgPath, OSL_IN_RAM, OSL_PF_8888);
-	mp3_select = oslLoadImageFilePNG("system/app/apollo/mp3_select.png", OSL_IN_RAM, OSL_PF_8888);
+	mp3_select = oslLoadImageFilePNG(apolloSelectorPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 
@@ -534,7 +534,7 @@ int mp3View(char * browseDirectory)
 int mp3player() 
 {
 	mp3bg = oslLoadImageFilePNG(apolloBgPath, OSL_IN_RAM, OSL_PF_8888);
-	mp3_select = oslLoadImageFilePNG("system/app/apollo/mp3_select.png", OSL_IN_RAM, OSL_PF_8888);
+	mp3_select = oslLoadImageFilePNG(apolloSelectorPath, OSL_IN_RAM, OSL_PF_8888);
 	
 	if (!mp3bg || !mp3_select)
 		debugDisplay();

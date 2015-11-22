@@ -691,7 +691,7 @@ OSL_IMAGE * processPBP(const char * path) {
 int gameView(char * browseDirectory, int type)
 {	
 	gamebg = oslLoadImageFilePNG(gameBgPath, OSL_IN_RAM, OSL_PF_8888);
-	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
+	gameSelection = oslLoadImageFilePNG(gameSelectorPath, OSL_IN_RAM, OSL_PF_8888);
 	
 	oslSetFont(Roboto);
 
@@ -791,7 +791,7 @@ int gameBoot()
 int gameApp() 
 {
 	gamebg = oslLoadImageFilePNG(gameBgPath, OSL_IN_RAM, OSL_PF_8888);
-	gameSelection = oslLoadImageFilePNG("system/app/game/gameselector.png", OSL_IN_RAM, OSL_PF_8888);
+	gameSelection = oslLoadImageFilePNG(gameSelectorPath, OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
 	

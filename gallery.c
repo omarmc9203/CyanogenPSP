@@ -379,7 +379,7 @@ void galleryUnload()
 int galleryView(char * browseDirectory)
 {	
 	gallerybg = oslLoadImageFilePNG(galleryBgPath, OSL_IN_RAM, OSL_PF_8888);
-	gallerySelection = oslLoadImageFilePNG("system/app/gallery/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	gallerySelection = oslLoadImageFilePNG(gallerySelectorPath, OSL_IN_RAM, OSL_PF_8888);
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
 
 	oslSetFont(Roboto);
@@ -405,7 +405,7 @@ int galleryView(char * browseDirectory)
 int galleryApp() 
 {
 	gallerybg = oslLoadImageFilePNG(galleryBgPath, OSL_IN_RAM, OSL_PF_8888);
-	gallerySelection = oslLoadImageFilePNG("system/app/gallery/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	gallerySelection = oslLoadImageFilePNG(gallerySelectorPath, OSL_IN_RAM, OSL_PF_8888);
 	galleryThumbnail = oslLoadImageFilePNG("system/app/gallery/ic_images.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	oslSetFont(Roboto);
