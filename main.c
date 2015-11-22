@@ -206,9 +206,9 @@ void firstBootInitiation()
 	loadIcons();
 	background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
 	cursor = oslLoadImageFilePNG(cursorPath, OSL_IN_VRAM, OSL_PF_8888);
-	navbar2 = oslLoadImageFile("system/home/icons/nav2.png", OSL_IN_RAM, OSL_PF_8888);
-	navbar = oslLoadImageFile("system/home/icons/nav.png", OSL_IN_VRAM, OSL_PF_8888);
-	notif = oslLoadImageFile("system/home/menu/notif.png", OSL_IN_RAM, OSL_PF_8888);
+	navbar = oslLoadImageFile(navbarPath, OSL_IN_RAM, OSL_PF_8888);
+	navbar2 = oslLoadImageFile(navbar2Path, OSL_IN_RAM, OSL_PF_8888);
+	//notif = oslLoadImageFile("system/home/menu/notif.png", OSL_IN_RAM, OSL_PF_8888);
 	backicon = oslLoadImageFilePNG(backiconPath, OSL_IN_RAM, OSL_PF_8888);
 	homeicon = oslLoadImageFilePNG(homeiconPath, OSL_IN_RAM, OSL_PF_8888);
 	multicon = oslLoadImageFilePNG(multiconPath, OSL_IN_RAM, OSL_PF_8888);
@@ -232,7 +232,7 @@ void firstBootInitiation()
 	
 	
 	//Debugger - Displays an error message if the following resources are missing.
-	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !notif || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !backicon || !multicon || !homeicon || !usbdebug  || !music)
+	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !backicon || !multicon || !homeicon || !usbdebug  || !music)
 		debugDisplay();
 		
 	//Sets the cursor's original position on the screen
@@ -395,6 +395,18 @@ int main()
 	checkGBootActivation();
 	createDirs();
 	themesLoad();
+	
+	FILE *temp;
+	 
+	if (!(fileExists("system/settings/rgb.bin")))
+	{
+		temp = fopen("system/settings/rgb.bin", "w");
+		fprintf(temp, "0\n149\n135");
+		fclose(temp);
+	}
+	temp = fopen(rgbValuesPath, "r");
+	fscanf(temp, "%d %d %d", &r, &g, &b);
+	fclose(temp);
 	
 	quickSettings = oslLoadImageFile(quickSettingsBgPath, OSL_IN_VRAM, OSL_PF_8888);
 	batt100 = oslLoadImageFile("system/home/icons/100.png", OSL_IN_VRAM, OSL_PF_8888);

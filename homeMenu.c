@@ -271,7 +271,12 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	}
 	
 	if (batteryLife == 100)
-		oslDrawImageXY(batt100,batx,baty);
+	{
+		if (n == 2)
+			oslDrawImageXY(batt100,batx-2,baty);
+		else 
+			oslDrawImageXY(batt100,batx-10,baty);
+	}
 	else if (batteryLife >80 && batteryLife <= 100) 
 		oslDrawImageXY(batt80,batx,baty);
 	else if (batteryLife >60 && batteryLife <= 80)
@@ -444,7 +449,7 @@ void volumeController()
 	{
 		increase_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
-		oslDrawFillRect(165, 56, vcontrolX+5, 58, RGB(130, 209, 203));	
+		oslDrawFillRect(165, 56, vcontrolX+5, 58, RGB(r, g, b));	
 		oslDrawImageXY(volumeControl, vcontrolX, 52);
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
@@ -453,7 +458,7 @@ void volumeController()
 	{
 		decrease_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
-		oslDrawFillRect(165, 56, vcontrolX+5, 58, RGB(130, 209, 203));
+		oslDrawFillRect(165, 56, vcontrolX+5, 58, RGB(r, g, b));
 		oslDrawImageXY(volumeControl, vcontrolX, 52);	
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
@@ -630,7 +635,7 @@ void androidQuickSettings()
 		
 	oslDrawStringf(235,yLine2, "%s", lang_quickSettings[language][4]);
 	
-	oslDrawFillRect(40, yPos2+85, controlX+10, yPos2+87, RGB(130, 209, 203));	
+	oslDrawFillRect(40, yPos2+85, controlX+10, yPos2+87, RGB(r, g, b));	
 	oslDrawImageXY(control,controlX,yPos2+66);
 		
 	digitaltime(25,yPos1,53,hrTime);
