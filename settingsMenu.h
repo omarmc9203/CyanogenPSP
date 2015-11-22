@@ -49,58 +49,38 @@ struct fw_version
 	unsigned int minor;
 };
 
-char highlightPath[250];
-char settingsBgPath[250];
-char displayBgPath[250];
-char aboutBgPath[250];
-char developerBgPath[250];
-char performanceBgPath[250];
-char performance2BgPath[250];
-char securityBgPath[250];
-char updatesBgPath[250];
-char wifiBgPath[250];
-char offSwitchPath[250];
-char onSwitchPath[250];
-char selectPath[250];
+char rgbValuesPath[250], backgroundDataPath[500];
 
-char aboutPath[250];
-char developerPath[250];
-char performancePath[250];
-char securityPath[250];
-char themesPath[250];
-char wifiPath[250];
+char settingsBgPath[250], displayBgPath[250], aboutBgPath[250], developerBgPath[250], performanceBgPath[250], performance2BgPath[250], 
+	 securityBgPath[250], updatesBgPath[250], wifiBgPath[250];
+	 
+char highlightPath[250], offSwitchPath[250], onSwitchPath[250], selectPath[250];
 
-char keyBoardBgPath[250];
-char cursorPath[250];
+char aboutPath[250], developerPath[250], performancePath[250], securityPath[250], themesPath[250], wifiPath[250];
 
-char apolloBgPath[250];
-char nowplayingBgPath[250];
+char keyBoardBgPath[250], cursorPath[250];
 
-char fmBgPath[250];
-char diriconPath[250];
+char apolloBgPath[250], apolloSelectorPath[250], nowplayingBgPath[250];
 
-char galleryBgPath[250];
-char gameBgPath[250];
-char quickSettingsBgPath[250];
-char backdropPath[250];
-char backiconPath[250];
-char homeiconPath[250];
-char multiconPath[250];
-char backicon2Path[250];
-char homeicon2Path[250];
-char multicon2Path[250];
+char fmBgPath[250], fmSelectorPath[250], diriconPath[250];
+
+char galleryBgPath[250], gallerySelectorPath[250];
+
+char gameBgPath[250], gameSelectorPath[250];
+
+char quickSettingsBgPath[250], navbarPath[250], navbar2Path[250], backdropPath[250], backiconPath[250], homeiconPath[250], 
+	 multiconPath[250], backicon2Path[250], homeicon2Path[250], multicon2Path[250];
 
 typedef struct fw_version fw_version;
 
 int connectAPCallback(int state);
 int connectToAP(int config);
-char fontPath[100];
-char backgroundPath[100], nickname[25], pspname[25], themeDirPath[250];
+char backgroundPath[500], nickname[25], pspname[25], fontPath[100], themeDirPath[250];
 int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language, usbStat, isPlaying, batteryM;
+int r, g, b;
 float fontSize;
 int passProtect;
-int RJL;
-int PSPDebug;
+int RJL, PSPDebug;
 int updateReady;
 void onlineUpdater();
 void flashUpdate();
@@ -128,6 +108,7 @@ void settingsUpx5();
 void settingsDownx5();
 void changeFont();
 int changeLanguage();
+void replaceAsset(char tempData[], char path[], char imgPath[], char redirectPath[]);
 void themesLoad();
 void themesReload();
 void iconPackLoad();

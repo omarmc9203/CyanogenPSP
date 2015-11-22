@@ -915,7 +915,7 @@ void ramMenu()
 		oslDrawStringf(20,78,"%s %d MB (%d%%) %s\n", lang_settingsRAM[language][0], availableRam, (((availableRam) * 100)/(totalRam)), lang_settingsRAM[language][1]); 
 		
 		oslDrawFillRect(20, 100, 424, 110, RGB(206, 215, 219));
-		oslDrawFillRect(20, 100, ((availableRam)*20.2), 110, RGB(0, 149, 135));
+		oslDrawFillRect(20, 100, ((availableRam)*20.2), 110, RGB(r, g, b));
 		
 		oslDrawStringf(20,122,"%d%% %s", (((20 - (availableRam)) * 100)/(totalRam)), lang_settingsRAM[language][2]);
 
@@ -1921,6 +1921,13 @@ int changeLanguage() //Created a separated function for this only because deleti
 	return language;
 }
 
+void replaceAsset(char tempData[], char path[], char imgPath[], char redirectPath[])
+{
+	strcpy(tempData, path);
+	strcat(tempData, imgPath); 
+	strcpy(redirectPath, tempData);
+}
+
 void themesLoad()
 {	
 	strcpy(themeDirPath, setFileDefaultsChar("system/settings/theme.bin", "system", themeDirPath));
@@ -1947,15 +1954,23 @@ void themesLoad()
 	char wifiImg[100] = "/settings/wifi.png";
 	
 	char apolloBgImg[100] = "/app/apollo/mp3bg.png";
+	char apolloSelectorImg[100] = "/app/apollo/mp3_select.png";
 	char nowplayingBgImg[100] = "/app/apollo/nowplaying.png";
 	
 	char fmBgImg[100] = "/app/filemanager/filemanagerbg.png";
+	char fmSelectorImg[100] = "/app/filemanager/bar.png";
 	char diriconImg[100] = "/app/filemanager/dir.png";
 	
 	char galleryBgImg[100] = "/app/gallery/gallerybg.png";
+	char gallerySelectorImg[100] = "/app/gallery/highlight.png";
+	
 	char gameImg[100] = "/app/game/gamebg.png";
+	char gameSelectorImg[100] = "/app/game/gameselector.png";
+	
 	char quickSettingsBgImg[100] = "/home/menu/quickSettings.png";
 	char backdropImg[100] = "/home/icons/backdrop.png";
+	char navbarImg[100] = "/home/icons/navbar.png";
+	char navbar2Img[100] = "/home/icons/navbar2.png";
 	char backiconImg[100] = "/home/icons/backicon.png";
 	char homeiconImg[100] = "/home/icons/homeicon.png";
 	char multiconImg[100] = "/home/icons/multicon.png";
@@ -1966,168 +1981,91 @@ void themesLoad()
 	char cursorImg[100] = "/cursor/cursor.png";
 	char keyBoardBgImg[100] = "/settings/keyboard.png";
 	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, highlightImg); 
-	strcpy(highlightPath, tempData);
+	char rgbValues[100] = "/settings/rgb.bin";
+	char backgroundData[100] = "/settings/background.bin";
 	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, aboutBgImg); 
-	strcpy(aboutBgPath, tempData);
+	replaceAsset(tempData, themeDirPath, highlightImg, highlightPath);
+	replaceAsset(tempData, themeDirPath, aboutBgImg, aboutBgPath);
+	replaceAsset(tempData, themeDirPath, developerBgImg, developerBgPath);
+	replaceAsset(tempData, themeDirPath, performanceBgImg, performanceBgPath);
+	replaceAsset(tempData, themeDirPath, performance2BgImg, performance2BgPath);
+	replaceAsset(tempData, themeDirPath, securityBgImg, securityBgPath);
+	replaceAsset(tempData, themeDirPath, updatesBgImg, updatesBgPath);
+	replaceAsset(tempData, themeDirPath, wifiBgImg, wifiBgPath);
+	replaceAsset(tempData, themeDirPath, offSwitchImg, offSwitchPath);
+	replaceAsset(tempData, themeDirPath, onSwitchImg, onSwitchPath);
+	replaceAsset(tempData, themeDirPath, selectImg, selectPath);
+	replaceAsset(tempData, themeDirPath, aboutImg, aboutPath);
+	replaceAsset(tempData, themeDirPath, developerImg, developerPath);
+	replaceAsset(tempData, themeDirPath, performanceImg, performancePath);
+	replaceAsset(tempData, themeDirPath, securityImg, securityPath);
+	replaceAsset(tempData, themeDirPath, themesImg, themesPath);
+	replaceAsset(tempData, themeDirPath, wifiImg, wifiPath);
+	replaceAsset(tempData, themeDirPath, settingsBgImg, settingsBgPath);
+	replaceAsset(tempData, themeDirPath, displayBgImg, displayBgPath);
+	replaceAsset(tempData, themeDirPath, apolloBgImg, apolloBgPath);
+	replaceAsset(tempData, themeDirPath, apolloSelectorImg, apolloSelectorPath);
+	replaceAsset(tempData, themeDirPath, nowplayingBgImg, nowplayingBgPath);
+	replaceAsset(tempData, themeDirPath, fmBgImg, fmBgPath);
+	replaceAsset(tempData, themeDirPath, fmSelectorImg, fmSelectorPath);
+	replaceAsset(tempData, themeDirPath, diriconImg, diriconPath);
+	replaceAsset(tempData, themeDirPath, galleryBgImg, galleryBgPath);
+	replaceAsset(tempData, themeDirPath, gallerySelectorImg, gallerySelectorPath);
+	replaceAsset(tempData, themeDirPath, gameImg, gameBgPath);
+	replaceAsset(tempData, themeDirPath, gameSelectorImg, gameSelectorPath);
+	replaceAsset(tempData, themeDirPath, quickSettingsBgImg, quickSettingsBgPath);
+	replaceAsset(tempData, themeDirPath, navbarImg, navbarPath);
+	replaceAsset(tempData, themeDirPath, navbar2Img, navbar2Path);
+	replaceAsset(tempData, themeDirPath, backiconImg, backiconPath);
+	replaceAsset(tempData, themeDirPath, homeiconImg, homeiconPath);
+	replaceAsset(tempData, themeDirPath, multiconImg, multiconPath);
+	replaceAsset(tempData, themeDirPath, backicon2Img, backicon2Path);
+	replaceAsset(tempData, themeDirPath, homeicon2Img, homeicon2Path);
+	replaceAsset(tempData, themeDirPath, multicon2Img, multicon2Path);
+	replaceAsset(tempData, themeDirPath, backdropImg, backdropPath);
+	replaceAsset(tempData, themeDirPath, cursorImg, cursorPath);
+	replaceAsset(tempData, themeDirPath, keyBoardBgImg, keyBoardBgPath);
+	replaceAsset(tempData, themeDirPath, rgbValues, rgbValuesPath);
+	replaceAsset(tempData, themeDirPath, backgroundData, backgroundPath);
 	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, developerBgImg); 
-	strcpy(developerBgPath, tempData);
+	FILE *temp;
+
+	temp = fopen(rgbValuesPath, "r");
+	fscanf(temp, "%d %d %d", &r, &g, &b);
+	fclose(temp);
 	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, performanceBgImg); 
-	strcpy(performanceBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, performance2BgImg); 
-	strcpy(performance2BgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, securityBgImg); 
-	strcpy(securityBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, updatesBgImg); 
-	strcpy(updatesBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, wifiBgImg); 
-	strcpy(wifiBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, offSwitchImg); 
-	strcpy(offSwitchPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, onSwitchImg); 
-	strcpy(onSwitchPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, selectImg); 
-	strcpy(selectPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, aboutImg); 
-	strcpy(aboutPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, developerImg); 
-	strcpy(developerPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, performanceImg); 
-	strcpy(performancePath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, securityImg); 
-	strcpy(securityPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, themesImg); 
-	strcpy(themesPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, wifiImg); 
-	strcpy(wifiPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, settingsBgImg); 
-	strcpy(settingsBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, displayBgImg); 
-	strcpy(displayBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, apolloBgImg); 
-	strcpy(apolloBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, nowplayingBgImg); 
-	strcpy(nowplayingBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, fmBgImg); 
-	strcpy(fmBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, diriconImg); 
-	strcpy(diriconPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, galleryBgImg); 
-	strcpy(galleryBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, gameImg); 
-	strcpy(gameBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, quickSettingsBgImg); 
-	strcpy(quickSettingsBgPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, backiconImg); 
-	strcpy(backiconPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, homeiconImg); 
-	strcpy(homeiconPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, multiconImg); 
-	strcpy(multiconPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, backicon2Img); 
-	strcpy(backicon2Path, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, homeicon2Img); 
-	strcpy(homeicon2Path, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, multicon2Img); 
-	strcpy(multicon2Path, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, backdropImg); 
-	strcpy(backdropPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, cursorImg); 
-	strcpy(cursorPath, tempData);
-	
-	strcpy(tempData, themeDirPath);
-	strcat(tempData, keyBoardBgImg); 
-	strcpy(keyBoardBgPath, tempData);
+	strcpy(backgroundPath, setFileDefaultsChar(backgroundPath, "system/framework/framework-res/res/background.png", backgroundPath));
 }
 
 void themesReload()
 {
-	oslDeleteImage(quickSettings);
+	oslDeleteImage(background);
+	oslDeleteImage(navbar);
+	oslDeleteImage(navbar2);
 	oslDeleteImage(backicon);
 	oslDeleteImage(homeicon);
 	oslDeleteImage(multicon);
 	oslDeleteImage(backicon2);
 	oslDeleteImage(homeicon2);
 	oslDeleteImage(multicon2);
-	oslDeleteImage(displaybg);
+	oslDeleteImage(quickSettings);
 	oslDeleteImage(cursor);
+	oslDeleteImage(displaybg);
+	oslDeleteImage(highlight);
 
-	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	quickSettings = oslLoadImageFile(quickSettingsBgPath, OSL_IN_VRAM, OSL_PF_8888);
+	background = oslLoadImageFile(backgroundPath, OSL_IN_RAM, OSL_PF_8888);
+	navbar = oslLoadImageFile(navbarPath, OSL_IN_RAM, OSL_PF_8888);
+	navbar2 = oslLoadImageFile(navbar2Path, OSL_IN_RAM, OSL_PF_8888);
 	backicon = oslLoadImageFilePNG(backiconPath, OSL_IN_RAM, OSL_PF_8888);
 	homeicon = oslLoadImageFilePNG(homeiconPath, OSL_IN_RAM, OSL_PF_8888);
 	multicon = oslLoadImageFilePNG(multiconPath, OSL_IN_RAM, OSL_PF_8888);
 	backicon2 = oslLoadImageFilePNG(backicon2Path, OSL_IN_RAM, OSL_PF_8888);
 	homeicon2 = oslLoadImageFilePNG(homeicon2Path, OSL_IN_RAM, OSL_PF_8888);
 	multicon2 = oslLoadImageFilePNG(multicon2Path, OSL_IN_RAM, OSL_PF_8888);
+	quickSettings = oslLoadImageFile(quickSettingsBgPath, OSL_IN_VRAM, OSL_PF_8888);
 	cursor = oslLoadImageFilePNG(cursorPath, OSL_IN_RAM, OSL_PF_8888);
+	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 }
 
 void iconPackLoad()
@@ -2147,53 +2085,18 @@ void iconPackLoad()
 	char settingsImg[50] = "/settings/ic_launcher_settings.png";
 	char umdImg[50] = "/umd/ic_launcher_umd.png";
 	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, allappsImg); 
-	strcpy(allappsPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, allapps_pressedImg); 
-	strcpy(allapps_pressedPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, apolloImg); 
-	strcpy(apolloPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, browserImg); 
-	strcpy(browserPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, calcImg); 
-	strcpy(calcPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, clockImg); 
-	strcpy(clockPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, fmImg); 
-	strcpy(fmPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, galleryImg); 
-	strcpy(galleryPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, gameImg); 
-	strcpy(gamePath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, messagesImg); 
-	strcpy(messagesPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, settingsImg); 
-	strcpy(settingsPath, tempData);
-	
-	strcpy(tempData, appDirPath);
-	strcat(tempData, umdImg); 
-	strcpy(umdPath, tempData);
+	replaceAsset(tempData, appDirPath, allappsImg, allappsPath);
+	replaceAsset(tempData, appDirPath, allapps_pressedImg, allapps_pressedPath);
+	replaceAsset(tempData, appDirPath, apolloImg, apolloPath);
+	replaceAsset(tempData, appDirPath, browserImg, browserPath);
+	replaceAsset(tempData, appDirPath, calcImg, calcPath);
+	replaceAsset(tempData, appDirPath, clockImg, clockPath);
+	replaceAsset(tempData, appDirPath, fmImg, fmPath);
+	replaceAsset(tempData, appDirPath, galleryImg, galleryPath);
+	replaceAsset(tempData, appDirPath, gameImg, gamePath);
+	replaceAsset(tempData, appDirPath, messagesImg, messagesPath);
+	replaceAsset(tempData, appDirPath, settingsImg, settingsPath);
+	replaceAsset(tempData, appDirPath, umdImg, umdPath);
 }
 
 void iconPackReload()
