@@ -152,18 +152,21 @@ void controls() //Main controller function - allows cursor movement
 	//Read keys
 	oslReadKeys();
 		
-	if(osl_keys->analogX >= 50)
-		cursor->x+= osl_keys->analogX/30;
+	if (!osl_pad.held.cross)	
+	{	
+		if(osl_keys->analogX >= 50)
+			cursor->x+= osl_keys->analogX/30;
 		
-	if(osl_keys->analogX <= -50)
-		cursor->x+=osl_keys->analogX/30;
+		if(osl_keys->analogX <= -50)
+			cursor->x+=osl_keys->analogX/30;
 
-	if(osl_keys->analogY >= 50)
-		cursor->y+= osl_keys->analogY/30;
+		if(osl_keys->analogY >= 50)
+			cursor->y+= osl_keys->analogY/30;
 		
-	if(osl_keys->analogY <= -50)
-		cursor->y+= osl_keys->analogY/30;
-		
+		if(osl_keys->analogY <= -50)
+			cursor->y+= osl_keys->analogY/30;
+	}
+	
 	/* Prevents the cursor from going off screen */
 	
 	if (cursor->x <= llimit)
@@ -711,7 +714,7 @@ void androidQuickSettings()
 		notif_up = 1;
 	}
 			
-	if (notif_down == 1)
+	if (notif_down == 1 && cursor->y <= 10)
 	{				
 		if (osl_pad.held.cross && osl_keys->analogY >= 50)
 		{
