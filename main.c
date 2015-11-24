@@ -209,12 +209,6 @@ void firstBootInitiation()
 	navbar = oslLoadImageFile(navbarPath, OSL_IN_RAM, OSL_PF_8888);
 	navbar2 = oslLoadImageFile(navbar2Path, OSL_IN_RAM, OSL_PF_8888);
 	//notif = oslLoadImageFile("system/home/menu/notif.png", OSL_IN_RAM, OSL_PF_8888);
-	backicon = oslLoadImageFilePNG(backiconPath, OSL_IN_RAM, OSL_PF_8888);
-	homeicon = oslLoadImageFilePNG(homeiconPath, OSL_IN_RAM, OSL_PF_8888);
-	multicon = oslLoadImageFilePNG(multiconPath, OSL_IN_RAM, OSL_PF_8888);
-	backicon2 = oslLoadImageFilePNG(backicon2Path, OSL_IN_RAM, OSL_PF_8888);
-	homeicon2 = oslLoadImageFilePNG(homeicon2Path, OSL_IN_RAM, OSL_PF_8888);
-	multicon2 = oslLoadImageFilePNG(multicon2Path, OSL_IN_RAM, OSL_PF_8888);
 	welcome = oslLoadImageFilePNG("system/home/icons/welcome.png", OSL_IN_RAM, OSL_PF_8888);
 	transbackground = oslLoadImageFilePNG("system/home/icons/transbackground.png", OSL_IN_RAM, OSL_PF_8888);
 	control = oslLoadImageFilePNG("system/home/menu/brightnesscontrol.png", OSL_IN_VRAM, OSL_PF_8888);
@@ -232,7 +226,7 @@ void firstBootInitiation()
 	
 	
 	//Debugger - Displays an error message if the following resources are missing.
-	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !backicon || !multicon || !homeicon || !usbdebug  || !music)
+	if (!background || !cursor || !ic_allapps || !ic_allapps_pressed || !navbar || !ic_launcher_apollo || !ic_launcher_settings || !ic_launcher_messenger || !ic_launcher_browser || !batt100 || !batt80 || !batt60 || !batt40 || !batt20 || !batt10 || !batt0 || !battcharge || !navbar2 || !usbdebug  || !music)
 		debugDisplay();
 		
 	//Sets the cursor's original position on the screen
@@ -421,8 +415,8 @@ int main()
 	volumeControl = oslLoadImageFile("system/home/menu/volumeControl.png", OSL_IN_RAM, OSL_PF_8888);
 	layerA = oslLoadImageFilePNG("system/home/icons/layerA.png", OSL_IN_RAM, OSL_PF_8888);
 	layerB = oslLoadImageFilePNG("system/home/icons/layerB.png", OSL_IN_RAM, OSL_PF_8888);
-	layerC = oslLoadImageFilePNG("system/home/icons/layerC.png", OSL_IN_RAM, OSL_PF_8888);
-	layerD = oslLoadImageFilePNG("system/home/icons/layerD.png", OSL_IN_RAM, OSL_PF_8888);
+	navbarHighlight = oslLoadImageFilePNG(navbarHighlightPath, OSL_IN_RAM, OSL_PF_8888);
+	navbarHighlight2 = oslLoadImageFilePNG(navbarHighlight2Path, OSL_IN_RAM, OSL_PF_8888);
 	
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto); //Load and set font
@@ -435,8 +429,8 @@ int main()
 	
 	deleteUpdateFile(); //Delete update.zip
 	
-	setCpuBoot(); //Set default CPU or load pre-existing value
 	setPowerManagement(); //Set default power save settings or load pre-existing values.
+	setCpuBoot(); //Set default CPU or load pre-existing value
 	
 	getPSPNickname(); //Get PSP name before hand
 	strcpy (pspname, nickname);

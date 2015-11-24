@@ -190,7 +190,7 @@ void controls() //Main controller function - allows cursor movement
 	}
 }
 
-void battery(int batx, int baty, int n) // Draws the battery icon depending on its percentage. 
+void battery(int batX, int batY, int n) // Draws the battery icon depending on its percentage. 
 {
 	int batteryLife, y = 0;
 	
@@ -202,26 +202,26 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	{
 		if (batteryM == 0)
 		{
-			oslDrawImageXY(layerC, 0, 0);
+			oslDrawFillRect(0, 0, 480, 21, RGB(245,81,30));
 		}
 		
 		if (batteryLife <= 99)
 		{
-			oslDrawStringf(batx+18, 4,"%d%%",batteryLife);
+			oslDrawStringf(batX+18, 4, "%d%%", batteryLife);
 		}
 		else  if (batteryLife > 99)
 		{
-			oslDrawStringf(batx+10, 4,"%d%%",batteryLife);
+			oslDrawStringf(batX+10, 4, "%d%%", batteryLife);
 		}
 		
 		if (usbStat == 1)
 		{
-			oslDrawImageXY(usbdebug,5, -1);
+			oslDrawImageXY(usbdebug, 5, -1);
 		}
 			
 		else if (isPlaying == 1)
 		{
-			oslDrawImageXY(music,5, 2);
+			oslDrawImageXY(music, 5, 2);
 		}
 		
 		if (usbStat == 1 && isPlaying == 1)
@@ -236,7 +236,7 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		if ((cursor->y <= 16) || (cursor->y >= 226))
 		{
 			if (batteryM == 0)
-				oslDrawImageXY(layerC, 0, 0);
+				oslDrawFillRect(0, 0, 480, 21, RGB(245,81,30));
 			else
 				oslDrawImageXY(layerA, 0, 0);
 			y+=2;
@@ -249,21 +249,21 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 		
 		if (batteryLife <= 99)
 		{
-			oslDrawStringf(batx+18, 4,"%d%%",batteryLife);
+			oslDrawStringf(batX+18, 4,"%d%%",batteryLife);
 		}
 		else  if (batteryLife > 99)
 		{
-			oslDrawStringf(batx+10, 4,"%d%%",batteryLife);
+			oslDrawStringf(batX+10, 4,"%d%%",batteryLife);
 		}
 		
 		if (usbStat == 1)
 		{
-			oslDrawImageXY(usbdebug,5, y-3);
+			oslDrawImageXY(usbdebug, 5, y-3);
 		}
 			
 		else if (isPlaying == 1)
 		{
-			oslDrawImageXY(music,5, y);
+			oslDrawImageXY(music, 5, y);
 		}
 		
 		if (usbStat == 1 && isPlaying == 1)
@@ -276,35 +276,46 @@ void battery(int batx, int baty, int n) // Draws the battery icon depending on i
 	if (batteryLife == 100)
 	{
 		if (n == 2)
-			oslDrawImageXY(batt100,batx-2,baty);
+			oslDrawImageXY(batt100, batX-2, batY);
 		else 
-			oslDrawImageXY(batt100,batx-10,baty);
+			oslDrawImageXY(batt100, batX-10, batY);
 	}
 	else if (batteryLife >80 && batteryLife <= 100) 
-		oslDrawImageXY(batt80,batx,baty);
+		oslDrawImageXY(batt80, batX, batY);
 	else if (batteryLife >60 && batteryLife <= 80)
-		oslDrawImageXY(batt60,batx,baty);
+		oslDrawImageXY(batt60, batX, batY);
 	else if (batteryLife >40 && batteryLife <= 60)
-		oslDrawImageXY(batt40,batx,baty);
+		oslDrawImageXY(batt40, batX, batY);
 	else if (batteryLife >20 && batteryLife <= 40) 
-		oslDrawImageXY(batt20,batx,baty);
+		oslDrawImageXY(batt20, batX, batY);
 	else if (batteryLife >10 && batteryLife <= 20)
-		oslDrawImageXY(batt10,batx,baty);
+		oslDrawImageXY(batt10, batX, batY);
 	else if (batteryLife >0 && batteryLife <= 10)
 	{
 		//oslPlaySound(LowBattery, 1);  
-		oslDrawImageXY(batt0,batx,baty);
+		oslDrawImageXY(batt0, batX, batY);
 	}
 	
 	if (scePowerIsBatteryCharging() == 1) // If the battery's charging, draw the charging icon on the battery icon.
-		//oslPlaySound(WirelessChargingStarted, 1);  
-		oslDrawImageXY(battcharge,batx,baty);
+	{
+		if (batteryLife == 100)
+		{
+			if (n == 2)
+				oslDrawImageXY(battcharge, batX-1, batY);
+			else 
+				oslDrawImageXY(battcharge, batX-9, batY);
+		}
+		else
+		{
+			//oslPlaySound(WirelessChargingStarted, 1);  
+			oslDrawImageXY(battcharge, batX, batY);
+		}
+	}
 }
 
-int vcontrolX;
-	
 void volumeController()
 {	
+	int vControlX = 0;
 	unsigned int kernelButtons = getbuttons(); 
 	
 	int llimit = 161;
@@ -314,136 +325,136 @@ void volumeController()
 	
 	if (volume == 0)
 	{
-		vcontrolX = 161;
+		vControlX = 161;
 	}
 	else if (volume == 1)
 	{
-		vcontrolX = 167;
+		vControlX = 167;
 	}
 	else if (volume == 2)
 	{
-		vcontrolX = 173;
+		vControlX = 173;
 	}
 	else if (volume == 3)
 	{
-		vcontrolX = 179;
+		vControlX = 179;
 	}
 	else if (volume == 4)
 	{
-		vcontrolX = 185;
+		vControlX = 185;
 	}
 	else if (volume == 5)
 	{
-		vcontrolX = 191;
+		vControlX = 191;
 	}
 	else if (volume == 6)
 	{
-		vcontrolX = 197;
+		vControlX = 197;
 	}
 	else if (volume == 7)
 	{
-		vcontrolX = 203;
+		vControlX = 203;
 	}
 	else if (volume == 8)
 	{
-		vcontrolX = 209;
+		vControlX = 209;
 	}
 	else if (volume == 9)
 	{
-		vcontrolX = 215;
+		vControlX = 215;
 	}
 	else if (volume == 10)
 	{
-		vcontrolX = 221;
+		vControlX = 221;
 	}
 	else if (volume == 11)
 	{
-		vcontrolX = 227;
+		vControlX = 227;
 	}
 	else if (volume == 12)
 	{
-		vcontrolX = 233;
+		vControlX = 233;
 	}
 	else if (volume == 13)
 	{
-		vcontrolX = 239;
+		vControlX = 239;
 	}
 	else if (volume == 14)
 	{
-		vcontrolX = 245;
+		vControlX = 245;
 	}
 	else if (volume == 15)
 	{
-		vcontrolX = 251;
+		vControlX = 251;
 	}
 	else if (volume == 16)
 	{
-		vcontrolX = 257;
+		vControlX = 257;
 	}
 	else if (volume == 17)
 	{
-		vcontrolX = 263;
+		vControlX = 263;
 	}
 	else if (volume == 18)
 	{
-		vcontrolX = 269;
+		vControlX = 269;
 	}
 	else if (volume == 19)
 	{
-		vcontrolX = 275;
+		vControlX = 275;
 	}
 	else if (volume == 20)
 	{
-		vcontrolX = 281;
+		vControlX = 281;
 	}
 	else if (volume == 21)
 	{
-		vcontrolX = 287;
+		vControlX = 287;
 	}
 	else if (volume == 22)
 	{
-		vcontrolX = 293;
+		vControlX = 293;
 	}
 	else if (volume == 23)
 	{
-		vcontrolX = 299;
+		vControlX = 299;
 	}
 	else if (volume == 24)
 	{
-		vcontrolX = 305;
+		vControlX = 305;
 	}
 	else if (volume == 25)
 	{
-		vcontrolX = 311;
+		vControlX = 311;
 	}
 	else if (volume == 26)
 	{
-		vcontrolX = 317;
+		vControlX = 317;
 	}
 	else if (volume == 27)
 	{
-		vcontrolX = 323;
+		vControlX = 323;
 	}
 	else if (volume == 28)
 	{
-		vcontrolX = 329;
+		vControlX = 329;
 	}
 	else if (volume == 29)
 	{
-		vcontrolX = 335;
+		vControlX = 335;
 	}
 	else if (volume == 30)
 	{
-		vcontrolX = 341;
+		vControlX = 341;
 	}
 	
-	if (vcontrolX <= llimit)
+	if (vControlX <= llimit)
 	{
-		vcontrolX = llimit;
+		vControlX = llimit;
 	}
-	else if (vcontrolX >= rlimit)
+	else if (vControlX >= rlimit)
 	{
-		vcontrolX = rlimit;
+		vControlX = rlimit;
 	}
 	
 	oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, 0);
@@ -452,8 +463,8 @@ void volumeController()
 	{
 		increase_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
-		oslDrawFillRect(165, 56, vcontrolX+5, 58, RGB(r, g, b));	
-		oslDrawImageXY(volumeControl, vcontrolX, 52);
+		oslDrawFillRect(165, 56, vControlX+5, 58, RGB(r, g, b));	
+		oslDrawImageXY(volumeControl, vControlX, 52);
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
 	
@@ -461,8 +472,8 @@ void volumeController()
 	{
 		decrease_volume(1);
 		oslDrawImageXY(volumeBar, 117,30);
-		oslDrawFillRect(165, 56, vcontrolX+5, 58, RGB(r, g, b));
-		oslDrawImageXY(volumeControl, vcontrolX, 52);	
+		oslDrawFillRect(165, 56, vControlX+5, 58, RGB(r, g, b));
+		oslDrawImageXY(volumeControl, vControlX, 52);	
 		oslDrawStringf(130,70, "Vol: %d", imposeGetVolume());
 	}
 }
@@ -488,22 +499,22 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 		oslDrawImageXY(navbar, 109, 237);
 		
 		if (cursor->x  >= 144 && cursor->x  <= 204 && cursor->y >= 226 && cursor->y <= 271)
-			oslDrawImageXY(backicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
-	
+			oslDrawImageXY(navbarHighlight, 130, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
 		else
-			oslDrawImageXY(navbar,109, 237);
+			oslDrawImageXY(navbar, 109, 237);
 		
 		if (cursor->x  >= 205 && cursor->x  <= 271 && cursor->y >= 226 && cursor->y <= 271)
-			oslDrawImageXY(homeicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
-	
+			oslDrawImageXY(navbarHighlight, 195, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
 		else
-			oslDrawImageXY(navbar,109, 237);
+			oslDrawImageXY(navbar, 109, 237);
 		
 		if (cursor->x  >= 272 && cursor->x  <= 332 && cursor->y >= 226 && cursor->y <= 271)
-			oslDrawImageXY(multicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
-	
+		{
+			oslDrawImageXY(navbarHighlight, 260, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
+			oslDrawImageXY(navbar, 109, 237);
+		}
 		else
-			oslDrawImageXY(navbar,109, 237);
+			oslDrawImageXY(navbar, 109, 237);
 	}
 	
 	else if (n == 1)
@@ -511,7 +522,7 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 		if ((cursor->y >= 226) || (cursor->y <= 16) )
 		{
 			if (batteryM == 0)
-				oslDrawImageXY(layerD, 0, 237);
+				oslDrawFillRect(0, 237, 480, 272, RGB(245,81,30));
 			else
 				oslDrawImageXY(layerB, 0, 237);
 				
@@ -525,22 +536,24 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 			oslDrawImageXY(navbar, 109, y);
 		
 			if (cursor->x  >= 144 && cursor->x  <= 204 && cursor->y >= 226 && cursor->y <= 271)
-				oslDrawImageXY(backicon,109, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+				oslDrawImageXY(navbarHighlight, 130, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
 	
 			else
-				oslDrawImageXY(navbar,109, y);
+				oslDrawImageXY(navbar, 109, y);
 		
 			if (cursor->x  >= 205 && cursor->x  <= 271 && cursor->y >= 226 && cursor->y <= 271)
-				oslDrawImageXY(homeicon,109, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+				oslDrawImageXY(navbarHighlight, 195, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
 	
 			else
 				oslDrawImageXY(navbar,109, y);
 		
 			if (cursor->x  >= 272 && cursor->x  <= 332 && cursor->y >= 226 && cursor->y <= 271)
-				oslDrawImageXY(multicon,109, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
-	
+			{
+				oslDrawImageXY(navbarHighlight, 260, y); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
+				oslDrawImageXY(navbar, 109, y);
+			}
 			else
-				oslDrawImageXY(navbar,109, y);
+				oslDrawImageXY(navbar, 109, y);
 		}
 		else if (cursor->y >= 16 && cursor->y <= 226)
 		{
@@ -555,48 +568,51 @@ void navbarButtons(int n) //Draws the navbar buttons in the bottom as seen on an
 	
 	else if (n == 2)
 	{
+		oslDrawFillRect(444, 0, 480, 272, RGB(0, 0, 0));
+		oslDrawImageXY(navbar2, 444, 19);
+		oslDrawImageXY(navbar2, 444, 19);
+		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75))
 		{
-			oslDrawImageXY(multicon2, 444, 19); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+			oslDrawImageXY(navbarHighlight2, 444, 26); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+			oslDrawImageXY(navbar2, 444, 19);
 		}
-	
-		else if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213))
-		{
-			oslDrawImageXY(backicon2, 444, 19); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
-		}
-
 		else if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155))
 		{
-			oslDrawImageXY(homeicon2, 444, 20); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+			oslDrawImageXY(navbarHighlight2, 444, 96); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+			oslDrawImageXY(navbar2, 444, 19);
 		}
-		else
+		else if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213))
 		{
+			oslDrawImageXY(navbarHighlight2, 444, 165); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
 			oslDrawImageXY(navbar2, 444, 19);
 		}
 	}
 	
 	else if (n == 3) //Powersave
 	{
-		oslDrawImageXY(layerD, 0, 237);
+		oslDrawFillRect(0, 237, 480, 272, RGB(245,81,30));
 		oslDrawImageXY(navbar, 109, 237);
 		
 		if (cursor->x  >= 144 && cursor->x  <= 204 && cursor->y >= 226 && cursor->y <= 271)
-			oslDrawImageXY(backicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+			oslDrawImageXY(navbarHighlight, 130, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
 	
 		else
-			oslDrawImageXY(navbar,109, 237);
+			oslDrawImageXY(navbar, 109, 237);
 	
 		if (cursor->x  >= 205 && cursor->x  <= 271 && cursor->y >= 226 && cursor->y <= 271)
-			oslDrawImageXY(homeicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
+			oslDrawImageXY(navbarHighlight, 195, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon, else it just draws the navbar.
 	
 		else
-			oslDrawImageXY(navbar,109, 237);
+			oslDrawImageXY(navbar, 109, 237);
 		
 		if (cursor->x  >= 272 && cursor->x  <= 332 && cursor->y >= 226 && cursor->y <= 271)
-			oslDrawImageXY(multicon,109, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
-	
+		{
+			oslDrawImageXY(navbarHighlight, 260, 237); //If the cursor is moved onto/near the back icon, it displays the highlighted back icon. else it just draws the navbar.
+			oslDrawImageXY(navbar, 109, 237);
+		}
 		else
-			oslDrawImageXY(navbar,109, 237);
+			oslDrawImageXY(navbar, 109, 237);
 	}
 }
 

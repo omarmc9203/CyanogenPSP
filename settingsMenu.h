@@ -68,8 +68,7 @@ char galleryBgPath[250], gallerySelectorPath[250];
 
 char gameBgPath[250], gameSelectorPath[250];
 
-char quickSettingsBgPath[250], navbarPath[250], navbar2Path[250], backdropPath[250], backiconPath[250], homeiconPath[250], 
-	 multiconPath[250], backicon2Path[250], homeicon2Path[250], multicon2Path[250];
+char quickSettingsBgPath[250], navbarPath[250], navbar2Path[250], backdropPath[250], navbarHighlightPath[250], navbarHighlight2Path[250];
 
 typedef struct fw_version fw_version;
 
