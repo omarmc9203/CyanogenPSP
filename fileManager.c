@@ -625,6 +625,7 @@ void OptionMenu()
 	while (!osl_quit)
 	{
 		oslStartDrawing();	
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		oslDrawImageXY(action, 98,47);
 		oslDrawStringf(120,115,"Press X");
 		if (copyData == 1)
