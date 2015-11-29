@@ -321,12 +321,27 @@ void aboutMenu()
 			}
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 120 && cursor->y <= 178)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 120 && cursor->y <= 178)
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
 			oslDrawStringf(20,129,"%s %s-20151116-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
 			oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
+		}
+		
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 179 && cursor->y <= 233)
+		{
+			oslDrawImageXY(highlight, 0, 179);
+			oslDrawStringf(20,185,"%s %d.%d", lang_settingsAbout[language][5], version.major, version.minor);
+			oslDrawStringf(20,199,"%s %s", lang_settingsAbout[language][6], OSL_VERSION);
+			oslDrawStringf(20,213,"Developer: Joel16");
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				oslDeleteImage(aboutbg);
+				oslDeleteImage(highlight);
+				creditsMenu();
+			}
 		}
 		
 		navbarButtons(2);
@@ -361,7 +376,7 @@ void aboutMenu()
 		{
 			if (updateReady == 1)
 			{
-				if (updateActivation == 1)
+				if (updateActivation == 1 && (fileExists("ms0:/PSP/GAME/update.zip")))
 				{
 					oslInitMessageDialog("Update.zip has been found. Would you like to flash the update?", 1);
 					memset(message, 0, sizeof(message));
@@ -400,6 +415,100 @@ void aboutMenu()
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(aboutbg);
 			oslDeleteImage(highlight);
+			home();	
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+		{	
+			oslPlaySound(KeypressStandard, 1);  
+			multitask();
+		}
+		
+		captureScreenshot();
+		
+	oslEndDrawing(); 
+    oslEndFrame(); 
+	oslSyncFrame();	
+	}
+}
+
+void creditsMenu()
+{
+	aboutbg = oslLoadImageFilePNG(aboutBgPath, OSL_IN_RAM, OSL_PF_8888);
+	
+	oslSetFont(Roboto);
+	
+	if (!aboutbg || !highlight)
+		debugDisplay();
+
+	while (!osl_quit)
+	{
+		LowMemExit();
+	
+		oslStartDrawing();
+		
+		oslClearScreen(RGB(0,0,0));
+		
+		controls();	
+
+		oslDrawImageXY(aboutbg, 0, 0);
+		oslDrawFillRect(0, 62, 444, 272, RGB(255,255,255));
+		
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+
+		oslDrawStringf(10,68,"I'd like to say thanks to all the Developers, contributors and");
+		oslDrawStringf(10,80,"supporters, who motivated me to continue this project for");
+		oslDrawStringf(10,92,"such a long time. Thank you, all of you! :)");
+		
+		oslDrawStringf(10,118,"Developers: Omega2058, qwikrazor87, hgoel0974 and GBOT");
+		
+		oslDrawStringf(10,138,"Translators: French - noname120 and Mahmoudos, German -");
+		oslDrawStringf(10,150,"Dimistoteles and Ciapa, Polish - pawelosro, Dutch - Arikuzo,");
+		oslDrawStringf(10,162,"Spanish - Randomdude0, Brazilian Portuguese - Hargrun,");
+		oslDrawStringf(10,174,"Portugues - Gustavo Fraga Pacheco, Norwegian - Ridge,");
+		oslDrawStringf(10,186,"Romanian- imhotep4, Italian - nerdvana8,");
+		oslDrawStringf(10,198,"Russan and Ukrainian - Vasniktel and Raithwall.");
+
+		oslDrawStringf(10,218,"Supporters: PSX-Place - STLcardsWS, Tranced, atreyu187, pinky,");
+		oslDrawStringf(10,230,"bitsbubba and kozarovv. Genetik57 for his battery assets.");
+		oslDrawStringf(10,242,"Other memebers from Hack Informer, GBAtemp and wololo.net.");
+		oslDrawStringf(10,254,"I hope I didn't forget anyone. Once again, thank you all :)");
+		
+		navbarButtons(2);
+		battery(330,2,0);
+		digitaltime(381,4,0,hrTime);
+		androidQuickSettings();
+		volumeController();
+		oslDrawImage(cursor);
+		
+		if (osl_keys->pressed.square)
+		{
+			powermenu();
+		}
+		
+		if (osl_keys->pressed.L)
+		{
+			oslPlaySound(Lock, 1);  
+			lockscreen();
+        }
+		
+		if (osl_keys->pressed.circle)
+		{	
+			oslDeleteImage(aboutbg);
+			settingsMenu();	
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{	
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(aboutbg);
+			settingsMenu();	
+		}
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{	
+			oslPlaySound(KeypressStandard, 1);  
+			oslDeleteImage(aboutbg);
 			home();	
 		}
 
@@ -2732,6 +2841,7 @@ void securityMenu()
 		
 		oslDrawStringf(20,83, "%s", lang_settingsSecuirty[language][0]); 
 		oslDrawStringf(20,144, "%s", lang_settingsSecuirty[language][1]); 
+		oslDrawStringf(20,200, "Swipe"); 
 		
 		if (cursor->x  >= 0 && cursor->x  <= 444 && cursor->y >= 61 && cursor->y <= 118)
 		{	
@@ -2740,8 +2850,10 @@ void securityMenu()
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);
-				sceIoRemove("system/settings/password.bin");
-				sceIoRemove("system/settings/pin.bin");
+				if (fileExists("system/settings/password.bin"))
+					sceIoRemove("system/settings/password.bin");
+				if (fileExists("system/settings/pin.bin"))
+					sceIoRemove("system/settings/pin.bin");
 				openOSK("Enter Password", "", 20, -1);
 				password = fopen("system/settings/password.bin", "w");
 				fprintf(password, "%s", tempMessage);
@@ -2749,19 +2861,35 @@ void securityMenu()
 			}
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 119 && cursor->y <= 178)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 119 && cursor->y <= 178)
 		{	
 			oslDrawImageXY(highlight, 0, 120);
 			oslDrawStringf(20,144, "%s", lang_settingsSecuirty[language][1]); 
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);
-				sceIoRemove("system/settings/password.bin");
-				sceIoRemove("system/settings/pin.bin");
+				if (fileExists("system/settings/password.bin"))
+					sceIoRemove("system/settings/password.bin");
+				if (fileExists("system/settings/pin.bin"))
+					sceIoRemove("system/settings/pin.bin");
 				openOSK("Enter Pin", "", 5, -1);
 				pin = fopen("system/settings/pin.bin", "w");
 				fprintf(pin, "%s", tempPin);
 				fclose(pin);
+			}
+		}
+		
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 180 && cursor->y <= 235)
+		{	
+			oslDrawImageXY(highlight, 0, 178);
+			oslDrawStringf(20,200, "Swipe"); 
+			if (osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);
+				if (fileExists("system/settings/password.bin"))
+					sceIoRemove("system/settings/password.bin");
+				if (fileExists("system/settings/pin.bin"))
+					sceIoRemove("system/settings/pin.bin");
 			}
 		}
 		

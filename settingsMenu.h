@@ -88,6 +88,7 @@ int getCpuClock();
 int getBusClock();
 void pspGetModel(int x, int y);
 void aboutMenu();
+void creditsMenu();
 void updatesMenu();
 void performanceMenu();
 void setCpuBoot();
