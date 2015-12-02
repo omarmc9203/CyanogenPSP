@@ -282,7 +282,7 @@ void galleryControls() //Controls
 	
 	volumeController();
 		
-	if (osl_keys->pressed.cross)
+	if (osl_keys->pressed.cross  && (strcmp(folderIcons[current].filePath, "doesn't matter") != 0))
 	{
 		oslPlaySound(KeypressStandard, 1);  
 		galleryUnload();
