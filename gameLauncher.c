@@ -569,13 +569,13 @@ OSL_IMAGE * processPBP(const char * path) {
 	sprintf(loadImg, "%s/icon0.png", curPath); 
 	int theSize = 0; 
 	
-	int loop0, total_size; 
+	int loop0; 
 	FILE *infile, *outfile; 
 	HEADER header; 
 
 	infile = fopen(path, "rb"); 
 
-	fseek(infile, 0, SEEK_END); total_size = ftell(infile); fseek(infile, 0, SEEK_SET); 
+	fseek(infile, 0, SEEK_END); fseek(infile, 0, SEEK_SET); 
 
 	if (fread(&header, sizeof(HEADER), 1, infile) < 0) 
 	{ 

@@ -879,7 +879,6 @@ void displayTextFromFile()
 
 		if(osl_keys->pressed.circle)
 		{
-			free(read_buffer);
 			oslDeleteImage(textview);
 			return;
 		}	
