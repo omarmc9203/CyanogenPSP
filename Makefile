@@ -1,3 +1,6 @@
+INCLUDE_DIR := include
+OSLIB_DIR := $(INCLUDE_DIR)/oslib
+
 TARGET = CyanogenPSP
 OBJS = main.o appDrawer.o homeMenu.o calculator.o lockScreen.o settingsMenu.o clock.o recoveryMenu.o imports.o recentsMenu.o \
 	   powerMenu.o musicPlayer.o fileManager.o gameLauncher.o mp3Lib.o messenger.o screenshot.o gallery.o language.o \
@@ -13,18 +16,18 @@ VERSION	= 5.2
 CFLAGS = -O2 -g -G0 -Wall -Werror
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
-LIBDIR =
+INCDIR = $(INCLUDE_DIR) \
+		 $(OSLIB_DIR)
+		
+LIBDIR = libs
 
-MYLIBS=
-STDLIBS= -losl -lpng -lz -lpspsystemctrl_user \
+LIBS = -losl -lpng -lz -lpspsystemctrl_user \
          -lpsphprm -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspwlan \
 		 -lpsputility -lpsphttp -lpspssl -lpspgum -lpspgu -lm \
          -lpspnet_adhocmatching -lpspnet_adhoc -lpspnet_adhocctl -ljpeg \
 		 -lpspvram -lpspkubridge -lpspreg \
 		 -lpspusb -lpspusbstor -lpspusbdevice -lpspmp3 -lmad -lpspsystemctrl_kernel -lpspvshctrl -lpsprtc_driver -lpspreg_driver \
-		 -lpspaudiolib -lpspaudio -lpspaudiocodec\
-		 
-LIBS=$(STDLIBS) $(MYLIBS)
+		 -lpspaudiolib -lpspaudio -lpspaudiocodec
 
 LDFLAGS =
 EXTRA_TARGETS = EBOOT.PBP

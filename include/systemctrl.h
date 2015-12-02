@@ -5,6 +5,7 @@
 #include <pspkernel.h>
 #include <psploadexec_kernel.h>
 #include <pspinit.h>
+#include "psploadcore.h"
 
 enum BootLoadFlags
 {
@@ -202,7 +203,7 @@ PspIoDrv *sctrlHENFindDriver(char *drvname);
 */
 u32 sctrlHENFindFunction(char *modname, char *libname, u32 nid);
 
-typedef struct SceModule2 {
+/*typedef struct SceModule2 {
     struct SceModule2   *next;
     unsigned short      attribute;
     unsigned char       version[2];
@@ -228,7 +229,7 @@ typedef struct SceModule2 {
     unsigned int        nsegment;
     unsigned int        segmentaddr[4];
     unsigned int        segmentsize[4];
-} SceModule2;
+} SceModule2;*/
 
 typedef int (* STMOD_HANDLER)(SceModule2 *);
 
