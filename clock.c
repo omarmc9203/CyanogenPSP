@@ -260,7 +260,7 @@ int pspTimer()
 
 int pspStopWatch()
 {
-	int hour = 0, min = 0, miliSec = 0, temp;
+	int hour = 0, min = 0, miliSec = 0;
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
 
@@ -300,8 +300,6 @@ int pspStopWatch()
 		oslIntraFontSetStyle(Roboto, 0.7f, WHITE, BLACK, INTRAFONT_ALIGN_CENTER);
 		
 		oslDrawStringf(224,110,"%d %d %d %d\n", hour, min, getTimer(), miliSec);
-		
-		temp = getTimer();
 
 		if (timerStart == 1)
 		{

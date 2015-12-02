@@ -39,14 +39,14 @@ void deviceStandby()
 
 void USB_Toggle()
 {	
-	SceCtrlData pad;
+	oslReadKeys();
 	
-	if(pad.Buttons & PSP_CTRL_SELECT)
+	if (osl_keys->pressed.select)
 	{
 		enableUsb();
 	}
-		
-	else if(pad.Buttons & PSP_CTRL_SELECT)
+	
+	else if (osl_keys->pressed.select)
 	{
 		disableUsb();
 	}

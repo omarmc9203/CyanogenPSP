@@ -3,7 +3,7 @@
 #include "homeMenu.h"
 #include "lockScreen.h"
 #include "screenshot.h"
-#include "settingsmenu.h"
+#include "settingsMenu.h"
 #include "include/utils.h"
 
 int lockscreen()

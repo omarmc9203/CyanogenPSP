@@ -3612,11 +3612,7 @@ void settingsDeleteResources()
 }
 
 void settingsMenu()
-{
-	struct apps activateApp;
-
-	activateApp.settings = 1;
-	
+{	
 	themesLoad();
 	
 	settingsbg = oslLoadImageFilePNG(settingsBgPath, OSL_IN_RAM, OSL_PF_8888);

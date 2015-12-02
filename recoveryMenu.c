@@ -357,7 +357,7 @@ fw_version getFwVersion(fw_version *v)
 
 void ShowPage1()
 {
-    int baryon, pommel, tachyon, fuseid, fusecfg, mb, model, type, region;
+    int baryon, pommel, tachyon, fuseid, fusecfg, mb, model, region;
 
 	recoverybg = oslLoadImageFilePNG("android_bootable_recovery/res/images/recoverybg.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -382,7 +382,6 @@ void ShowPage1()
 	
 		mb = chDetectMotherboard();
 		model = chDetectModel();	
-		type = chDetectOFW();
 		region = chGetRegion();		
 		
 		oslDrawStringf(10,80,"Kernel Version: %d.%d (0x%08X)\n\n", version.major, version.minor, sceKernelDevkitVersion());
