@@ -6,7 +6,6 @@
 #ifndef _MP3PLAYER_H_
 #define _MP3PLAYER_H_
 
-#include <mad.h>
 //#include "../../codec.h"
 
 #ifdef __cplusplus

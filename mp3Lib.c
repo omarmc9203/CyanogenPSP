@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <pspaudiolib.h>
 #include "mp3Lib.h"
+#include "include/mad.h"
 
 #define min(a,b) (((a)<(b))?(a):(b))
 #define max(a,b) (((a)>(b))?(a):(b))
