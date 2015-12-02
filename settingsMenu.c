@@ -1335,6 +1335,7 @@ void batteryMenu()
 void setPowerManagement()
 {
 	FILE * processorInfo = fopen("system/settings/processorInfo.bin", "w");
+	batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 	
 	switch(batteryM)
 	{

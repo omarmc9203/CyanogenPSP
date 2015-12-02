@@ -21,7 +21,7 @@ const char lang_welcome[][4][120] =
 {	
 	{"Welcome", "Use the analog stick to navigate the cursor and", "press X (cross) to open the application.", "GOT IT"},
 	{"Bienvenue", "Utilisez le stick analogique pour déplacer le curseur et", "pressez le bouton X (croix) pour ouvrir l'application.", "OK"},
-	{"Witamy", "Uzyj analoga by poruszać kursorem", "i przycisnij X by otworzyc aplikacje.", "Zrozumialem"},
+	{"Witamy", "Uzyj analoga by poruszac kursorem", "i przycisnij X by otworzyc aplikacje.", "Zrozumialem"},
 	{"Willkommen", "Benutze den Analog-Stick um den Cursor zu navigieren \nund", "\n\ndrücke X (Kreuz) um die Anwendung zu öffnen.", "OK"},
 	{"Welkom", "Gebruik de joystick om de aanwijzer te bewegen en", "druk X (kruisje) om de toepassing te openen.", "GOT IT"},
 	{"Bienvenido", "Use el stick análogo para navegar con el cursor y", "presione X para abrir la aplicación", "ENTENDIDO"},

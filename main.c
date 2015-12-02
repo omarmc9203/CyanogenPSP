@@ -429,8 +429,8 @@ int main()
 	
 	deleteUpdateFile(); //Delete update.zip
 	
-	setPowerManagement(); //Set default power save settings or load pre-existing values.
 	setCpuBoot(); //Set default CPU or load pre-existing value
+	setPowerManagement(); //Set default power save settings or load pre-existing values.
 	
 	getPSPNickname(); //Get PSP name before hand
 	strcpy (pspname, nickname);
