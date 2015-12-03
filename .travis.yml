@@ -20,8 +20,7 @@ install:
 script:
   - make -k
   
-after_script:
- deploy:
+deploy:
   provider: releases
   api_key: "d332dc024cb643c8807f4f1353d786b249abb20b"
    file:
