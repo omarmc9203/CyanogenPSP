@@ -1,4 +1,4 @@
-CyanogenPSP Stable
+CyanogenPSP  [![Build Status](https://travis-ci.org/joel16/CyanogenPSP.svg?branch=master)](https://travis-ci.org/joel16/CyanogenPSP)
 =================
 
 This is a program that allows you to do everything a PSP can do with a little more handy features, but with a whole different UI. This isn't a port of CyanogenMod for android, it's a project created from scratch. It's purpose is similar to that of "iR Shell", but has a UI inspired by CyanogenMod, Android. It will never allow you to run android apps, the psp system doesn't have the hardware capabilities to run android. If developers are intrested, feel free to contact me through my email: sauskethunderkid@gmail.com 
@@ -35,6 +35,7 @@ What's working
 - Brightness slider under quick settings. Use left/right to navigate the brightness scale.
 - Battery management settings - (Powersave, Balanced and Performance)
 - Multi language support (Settings->Display->Language) Available languages can be found here: https://www.transifex.com/cyanogenpsp/cyanogenpsp/
+- Font sizes
 
 What's yet to work
 =================
