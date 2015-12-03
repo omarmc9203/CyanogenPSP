@@ -25,7 +25,7 @@ What's working
 - Expanded desktop (Settings->Display)
 - Homebrew, POPS and ISO/CSO support (Game Menu)
 - Boot animation and game boot toggles (Settings->Display->Miscellaneous)
-- Security settings - Pin and password lock.
+- Security settings - Pin/Password lock and Swipe as default.
 - Status icons
 - Custom wallpaper support
 - Custom font support
