@@ -1,8 +1,9 @@
 language: c
 
 branches:
-  only:
+    only:
     - master
+    - /v\d+\.\d+[a-z]/
 
 before_install:
   - sudo apt-get update -qq
