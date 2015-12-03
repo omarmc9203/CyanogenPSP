@@ -22,7 +22,7 @@ script:
   
 deploy:
   provider: releases
-  api_key: ${GITHUB_API_KEY}
+  api_key:
    file:
     - "CyanogenPSP.prx"
     - "EBOOT.PBP"
