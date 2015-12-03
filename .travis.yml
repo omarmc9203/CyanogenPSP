@@ -19,4 +19,15 @@ install:
 # Change this to your needs
 script:
   - make -k
+  
+after_script:
+ deploy:
+  provider: releases
+  api_key: "d332dc024cb643c8807f4f1353d786b249abb20b"
+   file:
+    - "CyanogenPSP.prx"
+    - "EBOOT.PBP"
+  skip_cleanup: true
+  on:
+    tags: true
 
