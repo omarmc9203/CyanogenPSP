@@ -36,13 +36,14 @@ What's working
 - Battery management settings - (Powersave, Balanced and Performance)
 - Multi language support (Settings->Display->Language) Available languages can be found here: https://www.transifex.com/cyanogenpsp/cyanogenpsp/
 - Font sizes
+- UMD
 
 What's yet to work
 =================
 - Fully functional calculator
 - Fully functional recents menu
 - Adhoc Messenger
-- UMD
+- Certain file manager functions such as copy/cut
 
 What's not working
 =================
