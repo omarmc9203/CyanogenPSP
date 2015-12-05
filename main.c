@@ -378,7 +378,7 @@ int main()
 	Lock = oslLoadSoundFile("system/media/audio/ui/Lock.wav", OSL_FMT_NONE);
 	Unlock = oslLoadSoundFile("system/media/audio/ui/Unlock.wav", OSL_FMT_NONE);
 	
-	strcpy(backgroundPath, setFileDefaultsChar("system/settings/background.bin", "system/framework/framework-res/res/background.png", backgroundPath));
+	strcpy(backgroundPath, setFileDefaultsChar("system/settings/background.bin", "system/framework/framework-res/res/background1.png", backgroundPath));
 	strcpy(fontPath, setFileDefaultsChar("system/settings/font.bin", "system/fonts/Roboto.pgf", fontPath));
 	
 	hrTime = setFileDefaultsInt("system/app/clock/timeSet.bin", 0, hrTime);
@@ -398,6 +398,7 @@ int main()
 		fprintf(temp, "0\n149\n135");
 		fclose(temp);
 	}
+	
 	temp = fopen(rgbValuesPath, "r");
 	fscanf(temp, "%d %d %d", &r, &g, &b);
 	fclose(temp);
@@ -421,11 +422,22 @@ int main()
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto); //Load and set font
 	
-	SceUID kModule, kModule1, kModule2;
+	SceUID kModule[3];
 	
-	kModule = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
-	kModule1 = pspSdkLoadStartModule("modules/control.prx", PSP_MEMORY_PARTITION_KERNEL);
-	kModule2 = pspSdkLoadStartModule("modules/impose.prx", PSP_MEMORY_PARTITION_KERNEL);
+	kModule[0] = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
+	kModule[1] = pspSdkLoadStartModule("modules/control.prx", PSP_MEMORY_PARTITION_KERNEL);
+	kModule[2] = pspSdkLoadStartModule("modules/impose.prx", PSP_MEMORY_PARTITION_KERNEL);
+	
+	int i;
+	
+	for (i = 0; i < 3; i++)
+	{
+		if (kModule[i] < 0)
+		{
+			pspDebugScreenPrintf("Error 0x%08X starting module.\n", kModule[i]);
+			break;
+		}
+	}
 	
 	deleteUpdateFile(); //Delete update.zip
 	
@@ -454,4 +466,3 @@ int main()
 	oslQuit();
 	return 0;
 }
-
