@@ -19,14 +19,12 @@ int lockscreen()
 		debugDisplay();
 		
 	if (fileExists("system/settings/password.bin"))
-	{
 		passProtect = 1;	
-	}
 	else if (fileExists("system/settings/pin.bin"))
-	{
-		passProtect = 2;	
-	}
-	
+		passProtect = 2;
+	else if ((!(fileExists("system/settings/password.bin"))) || (!(fileExists("system/settings/pin.bin"))))
+		passProtect = 0;
+		
 	while (!osl_quit)
 	{	
 		LowMemExit();

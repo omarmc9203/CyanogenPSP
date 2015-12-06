@@ -2812,9 +2812,6 @@ void displayMiscellaneous()
 
 void securityMenu()
 {	
-	FILE * password;
-	FILE * pin;
-
 	securitybg = oslLoadImageFilePNG(securityBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
@@ -2853,10 +2850,10 @@ void securityMenu()
 				oslPlaySound(KeypressStandard, 1);
 				if (fileExists("system/settings/password.bin"))
 					sceIoRemove("system/settings/password.bin");
-				if (fileExists("system/settings/pin.bin"))
+				else if (fileExists("system/settings/pin.bin"))
 					sceIoRemove("system/settings/pin.bin");
 				openOSK("Enter Password", "", 20, -1);
-				password = fopen("system/settings/password.bin", "w");
+				FILE * password = fopen("system/settings/password.bin", "w");
 				fprintf(password, "%s", tempMessage);
 				fclose(password);
 			}
@@ -2871,10 +2868,10 @@ void securityMenu()
 				oslPlaySound(KeypressStandard, 1);
 				if (fileExists("system/settings/password.bin"))
 					sceIoRemove("system/settings/password.bin");
-				if (fileExists("system/settings/pin.bin"))
+				else if (fileExists("system/settings/pin.bin"))
 					sceIoRemove("system/settings/pin.bin");
 				openOSK("Enter Pin", "", 5, -1);
-				pin = fopen("system/settings/pin.bin", "w");
+				FILE * pin = fopen("system/settings/pin.bin", "w");
 				fprintf(pin, "%s", tempPin);
 				fclose(pin);
 			}
@@ -2889,7 +2886,7 @@ void securityMenu()
 				oslPlaySound(KeypressStandard, 1);
 				if (fileExists("system/settings/password.bin"))
 					sceIoRemove("system/settings/password.bin");
-				if (fileExists("system/settings/pin.bin"))
+				else if (fileExists("system/settings/pin.bin"))
 					sceIoRemove("system/settings/pin.bin");
 			}
 		}
