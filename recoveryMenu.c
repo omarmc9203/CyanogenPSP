@@ -3,20 +3,16 @@
 // Thanks Yoti for his libpspident.a
 // Thanks Raing3 for his psppower lib.
 #include "recoveryMenu.h"
-#include "modules/ipl_update.h"
-#include "modules/batman.h"
-#include "modules/kuman.h"
+#include "prx/ipl_update.h"
+#include "prx/battManager.h"
+#include "prx/kernelUserManager.h"
+#include "prx/scepower.h"
+#include "prx/kernelUserManagerHeader.h"
 #include "include/common.h"
 #include "include/utils.h"
-#include "prx/scepower.h"
 #include "homeMenu.h"
-#include "kuman_header.h"
 #include "systemctrl_se.h"
 #include "settingsMenu.h"
-
-extern void CheckerPrintf(char *fmt, ...);
-
-SceCtrlData pad;
 
 SEConfig config;
 

@@ -2,10 +2,10 @@ INCLUDE_DIR := include
 OSLIB_DIR := $(INCLUDE_DIR)/oslib
 
 TARGET = CyanogenPSP
-OBJS = main.o appDrawer.o homeMenu.o calculator.o lockScreen.o settingsMenu.o clock.o recoveryMenu.o imports.o recentsMenu.o \
+OBJS = main.o appDrawer.o homeMenu.o calculator.o lockScreen.o settingsMenu.o clock.o recoveryMenu.o recentsMenu.o \
 	   powerMenu.o musicPlayer.o fileManager.o gameLauncher.o mp3Lib.o messenger.o screenshot.o gallery.o language.o \
 	   include/utils.o include/pgeZip.o include/ram.o include/common.o \
-	   prx/display.o prx/imposeDriver.o prx/control.o prx/power.o \
+	   prx/display.o prx/imposeDriver.o prx/control.o prx/power.o prx/recoveryImports.o \
 	   #scepower.o
 	   
 BUILD_PRX = 1
@@ -31,7 +31,7 @@ LIBS = -losl -lpng -lz -lpspsystemctrl_user \
 
 LDFLAGS =
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = CyanogenPSP Stable v$(VERSION)
+PSP_EBOOT_TITLE = CyanogenPSP v$(VERSION)
 PSP_EBOOT_ICON = ICON0.png
 
 PSPSDK=$(shell psp-config --pspsdk-path)

@@ -19,6 +19,10 @@ OSL_IMAGE *recoverybg, *Selector;
 
 OSL_FONT *roboto;
 
+//Imports
+u32 chGetKirk();
+u32 chGetSpock();
+
 void ShowPage5();
 void ShowPage4();
 void backupPassword();
