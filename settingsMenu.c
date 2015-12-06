@@ -495,14 +495,14 @@ void creditsMenu()
 		if (osl_keys->pressed.circle)
 		{	
 			oslDeleteImage(aboutbg);
-			settingsMenu();	
+			aboutMenu();
 		}
 
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{	
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(aboutbg);
-			settingsMenu();	
+			aboutMenu();	
 		}
 		
 		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
