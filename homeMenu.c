@@ -249,11 +249,13 @@ void battery(int batX, int batY, int n) // Draws the battery icon depending on i
 		
 		if (batteryLife <= 99)
 		{
-			oslDrawStringf(batX+18, 4,"%d%%",batteryLife);
+			batY = y;
+			oslDrawStringf(batX+18, y+2, "%d%%", batteryLife);
 		}
 		else  if (batteryLife > 99)
 		{
-			oslDrawStringf(batX+10, 4,"%d%%",batteryLife);
+			batY = y;
+			oslDrawStringf(batX+10, y+2, "%d%%", batteryLife);
 		}
 		
 		if (usbStat == 1)
