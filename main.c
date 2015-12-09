@@ -31,6 +31,7 @@ int initOSLib() //Initialize OsLib
     oslInitAudio();
     oslSetKeyAutorepeatInit(40);
     oslSetKeyAutorepeatInterval(10);
+	oslSetFrameskip(1);
     return 0;
 }
 
