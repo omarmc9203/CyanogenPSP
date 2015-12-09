@@ -628,11 +628,21 @@ void androidQuickSettings()
 	int llimit = 20;
 	int rlimit = 420;
 	
+	pspTime time;
+    sceRtcGetCurrentClockLocalTime(&time);
+
+	int day = sceRtcGetDayOfWeek(time.year, time.month, time.day);
+	
 	oslDrawImageXY(quickSettings,0,notif_y);
 	
 	battery(374,yPos2-2,2);
 	getDayOfWeek(15,yPos2+5,1);
-	getMonthOfYear(70,yPos2+5);
+	if (day == 3)
+		getMonthOfYear(90,yPos2+5);
+	else if (day == 4 || day == 6)
+		getMonthOfYear(80,yPos2+5);
+	else 
+		getMonthOfYear(72,yPos2+5);
 	
 	oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_CENTER);
 
