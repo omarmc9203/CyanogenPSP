@@ -155,11 +155,12 @@ void ShowPage3()
 {
     int cpu, bus;
 	char button[256], wma[256], flash[256];
-	u8 kirk[4], spock[4], macaddr[512];
+	u8 macaddr[512]; 
+	//u8 kirk[4], spock[4];
 	u32 pass;
 	
-	*(u32 *)kirk = chGetKirk();
-	*(u32 *)spock = chGetSpock();
+	//*(u32 *)kirk = chGetKirk();
+	//*(u32 *)spock = chGetSpock();
 	
 	u32 value;
 	
@@ -233,7 +234,7 @@ void ShowPage3()
 		}
 	   
 		oslDrawStringf(10,130,"Scramble:     0x%08X\n\n", chGetScramble());
-		oslDrawStringf(10,140,"Kirk:         %c%c%c%c\n", kirk[3], kirk[2], kirk[1], kirk[0]);
+		/*oslDrawStringf(10,140,"Kirk:         %c%c%c%c\n", kirk[3], kirk[2], kirk[1], kirk[0]); 
 	
 		if(kuKernelGetModel() == 4)
 		{
@@ -242,7 +243,7 @@ void ShowPage3()
 		else
 		{
 			oslDrawStringf(10,150,"Spock:        %c%c%c%c\n\n", spock[3], spock[2], spock[1], spock[0]); 
-		}
+		}*/
 	
 		oslDrawStringf(10,200,"Press L/R to switch sections, X to edit and Circle to return.\n");
 		
