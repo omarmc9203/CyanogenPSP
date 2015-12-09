@@ -11,7 +11,7 @@
 
 char message[500] = "";	
 
-int message1()
+int initiateMessage()
 {
     char* nickname = (char*)malloc(100);
     int skip = 0;
@@ -297,9 +297,6 @@ void doServer()
 
 void newMessage()
 {	
-	int skip = 0;
-    char message[250] = "";
-
 	new_message = oslLoadImageFilePNG("system/app/messenger/new_message.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	if (!new_message)
@@ -308,8 +305,7 @@ void newMessage()
 	while (!osl_quit)
 	{
 		LowMemExit();
-	
-		if (!skip){
+		
 		oslStartDrawing();
 		
 		oslClearScreen(RGB(0,0,0));
@@ -325,27 +321,33 @@ void newMessage()
 		volumeController();
 		oslDrawImage(cursor);
 		
+		if (osl_keys->pressed.L)
+		{
+			oslPlaySound(Lock, 1);  
+			lockscreen();
+		}
+		
 		if (osl_keys->pressed.circle)
 		{
 			oslDeleteImage(new_message);
 			messenger();
 		}
 
-		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
 			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(new_message);
+			oslDeleteImage(messengerbg);
 			messenger();
 		}
-		
-		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
 			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(new_message);
+			oslDeleteImage(messengerbg);
 			home();
 		}
-
-		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			multitask();
@@ -359,38 +361,24 @@ void newMessage()
 			doServer();
 		}
 		
-		oslDrawString(14, 245, message);
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		oslDrawString(14, 245, tempMessage);
 		
-		if (oslOskIsActive()){
-				oslDrawOsk();
-				if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE){
-					if (oslOskGetResult() == OSL_OSK_CANCEL)
-						return;
-					else{
-						char userText[100] = "";
-						oslOskGetText(userText);
-						sprintf(message, "%s", userText);
-					}
-					oslEndOsk();
-				}
-			}
-			oslEndDrawing();
+		if (cursor->x >= 10 && cursor->x <= 362 && cursor->y >= 228 && cursor->y <= 270 && osl_keys->pressed.cross)
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			openOSK("Enter Message", "", 128, -1);
 		}
 		
-		if (!oslOskIsActive()){
-			oslReadKeys();
-			if (osl_keys->pressed.circle){
-				return;
-			}else if (cursor->x >= 12 && cursor->x <= 415 && cursor->y >= 233 && cursor->y <= 270 && osl_pad.held.cross){
-				oslPlaySound(KeypressStandard, 1);  
-				oslInitOsk("Type Message", "", 128, 1, -1);
-				memset(message, 0, sizeof(message));
-			}
-		}
+		if ((cursor->x >= 10 && cursor->x <= 405 && cursor->y >= 88 && cursor->y <= 118 && osl_keys->pressed.cross) && oslIsWlanPowerOn())
+			doClient();
+        else if ((cursor->x >= 410 && cursor->x <= 442 && cursor->y >= 92 && cursor->y <= 118 && osl_keys->pressed.cross) && oslIsWlanPowerOn())
+			doServer();
+		
         oslEndDrawing(); 
 		oslEndFrame(); 
-        skip = oslSyncFrame();
-		}
+        oslSyncFrame();
+	}
 }
 
 int messenger()
@@ -431,30 +419,30 @@ int messenger()
 		if (osl_keys->pressed.L)
 		{
 			oslPlaySound(Lock, 1);  
-			message1();
-        }
+			lockscreen();
+		}
 		
 		if (osl_keys->pressed.circle)
 		{
 			oslDeleteImage(messengerbg);
 			appdrawer();
 		}
-
-		if (cursor->x >= 137 && cursor->x <= 200 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+	
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(messengerbg);
 			appdrawer();
 		}
-		
-		if (cursor->x >= 200 && cursor->x <= 276 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			oslDeleteImage(messengerbg);
 			home();
 		}
-
-		if (cursor->x >= 276 && cursor->x <= 340 && cursor->y >= 237 && cursor->y <= 271 && osl_keys->pressed.cross)
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
 		{
 			oslPlaySound(KeypressStandard, 1);  
 			multitask();
@@ -477,11 +465,6 @@ int messenger()
 			doClient();
 		}
 		*/
-		
-        if (osl_keys->released.triangle && oslIsWlanPowerOn())
-			doClient();
-        else if (osl_keys->released.square && oslIsWlanPowerOn())
-			doServer();
 		
 		oslEndDrawing(); 
 		oslEndFrame(); 

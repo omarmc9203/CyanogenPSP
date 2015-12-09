@@ -675,7 +675,7 @@ void OptionMenu()
 
 		else if (osl_keys->pressed.square) 
 		{
-			DeleteFile(folderIcons[current].filePath);
+			deleteFile(folderIcons[current].filePath);
 		}
 	
 		else if (osl_keys->pressed.circle) 
@@ -745,7 +745,7 @@ void newFolder()
 	}
 }
 
-void DeleteFile(char path[])
+void deleteFile(char path[])
 {
 	deletion = oslLoadImageFilePNG("system/app/filemanager/deletion.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -852,30 +852,51 @@ char * readTextFromFile(char *path)
 	return read_buffer;
 }
 
-void displayTextFromFile()
+void displayTextFromFile(char * path)
 {
 	textview = oslLoadImageFilePNG("system/app/filemanager/textview.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	if (!textview)
 		debugDisplay();
+			
+	FILE *stream;
+	char *contents;
+	int fileSize = 0;
+		
+	//Open the stream. Note "b" to avoid DOS/UNIX new line conversion.
+	stream = fopen(path, "rb");
+
+	//Seek to the end of the file to determine the file size
+	fseek(stream, 0L, SEEK_END);
+	fileSize = ftell(stream);
+	fseek(stream, 0L, SEEK_SET);
+
+	//Allocate enough memory (add 1 for the \0, since fread won't add it)
+	contents = malloc(fileSize+1);
+
+	//Read the file 
+	size_t size = fread(contents, 1, fileSize, stream);
+	contents[size] = 0; // Add terminating zero.
+
+	//Close the file
+	fclose(stream);
 
 	while (!osl_quit)
 	{
-
 		oslStartDrawing();	
 		oslReadKeys();
 		
-		oslClearScreen(RGB(0,0,0));
-		oslDrawImageXY(textview,0,0);
+		oslClearScreen(RGB(0, 0, 0));
+		oslDrawImageXY(textview, 0, 0);
 
-		battery(370,2,1);
-		digitaltime(420,4,0,hrTime);	
+		battery(370, 2, 1);
+		digitaltime(420, 4, 0,hrTime);	
 		volumeController();
 		
 		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);	
 			
-		oslDrawStringf(40,40, folderIcons[current].name);	
-		oslDrawStringf(10,66," \n%s", readTextFromFile(folderIcons[current].filePath));
+		oslDrawStringf(40, 40, folderIcons[current].name);	
+		oslDrawStringf(10, 70, "%s", contents);
 
 		if(osl_keys->pressed.circle)
 		{
@@ -1154,7 +1175,7 @@ void dirControls() //Controls
 	if (((ext) != NULL) && ((strcmp(ext ,".txt") == 0) || ((strcmp(ext ,".TXT") == 0)) || ((strcmp(ext ,".c") == 0)) || ((strcmp(ext ,".h") == 0)) || ((strcmp(ext ,".cpp") == 0)) || ((strcmp(ext ,".bin") == 0))) && (osl_keys->pressed.cross))
 	{
 		oslPlaySound(KeypressStandard, 1);  
-		displayTextFromFile();
+		displayTextFromFile(folderIcons[current].filePath);
 	}
 	
 	if (osl_keys->pressed.square)

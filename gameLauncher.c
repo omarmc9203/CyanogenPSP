@@ -1,7 +1,6 @@
 #include "homeMenu.h"
 #include "appDrawer.h"
 #include "gameLauncher.h"
-#include "game_icon0.h"
 #include "clock.h"
 #include "fileManager.h"
 #include "lockScreen.h"
@@ -231,13 +230,12 @@ void gameDisplay()
 		{	
 			oslDrawImageXY(icon0, 326,118);
 		}
-	}
-	
+	}	
 	else if (folderIcons[i].active == 0)
 	{
 		oslDeleteImage(icon0);
 	}*/
-	
+
 	// Displays the directories, while also incorporating the scrolling
 	for(i=curScroll;i<MAX_GAME_DISPLAY+curScroll;i++) 
 	{
@@ -510,12 +508,6 @@ void gameUnload()
 	oslDeleteImage(gamebg);
 	oslDeleteImage(gameSelection);
 }
-
-const OSL_VIRTUALFILENAME __image_ram_files[] = {
-	{"system/app/game/default.png", (void*)icon0_png, sizeof(icon0_png), &VF_MEMORY}
-};
-
-unsigned int size_icon0_png = 8939;
 
 void getIcon0(char* filename)
 {

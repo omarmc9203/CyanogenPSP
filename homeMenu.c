@@ -1,6 +1,7 @@
 #include "homeMenu.h"
 #include "language.h"
 #include "appDrawer.h"
+#include "messenger.h"
 #include "musicPlayer.h"
 #include "clock.h"
 #include "fileManager.h"
@@ -1035,13 +1036,14 @@ void home()
 			mp3player();
 		}
 		
-		/*
-		if (cursor->x >= 155 && cursor->x <= 210 && cursor->y >= 195 && cursor->y <= 240 && osl_keys->pressed.cross)
+		if (experimentalF == 1)
 		{
-			homeUnloadResources();
-			messenger();
+			if (cursor->x >= 155 && cursor->x <= 210 && cursor->y >= 195 && cursor->y <= 240 && osl_keys->pressed.cross)
+			{
+				homeUnloadResources();
+				messenger();
+			}
 		}
-		*/
 			
 		if (cursor->x >= 215 && cursor->x <= 243 && cursor->y >= 195 && cursor->y <= 230 && osl_keys->pressed.cross)
 		{

@@ -38,7 +38,7 @@ const char lang_welcome[][4][120] =
 const char lang_appDrawer[][10][100] = 
 {	
 	{"Browser", "Calculator", "Clock", "Manager", "Gallery", "Game", "Messages", "Music", "Settings", "UMD"},
-	{"Navigateur", "Calculatrice", "Horloge", "Explorateur", "Galerie", "Jeux", "Messages", "Musique", "Configurations", "UMD"},
+	{"Navigateur", "Calc", "Horloge", "Explorateur", "Galerie", "Jeux", "Messages", "Musique", "Paramètres", "UMD"},
 	{"Internet", "Kalkulator", "Zegar", "Pliki", "Galeria", "Gry", "Wiadomosci", "Muzyka", "Ustawienia", "UMD"},
 	{"Browser", "Taschenrechner", "Uhr", "Manager", "Galerie", "Spiel", "Nachrichten", "Musik", "Einstellungen", "UMD"},
 	{"Browser", "Rekenmachine", "Klok", " Beheerder", "Gallerij", "Spel", "Berichten", "Muziek", "Instellingen", "UMD"},
@@ -273,21 +273,21 @@ const char lang_settingsUpdates[][1][100] =
 	{"Перевірити оновлення"}
 };
 
-const char lang_settingsSecuirty[][2][100] = 
+const char lang_settingsSecuirty[][3][100] = 
 {	
-	{"Password lock", "Pin lock"},
-	{"Verrouillage par mot de passe", "Verrouillage par code PIN"},
-	{"Zabezpieczenie haslem", "Zabezpieczenie kodem PIN"},
-	{"Passwortsperre", "Pinsperre"},
-	{"Wachtwoord vergrendeling", "PIN vergrendeling"},
-	{"Bloqueo con contraseña", "Bloqueo con PIN"},
-	{"Trava por senha", "Trava por PIN"},
-	{"Trava de senha", "Trava de pino"},
-	{"Passordlås", "Pin-lås"},
-	{"Blocare cu parolă", "Blocare cu PIN"},
-	{"Blocco con password", "Blocco con PIN"},
-	{"Защита паролем", "Защита PIN-кодом"},
-	{"Захист паролем", "Захист PIN-кодом"}
+	{"Password lock", "Pin lock", "Swipe"},
+	{"Verrouillage par mot de passe", "Verrouillage par code PIN", "Chiper"},
+	{"Zabezpieczenie haslem", "Zabezpieczenie kodem PIN", "Trzepnięcie"},
+	{"Passwortsperre", "Pinsperre", "Stibitzen"},
+	{"Wachtwoord vergrendeling", "PIN vergrendeling", "Slaan"},
+	{"Bloqueo con contraseña", "Bloqueo con PIN", "Apandar"},
+	{"Trava por senha", "Trava por PIN", "Pancada forte"},
+	{"Trava de senha", "Trava de pino", "Pancada forte"},
+	{"Passordlås", "Pin-lås", "Sveip"},
+	{"Blocare cu parolă", "Blocare cu PIN", "Bețivan"},
+	{"Blocco con password", "Blocco con PIN", "Swipe"},
+	{"Защита паролем", "Защита PIN-кодом", "Жест"},
+	{"Захист паролем", "Захист PIN-кодом", "Жест"}
 };
 
 const char lang_settingsWifi[][3][100] = 
@@ -307,21 +307,21 @@ const char lang_settingsWifi[][3][100] =
 	{"Не знайдено конфігурацій Wi-Fi", "Будь ласка, вкл. WLAN перемикач", "Натисніть вверх/вниз для вибору конфігурацій Wi-Fi"}
 };
 
-const char lang_settingsDeveloperOptions[][5][150] = 
+const char lang_settingsDeveloperOptions[][4][150] = 
 {	
-	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Press triangle to disable or it may cause the program to crash", "Toggle USB debugging", "Dumping tools"},
-	{"Activer/Désactiver Remote Joy Lite", "Affiche l'écran de votre PSP sur votre ordinateur par USB", "Appuyez sur triangle pour le désactiver, ou il risque de faire planter le programme", "Activer/Désactiver le débogage par USB'", "Dumping tools"},
-	{"Wlącz Remote Joy Lite", "Wyswietla obraz z PSP na komputerze poprzez USB", "Nacisnij trojkat by wylaczyc, moze powodowac crashe", "Wlacz debugowanie USB", "Narzedzia do zgrywania"},
-	{"Remote Joy Lite ein-/ausschalten", "Zeigt den Bildschirm deiner PSP via USB auf deinem Computer an", "Drücke Dreieck zum deaktivieren, sonst könnte das Programm abstürzen", "USB-Debugging ein-/ausschalten", "Sicherungstools"},
-	{"Remote Joy Lite aan/uit", "Geeft je PSP scherm weer op je computer via USB", "Druk driehoek om dit uit te schalelen anders kan dit programma crashen", "USB debugging aan/uit", "Dumping tools"},
-	{"Usar Remote Joy Lite", "Muestra la imagen de la pantalla de tu PSP en tu PC vía USB", "Presiona Triangulo para desactivarlo o podria causar que la aplicación se detenga", "Activar depuración de USB", "Opciones de volcado/extracción"},
-	{"Alternar Remote Joy Lite", "Exibe a tela do seu PSP no seu PC por um cabo USB", "Pressione triangulo para desabilitar ou pode causar um crash", "Alternar depuração USB", "Ferramentas de dumping"},
-	{"Alternar Remote Joy Lite", "Exibir a tela de seu PSP em seu computador via USB", "Aperte triângulo para desabilitar ou isto pode causar o encerramento súbito do aplicativo", "Alternar depuração de USB", "Ferramentas de Dumping"},
-	{"Veksle Remote Joy Lite", "Viser PSP skjermen på din PC gjennom USB", "Trykk trekant for å deaktivere, ellers kan det føre til at programmet krasjer", "Veksle USB feilsøking", "Dumping tools"},
-	{"Activează Remote Joy Lite", "Afișează ecranul PSPului pe calculator prin USB", "Apasă pe triunghi pentru a-l dezactiva, altfel poate cauza erori în programe", "Activează depanarea prin USB", "Unelte pentru descărcare"},
-	{"Attiva Remote Joy Lite", "Visualizza la tua schermata PSP sul tuo computer tramite USB", "Premi triangolo per disabilitalo o potrebbe far crashare il programma", "Attiva debug USB", "Strumenti di salvataggio"},
-	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Нажмите треугольник для откл., или может быть поломка", "Включить отладку USB", "Инструменты считывания"},
-	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Натисніть трикутник для відкл., або можуть бути несправності", "Ввімкнути налагодження USB", "Інструменти зчитування"}
+	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Toggle experimental features", "Dumping tools"},
+	{"Activer/Désactiver Remote Joy Lite", "Affiche l'écran de votre PSP sur votre ordinateur par USB", "Activer/Désactiver caractéristiques expérimentales", "Dumping tools"},
+	{"Wlącz Remote Joy Lite", "Wyswietla obraz z PSP na komputerze poprzez USB", "Wlacz funkcje eksperymentalne", "Narzedzia do zgrywania"},
+	{"Remote Joy Lite ein-/ausschalten", "Zeigt den Bildschirm deiner PSP via USB auf deinem Computer an", "Experimentelle Funktionen ein-/ausschalten", "Sicherungstools"},
+	{"Remote Joy Lite aan/uit", "Geeft je PSP scherm weer op je computer via USB", "Experimentele functies aan/uit", "Dumping tools"},
+	{"Usar Remote Joy Lite", "Muestra la imagen de la pantalla de tu PSP en tu PC vía USB", "Activar características experimentales", "Opciones de volcado/extracción"},
+	{"Alternar Remote Joy Lite", "Exibe a tela do seu PSP no seu PC por um cabo USB", "Alternar recursos experimentais", "Ferramentas de dumping"},
+	{"Alternar Remote Joy Lite", "Exibir a tela de seu PSP em seu computador via USB", "Alternar recursos experimentais", "Ferramentas de Dumping"},
+	{"Veksle Remote Joy Lite", "Viser PSP skjermen på din PC gjennom USB", "Veksle eksperimentelle funksjoner", "Dumping tools"},
+	{"Activează Remote Joy Lite", "Afișează ecranul PSPului pe calculator prin USB", "Activează caracteristici experimentale", "Unelte pentru descărcare"},
+	{"Attiva Remote Joy Lite", "Visualizza la tua schermata PSP sul tuo computer tramite USB", "Attiva funzioni sperimentali", "Strumenti di salvataggio"},
+	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Включить экспериментальные возможности", "Инструменты считывания"},
+	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Ввімкнути експериментальні можливості", "Інструменти зчитування"}
 };
 
 const char lang_settingsDump[][9][100] = 

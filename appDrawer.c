@@ -305,13 +305,15 @@ int appdrawer()
 			internet();
 		}
 		
-		/*// WIP Calculator
-		if (cursor->x >= 100 && cursor->x <= 140 && cursor->y >= 25 && cursor->y <= 85 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			appdrawer_deleteImages();
-			calculator();
-		}*/
+		if (experimentalF == 1)
+		{	// WIP calculator
+			if (cursor->x >= 100 && cursor->x <= 140 && cursor->y >= 25 && cursor->y <= 85 && osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				appdrawer_deleteImages();
+				calculator();
+			}
+		}
 		
 		if (cursor->x >= 160 && cursor->x <= 225 && cursor->y >= 25 && cursor->y <= 85 && osl_keys->pressed.cross)
 		{
@@ -341,14 +343,15 @@ int appdrawer()
 			gameApp();
 		}
 
-		/*
-		if (cursor->x >= 15 && cursor->x <= 75 && cursor->y >= 115 && cursor->y <= 180 && osl_keys->pressed.cross)
-		{
-			oslPlaySound(KeypressStandard, 1); 
-			appdrawer_deleteImages();
-			messenger();
+		if (experimentalF == 1)
+		{	//WIP ad-hoc messenger application
+			if (cursor->x >= 15 && cursor->x <= 75 && cursor->y >= 115 && cursor->y <= 180 && osl_keys->pressed.cross)
+			{
+				oslPlaySound(KeypressStandard, 1); 
+				appdrawer_deleteImages();
+				messenger();
+			}
 		}
-		*/
 		
 		if (cursor->x >= 100 && cursor->x <= 140 && cursor->y >= 115 && cursor->y <= 180 && osl_keys->pressed.cross)
 		{

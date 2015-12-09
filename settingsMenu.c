@@ -454,7 +454,7 @@ void creditsMenu()
 		oslDrawImageXY(aboutbg, 0, 0);
 		oslDrawFillRect(0, 62, 444, 272, RGB(255,255,255));
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		oslIntraFontSetStyle(Roboto, 0.5, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(10,68,"I'd like to say thanks to all the Developers, contributors and");
 		oslDrawStringf(10,80,"supporters, who motivated me to continue this project for");
@@ -2477,10 +2477,10 @@ void displayTime()
 		oslDrawStringf(20,86, "%s", lang_settingsTime[language][0]);
 		
 		if (hrTime == 0)
-			oslDrawImageXY(offswitch,350,80);
+			oslDrawImageXY(offswitch,392,80);
 				
 		else if (hrTime == 1)
-			oslDrawImageXY(onswitch,350,80);
+			oslDrawImageXY(onswitch,392,80);
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
@@ -2488,7 +2488,7 @@ void displayTime()
 			oslDrawStringf(20,86, "%s", lang_settingsTime[language][0]);
 			if (hrTime == 0)
 			{
-				oslDrawImageXY(offswitch,350,80);
+				oslDrawImageXY(offswitch,392,80);
 				
 				if (osl_keys->pressed.cross)
 				{
@@ -2501,7 +2501,7 @@ void displayTime()
 			}
 			else if (hrTime == 1)
 			{
-				oslDrawImageXY(onswitch,350,80);
+				oslDrawImageXY(onswitch,392,80);
 			
 				if (osl_keys->pressed.cross)
 				{
@@ -2640,7 +2640,7 @@ void displayMiscellaneous()
 
 		if (widgetActivator == 0)
 		{
-			oslDrawImageXY(offswitch,350,80);
+			oslDrawImageXY(offswitch,392,80);
 			
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
@@ -2654,7 +2654,7 @@ void displayMiscellaneous()
 		
 		else if (widgetActivator == 1)
 		{
-			oslDrawImageXY(onswitch,350,80);
+			oslDrawImageXY(onswitch,392,80);
 		
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117 && osl_keys->pressed.cross)
 			{
@@ -2668,7 +2668,7 @@ void displayMiscellaneous()
 		
 		if (eDesktopActivator == 0)
 		{
-			oslDrawImageXY(offswitch,350,133);
+			oslDrawImageXY(offswitch,392,133);
 			
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156 && osl_keys->pressed.cross)
 			{
@@ -2682,7 +2682,7 @@ void displayMiscellaneous()
 		
 		else if (eDesktopActivator == 1)
 		{
-			oslDrawImageXY(onswitch,350,133);
+			oslDrawImageXY(onswitch,392,133);
 		
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156 && osl_keys->pressed.cross)
 			{
@@ -2694,9 +2694,10 @@ void displayMiscellaneous()
 			}
 		}
 		
+		
 		if (bootAnimActivator == 0)
 		{
-			oslDrawImageXY(offswitch,350,186);
+			oslDrawImageXY(offswitch,392,186);
 			
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215 && osl_keys->pressed.cross)
 			{
@@ -2710,7 +2711,7 @@ void displayMiscellaneous()
 		
 		else if (bootAnimActivator == 1)
 		{
-			oslDrawImageXY(onswitch,350,186);
+			oslDrawImageXY(onswitch,392,186);
 		
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215 && osl_keys->pressed.cross)
 			{
@@ -2721,10 +2722,9 @@ void displayMiscellaneous()
 				fclose(bootAnimActivation);
 			}
 		}
-		
 		if (gBootActivator == 0)
 		{
-			oslDrawImageXY(offswitch,350,236);
+			oslDrawImageXY(offswitch,392,236);
 			
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
@@ -2738,7 +2738,7 @@ void displayMiscellaneous()
 		
 		else if (gBootActivator == 1)
 		{
-			oslDrawImageXY(onswitch,350,236);
+			oslDrawImageXY(onswitch,392,236);
 		
 			if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 216 && cursor->y <= 272 && osl_keys->pressed.cross)
 			{
@@ -2839,7 +2839,7 @@ void securityMenu()
 		
 		oslDrawStringf(20,83, "%s", lang_settingsSecuirty[language][0]); 
 		oslDrawStringf(20,144, "%s", lang_settingsSecuirty[language][1]); 
-		oslDrawStringf(20,200, "Swipe"); 
+		oslDrawStringf(20,200, "%s", lang_settingsSecuirty[language][2]); 
 		
 		if (cursor->x  >= 0 && cursor->x  <= 444 && cursor->y >= 61 && cursor->y <= 118)
 		{	
@@ -2880,7 +2880,7 @@ void securityMenu()
 		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 180 && cursor->y <= 235)
 		{	
 			oslDrawImageXY(highlight, 0, 178);
-			oslDrawStringf(20,200, "Swipe"); 
+			oslDrawStringf(20,200, "%s", lang_settingsSecuirty[language][2]); 
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);
@@ -3439,19 +3439,20 @@ void developerMenu()
 		
 		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		
-		oslDrawStringf(10,107, "%s", lang_settingsDeveloperOptions[language][0]);
-		oslDrawStringf(10,121, "%s", lang_settingsDeveloperOptions[language][1]);
-		oslDrawStringf(10,135, "%s", lang_settingsDeveloperOptions[language][2]);
-		oslDrawStringf(10,168, "%s", lang_settingsDeveloperOptions[language][3]);
+		oslDrawStringf(10,115, "%s", lang_settingsDeveloperOptions[language][0]);
+		oslDrawStringf(10,130, "%s", lang_settingsDeveloperOptions[language][1]);
 		oslDrawStringf(10,182, "%s", lang_settingsDeveloperOptions[language][2]);
-		oslDrawStringf(10,236, "%s", lang_settingsDeveloperOptions[language][4]);
-		
+		oslDrawStringf(10,236, "%s", lang_settingsDeveloperOptions[language][3]);
+		if (experimentalF == 0)
+			oslDrawImageXY(offswitch, 392, 175);
+		else
+			oslDrawImageXY(onswitch, 392, 175);
+			
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 154)
 		{
 			oslDrawImageXY(highlight, 0, 100);
-			oslDrawStringf(10,107, "%s", lang_settingsDeveloperOptions[language][0]);
-			oslDrawStringf(10,121, "%s", lang_settingsDeveloperOptions[language][1]);
-			oslDrawStringf(10,135, "%s", lang_settingsDeveloperOptions[language][2]);
+			oslDrawStringf(10,115, "%s", lang_settingsDeveloperOptions[language][0]);
+			oslDrawStringf(10,130, "%s", lang_settingsDeveloperOptions[language][1]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -3462,21 +3463,41 @@ void developerMenu()
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 155 && cursor->y <= 214)
 		{
-			oslDrawImageXY(highlight, 0, 157);
-			oslDrawStringf(10,168, "%s", lang_settingsDeveloperOptions[language][3]);
+			oslDrawImageXY(highlight, 0, 158);
 			oslDrawStringf(10,182, "%s", lang_settingsDeveloperOptions[language][2]);
-			if (osl_keys->pressed.cross)
+			
+			if (experimentalF == 0)
 			{
-				oslPlaySound(KeypressStandard, 1);  
-				PSPDebug = 1;
-				modules[1] = loadStartModule("modules/psplink.prx");
+				oslDrawImageXY(offswitch, 392, 175);
+				
+				if (osl_keys->pressed.cross)
+				{
+					oslPlaySound(KeypressStandard, 1);  
+					FILE * experimentalFeatures = fopen("system/settings/experimentalFeatures.bin", "w");
+					experimentalF = 1;
+					fprintf(experimentalFeatures, "1");
+					fclose(experimentalFeatures);
+				}
+			}
+			else if (experimentalF == 1)
+			{
+				oslDrawImageXY(onswitch, 392, 175);
+			
+				if (osl_keys->pressed.cross)
+				{
+					oslPlaySound(KeypressStandard, 1);  
+					FILE * experimentalFeatures = fopen("system/settings/experimentalFeatures.bin", "w");
+					experimentalF = 0;
+					fprintf(experimentalFeatures, "0");
+					fclose(experimentalFeatures);
+				}
 			}
 		}
 		
 		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 215 && cursor->y <= 272)
 		{
 			oslDrawImageXY(highlight, 0, 216);
-			oslDrawStringf(10,236, "%s", lang_settingsDeveloperOptions[language][4]);
+			oslDrawStringf(10,236, "%s", lang_settingsDeveloperOptions[language][3]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
@@ -3636,9 +3657,9 @@ void settingsMenu()
 		controls();	
 
 		oslDrawImageXY(settingsbg, 0, 0);
-		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 
+		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		
 		oslDrawStringf(50,120,"%s", lang_settingsMain[language][0]);
 		oslDrawStringf(280,120,"%s", lang_settingsMain[language][1]);
 		oslDrawStringf(50,177,"%s", lang_settingsMain[language][2]);
@@ -3670,26 +3691,6 @@ void settingsMenu()
 		{	
 			settingsDeleteResources();
 			appdrawer();
-		}
-		
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			multitask();
-		}
-	
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			settingsDeleteResources();
-			appdrawer();
-		}
-
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			settingsDeleteResources();
-			home();
 		}
 		
 		if (cursor->x >= 3 && cursor->x <= 219 && cursor->y >= 98 && cursor->y <= 154 && osl_keys->pressed.cross)
@@ -3732,6 +3733,26 @@ void settingsMenu()
 			oslPlaySound(KeypressStandard, 1);  
 			settingsDeleteResources();
 			aboutMenu();
+		}
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			settingsDeleteResources();
+			appdrawer();
+		}
+
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			settingsDeleteResources();
+			home();
+		}
+		
+		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+		{
+			oslPlaySound(KeypressStandard, 1);  
+			multitask();
 		}
 
 		captureScreenshot();

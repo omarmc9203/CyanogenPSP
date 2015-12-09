@@ -146,6 +146,12 @@ static int PrintFrameInfo(struct mad_header *Header)
 	Emphasis = "(unexpected emphasis value)";
 	break;
     }
+	
+	if (Emphasis == NULL) //My simple yet unnecessary workaround for GCC's warning on unused parameters.
+		return 1;
+	else if (Mode == NULL)
+		return 1;
+	
     pspDebugScreenSetXY(0, 29);
     printf("%lu kb/s audio MPEG layer %s stream at %dHz\n", Header->bitrate / 1000, Layer, Header->samplerate);
     sceDisplayWaitVblankStart();

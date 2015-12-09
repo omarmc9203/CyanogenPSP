@@ -384,6 +384,7 @@ int main()
 	hrTime = setFileDefaultsInt("system/app/clock/timeSet.bin", 0, hrTime);
 	language = setFileDefaultsInt("system/settings/language.bin", 0, language);
 	batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
+	experimentalF = setFileDefaultsInt("system/settings/experimentalFeatures.bin", 0, experimentalF);
 	fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 0.5, fontSize);
 	
 	checkGBootActivation();
@@ -392,9 +393,9 @@ int main()
 	
 	FILE *temp;
 	 
-	if (!(fileExists("system/settings/rgb.bin")))
+	if (!(fileExists(rgbValuesPath)))
 	{
-		temp = fopen("system/settings/rgb.bin", "w");
+		temp = fopen(rgbValuesPath, "w");
 		fprintf(temp, "0\n149\n135");
 		fclose(temp);
 	}

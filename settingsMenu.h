@@ -75,7 +75,7 @@ typedef struct fw_version fw_version;
 int connectAPCallback(int state);
 int connectToAP(int config);
 char backgroundPath[500], nickname[25], pspname[25], fontPath[100], themeDirPath[250];
-int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language, usbStat, isPlaying, batteryM;
+int widgetActivator, eDesktopActivator, bootAnimActivator, gBootActivator, processorState, hrTime, language, usbStat, isPlaying, batteryM, experimentalF;
 int r, g, b;
 float fontSize;
 int passProtect;

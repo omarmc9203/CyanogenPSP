@@ -114,13 +114,13 @@ void refresh();
 void OptionMenu();
 void renameFile();
 void newFolder();
-void DeleteFile(char path[]);
+void deleteFile(char path[]);
 int deleteRecursive(char path[]); //Thanks Moonchild!
 void fcopy(char * source);
 void fpaste(char * destination);
 int checkTextFile(char *path);
 char * readTextFromFile(char *path);
-void displayTextFromFile();
+void displayTextFromFile(char * path);
 void dirUpx5();
 void dirDownx5();
 void oslPrintText(int x, int y, float size, char * text, OSL_COLOR color);
