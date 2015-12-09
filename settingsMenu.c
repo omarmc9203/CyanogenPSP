@@ -1743,7 +1743,7 @@ void displayFontMenu()
 void displayFontSizeMenu()
 {	
 	FILE * fontManagement;
-	int tempFontData = fontSize;
+	int tempFontData = 0;
 
 	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
 	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
@@ -1752,11 +1752,11 @@ void displayFontSizeMenu()
 	
 	fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 0.5, fontSize);
 	
-	if (fontSize == 0.4)
+	if (fontSize < 0.5)
 		tempFontData = 0;
 	else if (fontSize == 0.5)
 		tempFontData = 1;
-	else if (fontSize == 0.6)
+	else if (fontSize > 0.6)
 		tempFontData = 2;
 	
 	oslSetFont(Roboto);
