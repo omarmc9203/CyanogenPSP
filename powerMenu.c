@@ -34,8 +34,8 @@ void powermenu()
 		navbarButtons(0);
 		oslDrawImageXY(power, 100, 61);
 		
-		digitaltime(420,4,0,hrTime);
 		battery(370,2,1);
+		digitaltime(420,4,0,hrTime);
 		
 		oslIntraFontSetStyle(Roboto, 0.75f, BLACK, 0, 0);
 		oslDrawStringf(165, 100, "Power off");
