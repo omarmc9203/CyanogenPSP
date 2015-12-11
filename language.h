@@ -16,5 +16,4 @@ const char lang_settingsUpdates[13][1][100];
 const char lang_settingsSecuirty[13][3][100];
 const char lang_settingsWifi[13][3][100];
 const char lang_settingsDeveloperOptions[13][4][150];
-const char lang_settingsDump[13][9][100];
 const char lang_quickSettings[13][5][100];

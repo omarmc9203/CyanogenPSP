@@ -386,6 +386,7 @@ int main()
 	language = setFileDefaultsInt("system/settings/language.bin", 0, language);
 	batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 	experimentalF = setFileDefaultsInt("system/settings/experimentalFeatures.bin", 0, experimentalF);
+	DARK = setFileDefaultsInt("system/settings/darkTheme.bin", 0, DARK);
 	fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 0.5, fontSize);
 	
 	checkGBootActivation();

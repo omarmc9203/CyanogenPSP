@@ -17,7 +17,10 @@
 
 void appdrawer_loadImages()
 {
-	backdrop = oslLoadImageFilePNG(backdropPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+		backdrop = oslLoadImageFilePNG(backdropPath, OSL_IN_RAM, OSL_PF_8888);
+	else 
+		backdrop = oslLoadImageFilePNG("system/home/icons/backdropDark.png", OSL_IN_RAM, OSL_PF_8888);
 	ic_launcher_clock = oslLoadImageFilePNG(clockPath, OSL_IN_RAM, OSL_PF_8888);
 }
 
@@ -253,7 +256,11 @@ int appdrawer()
 			digitaltime(420,4,0,hrTime);
 		}
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_CENTER);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_CENTER);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, INTRAFONT_ALIGN_CENTER);
+			
 		oslDrawImageXY(backdrop, 1, 15);
 		oslDrawImageXY(ic_launcher_browser, browser_x, 40);
 		oslDrawStringf(browser_text_x, 90, "%s", lang_appDrawer[language][0]);

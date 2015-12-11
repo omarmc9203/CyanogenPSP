@@ -191,19 +191,6 @@ void switchStatus(int n)
 			oslDrawImageXY(onswitch, 370, 62);
 	}
 	
-	else if (n == 2)
-	{
-		if (sceWlanGetSwitchState() == 0)
-		{
-			oslDrawImageXY(offswitch, 392, 68);
-		}
-		
-		else
-		{
-			oslDrawImageXY(onswitch, 392, 68);
-		}
-	}
-	
 	else if (n == 3)
 	{
 		if (sceWlanGetSwitchState() == 0)
@@ -266,8 +253,16 @@ fw_version getFwVersion(fw_version *v);
 
 void aboutMenu()
 {	
-	aboutbg = oslLoadImageFilePNG(aboutBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		aboutbg = oslLoadImageFilePNG(aboutBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		aboutbg = oslLoadImageFilePNG("system/settings/Dark/aboutbg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 
 	oslSetFont(Roboto);
 	
@@ -296,7 +291,10 @@ void aboutMenu()
 
 		oslDrawImageXY(aboutbg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
 		oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
@@ -434,11 +432,14 @@ void aboutMenu()
 
 void creditsMenu()
 {
-	aboutbg = oslLoadImageFilePNG(aboutBgPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+		aboutbg = oslLoadImageFilePNG(aboutBgPath, OSL_IN_RAM, OSL_PF_8888);
+	else
+		aboutbg = oslLoadImageFilePNG("system/settings/Dark/aboutbg.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	oslSetFont(Roboto);
 	
-	if (!aboutbg || !highlight)
+	if (!aboutbg)
 		debugDisplay();
 
 	while (!osl_quit)
@@ -454,7 +455,10 @@ void creditsMenu()
 		oslDrawImageXY(aboutbg, 0, 0);
 		oslDrawFillRect(0, 62, 444, 272, RGB(255,255,255));
 		
-		oslIntraFontSetStyle(Roboto, 0.5, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, 0.5, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, 0.5, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(10,68,"I'd like to say thanks to all the Developers, contributors and");
 		oslDrawStringf(10,80,"supporters, who motivated me to continue this project for");
@@ -528,8 +532,16 @@ void creditsMenu()
 
 void updatesMenu()
 {		    
-	updatesbg = oslLoadImageFilePNG(updatesBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		updatesbg = oslLoadImageFilePNG(updatesBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		updatesbg = oslLoadImageFilePNG("system/settings/Dark/updatesbg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 
 	oslSetFont(Roboto);
 
@@ -548,7 +560,10 @@ void updatesMenu()
 
 		oslDrawImageXY(updatesbg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,93, "%s", lang_settingsUpdates[language][0]);
 
@@ -621,8 +636,16 @@ void updatesMenu()
 
 void performanceMenu()
 {	
-	performancebg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		performancebg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		performancebg = oslLoadImageFilePNG("system/settings/Dark/performancebg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 
 	oslSetFont(Roboto);
 
@@ -641,7 +664,10 @@ void performanceMenu()
 
 		oslDrawImageXY(performancebg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,86, "%s", lang_settingsPerformance[language][0]);
 		oslDrawStringf(20,140, "%s", lang_settingsPerformance[language][1]);
@@ -802,8 +828,16 @@ void processorMenu()
 	int currentState = stateOff;
 	int cpufreq, cpu, bus, state = 0;
 	
-	processorbg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		processorbg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		processorbg = oslLoadImageFilePNG("system/settings/Dark/performancebg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 
 	oslSetFont(Roboto);
 	
@@ -822,7 +856,10 @@ void processorMenu()
 		
 		oslDrawImageXY(processorbg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,76, "%s", lang_settingsProcessor[language][0]);
 		oslDrawStringf(20,128, "%s", lang_settingsProcessor[language][1]);
@@ -995,8 +1032,16 @@ void processorMenu()
 
 void ramMenu()
 {	
-	performancebg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		performancebg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		performancebg = oslLoadImageFilePNG("system/settings/Dark/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 
 	oslSetFont(Roboto);
 	
@@ -1019,7 +1064,10 @@ void ramMenu()
 		
 		oslDrawImageXY(performancebg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,78,"%s %d MB (%d%%) %s\n", lang_settingsRAM[language][0], availableRam, (((availableRam) * 100)/(totalRam)), lang_settingsRAM[language][1]); 
 		
@@ -1079,8 +1127,16 @@ void ramMenu()
 
 void storageMenu()
 {	
-	performancebg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		performancebg = oslLoadImageFilePNG(performance2BgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		performancebg = oslLoadImageFilePNG("system/settings/Dark/performancebg2.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 
 	oslSetFont(Roboto);
 	
@@ -1106,7 +1162,10 @@ void storageMenu()
 		
 		oslDrawImageXY(performancebg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,80, "%s", lang_settingsStorage[language][0]); 
 		//oslDrawStringf(20,100,"%s %.2f MB", lang_settingsStorage[language][1], totalSpace/1048576);
@@ -1175,8 +1234,16 @@ void batteryMenu()
 {	
 	FILE * batteryManagement;
 
-	performancebg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		performancebg = oslLoadImageFilePNG(performanceBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		performancebg = oslLoadImageFilePNG("system/settings/Dark/performancebg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 	select = oslLoadImageFilePNG(selectPath, OSL_IN_RAM, OSL_PF_8888);
 	deselect = oslLoadImageFilePNG("system/settings/deselect.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -1199,7 +1266,10 @@ void batteryMenu()
 
 		oslDrawImageXY(performancebg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,86, "%s", lang_settingsBattery[language][0]);
 		oslDrawStringf(20,140, "%s", lang_settingsBattery[language][1]);
@@ -1365,8 +1435,16 @@ void setPowerManagement()
 
 void displayMenu()
 {	
-	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		displaybg = oslLoadImageFilePNG("system/settings/Dark/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 
 	oslSetFont(Roboto);
 
@@ -1383,7 +1461,10 @@ void displayMenu()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -1500,9 +1581,17 @@ void displayMenu()
 
 void displayThemes()
 {	
-	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
-
+	if (DARK == 0)
+	{
+		displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		displaybg = oslLoadImageFilePNG("system/settings/Dark/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+	
 	oslSetFont(Roboto);
 
 	if (!displaybg)
@@ -1518,7 +1607,10 @@ void displayThemes()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -1635,8 +1727,16 @@ void displayThemes()
 
 void displayFontMenu()
 {	
-	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		displaybg = oslLoadImageFilePNG("system/settings/Dark/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 
 	oslSetFont(Roboto);
 
@@ -1653,7 +1753,10 @@ void displayFontMenu()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -1745,8 +1848,17 @@ void displayFontSizeMenu()
 	FILE * fontManagement;
 	int tempFontData = 0;
 
-	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		displaybg = oslLoadImageFilePNG("system/settings/Dark/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+
 	select = oslLoadImageFilePNG(selectPath, OSL_IN_RAM, OSL_PF_8888);
 	deselect = oslLoadImageFilePNG("system/settings/deselect.png", OSL_IN_RAM, OSL_PF_8888);
 	
@@ -1776,7 +1888,10 @@ void displayFontSizeMenu()
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawStringf(20,86, "%s", lang_settingsFonts[language][2]);
 		oslDrawStringf(20,140, "%s", lang_settingsFonts[language][3]);
@@ -1942,7 +2057,10 @@ void settingsDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1) 
 		{
-			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+			if (DARK == 0)
+				oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+			else
+				oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 			oslDrawStringf(SETTINGS_DISPLAY_X, (i - curScroll)*55+SETTINGS_DISPLAY_Y, "%.56s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
@@ -2411,8 +2529,17 @@ char * settingsBrowse(const char * path, int n) // n is used here to search for 
 
 void displaySubThemes(char * browseDirectory, int n) // n is used here to search for fonts or wallpaper
 {	
-	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		displaybg = oslLoadImageFilePNG("system/settings/Dark/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+
 
 	oslSetFont(Roboto);
 
@@ -2450,8 +2577,17 @@ void displayTime()
 {	
 	FILE * timeSetTxt;
 	
-	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		displaybg = oslLoadImageFilePNG("system/settings/Dark/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -2470,7 +2606,10 @@ void displayTime()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -2585,8 +2724,17 @@ void displayMiscellaneous()
 	fscanf(bootAnimActivation,"%d",&bootAnimActivator);
 	fclose(bootAnimActivation);
 
-	displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		displaybg = oslLoadImageFilePNG(displayBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		displaybg = oslLoadImageFilePNG("system/settings/Dark/displaybg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -2605,7 +2753,10 @@ void displayMiscellaneous()
 		
 		controls();	
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		oslDrawImageXY(displaybg, 0, 0);
 		
@@ -2812,8 +2963,17 @@ void displayMiscellaneous()
 
 void securityMenu()
 {	
-	securitybg = oslLoadImageFilePNG(securityBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		securitybg = oslLoadImageFilePNG(securityBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		securitybg = oslLoadImageFilePNG("system/settings/Dark/securitybg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+	
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -2835,7 +2995,10 @@ void securityMenu()
 		oslDrawImageXY(securitybg, 0, 0);
 		
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(20,83, "%s", lang_settingsSecuirty[language][0]); 
 		oslDrawStringf(20,144, "%s", lang_settingsSecuirty[language][1]); 
@@ -2948,7 +3111,11 @@ void securityMenu()
 
 void wifiMenu()
 {	
-	wifibg = oslLoadImageFilePNG(wifiBgPath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+		wifibg = oslLoadImageFilePNG(wifiBgPath, OSL_IN_RAM, OSL_PF_8888);
+	else
+		wifibg = oslLoadImageFilePNG("system/settings/Dark/wifibg.png", OSL_IN_RAM, OSL_PF_8888);
+
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -2988,7 +3155,10 @@ void wifiMenu()
 
 		oslDrawImageXY(wifibg, 0, 0);
 		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
 		if (enabled)
 		{
@@ -3076,345 +3246,21 @@ void wifiMenu()
 	oslNetTerm();
 }
 
-void DumpBootBin(void)
-{
-	int i;
-	int fd;
-
-	oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, INTRAFONT_ALIGN_LEFT);
-	i = sceUmdCheckMedium();
-	if(i == 0)
-	{
-		oslDrawStringf(4,5, "%s", lang_settingsDump[language][5]);
-		i = sceUmdWaitDriveStat(PSP_UMD_PRESENT);
-	}
-
-	i = sceUmdActivate(1, "disc0:");
-	oslDrawStringf(4,5, "%s", lang_settingsDump[language][6]);
-	oslSyncFrame();
-	sceKernelDelayThread(2*1000000);
-
-	i = sceUmdWaitDriveStat(PSP_UMD_READY);
-
-	/* Open the UMD_DATA.BIN */
-	fd = sceIoOpen("disc0:/UMD_DATA.BIN", PSP_O_RDONLY, 0777);
-	if(fd >= 0)
-	{
-		char game_id[11];
-		char path[256];
-
-		sceIoRead(fd, game_id, 10);
-		sceIoClose(fd);
-		game_id[10] = 0;
-		build_path(path, "ms0:/", game_id, 0);
-		sceIoMkdir(path, 0777);
-
-		oslDrawStringf(4,15,"%s %s\n", lang_settingsDump[language][7], game_id);
-		write_file("disc0:/PSP_GAME/SYSDIR", path, "BOOT.BIN");
-		oslSyncFrame();
-		sceKernelDelayThread(3*1000000);
-	}
-}
-
-/* Dump a filing system */
-void dump_filesystem(const char *root, const char *write_loc)
-{
-	int dfd;
-	char next_root[256];
-	char next_write[256];
-
-	sceIoMkdir(write_loc, 0777);
-
-	dfd = sceIoDopen(root);
-	if(dfd > 0)
-	{
-		SceIoDirent dir;
-
-		while(sceIoDread(dfd, &dir) > 0)
-		{
-			if(dir.d_stat.st_attr & FIO_SO_IFDIR)
-			{
-				if(dir.d_name[0] != '.')
-				{
-					build_path(next_write, write_loc, dir.d_name, 0);
-					build_path(next_root, root, dir.d_name, 1);
-					dump_filesystem(next_root, next_write);
-				}
-			}
-			else
-			{
-				write_file(root, write_loc, dir.d_name);
-			}
-		}
-		sceIoDclose(dfd);
-	}
-}
-
-/* Dump memory */
-void dump_memory(void)
-{
-	int fd;
-
-	oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, INTRAFONT_ALIGN_LEFT);
-	oslDrawStringf(4,5,"%s 0x8400000\n", lang_settingsDump[language][8]);
-	fd = sceIoOpen("ms0:/MEMORY.BIN", PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);
-	if(fd >= 0)
-	{
-		sceIoWrite(fd, (void *) 0x8400000, 28*1024*1024);
-		sceIoClose(fd);
-	}
-	oslSyncFrame();
-	sceKernelDelayThread(3*1000000);
-}
-
-void dumpMenu()
-{
-	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
-
-	oslSetFont(Roboto);
-	
-	if (!developerbg || !highlight)
-		debugDisplay();
-
-	while (!osl_quit)
-	{
-		LowMemExit();
-		
-		oslStartDrawing();
-		
-		oslClearScreen(RGB(0,0,0));
-		
-		controls();	
-
-		oslDrawImageXY(developerbg, 0, 0);
-		switchStatus(2);
-		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
-
-		oslDrawStringf(20,123, "%s", lang_settingsDump[language][0]);
-		oslDrawStringf(20,181, "%s", lang_settingsDump[language][1]);
-		oslDrawStringf(20,236, "%s", lang_settingsDump[language][2]);
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155)
-		{
-			oslDrawImageXY(highlight, 0, 101);
-			oslDrawStringf(20,123, "%s", lang_settingsDump[language][0]);
-			if (osl_keys->pressed.cross)
-			{
-				oslPlaySound(KeypressStandard, 1);  
-				dump_filesystem("flash0:/", "ms0:/flash0");
-			}
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211)
-		{
-			oslDrawImageXY(highlight, 0, 158);
-			oslDrawStringf(20,181, "%s", lang_settingsDump[language][1]);
-			if (osl_keys->pressed.cross)
-			{
-				oslPlaySound(KeypressStandard, 1);  
-				dump_filesystem("flash1:/", "ms0:/flash1");
-			}
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 212 && cursor->y <= 268)
-		{
-			oslDrawImageXY(highlight, 0, 216);
-			oslDrawStringf(20,236, "%s", lang_settingsDump[language][2]);
-			if (osl_keys->pressed.cross)
-			{
-				oslPlaySound(KeypressStandard, 1);  
-				oslDeleteImage(developerbg);
-				oslDeleteImage(highlight);
-				oslDeleteImage(offswitch);	
-				oslDeleteImage(onswitch);
-				dumpMenuMore();
-			}
-		}
-
-		navbarButtons(2);
-		battery(330,2,0);
-		digitaltime(381,4,0,hrTime);
-		androidQuickSettings();
-		volumeController();
-		oslDrawImage(cursor);
-		
-		if (osl_keys->pressed.square)
-		{
-			powermenu();
-		}
-		
-		if (osl_keys->pressed.L)
-		{
-			oslPlaySound(Lock, 1);  
-			lockscreen();
-        }
-		
-		if (osl_keys->pressed.circle)
-		{
-			oslDeleteImage(developerbg);
-			oslDeleteImage(highlight);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			developerMenu();
-		}
-		
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(developerbg);
-			oslDeleteImage(highlight);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			developerMenu();
-		}
-		
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(developerbg);
-			oslDeleteImage(highlight);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			home();
-		}
-
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
-		{	
-			oslPlaySound(KeypressStandard, 1);  
-			multitask();
-		}
-		
-		captureScreenshot();
-		
-	oslEndDrawing(); 
-    oslEndFrame(); 
-	oslSyncFrame();	
-	}	
-}
-
-void dumpMenuMore()
-{
-	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
-	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
-	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
-
-	oslSetFont(Roboto);
-	
-	if (!developerbg || !highlight)
-		debugDisplay();
-
-	while (!osl_quit)
-	{
-		LowMemExit();
-		
-		oslStartDrawing();
-		
-		oslClearScreen(RGB(0,0,0));
-		
-		controls();	
-
-		oslDrawImageXY(developerbg, 0, 0);
-		switchStatus(2);
-		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
-
-		oslDrawStringf(20,123, "%s", lang_settingsDump[language][3]);
-		oslDrawStringf(20,181, "%s", lang_settingsDump[language][4]);
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 155)
-		{
-			oslDrawImageXY(highlight, 0, 101);
-			oslDrawStringf(20,123, "%s", lang_settingsDump[language][3]);
-			if (osl_keys->pressed.cross)
-			{
-				oslPlaySound(KeypressStandard, 1);  
-				DumpBootBin();
-			}
-		}
-		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 156 && cursor->y <= 211)
-		{
-			oslDrawImageXY(highlight, 0, 158);
-			oslDrawStringf(20,181, "%s", lang_settingsDump[language][4]);
-			if (osl_keys->pressed.cross)
-			{
-				oslPlaySound(KeypressStandard, 1);  
-				dump_memory();
-			}
-		}
-
-		navbarButtons(2);
-		battery(330,2,0);
-		digitaltime(381,4,0,hrTime);
-		androidQuickSettings();
-		volumeController();
-		oslDrawImage(cursor);
-		
-		if (osl_keys->pressed.square)
-		{
-			powermenu();
-		}
-		
-		if (osl_keys->pressed.L)
-		{
-			oslPlaySound(Lock, 1);  
-			lockscreen();
-        }
-		
-		if (osl_keys->pressed.circle)
-		{
-			oslDeleteImage(developerbg);
-			oslDeleteImage(highlight);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			dumpMenu();
-		}
-		
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(developerbg);
-			oslDeleteImage(highlight);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			dumpMenu();
-		}
-		
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(developerbg);
-			oslDeleteImage(highlight);
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			home();
-		}
-
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
-		{	
-			oslPlaySound(KeypressStandard, 1);  
-			multitask();
-		}
-		
-		captureScreenshot();
-		
-	oslEndDrawing(); 
-    oslEndFrame(); 
-	oslSyncFrame();	
-	}	
-}
-
-SceUID modules[3];
-
 void developerMenu()
 {	
-	developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
-	highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	SceUID module;
+
+	if (DARK == 0)
+	{
+		developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+	}
+	else
+	{
+		developerbg = oslLoadImageFilePNG("system/settings/Dark/developerbg.png", OSL_IN_RAM, OSL_PF_8888);
+		highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);
+	}
+	
 	offswitch = oslLoadImageFilePNG(offSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 	onswitch = oslLoadImageFilePNG(onSwitchPath, OSL_IN_RAM, OSL_PF_8888);
 
@@ -3435,40 +3281,46 @@ void developerMenu()
 
 		oslDrawImageXY(developerbg, 0, 0);
 		
-		switchStatus(2);
-		
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
-		
-		oslDrawStringf(10,115, "%s", lang_settingsDeveloperOptions[language][0]);
-		oslDrawStringf(10,130, "%s", lang_settingsDeveloperOptions[language][1]);
-		oslDrawStringf(10,182, "%s", lang_settingsDeveloperOptions[language][2]);
-		oslDrawStringf(10,236, "%s", lang_settingsDeveloperOptions[language][3]);
-		if (experimentalF == 0)
-			oslDrawImageXY(offswitch, 392, 175);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		else
-			oslDrawImageXY(onswitch, 392, 175);
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
+		
+		oslDrawStringf(10,75, "%s", lang_settingsDeveloperOptions[language][0]);
+		oslDrawStringf(10,90, "%s", lang_settingsDeveloperOptions[language][1]);
+		oslDrawStringf(10,140, "%s", lang_settingsDeveloperOptions[language][2]);
+		oslDrawStringf(10,195, "Dark Theme");
+		
+		if (experimentalF == 0)
+			oslDrawImageXY(offswitch,392,133);
+		else
+			oslDrawImageXY(onswitch,392,133);
+		
+		if (DARK == 0)
+			oslDrawImageXY(offswitch,392,186);
+		else
+			oslDrawImageXY(onswitch,392,186);
 			
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 99 && cursor->y <= 154)
+		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 60 && cursor->y <= 117)
 		{
-			oslDrawImageXY(highlight, 0, 100);
-			oslDrawStringf(10,115, "%s", lang_settingsDeveloperOptions[language][0]);
-			oslDrawStringf(10,130, "%s", lang_settingsDeveloperOptions[language][1]);
+			oslDrawImageXY(highlight, 0, 63);
+			oslDrawStringf(10,75, "%s", lang_settingsDeveloperOptions[language][0]);
+			oslDrawStringf(10,90, "%s", lang_settingsDeveloperOptions[language][1]);
 			if (osl_keys->pressed.cross)
 			{
 				oslPlaySound(KeypressStandard, 1);  
-				RJL = 1;
-				modules[0] = loadStartModule("modules/RemoteJoyLite.prx");
+				module = loadStartModule("modules/RemoteJoyLite.prx");
 			}
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 155 && cursor->y <= 214)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 118 && cursor->y <= 156)
 		{
-			oslDrawImageXY(highlight, 0, 158);
-			oslDrawStringf(10,182, "%s", lang_settingsDeveloperOptions[language][2]);
+			oslDrawImageXY(highlight, 0, 118);
+			oslDrawStringf(10,140, "%s", lang_settingsDeveloperOptions[language][2]);
 			
 			if (experimentalF == 0)
 			{
-				oslDrawImageXY(offswitch, 392, 175);
+				oslDrawImageXY(offswitch,392,133);
 				
 				if (osl_keys->pressed.cross)
 				{
@@ -3481,7 +3333,7 @@ void developerMenu()
 			}
 			else if (experimentalF == 1)
 			{
-				oslDrawImageXY(onswitch, 392, 175);
+				oslDrawImageXY(onswitch,392,133);
 			
 				if (osl_keys->pressed.cross)
 				{
@@ -3494,18 +3346,43 @@ void developerMenu()
 			}
 		}
 		
-		if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 215 && cursor->y <= 272)
+		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215)
 		{
-			oslDrawImageXY(highlight, 0, 216);
-			oslDrawStringf(10,236, "%s", lang_settingsDeveloperOptions[language][3]);
-			if (osl_keys->pressed.cross)
+			oslDrawImageXY(highlight, 0, 173);
+			oslDrawStringf(10,195, "Dark Theme");
+			if (DARK == 0)
 			{
-				oslPlaySound(KeypressStandard, 1);  
-				oslDeleteImage(developerbg);
-				oslDeleteImage(highlight);
-				oslDeleteImage(offswitch);	
-				oslDeleteImage(onswitch);
-				dumpMenu();
+				oslDrawImageXY(offswitch,392,186);
+				
+				if (osl_keys->pressed.cross)
+				{
+					oslPlaySound(KeypressStandard, 1);  
+					FILE * darkTheme = fopen("system/settings/darkTheme.bin", "w");
+					DARK = 1;
+					fprintf(darkTheme, "1");
+					fclose(darkTheme);
+					oslDeleteImage(developerbg);
+					oslDeleteImage(highlight);
+					developerbg = oslLoadImageFilePNG("system/settings/Dark/developerbg.png", OSL_IN_RAM, OSL_PF_8888);
+					highlight = oslLoadImageFilePNG("system/settings/Dark/highlight.png", OSL_IN_RAM, OSL_PF_8888);	
+				}
+			}
+			else if (DARK == 1)
+			{
+				oslDrawImageXY(onswitch,392,186);
+			
+				if (osl_keys->pressed.cross)
+				{
+					oslPlaySound(KeypressStandard, 1);  
+					FILE * darkTheme = fopen("system/settings/darkTheme.bin", "w");
+					DARK = 0;
+					fprintf(darkTheme, "0");
+					fclose(darkTheme);
+					oslDeleteImage(developerbg);
+					oslDeleteImage(highlight);
+					developerbg = oslLoadImageFilePNG(developerBgPath, OSL_IN_RAM, OSL_PF_8888);
+					highlight = oslLoadImageFilePNG(highlightPath, OSL_IN_RAM, OSL_PF_8888);
+				}
 			}
 		}
 
@@ -3563,16 +3440,7 @@ void developerMenu()
 		}
 		
 		captureScreenshot();
-
-		if(RJL == 1 && osl_keys->pressed.triangle)
-		{
-			stopUnloadModule(modules[0]);
-		}
-
-		if(PSPDebug == 1  && osl_keys->pressed.triangle)
-		{	
-			stopUnloadModule(modules[1]);
-		}
+		
 	oslEndDrawing(); 
     oslEndFrame(); 
 	oslSyncFrame();	
@@ -3633,13 +3501,26 @@ void settingsMenu()
 {	
 	themesLoad();
 	
-	settingsbg = oslLoadImageFilePNG(settingsBgPath, OSL_IN_RAM, OSL_PF_8888);
-	about = oslLoadImageFilePNG(aboutPath, OSL_IN_RAM, OSL_PF_8888);
-	themes = oslLoadImageFilePNG(themesPath, OSL_IN_RAM, OSL_PF_8888);
-	developeroptions = oslLoadImageFilePNG(developerPath, OSL_IN_RAM, OSL_PF_8888);
-	wifi = oslLoadImageFilePNG(wifiPath, OSL_IN_RAM, OSL_PF_8888);
-	security = oslLoadImageFilePNG(securityPath, OSL_IN_RAM, OSL_PF_8888);
-	performance = oslLoadImageFilePNG(performancePath, OSL_IN_RAM, OSL_PF_8888);
+	if (DARK == 0)
+	{
+		settingsbg = oslLoadImageFilePNG(settingsBgPath, OSL_IN_RAM, OSL_PF_8888);
+		about = oslLoadImageFilePNG(aboutPath, OSL_IN_RAM, OSL_PF_8888);
+		developeroptions = oslLoadImageFilePNG(developerPath, OSL_IN_RAM, OSL_PF_8888);
+		performance = oslLoadImageFilePNG(performancePath, OSL_IN_RAM, OSL_PF_8888);
+		security = oslLoadImageFilePNG(securityPath, OSL_IN_RAM, OSL_PF_8888);
+		themes = oslLoadImageFilePNG(themesPath, OSL_IN_RAM, OSL_PF_8888);
+		wifi = oslLoadImageFilePNG(wifiPath, OSL_IN_RAM, OSL_PF_8888);
+	}	
+	else
+	{
+		settingsbg = oslLoadImageFilePNG("system/settings/Dark/settingsbg.png", OSL_IN_RAM, OSL_PF_8888);
+		about = oslLoadImageFilePNG("system/settings/Dark/about.png", OSL_IN_RAM, OSL_PF_8888);
+		developeroptions = oslLoadImageFilePNG("system/settings/Dark/developeroptions.png", OSL_IN_RAM, OSL_PF_8888);
+		performance = oslLoadImageFilePNG("system/settings/Dark/performance.png", OSL_IN_RAM, OSL_PF_8888);
+		security = oslLoadImageFilePNG("system/settings/Dark/security.png", OSL_IN_RAM, OSL_PF_8888);
+		themes = oslLoadImageFilePNG("system/settings/Dark/themes.png", OSL_IN_RAM, OSL_PF_8888);
+		wifi = oslLoadImageFilePNG("system/settings/Dark/wifi.png", OSL_IN_RAM, OSL_PF_8888);
+	}
 	
 	oslSetFont(Roboto);
 
@@ -3658,7 +3539,10 @@ void settingsMenu()
 
 		oslDrawImageXY(settingsbg, 0, 0);
 
-		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		if (DARK == 0)
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+		else
+			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 		
 		oslDrawStringf(50,120,"%s", lang_settingsMain[language][0]);
 		oslDrawStringf(280,120,"%s", lang_settingsMain[language][1]);

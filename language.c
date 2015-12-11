@@ -324,23 +324,6 @@ const char lang_settingsDeveloperOptions[][4][150] =
 	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Ввімкнути експериментальні можливості", "Інструменти зчитування"}
 };
 
-const char lang_settingsDump[][9][100] = 
-{	
-	{"Dump Flash 0", "Dump Flash 1", "More", "Dump UMD boot.bin", "Dump Memory", "Insert UMD", "Mounted disc", "Found game", "Dumping 28Megs from"},
-	{"Sauvegarder le Flash 0", "Sauvegarder le Flash 1", "Plus", "Sauvegarder le boot.bin de l'UMD", "Sauvegarder la mémoire", "Insérer un UMD", "Disque monté", "Jeu trouvé", "Sauvegarde de 28 Mo de"},
-	{"Zgraj Flash 0", "Zgraj Flash 1", "Wiecej", "Zgraj UMD boot.bin", "Zgraj pamiec", "Wloz UMD", "Wlozony dysk", "Znaleziono gre", "Zgrywanie 28Mega z"},
-	{"Flash 0 sichern", "Flash 1 sichern", "Mehr", "UMD boot.bin sichern", "Speicher sichern", "UMD einlegen", "Eingehängte Disc", "Spiel gefunden", "Sichere 28MB von"},
-	{"Dump Flash 0", "Dump Flash 1", "Meer", "Dump UMD boot.bin", "Dump Geheugen", "Plaats UMD", "Geplaatste schijf", "Spel gevonden", "Dumping 28Megs van"},
-	{"Extraer Flash 0", "Extraer Flash 1", "Más", "Extraer boot.bin del UMD", "Volcar Memoria", "Insertar UMD", "Disco Leído", "Se ha encontrado un juego", "Extrayendo 28Megas de"},
-	{"Dump Flash 0", "Dump Flash 1", "Mais", "Dump UMD boot.bin", "Memoria Dump", "Insira um UMD", "Disco montado", "Jogo encontrado", "Dumping 28Megs de"},
-	{"Despejar Flash 0", "Despejar Flash 1", "Mais", "Despejar boot.bin do UMD", "Despejar Memória", "Insira o UMD", "Disco montado", "Jogo encontrado", "Despejando 28Megs de"},
-	{"Dump Flash 0", "Dump Flash 1", "Mer", "Dump UMD boot.bin", "Dump Minne", "Sett inn UMD", "Montert plate", "Spill funnet", "Dumper 28Megs fra"},
-	{"Descarcă Flash 0", "Descarcă Flash 1", "Mai multe", "Descarcă UMD boot.bin", "Descarcă memoria", "Introdu un UMD", "Disc montat", "Joc găsit", "Se descarcă 28Mega din"},
-	{"Dump Flash 0", "Dump Flash 1", "Altro", "Dump UMD boot.bin", "Dump Memoria", "Inserisci UMD", "Disco montato", "Trovato gioco", "Salvando 28Megs da"},
-	{"Считать Flash 0", "Считать Flash 1", "Больше", "Считать UMD boot.bin", "Считать память", "Вставьте UMD", "Монтирование диска", "Найдена игра", "Считать 28Megs с"},
-	{"Зчитати Flash 0", "Зчитати Flash 1", "Більше", "Зчитати UMD boot.bin", "Зчитати пам'ять", "Вставте UMD", "Монтування диску", "Знайдено гру", "Зчитати 28Megs з"}
-};
-
 const char lang_quickSettings[][5][100] = 
 {	
 	{"Wi-Fi", "Power save", "Balanced", "Performance", "Lockscreen"},
