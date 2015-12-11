@@ -3310,6 +3310,11 @@ void developerMenu()
 			{
 				oslPlaySound(KeypressStandard, 1);  
 				module = loadStartModule("modules/RemoteJoyLite.prx");
+				if (module < 0)
+				{
+					pspDebugScreenPrintf("Error 0x%08X starting module.\n", module);
+					break;
+				}
 			}
 		}
 		
