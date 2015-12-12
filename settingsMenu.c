@@ -17,6 +17,25 @@
 #include "recoveryMenu.h"
 #include "screenshot.h"
 
+#define YEAR ((((__DATE__ [7] - '0') * 10 + (__DATE__ [8] - '0')) * 10 \
++ (__DATE__ [9] - '0')) * 10 + (__DATE__ [10] - '0'))
+
+#define MONTH (__DATE__ [2] == 'n' ? 0 \
+: __DATE__ [2] == 'b' ? 1 \
+: __DATE__ [2] == 'r' ? (__DATE__ [0] == 'M' ? 2 : 3) \
+: __DATE__ [2] == 'y' ? 4 \
+: __DATE__ [2] == 'n' ? 5 \
+: __DATE__ [2] == 'l' ? 6 \
+: __DATE__ [2] == 'g' ? 7 \
+: __DATE__ [2] == 'p' ? 8 \
+: __DATE__ [2] == 't' ? 9 \
+: __DATE__ [2] == 'v' ? 10 : 11)
+
+#define DAY ((__DATE__ [4] == ' ' ? 0 : __DATE__ [4] - '0') * 10 \
++ (__DATE__ [5] - '0'))
+
+#define DATE_AS_INT (((YEAR - 2000) * 12 + MONTH) * 31 + DAY)
+
 char name;
 int setclock;
 char cyanogenpspversion[5] = "5.3";
@@ -299,7 +318,7 @@ void aboutMenu()
 		oslDrawStringf(20,78,"%s", lang_settingsAbout[language][0]);
 		oslDrawStringf(20,92,"%s", lang_settingsAbout[language][1]);
 		pspGetModel(20,143);
-		oslDrawStringf(20,129,"%s %s-20151116-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+		oslDrawStringf(20,129,"%s %s-%d%02d%02d-%s", lang_settingsAbout[language][2], cyanogenpspversion, YEAR, MONTH + 1, DAY, lang_settingsAbout[language][3]);
 		oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		oslDrawStringf(20,185,"%s %d.%d", lang_settingsAbout[language][5], version.major, version.minor);
 		oslDrawStringf(20,199,"%s %s", lang_settingsAbout[language][6], OSL_VERSION);
@@ -323,7 +342,7 @@ void aboutMenu()
 		{
 			oslDrawImageXY(highlight, 0, 122);
 			pspGetModel(20,143);
-			oslDrawStringf(20,129,"%s %s-20151116-%s", lang_settingsAbout[language][2], cyanogenpspversion, lang_settingsAbout[language][3]);
+			oslDrawStringf(20,129,"%s %s-%d%02d%02d-%s", lang_settingsAbout[language][2], cyanogenpspversion, YEAR, MONTH + 1, DAY, lang_settingsAbout[language][3]);
 			oslDrawStringf(20,157,"%s %02X:%02X:%02X:%02X:%02X:%02X", lang_settingsAbout[language][4], macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5]);
 		}
 		
@@ -475,7 +494,7 @@ void creditsMenu()
 		oslDrawStringf(10,198,"Russan and Ukrainian - Vasniktel and Raithwall.");
 
 		oslDrawStringf(10,218,"Supporters: PSX-Place - STLcardsWS, Tranced, atreyu187, pinky,");
-		oslDrawStringf(10,230,"bitsbubba and kozarovv. Genetik57 for his battery assets.");
+		oslDrawStringf(10,230,"bitsbubba, kozarovv, pinkfloydviste. Genetik57 for his assets.");
 		oslDrawStringf(10,242,"Other memebers from Hack Informer, GBAtemp and wololo.net.");
 		oslDrawStringf(10,254,"I hope I didn't forget anyone. Once again, thank you all :)");
 		
