@@ -4,12 +4,14 @@
 #include "clock.h"
 #include "fileManager.h"
 #include "lockScreen.h"
-#include "mp3Lib.h"
 #include "recentsMenu.h"
 #include "powerMenu.h"
 #include "screenshot.h"
 #include "settingsMenu.h"
+#include "include/audio/mp3playerME.h"
 #include "include/utils.h"
+
+int imposeGetVolume();
 
 int MP3Scan(const char* path )
 {
@@ -146,7 +148,9 @@ void MP3Play(char * path)
 	struct ID3Tag ID3;
 
 	nowplaying = oslLoadImageFilePNG(nowplayingBgPath, OSL_IN_RAM, OSL_PF_8888);
-
+	mp3Play = oslLoadImageFilePNG("system/app/apollo/play.png", OSL_IN_RAM, OSL_PF_8888);
+	mp3Pause = oslLoadImageFilePNG("system/app/apollo/pause.png", OSL_IN_RAM, OSL_PF_8888);
+	
 	if (!nowplaying)
 		debugDisplay();
 	
@@ -154,11 +158,11 @@ void MP3Play(char * path)
 	
 	pspAudioInit();
 	
-	int i;
-	MP3_Init(1);
-	ID3 = ParseID3(path);
-	MP3_Load(path);
-	MP3_Play();
+	int i, mp3Min = 0;
+	MP3ME_Init(1);
+	ParseID3(path, &ID3);
+	MP3ME_Load(path);
+	MP3ME_Play();
 	
 	isPlaying = 1;
 	
@@ -174,6 +178,11 @@ void MP3Play(char * path)
 		
 		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
 		
+		if (MP3ME_playingTime > 59)
+		{
+			mp3Min += 1;
+			MP3ME_playingTime = 0;
+		}
 		oslDrawImageXY(nowplaying, 0, 0);
 		oslDrawStringf(240,76, "Playing: %.19s", folderIcons[current].name);
 		oslDrawStringf(240,96, "Title: %.21s", ID3.ID3Title);
@@ -182,7 +191,13 @@ void MP3Play(char * path)
 		oslDrawStringf(240,136, "Album: %.21s", ID3.ID3Album);
 		oslDrawStringf(240,156, "Year: %.22s", ID3.ID3Year);
 		oslDrawStringf(240,176, "Genre: %.21s", ID3.ID3GenreText);
-
+		oslDrawStringf(435,206, "0%d:%.f", mp3Min, MP3ME_playingTime);
+		
+		if (MP3ME_isPlaying == 1)
+			oslDrawImageXY(mp3Play, 230, 224);
+		if (MP3ME_isPlaying == 0)
+			oslDrawImageXY(mp3Pause, 230, 224);
+		
 		battery(370,2,1);
 		digitaltime(420,4,0,hrTime);
 		volumeController();
@@ -190,34 +205,39 @@ void MP3Play(char * path)
 		if(osl_keys->pressed.select) 
 		{
 			oslDeleteImage(nowplaying);
+			oslDeleteImage(mp3Play);
+			oslDeleteImage(mp3Pause);
 			return;
 		}
 		
-		else if(osl_keys->pressed.cross) 
+		if(MP3ME_isPlaying == 1 && osl_keys->pressed.cross) 
 		{
 			oslPlaySound(KeypressStandard, 1); 
-			MP3_Pause();
+			MP3ME_Pause();
 			for(i=0; i<10; i++) 
 			{
 				sceDisplayWaitVblankStart();
 			}
 		}
-			
-		if (MP3_EndOfStream() == 1) 
+		
+		else if (MP3ME_isPlaying == 0 && osl_keys->pressed.cross)
 		{
-			pspAudioEnd();
-			MP3_Stop();
-			releaseAudioCh();
-			current++;
-			MP3Play(folderIcons[current].filePath);
+			MP3ME_Play();
+		}
+			
+		if (MP3ME_EndOfStream() == 1) 
+		{
+			MP3ME_Stop();
 		}
 		
 		if(osl_keys->pressed.circle)
 		{
-			MP3_Pause();
-			MP3_End();
-			releaseAudioCh();
+			endAudioLib();
+			MP3ME_Stop();
+			releaseAudio();
 			oslDeleteImage(nowplaying);
+			oslDeleteImage(mp3Play);
+			oslDeleteImage(mp3Pause);
 			isPlaying = 0;
 			setCpuBoot(); //Restore previous CPU state
 			return;
@@ -234,21 +254,19 @@ void MP3Play(char * path)
 			lockscreen();
 		}
 	
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}	
+		captureScreenshot();
 		
 		oslEndDrawing(); 
         oslEndFrame(); 
 		oslSyncFrame();	
 		}
-	MP3_End();
 }
 
 int soundPlay(char * path)
 {	
 	nowplaying = oslLoadImageFilePNG(nowplayingBgPath, OSL_IN_RAM, OSL_PF_8888);
+	mp3Play = oslLoadImageFilePNG("system/app/apollo/play.png", OSL_IN_RAM, OSL_PF_8888);
+	mp3Pause = oslLoadImageFilePNG("system/app/apollo/pause.png", OSL_IN_RAM, OSL_PF_8888);
 	
 	OSL_SOUND * sound = oslLoadSoundFile(path, OSL_FMT_NONE);
 
@@ -258,6 +276,8 @@ int soundPlay(char * path)
 	oslInitAudioME(3);
 	
 	oslPlaySound(sound,0);
+	
+	isPlaying = 1;
 	
 	while (!osl_quit)
 	{
@@ -272,6 +292,7 @@ int soundPlay(char * path)
 		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
+		oslDrawImageXY(mp3Play, 230, 224);
 		oslDrawStringf(240,76, "%.28s", folderIcons[current].name);
 		
 		battery(370,2,1);
@@ -281,6 +302,8 @@ int soundPlay(char * path)
 		if(osl_keys->pressed.select) 
 		{
 			oslDeleteImage(nowplaying);
+			oslDeleteImage(mp3Play);
+			oslDeleteImage(mp3Pause);
 			return 1;
 		}
 		
@@ -292,9 +315,12 @@ int soundPlay(char * path)
 		
 		if(osl_keys->pressed.circle)
 		{
+			isPlaying = 0;
 			oslStopSound(sound);
 			oslDeleteSound(sound);
 			oslDeleteImage(nowplaying);
+			oslDeleteImage(mp3Play);
+			oslDeleteImage(mp3Pause);
 			return 1;
 		}
 		
@@ -309,10 +335,7 @@ int soundPlay(char * path)
 			lockscreen();
 		}
 	
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}	
+		captureScreenshot();
 		
 		oslEndDrawing(); 
         oslEndFrame(); 
@@ -321,6 +344,8 @@ int soundPlay(char * path)
 	oslStopSound(sound);
 	oslDeleteSound(sound);
 	oslDeleteImage(nowplaying);
+	oslDeleteImage(mp3Play);
+	oslDeleteImage(mp3Pause);
 	return 0;
 }
 
@@ -432,8 +457,9 @@ void mp3Controls() //Controls
 	{
 		if (isPlaying == 1)
 		{
-			MP3_End();
-			releaseAudioCh();
+			endAudioLib();
+			MP3ME_Stop();
+			releaseAudio();
 			MP3Play(folderIcons[current].filePath);
 		}
 		else 
@@ -454,10 +480,7 @@ void mp3Controls() //Controls
 		lockscreen();
     }
 	
-	if (osl_pad.held.R && osl_keys->pressed.triangle)
-	{
-		screenshot();
-	}
+	captureScreenshot();
 	
 	timer++;
 	if ((timer > 30) && (pad.Buttons & PSP_CTRL_UP))
@@ -619,10 +642,7 @@ int mp3player()
 			lockscreen();
 		}
 	
-		if (osl_pad.held.R && osl_keys->pressed.triangle)
-		{
-			screenshot();
-		}
+		captureScreenshot();
 		
 		oslEndDrawing(); 
         oslEndFrame(); 

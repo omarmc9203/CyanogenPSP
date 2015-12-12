@@ -3,8 +3,9 @@ OSLIB_DIR := $(INCLUDE_DIR)/oslib
 
 TARGET = CyanogenPSP
 OBJS = main.o appDrawer.o homeMenu.o calculator.o lockScreen.o settingsMenu.o clock.o recoveryMenu.o recentsMenu.o \
-	   powerMenu.o musicPlayer.o fileManager.o gameLauncher.o mp3Lib.o messenger.o screenshot.o gallery.o language.o \
+	   powerMenu.o musicPlayer.o fileManager.o gameLauncher.o messenger.o screenshot.o gallery.o language.o \
 	   include/utils.o include/pgeZip.o include/ram.o include/common.o \
+	   include/audio/mp3playerME.o include/audio/id3.o \
 	   prx/display.o prx/imposeDriver.o prx/control.o prx/power.o prx/recoveryImports.o \
 	   #scepower.o
 	   

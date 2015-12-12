@@ -453,7 +453,8 @@ void creditsMenu()
 		controls();	
 
 		oslDrawImageXY(aboutbg, 0, 0);
-		oslDrawFillRect(0, 62, 444, 272, RGB(255,255,255));
+		if (DARK == 0)
+			oslDrawFillRect(0, 62, 444, 272, RGB(255,255,255));
 		
 		if (DARK == 0)
 			oslIntraFontSetStyle(Roboto, 0.5, BLACK, 0, INTRAFONT_ALIGN_LEFT);
@@ -871,11 +872,11 @@ void processorMenu()
 			oslDrawStringf(20,145, "%s", lang_settingsProcessor[language][2]);
 		}
 		
-		if (osl_keys->pressed.L && batteryM != 0)
+		if (osl_keys->pressed.L && batteryM != 0 && isPlaying != 1)
 		{
 			currentState = stateUnderClock;
 		}
-		else if (osl_keys->pressed.R && batteryM != 0)
+		else if (osl_keys->pressed.R && batteryM != 0 && isPlaying != 1)
 		{
 			currentState = stateOverClock;
 		}
