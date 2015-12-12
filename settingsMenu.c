@@ -3290,7 +3290,7 @@ void developerMenu()
 		oslDrawStringf(10,75, "%s", lang_settingsDeveloperOptions[language][0]);
 		oslDrawStringf(10,90, "%s", lang_settingsDeveloperOptions[language][1]);
 		oslDrawStringf(10,140, "%s", lang_settingsDeveloperOptions[language][2]);
-		oslDrawStringf(10,195, "Dark Theme");
+		oslDrawStringf(10,195, "%s", lang_settingsDeveloperOptions[language][3]);
 		
 		if (experimentalF == 0)
 			oslDrawImageXY(offswitch,392,133);
@@ -3355,7 +3355,7 @@ void developerMenu()
 		else if (cursor->x >= 0 && cursor->x <= 444 && cursor->y >= 157 && cursor->y <= 215)
 		{
 			oslDrawImageXY(highlight, 0, 173);
-			oslDrawStringf(10,195, "Dark Theme");
+			oslDrawStringf(10,195, "%s", lang_settingsDeveloperOptions[language][3]);
 			if (DARK == 0)
 			{
 				oslDrawImageXY(offswitch,392,186);

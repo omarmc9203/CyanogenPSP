@@ -309,19 +309,19 @@ const char lang_settingsWifi[][3][100] =
 
 const char lang_settingsDeveloperOptions[][4][150] = 
 {	
-	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Toggle experimental features", "Dumping tools"},
-	{"Activer/Désactiver Remote Joy Lite", "Affiche l'écran de votre PSP sur votre ordinateur par USB", "Activer/Désactiver caractéristiques expérimentales", "Dumping tools"},
-	{"Wlącz Remote Joy Lite", "Wyswietla obraz z PSP na komputerze poprzez USB", "Wlacz funkcje eksperymentalne", "Narzedzia do zgrywania"},
-	{"Remote Joy Lite ein-/ausschalten", "Zeigt den Bildschirm deiner PSP via USB auf deinem Computer an", "Experimentelle Funktionen ein-/ausschalten", "Sicherungstools"},
-	{"Remote Joy Lite aan/uit", "Geeft je PSP scherm weer op je computer via USB", "Experimentele functies aan/uit", "Dumping tools"},
-	{"Usar Remote Joy Lite", "Muestra la imagen de la pantalla de tu PSP en tu PC vía USB", "Activar características experimentales", "Opciones de volcado/extracción"},
-	{"Alternar Remote Joy Lite", "Exibe a tela do seu PSP no seu PC por um cabo USB", "Alternar recursos experimentais", "Ferramentas de dumping"},
-	{"Alternar Remote Joy Lite", "Exibir a tela de seu PSP em seu computador via USB", "Alternar recursos experimentais", "Ferramentas de Dumping"},
-	{"Veksle Remote Joy Lite", "Viser PSP skjermen på din PC gjennom USB", "Veksle eksperimentelle funksjoner", "Dumping tools"},
-	{"Activează Remote Joy Lite", "Afișează ecranul PSPului pe calculator prin USB", "Activează caracteristici experimentale", "Unelte pentru descărcare"},
-	{"Attiva Remote Joy Lite", "Visualizza la tua schermata PSP sul tuo computer tramite USB", "Attiva funzioni sperimentali", "Strumenti di salvataggio"},
-	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Включить экспериментальные возможности", "Инструменты считывания"},
-	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Ввімкнути експериментальні можливості", "Інструменти зчитування"}
+	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Toggle experimental features", "Dark theme"},
+	{"Activer/Désactiver Remote Joy Lite", "Affiche l'écran de votre PSP sur votre ordinateur par USB", "Activer/Désactiver caractéristiques expérimentales", "Thème noir"},
+	{"Wlącz Remote Joy Lite", "Wyswietla obraz z PSP na komputerze poprzez USB", "Wlacz funkcje eksperymentalne", "Dark theme"},
+	{"Remote Joy Lite ein-/ausschalten", "Zeigt den Bildschirm deiner PSP via USB auf deinem Computer an", "Experimentelle Funktionen ein-/ausschalten", "Dunkles thema"},
+	{"Remote Joy Lite aan/uit", "Geeft je PSP scherm weer op je computer via USB", "Experimentele functies aan/uit", "Donkere thema"},
+	{"Usar Remote Joy Lite", "Muestra la imagen de la pantalla de tu PSP en tu PC vía USB", "Activar características experimentales", "Tema oscuro"},
+	{"Alternar Remote Joy Lite", "Exibe a tela do seu PSP no seu PC por um cabo USB", "Alternar recursos experimentais", "Tema escuro"},
+	{"Alternar Remote Joy Lite", "Exibir a tela de seu PSP em seu computador via USB", "Alternar recursos experimentais", "Tema escuro"},
+	{"Veksle Remote Joy Lite", "Viser PSP skjermen på din PC gjennom USB", "Veksle eksperimentelle funksjoner", "Mørkt tema"},
+	{"Activează Remote Joy Lite", "Afișează ecranul PSPului pe calculator prin USB", "Activează caracteristici experimentale", "Temă întuneric"},
+	{"Attiva Remote Joy Lite", "Visualizza la tua schermata PSP sul tuo computer tramite USB", "Attiva funzioni sperimentali", "Tema scuro"},
+	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Включить экспериментальные возможности", "Ночной режим"},
+	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Ввімкнути експериментальні можливості", "Нічний режим"}
 };
 
 const char lang_quickSettings[][5][100] = 
