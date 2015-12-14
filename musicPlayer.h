@@ -21,7 +21,6 @@
 
 OSL_IMAGE *mp3bg, *cursor, *nowplaying, *mp3_select, *mp3Play, *mp3Pause;
 
-int MP3Scan(const char* path);
 void mp3Up();
 void mp3Down();
 void mp3Upx5();

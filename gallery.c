@@ -291,20 +291,20 @@ void galleryControls() //Controls
 	
 	if (osl_keys->pressed.circle)
 	{			
-		if((strcmp("ms0:/PICTURE", lastDir)==0) || (strcmp("ms0:/PSP/PHOTO", lastDir)==0) || (strcmp("ms0:/PSP/GAME/CyanogenPSP/screenshots", lastDir)==0) || (strcmp("ms0:/", lastDir)==0))
+		if((strcmp("ms0:/PICTURE", curDir)==0) || (strcmp("ms0:/PSP/PHOTO", curDir)==0) || (strcmp("ms0:/PSP/GAME/CyanogenPSP/screenshots", curDir)==0) || (strcmp("ms0:/", curDir)==0))
 		{
 			galleryUnload();
 			galleryApp();
 		}
-		else if((strcmp("ms0:/PICTURE", lastDir)!=0)) 
+		else if((strcmp("ms0:/PICTURE", curDir)!=0)) 
 		{
 			dirBack(6);
 		}
-		else if((strcmp("ms0:/PSP/PHOTO", lastDir)!=0))
+		else if((strcmp("ms0:/PSP/PHOTO", curDir)!=0))
 		{
 			dirBack(7);
 		}	
-		else if((strcmp("ms0:/PSP/GAME/CyanogenPSP/screenshots", lastDir)!=0))
+		else if((strcmp("ms0:/PSP/GAME/CyanogenPSP/screenshots", curDir)!=0))
 		{
 			dirBack(8);
 		}

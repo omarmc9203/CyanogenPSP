@@ -85,7 +85,7 @@ SceIoDirent g_dir;
 int i;
 int current;
 int curScroll;
-char lastDir[512];
+char curDir[512];
 int timer;
 char returnMe[512];
 /* Define a write buffer */
@@ -100,7 +100,7 @@ int copy_file(char * a, char * b);
 int copy_folder_recursive(char * a, char * b);
 int fileExists(const char* path);
 int dirExists(const char* path);
-long getFileSize(const char * fileName);
+double getFileSize(const char * path);
 int IsNextDir();
 char* GetNextFileName();
 int ChangeDir(const char* path);

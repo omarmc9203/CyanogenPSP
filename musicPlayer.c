@@ -13,102 +13,6 @@
 
 int imposeGetVolume();
 
-int MP3Scan(const char* path )
-{
-	curScroll = 1;
-	sprintf(lastDir, path);
-
-	int i;
-	for (i=0; i<=MAX_FILES; i++)	// erase old folders
-		dirScan[i].exist = 0;
-
-	int x;
-	for (x=0; x<=MAX_FILES; x++) 
-	{
-		folderIcons[x].active = 0;
-	}
-
-	int fd = sceIoDopen(path);
-
-	i = 1;
-	
-	if (fd) 
-	{
-		if (!(strcmp(path, "ms0:")==0 || (strcmp(path, "ms0:/")==0))) 
-		{
-			sceIoDread(fd, &g_dir);		// get rid of '.' and '..'
-			sceIoDread(fd, &g_dir);
-
-			// Create our own '..'
-			folderIcons[1].active = 1; 
-			sprintf(folderIcons[1].filePath, "doesn't matter");
-			sprintf(folderIcons[1].name, "..");
-			sprintf(folderIcons[1].fileType, "dotdot");
-
-			x = 2;
-		} 
-		else 
-		{
-			x = 1;
-		}
-		
-		while ( sceIoDread(fd, &g_dir) && i<=MAX_FILES ) 
-		{
-			sprintf( dirScan[i].name, g_dir.d_name );
-			sprintf( dirScan[i].path, "%s/%s", path, dirScan[i].name );
-			
-			//skip . and .. entries
-			if (!strcmp(".", g_dir.d_name) || !strcmp("..", g_dir.d_name)) 
-			{
-				memset(&g_dir, 0, sizeof(SceIoDirent));
-				continue;
-			};
-
-			if (g_dir.d_stat.st_attr & FIO_SO_IFDIR) 
-			{
-				dirScan[i].directory = 1;
-				dirScan[i].exist = 1;
-			}
-			else 
-			{
-				dirScan[i].directory = 0;
-				dirScan[i].exist = 1;
-			}
-
-			dirScan[i].size = g_dir.d_stat.st_size;
-			i++;
-		}
-	}
-
-	sceIoDclose(fd);
-
-	for (i=1; i<MAX_FILES; i++) {
-		if (dirScan[i].exist == 0) 
-		break;
-		folderIcons[x].active = 1;
-		sprintf(folderIcons[x].filePath, dirScan[i].path);
-		sprintf(folderIcons[x].name, dirScan[i].name);
-
-		char *suffix = strrchr(dirScan[i].name, '.');
-		
-		if (dirScan[i].directory == 1) 
-		{      // if it's a directory
-			sprintf(folderIcons[x].fileType, "fld");
-		} 
-		else if ((dirScan[i].directory == 0) && (suffix)) 
-		{		// if it's not a directory
-			sprintf(folderIcons[x].fileType, "none");
-		}
-		else if (!(suffix)) 
-		{
-			sprintf(folderIcons[x].fileType, "none");
-		}
-		x++;
-	}
-
-	return 1;
-}
-
 void mp3Up()
 {
 	current--; // Subtract a value from current so the ">" goes up
@@ -227,7 +131,11 @@ void MP3Play(char * path)
 			
 		if (MP3ME_EndOfStream() == 1) 
 		{
+			isPlaying = 0;
+			endAudioLib();
 			MP3ME_Stop();
+			releaseAudio();
+			MP3ME_Play();
 		}
 		
 		if(osl_keys->pressed.circle)
@@ -279,6 +187,8 @@ int soundPlay(char * path)
 	
 	isPlaying = 1;
 	
+	int Play = 1;
+	
 	while (!osl_quit)
 	{
 		LowMemExit();
@@ -292,7 +202,12 @@ int soundPlay(char * path)
 		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
 		
 		oslDrawImageXY(nowplaying, 0, 0);
-		oslDrawImageXY(mp3Play, 230, 224);
+		
+		if (Play == 1)
+			oslDrawImageXY(mp3Play, 230, 224);
+		else if (Play == 0)
+			oslDrawImageXY(mp3Pause, 230, 224);
+		
 		oslDrawStringf(240,76, "%.28s", folderIcons[current].name);
 		
 		battery(370,2,1);
@@ -307,8 +222,15 @@ int soundPlay(char * path)
 			return 1;
 		}
 		
-		if(osl_keys->pressed.cross) 
+		if(osl_keys->pressed.cross && Play == 1) 
 		{
+			Play = 0;
+			oslPlaySound(KeypressStandard, 1); 
+			oslPauseSound(sound,-1);
+		}
+		else if(osl_keys->pressed.cross && Play == 0) 
+		{
+			Play = 1;
 			oslPlaySound(KeypressStandard, 1); 
 			oslPauseSound(sound,-1);
 		}
@@ -378,7 +300,7 @@ void mp3FileDisplay()
 		// If the currently selected item is active, then display the name
 		if (folderIcons[i].active == 1)
 		{	
-			oslDrawStringf(MP3_DISPLAY_X, (i - curScroll)*55+MP3_DISPLAY_Y, "%.68s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
+			oslDrawStringf(MP3_DISPLAY_X, (i - curScroll)*55+MP3_DISPLAY_Y, "%.62s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
 		}
 	}
 
@@ -433,21 +355,21 @@ void mp3Controls() //Controls
 	
 	if (osl_keys->pressed.circle)
 	{			
-		if((strcmp("ms0:/MUSIC", lastDir)==0) || (strcmp("ms0:/PSP/MUSIC", lastDir)==0) || (strcmp("ms0:/PSP/GAME/CyanogenPSP/downloads", lastDir)==0) || (strcmp("ms0:/", lastDir)==0))
+		if((strcmp("ms0:/MUSIC", curDir)==0) || (strcmp("ms0:/PSP/MUSIC", curDir)==0) || (strcmp("ms0:/PSP/GAME/CyanogenPSP/downloads", curDir)==0) || (strcmp("ms0:/", curDir)==0))
 		{
 			oslDeleteImage(mp3bg);
 			oslDeleteImage(mp3_select);
 			mp3player();
 		}
-		else if((strcmp("ms0:/MUSIC", lastDir)!=0)) 
+		else if((strcmp("ms0:/MUSIC", curDir)!=0)) 
 		{
 			dirBack(3);
 		}
-		else if((strcmp("ms0:/PSP/MUSIC", lastDir)!=0))
+		else if((strcmp("ms0:/PSP/MUSIC", curDir)!=0))
 		{
 			dirBack(4);
 		}	
-		else if((strcmp("ms0:/PSP/GAME/CyanogenPSP/downloads", lastDir)!=0))
+		else if((strcmp("ms0:/PSP/GAME/CyanogenPSP/downloads", curDir)!=0))
 		{
 			dirBack(5);
 		}	

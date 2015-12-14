@@ -402,16 +402,16 @@ void gameControls(int n) //Controls
 	
 	if (osl_keys->pressed.circle)
 	{	
-		if((strcmp("ms0:/ISO", lastDir)==0) || (strcmp("ms0:/PSP/GAME", lastDir)==0) || (strcmp("ms0:/", lastDir)==0))
+		if((strcmp("ms0:/ISO", curDir)==0) || (strcmp("ms0:/PSP/GAME", curDir)==0) || (strcmp("ms0:/", curDir)==0))
 		{
 			gameUnload();
 			gameApp();
 		}
-		else if((strcmp("ms0:/PSP/GAME/", lastDir)!=0)) 
+		else if((strcmp("ms0:/PSP/GAME/", curDir)!=0)) 
 		{
 			dirBack(1);
 		}
-		else if((strcmp("ms0:/ISO/", lastDir)!=0))
+		else if((strcmp("ms0:/ISO/", curDir)!=0))
 		{
 			dirBack(2);
 		}	

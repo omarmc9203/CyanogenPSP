@@ -387,15 +387,25 @@ int dirExists(const char* path)
 	}
 }
 
-long getFileSize(const char * fileName) 
-{ 
-	struct stat file; 
-    if(!stat(fileName, &file)) 
-	{ 
-		return file.st_size; 
-    } 
-    return 0; 
-} 
+double getFileSize(const char * path)
+{
+	//try to open file
+	SceUID fd = sceIoOpen(path, PSP_O_RDONLY, 0777);
+	
+	if(fd < 0) //failed
+		return 0;
+
+	//get file size
+	double size = sceIoLseek(fd, 0, SEEK_END); 
+	
+	size = size/1024;
+	size = size/1024;
+	
+	//close file
+	sceIoClose(fd);
+	
+	return size;
+}
 
 SceUID dirId;
 int dirStatus = 1;
@@ -425,7 +435,7 @@ int folderScan(const char* path )
 	memset(&g_dir, 0, sizeof(SceIoDirent));
 
 	curScroll = 1;
-	sprintf(lastDir, path);
+	sprintf(curDir, path);
 
 	int i;
 	for (i=0; i<=MAX_FILES; i++)	// erase old folders
@@ -610,9 +620,9 @@ void write_file(const char *read_loc, const char *write_loc, const char *name)
 
 void refresh()
 {
-	folderScan(lastDir);
+	folderScan(curDir);
 	current = 1;
-	dirBrowse(lastDir);
+	dirBrowse(curDir);
 }
 
 void OptionMenu()
@@ -627,50 +637,53 @@ void OptionMenu()
 		oslStartDrawing();	
 		oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
 		oslDrawImageXY(action, 98,47);
-		oslDrawStringf(120,115,"Press X");
+		oslDrawStringf(115,115,"Press X to");
 		if (copyData == 1)
 		{
-			oslDrawStringf(120,125,"to Paste");
+			oslDrawStringf(115,130,"Paste");
 		}
 		else
 		{
-			oslDrawStringf(120,125,"to Copy");
+			oslDrawStringf(115,130,"Copy");
 		}
-		oslDrawStringf(260,115,"Press Triangle");
-		oslDrawStringf(260,125,"to Cut");
+		oslDrawStringf(255,115,"Press Triangle to");
+		oslDrawStringf(255,130,"create new Dir");
 	
-		oslDrawStringf(120,160,"Press Square");
-		oslDrawStringf(120,170,"to Delete");
-		oslDrawStringf(260,160,"Press Circle");
-		oslDrawStringf(260,170,"to Rename");
+		oslDrawStringf(115,160,"Press Square to");
+		oslDrawStringf(115,175,"Delete");
+		oslDrawStringf(255,160,"Press Circle");
+		oslDrawStringf(255,175,"to Rename");
 		oslDrawStringf(170,215,"Press Select to Cancel");
 	
 		oslReadKeys();
 	
 		if(osl_keys->pressed.cross) 
 		{
-			if(copyData == 0)
+			if (experimentalF == 1)
 			{
-				strcpy(oldLocation, folderIcons[current].filePath); 
-				copyData = 1;
-				oslPlaySound(KeypressStandard, 1);  
-				oslDeleteImage(action);
-				refresh();
-			}
-			if (copyData == 1)
-			{
-				copy_folder(oldLocation, folderIcons[current].filePath);
-				copyData = 0;
-				oslPlaySound(KeypressStandard, 1);  
-				oslDeleteImage(action);
-				refresh();
+				if(copyData == 0)
+				{
+					strcpy(oldLocation, folderIcons[current].filePath); 
+					copyData = 1;
+					oslPlaySound(KeypressStandard, 1);  
+					oslDeleteImage(action);
+					refresh();
+				}
+				if (copyData == 1)
+				{
+					copy_file(oldLocation, curDir);
+					copyData = 0;
+					oslPlaySound(KeypressStandard, 1);  
+					oslDeleteImage(action);
+					refresh();
+				}
 			}
 		}
 		
 		else if (osl_keys->pressed.triangle) 
 		{
 			oslDeleteImage(action);
-			refresh();
+			newFolder();
 		}
 
 		else if (osl_keys->pressed.square) 
@@ -726,7 +739,7 @@ void newFolder()
 		
 		openOSK("Enter Folder Name", "", 250, -1);
 		
-		strcpy(newDir, lastDir); //Copy current directory to newDir
+		strcpy(newDir, curDir); //Copy current directory to newDir
         strcat(newDir, "/"); //Add a '/' to newDir to denote the file path
         strcat(newDir, tempData); //Add data returned from the OSK to newDir
 		
@@ -901,7 +914,7 @@ void displayTextFromFile(char * path)
 		if(osl_keys->pressed.circle)
 		{
 			oslDeleteImage(textview);
-			return;
+			refresh();
 		}	
 				
 	oslEndDrawing(); 
@@ -932,7 +945,7 @@ void centerText(int centerX, int centerY, char * centerText, int centerLength)
 
 void dirVars()
 {
-	sprintf(lastDir, "ms0:/");
+	sprintf(curDir, "ms0:/");
 	sprintf(returnMe, "blah");
 	returnMe[5] = '\0';
 	current = 1;
@@ -977,7 +990,7 @@ void dirDisplay()
 	oslIntraFontSetStyle(Roboto, fontSize, WHITE, 0, 0);
 
 	oslDrawImageXY(filemanagerbg, 0, 0);
-	oslDrawStringf(86, 30, "%.34s",lastDir); // Displays the current directory.
+	oslDrawStringf(86, 30, "%.34s",curDir); // Displays the current directory.
 	oslDrawImageXY(bar,0,(current - curScroll)*44+CURR_DISPLAY_Y);
 	
 	battery(370,2,1);
@@ -1058,9 +1071,11 @@ void dirDisplay()
 		}
 		
 		// If the currently selected item is active, then display the name
-		if (folderIcons[i].active == 1) {
-			
-			oslDrawStringf(DISPLAY_X, (i - curScroll)*44+DISPLAY_Y, "%.52s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
+		if (folderIcons[i].active == 1) 
+		{
+			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, 0);
+			oslDrawStringf(DISPLAY_X, (i - curScroll)*44+DISPLAY_Y, "%.42s", folderIcons[i].name);	// change the X & Y value accordingly if you want to move it (for Y, just change the +10)		
+			//oslDrawStringf(DISPLAY_X+335, (i - curScroll)*44+DISPLAY_Y, "<%.2f MB>", getFileSize(folderIcons[i].filePath));
 		}
 	}
 }
@@ -1117,7 +1132,7 @@ void dirControls() //Controls
 	
 	if (osl_keys->pressed.circle)
 	{		
-		if((!strcmp("ms0:/", lastDir)) || (!strcmp("ms0:", lastDir))) //If pressed circle in root folder
+		if((!strcmp("ms0:/", curDir)) || (!strcmp("ms0:", curDir))) //If pressed circle in root folder
 		{
 			filemanager_unload();
 			appdrawer();
@@ -1142,10 +1157,10 @@ void dirControls() //Controls
 	if (((ext) != NULL) && ((strcmp(ext ,".ZIP") == 0) || (strcmp(ext ,".zip") == 0)) && (osl_keys->pressed.cross))
 	{
 		oslPlaySound(KeypressStandard, 1);  
-		pgeZip* zipFiles = pgeZipOpen(folderIcons[current].filePath);
-		chdir("..");
-		pgeZipExtract(zipFiles, NULL);
-		pgeZipClose(zipFiles);
+		pgeZip * zipFile = pgeZipOpen(folderIcons[current].filePath);
+		chdir(curDir);
+		pgeZipExtract(zipFile, NULL);
+		pgeZipClose(zipFile);
 		oslSyncFrame();
 		sceKernelDelayThread(3*1000000);
 		refresh();
@@ -1267,21 +1282,21 @@ void dirBack(int n)
 			break;
 	}
 	
-	if (strlen(lastDir) > strlen(str)) 
+	if (strlen(curDir) > strlen(str)) 
 	{
-		for (a=strlen(lastDir);a>=0;a--) 
+		for (a=strlen(curDir);a>=0;a--) 
 		{
-			if (lastDir[a] == '/') 
+			if (curDir[a] == '/') 
 			{
 				b++;
 			}
-			lastDir[a] = '\0';
+			curDir[a] = '\0';
 			if (b == 1) 
 			{
 				break;
 			}
 		}
-		folderScan(lastDir);
+		folderScan(curDir);
 	} 
 }
 

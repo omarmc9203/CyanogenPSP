@@ -241,19 +241,19 @@ const char lang_settingsBattery[][3][60] =
 
 const char lang_settingsAbout[][7][100] = 
 {	
-	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "UNOFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
-	{"Mises à jour de CyanogenPSP", "Cliquez pour voir et installer les mises à jour disponibles", "Version CyanogenPSP :", "UNOFFICIEL", "Adresse MAC :", "Version du noyau :", "Version de l'OSLib :"},
-	{"Aktualizacje CyanogenPSP", "Nacisnij aby sprawdzic/zainstalowac aktualizacje", "Wersja CyanogenPSP:", "UNOFFICIAL", "Adres Mac:", "Wersja jadra:", "Wersja OSLib:"},
-	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "INOFFIZIELL", "Mac Adresse:", "Kernel version:", "OSLib version:"},
-	{"CyanogenPSP updates", "Klik om updates weer te geven/installeren", "CyanogenPSP versie:", "NIET OFFICIEEL", "Mac Adres:", "Kernel versie:", "OSLib versie:"},
-	{"Actualizaciones de CyanogenPSP", "Haga click para ver o instalar actualizaciones", "Versión de CyanogenPSP:", "NO OFICIAL", "Dirección MAC:", "Versión del Kernel:", "Versión del OSLib:"},
-	{"Atualizações CyanogenPSP", "Clique para, ver ou instalar atualizações disponiveis", "versão CyanogenPSP:", "NÃO-OFICIAL", "Endereço MAC:", "Versão do kernel:", "Versão OSLIB:"},
-	{"Atualizações do CyanogenPSP", "Clique para, ver ou instalar atualizações disponíveis", "Versão do CyanogenPSP:", "NÃO-OFICIAL", "Endereço Mac:", "Versão do Kernel:", "Versão do OSLib:"},
-	{"CyanogenPSP oppdateringer", "Trykk for, vis eller installer tilgjengelige oppdateringer", "CyanogenPSP versjon:", "UOFFISIELL", "Mac Adresse:", "Kernel versjon:", "OSLib versjon:"},
-	{"Actualizări CyanogenPSP", "Apasă pentru a vedea și instala actualizări disponibile", "Versiune CyanogenPSP:", "NEOFICIAL", "Adresă Mac:", "Versiune de kernel:", "Versiune de OSLib:"},
-	{"Aggiornamenti CyanogenPSP", "Clicca per, vedere o installare gli aggiornamenti disponibili", "Versione CyanogenPSP:", "NON UFFICIALE", "Indirizzo MAC:", "Versione kernel:", "Versione OSLib:"},
-	{"Обновления CyanogenPSP", "Нажмите для проверки или установки обновлений", "Версия CyanogenPSP:", "UNOFFICIAL", "MAC-адрес:", "Версия ядра:", "Версия OSLib:"},
-	{"Оновлення CyanogenPSP", "Натисніть, щоб перевірити і встановити оновлення", "Версія CyanogenPSP:", "UNOFFICIAL", "MAC-адрес:", "Версія ядра:", "Версія OSLib:"}
+	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "OFFICIAL", "Mac Address:", "Kernel version:", "OSLib version:"},
+	{"Mises à jour de CyanogenPSP", "Cliquez pour voir et installer les mises à jour disponibles", "Version CyanogenPSP :", "OFFICIEL", "Adresse MAC :", "Version du noyau :", "Version de l'OSLib :"},
+	{"Aktualizacje CyanogenPSP", "Nacisnij aby sprawdzic/zainstalowac aktualizacje", "Wersja CyanogenPSP:", "OFFICIAL", "Adres Mac:", "Wersja jadra:", "Wersja OSLib:"},
+	{"CyanogenPSP updates", "Click for, view or install available updates", "CyanogenPSP version:", "OFFIZIELL", "Mac Adresse:", "Kernel version:", "OSLib version:"},
+	{"CyanogenPSP updates", "Klik om updates weer te geven/installeren", "CyanogenPSP versie:", "OFFICIEEL", "Mac Adres:", "Kernel versie:", "OSLib versie:"},
+	{"Actualizaciones de CyanogenPSP", "Haga click para ver o instalar actualizaciones", "Versión de CyanogenPSP:", "OFICIAL", "Dirección MAC:", "Versión del Kernel:", "Versión del OSLib:"},
+	{"Atualizações CyanogenPSP", "Clique para, ver ou instalar atualizações disponiveis", "versão CyanogenPSP:", "OFICIAL", "Endereço MAC:", "Versão do kernel:", "Versão OSLIB:"},
+	{"Atualizações do CyanogenPSP", "Clique para, ver ou instalar atualizações disponíveis", "Versão do CyanogenPSP:", "OFICIAL", "Endereço Mac:", "Versão do Kernel:", "Versão do OSLib:"},
+	{"CyanogenPSP oppdateringer", "Trykk for, vis eller installer tilgjengelige oppdateringer", "CyanogenPSP versjon:", "OFFISIELL", "Mac Adresse:", "Kernel versjon:", "OSLib versjon:"},
+	{"Actualizări CyanogenPSP", "Apasă pentru a vedea și instala actualizări disponibile", "Versiune CyanogenPSP:", "OFICIAL", "Adresă Mac:", "Versiune de kernel:", "Versiune de OSLib:"},
+	{"Aggiornamenti CyanogenPSP", "Clicca per, vedere o installare gli aggiornamenti disponibili", "Versione CyanogenPSP:", "UFFICIALE", "Indirizzo MAC:", "Versione kernel:", "Versione OSLib:"},
+	{"Обновления CyanogenPSP", "Нажмите для проверки или установки обновлений", "Версия CyanogenPSP:", "OFFICIAL", "MAC-адрес:", "Версия ядра:", "Версия OSLib:"},
+	{"Оновлення CyanogenPSP", "Натисніть, щоб перевірити і встановити оновлення", "Версія CyanogenPSP:", "OFFICIAL", "MAC-адрес:", "Версія ядра:", "Версія OSLib:"}
 };
 
 const char lang_settingsUpdates[][1][100] = 

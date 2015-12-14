@@ -128,6 +128,16 @@ void centerClock(int n)
 	
 	if (hrTime == 0)
 	{
+		oslIntraFontSetStyle(Roboto, 0.6f, WHITE, BLACK, INTRAFONT_ALIGN_CENTER);
+		
+		if (n == 0)
+		{
+			if(time.hour >= 12) 
+				oslDrawString(300,136,"PM"); 
+			else if (time.hour <= 12) 
+				oslDrawString(300,136,"AM");    
+		}
+		
 		if (time.hour > 12)
 			time.hour -= 12;
 	
@@ -137,7 +147,7 @@ void centerClock(int n)
 	
     oslIntraFontSetStyle(Roboto, 1.7f, WHITE, 0, INTRAFONT_ALIGN_CENTER);
 	
-	if (n==0)
+	if (n == 0)
 	{
 		oslDrawStringf(222,136,"%2d:%02d", time.hour, time.minutes);
 	}
@@ -477,15 +487,7 @@ int pspclock()
         centerClock(0);
 		
 		oslIntraFontSetStyle(Roboto, 0.6f, WHITE, BLACK, INTRAFONT_ALIGN_CENTER);
-		
-		if (hrTime == 0)
-		{			
-			if(time.hour <= 12) 
-				oslDrawString(300,136,"PM"); 
-			else if (time.hour >= 12) 
-				oslDrawString(300,136,"AM");  
-		}
-		
+
 		getDayOfWeek(190,156,2);
 		getMonthOfYear(265,156);
 
