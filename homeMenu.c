@@ -897,17 +897,9 @@ void dayNightCycleWidget()
 	pspTime time;
 	sceRtcGetCurrentClockLocalTime(&time);
 	
-	if (hrTime == 0)
-	{
-		if (time.hour > 12)
-			time.hour -= 12;
-	
-		if (time.hour == 00)
-			time.hour = 12;
-	}
-	
     oslIntraFontSetStyle(Roboto, 1.7f, WHITE, 0, INTRAFONT_ALIGN_CENTER);
-	oslDrawStringf(235,70,"%2d:%02d", time.hour, time.minutes);
+	
+	centerClock(1);
 		
 	oslIntraFontSetStyle(Roboto, 0.5f, WHITE, 0, INTRAFONT_ALIGN_CENTER);
 	getMonthOfYear(312,102);

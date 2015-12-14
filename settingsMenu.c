@@ -1929,7 +1929,6 @@ void displayFontSizeMenu()
 				fclose(fontManagement);
 				tempFontData = 0;
 				fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 1, fontSize);
-				setPowerManagement();
 			}
 		}
 
@@ -1945,7 +1944,6 @@ void displayFontSizeMenu()
 				fclose(fontManagement);
 				tempFontData = 1;
 				fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 1, fontSize);
-				setPowerManagement();
 			}
 		}
 
@@ -1961,7 +1959,6 @@ void displayFontSizeMenu()
 				fclose(fontManagement);
 				tempFontData = 2;
 				fontSize = setFileDefaultsFloat("system/settings/fontSize.bin", 1, fontSize);
-				setPowerManagement();
 			}
 		}
 		

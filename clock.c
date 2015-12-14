@@ -149,12 +149,26 @@ void centerClock(int n)
 	
 	if (n == 0)
 	{
-		oslDrawStringf(222,136,"%2d:%02d", time.hour, time.minutes);
+		if (time.hour > 12 && hrTime == 1)
+		{
+			oslDrawStringf(237,136,"%2d:%02d", time.hour, time.minutes);
+		}
+		else
+		{
+			oslDrawStringf(222,136,"%2d:%02d", time.hour, time.minutes);
+		}
 	}
 	
 	else if (n == 1)
 	{
-		oslDrawStringf(235,70,"%2d:%02d", time.hour, time.minutes);	
+		if (time.hour > 12 && hrTime == 1)
+		{
+			oslDrawStringf(250,70,"%2d:%02d", time.hour, time.minutes);	
+		}
+		else
+		{
+			oslDrawStringf(235,70,"%2d:%02d", time.hour, time.minutes);	
+		}
 	}
 }
 
