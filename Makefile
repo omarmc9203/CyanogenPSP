@@ -12,7 +12,7 @@ OBJS = main.o appDrawer.o homeMenu.o calculator.o lockScreen.o settingsMenu.o cl
 BUILD_PRX = 1
 PSP_LARGE_MEMORY = 1
 
-VERSION	= 5.2
+VERSION	= 6.0
 
 CFLAGS = -O2 -g -G0 -Wall -Werror
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti

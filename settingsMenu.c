@@ -38,7 +38,7 @@
 
 char name;
 int setclock;
-char cyanogenpspversion[5] = "5.3";
+char cyanogenpspversion[5] = "6.0";
 char lang[12] = "Uk English";
 static char Settings_message[100] = "";
 
