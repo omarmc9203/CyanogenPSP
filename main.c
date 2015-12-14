@@ -1,4 +1,3 @@
-//Parts of the Shell
 #include "musicPlayer.h"
 #include "appDrawer.h"
 #include "language.h"

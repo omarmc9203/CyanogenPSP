@@ -1424,33 +1424,37 @@ void batteryMenu()
 
 void setPowerManagement()
 {
-	FILE * processorInfo = fopen("system/settings/processorInfo.bin", "w");
+	FILE * processorInfo;
 	batteryM = setFileDefaultsInt("system/settings/battery.bin", 1, batteryM);
 	
 	switch(batteryM)
 	{
 		case 0:
 			processorState = 4;
+			processorInfo = fopen("system/settings/processorInfo.bin", "w");
 			fprintf(processorInfo, "%d", processorState);
+			fclose(processorInfo);
 			setCpuBoot();
 			imposeSetBrightness(0);
 			break;
 	
 		case 1:
 			processorState = 4;
+			processorInfo = fopen("system/settings/processorInfo.bin", "w");
 			fprintf(processorInfo, "%d", processorState);
+			fclose(processorInfo);
 			setCpuBoot();
 			imposeSetBrightness(1);
 			break;
 			
 		case 2:
 			processorState = 7;
+			processorInfo = fopen("system/settings/processorInfo.bin", "w");
 			fprintf(processorInfo, "%d", processorState);
+			fclose(processorInfo);
 			setCpuBoot();
 			break;
 	}
-	
-	fclose(processorInfo);
 }
 
 void displayMenu()
