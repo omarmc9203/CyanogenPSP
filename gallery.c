@@ -172,16 +172,19 @@ int showImage(char * path, int n)
 		oslEndFrame(); 
 		oslSyncFrame();	
 		
-		if(osl_keys->analogY <= -50)
+		if (experimentalF == 1)
 		{
-			image->stretchX = image->sizeX * zoomIn++;
-			image->stretchY = image->sizeY * zoomOut++;
-		}
+			if(osl_keys->analogY <= -50)
+			{
+				image->stretchX = image->sizeX * zoomIn++;
+				image->stretchY = image->sizeY * zoomOut++;
+			}
 		
-		if(osl_keys->analogY >= 50)
-		{
-			image->stretchX = image->sizeX * zoomIn--;
-			image->stretchY = image->sizeY * zoomOut--;
+			if(osl_keys->analogY >= 50)
+			{
+				image->stretchX = image->sizeX * zoomIn--;
+				image->stretchY = image->sizeY * zoomOut--;
+			}
 		}
 		
 		if (osl_keys->pressed.square) 
