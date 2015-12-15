@@ -13,7 +13,7 @@ What's working
 - Navbar functions, for returning home or back to the previous menu
 - Power menu (Allows access to exit to XMB, and launch recovery)
 - USB toggle in Settings->Performance->Storage Management, and recovery menu
-- Screenshots (Use R + X to take a screenshot)
+- Screenshots (Use Note button to take screenshot)
 - Integrated RemoteJoyLite (Settings->Developer Options)
 - Music player - Supports MP3, BGM, WAV, AT3 and MOD files
 - Quick settings (Drop down menu)
@@ -42,8 +42,9 @@ What's yet to work
 =================
 - Fully functional calculator
 - Fully functional recents menu
-- Adhoc Messenger
+- Adhoc messenger
 - Certain file manager functions such as copy/cut
+- Some recovery menu functions
 
 What's not working
 =================
