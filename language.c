@@ -30,8 +30,8 @@ const char lang_welcome[][4][120] =
 	{"Velkommen", "Bruk den analoge spaken for å flytte på pekeren og", "trykk X (kryss) for å åpne applikasjonen.", "SKJØNNER"},
 	{"Bine ai venit", "Folosește joystickul pentru a naviga și", "apasă X pentru a deschide o aplicație", "AM ÎNȚELES"},
 	{"Benvenuto", "Usa lo stick analogico per muovere il cursore e", "premi X (croce) per aprire l'applicazione.", "HO CAPITO"},
-	{"Приветствую", "Используйте аналоговый стик для управления курсором и", "нажмите X (крест) для открытия программы.", "Я понял"},
-	{"Вітаю", "Використовуйте аналоговий стік для керування курсором і", "натисніть X (хрест) для відкриття програми.", "Я зрозумів"}
+	{"Приветствую", "Используйте джойстик для управления курсором и", "нажмите X (крест) для открытия программы.", "Я понял"},
+	{"Вітаю", "Використовуйте джойстик для керування курсором і", "натисніть X (хрест) для відкриття програми.", "Я зрозумів"}
 };
 
 
@@ -39,7 +39,7 @@ const char lang_appDrawer[][10][100] =
 {	
 	{"Browser", "Calculator", "Clock", "Manager", "Gallery", "Game", "Messages", "Music", "Settings", "UMD"},
 	{"Navigateur", "Calc", "Horloge", "Explorateur", "Galerie", "Jeux", "Messages", "Musique", "Paramètres", "UMD"},
-	{"Internet", "Kalkulator", "Zegar", "Pliki", "Galeria", "Gry", "Wiadomosci", "Muzyka", "Ustawienia", "UMD"},
+	{"Internet", "Kalkulator", "Zegar", "Pliki", "Galeria", "Gry", " Wiadomosci", "Muzyka", "Ustawienia", "UMD"},
 	{"Browser", "Taschenrechner", "Uhr", "Manager", "Galerie", "Spiel", "Nachrichten", "Musik", "Einstellungen", "UMD"},
 	{"Browser", "Rekenmachine", "Klok", " Beheerder", "Gallerij", "Spel", "Berichten", "Muziek", "Instellingen", "UMD"},
 	{"Navegador", "Calculadora", "Reloj", "Gestión", "Galería", "Juegos", "Mensajes", "Música", "Ajustes", "UMD"},
@@ -107,7 +107,7 @@ const char lang_settingsFonts[][5][100] =
 {	
 	{"Font Style", "Font Size", "Small", "Medium", "Large"},
 	{"Le style de police", "Taille de police", "Petit", "Moyen", "Grand"},
-	{"Krój czcionki", "Rozmiar czcionki", "Mały", "Średni", "duże"},
+	{"Czcionka", "Rozmiar czcionki", "Mala", "Srednia", "Duza"},
 	{"Schriftstil", "Schriftgröße", "Klein", "Medium", "große"},
 	{"Lettertype", "Letter grootte", "Klein", "Medium", "Groot"},
 	{"Estilo de fuente", "Tamaño de fuente", "Pequeña", "Medio", "Gran"},
@@ -168,7 +168,7 @@ const char lang_settingsPerformance[][4][100] =
 	{"Procesor", "Memorie", "Gestionarea memoriei", "Gestionarea bateriei"},
 	{"Processore", "Memoria", "Gestione dello spazio", "Gestione della batteria"},
 	{"Процессор", "Память", "Управление памятью", "Управление электропитанием"},
-	{"Процесор", "Пам'ять", "Керування памя'ттю", "Керування батареєю"}
+	{"Процесор", "Пам'ять", "Керування пам'яттю", "Керування батареєю"}
 };
 
 const char lang_settingsProcessor[][5][100] = 
@@ -277,7 +277,7 @@ const char lang_settingsSecuirty[][3][100] =
 {	
 	{"Password lock", "Pin lock", "Swipe"},
 	{"Verrouillage par mot de passe", "Verrouillage par code PIN", "Chiper"},
-	{"Zabezpieczenie haslem", "Zabezpieczenie kodem PIN", "Trzepnięcie"},
+	{"Haslo", "Kod PIN", "Przesuniecie"},
 	{"Passwortsperre", "Pinsperre", "Stibitzen"},
 	{"Wachtwoord vergrendeling", "PIN vergrendeling", "Slaan"},
 	{"Bloqueo con contraseña", "Bloqueo con PIN", "Apandar"},
@@ -286,8 +286,8 @@ const char lang_settingsSecuirty[][3][100] =
 	{"Passordlås", "Pin-lås", "Sveip"},
 	{"Blocare cu parolă", "Blocare cu PIN", "Bețivan"},
 	{"Blocco con password", "Blocco con PIN", "Swipe"},
-	{"Защита паролем", "Защита PIN-кодом", "Жест"},
-	{"Захист паролем", "Захист PIN-кодом", "Жест"}
+	{"Защита паролем", "Защита PIN-кодом" "Жест"},
+	{"Захист паролем", "Захист PIN-кодом" "Жест"}
 };
 
 const char lang_settingsWifi[][3][100] = 
@@ -311,7 +311,7 @@ const char lang_settingsDeveloperOptions[][4][150] =
 {	
 	{"Toggle Remote Joy Lite", "Displays your PSP screen on your computer via USB", "Toggle experimental features", "Dark theme"},
 	{"Activer/Désactiver Remote Joy Lite", "Affiche l'écran de votre PSP sur votre ordinateur par USB", "Activer/Désactiver caractéristiques expérimentales", "Thème noir"},
-	{"Wlącz Remote Joy Lite", "Wyswietla obraz z PSP na komputerze poprzez USB", "Wlacz funkcje eksperymentalne", "Dark theme"},
+	{"Wlacz Remote Joy Lite", "Wyswietla obraz z PSP na komputerze przez USB", "Wlacz eksperymentalne funkcje", "Ciemny motyw"},
 	{"Remote Joy Lite ein-/ausschalten", "Zeigt den Bildschirm deiner PSP via USB auf deinem Computer an", "Experimentelle Funktionen ein-/ausschalten", "Dunkles thema"},
 	{"Remote Joy Lite aan/uit", "Geeft je PSP scherm weer op je computer via USB", "Experimentele functies aan/uit", "Donkere thema"},
 	{"Usar Remote Joy Lite", "Muestra la imagen de la pantalla de tu PSP en tu PC vía USB", "Activar características experimentales", "Tema oscuro"},
@@ -320,8 +320,8 @@ const char lang_settingsDeveloperOptions[][4][150] =
 	{"Veksle Remote Joy Lite", "Viser PSP skjermen på din PC gjennom USB", "Veksle eksperimentelle funksjoner", "Mørkt tema"},
 	{"Activează Remote Joy Lite", "Afișează ecranul PSPului pe calculator prin USB", "Activează caracteristici experimentale", "Temă întuneric"},
 	{"Attiva Remote Joy Lite", "Visualizza la tua schermata PSP sul tuo computer tramite USB", "Attiva funzioni sperimentali", "Tema scuro"},
-	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Включить экспериментальные возможности", "Ночной режим"},
-	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Ввімкнути експериментальні можливості", "Нічний режим"}
+	{"Вкл. Remote Joy Lite", "Отображение изображения с PSP на компьютер через USB", "Вкл. специальные функции", "Ночной режим"},
+	{"Увм. Remote Joy Lite", "Відображення зображення з PSP на комп'ютер через USB", "Увм. спеціальні функції", "Нічний режим"}
 };
 
 const char lang_quickSettings[][5][100] = 
