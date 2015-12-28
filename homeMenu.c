@@ -648,7 +648,7 @@ void androidQuickSettings()
 
 	oslDrawStringf(150,yLine1, "%s", lang_quickSettings[language][0]);
 	oslDrawStringf(350,yPos2, "%d%%",scePowerGetBatteryLifePercent());
-	oslDrawStringf(435,yPos2, "%.7s", pspname);
+	oslDrawStringf(436,yPos2, "%.7s", pspname);
 	
 	int cpu = getCpuClock();
 	
@@ -669,8 +669,21 @@ void androidQuickSettings()
 	
 	oslDrawFillRect(40, yPos2+85, controlX+10, yPos2+87, RGB(r, g, b));	
 	oslDrawImageXY(control,controlX,yPos2+66);
-		
-	digitaltime(25,yPos1,53,hrTime);
+	
+	if (hrTime == 0)
+	{
+		if((time.hour >= 10 && time.hour < 13) || (time.hour == 0)) 
+			digitaltime(32,yPos1,53,hrTime);
+		else
+			digitaltime(27,yPos1,53,hrTime);
+	}
+	else if (hrTime == 1)
+	{
+		if(time.hour >= 10 && time.hour <= 23) 
+			digitaltime(19,yPos1,53,hrTime);
+		else
+			digitaltime(12,yPos1,53,hrTime);
+	}
 	
 	if (getBrightness() == 10)
 	{
@@ -744,7 +757,7 @@ void androidQuickSettings()
 	}
 			
 	if (notif_down == 1 && cursor->y <= 10)
-	{				
+	{	
 		if (osl_pad.held.cross && osl_keys->analogY >= 50)
 		{
 			notif_y = notif_y+6;
@@ -780,9 +793,9 @@ void androidQuickSettings()
 			notif_enabled = 1;
 		}
 	}
-	
-	if (notif_enabled == 1)
-	{	
+
+	if (yLine2 >= 136)
+	{
 		if (osl_keys->held.right)
 		{
 			controlX += 4;
@@ -794,7 +807,7 @@ void androidQuickSettings()
 			setBrightness(getBrightness() - 1);
 		}	
 		
-		if (cursor->x >= 386 && cursor->x <= 414 && cursor->y >= 12 && cursor->y <= 38 && osl_keys->pressed.cross)
+		if ((cursor->x >= 386 && cursor->x <= 414 && cursor->y >= 12 && cursor->y <= 38) && osl_keys->pressed.cross)
 		{	
 			oslPlaySound(KeypressStandard, 1);  
 			notif_y = notif_y-272;
@@ -805,7 +818,7 @@ void androidQuickSettings()
 			settingsMenu();
 		}
 	
-		if (cursor->x >= 96 && cursor->x <= 206 && cursor->y >= 126 && cursor->y <= 192 && osl_keys->pressed.cross)
+		if ((cursor->x >= 96 && cursor->x <= 206 && cursor->y >= 126 && cursor->y <= 192) && osl_keys->pressed.cross)
 		{	
 			oslPlaySound(KeypressStandard, 1);  
 			notif_y = notif_y-272;
@@ -816,7 +829,7 @@ void androidQuickSettings()
 			wifiMenu();
 		}
 		
-		if (cursor->x >= 198 && cursor->x <= 272 && cursor->y >= 204 && cursor->y <= 258 && osl_keys->pressed.cross)
+		if ((cursor->x >= 198 && cursor->x <= 272 && cursor->y >= 204 && cursor->y <= 258) && osl_keys->pressed.cross)
 		{
 			oslPlaySound(Lock, 1);
 			notif_y = notif_y-272;
@@ -827,6 +840,7 @@ void androidQuickSettings()
 			lockscreen();
 		}
 	}
+	
 	if (notif_down == 1 && osl_keys->pressed.circle)
 	{
 		notif_y = notif_y-272;

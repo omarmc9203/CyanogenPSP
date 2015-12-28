@@ -423,7 +423,7 @@ int main()
 	Roboto = oslLoadIntraFontFile(fontPath, INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
 	oslSetFont(Roboto); //Load and set font
 	
-	SceUID kModule[3];
+	/*SceUID kModule[3];
 	
 	kModule[0] = pspSdkLoadStartModule("modules/display.prx", PSP_MEMORY_PARTITION_KERNEL);
 	kModule[1] = pspSdkLoadStartModule("modules/control.prx", PSP_MEMORY_PARTITION_KERNEL);
@@ -438,7 +438,7 @@ int main()
 			pspDebugScreenPrintf("Error 0x%08X starting module.\n", kModule[i]);
 			break;
 		}
-	}
+	}*/
 	
 	deleteUpdateFile(); //Delete update.zip
 	

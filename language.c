@@ -82,8 +82,8 @@ const char lang_settingsDisplay[][4][100] =
 	{"Temaer", "Tid", "språk", "Diverse"},
 	{"Teme", "Ceas", "Limbă", "Diverse"},
 	{"Temi", "Ora", "lingua", "Varie"},
-	{"Темы", "Время", "Язык﻿", "Разное"},
-	{"Теми", "Час", "Мови﻿", "Різне"}
+	{"Темы", "Время", "Язык", "Разное"},
+	{"Теми", "Час", "Мова", "Різне"}
 };
 
 const char lang_settingsThemes[][4][100] = 

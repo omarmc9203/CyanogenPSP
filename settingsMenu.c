@@ -3149,6 +3149,7 @@ void wifiMenu()
 	if (!wifibg)
 		debugDisplay();
 		
+	int skip = 0;	
 	int enabled = 1;
     int selectedConfig = 0;
 	int wifi_y = 95;
@@ -3169,106 +3170,108 @@ void wifiMenu()
         sprintf(Settings_message, "%s", lang_settingsWifi[language][1]);
 
 	while (!osl_quit)
-	{			
-		LowMemExit();
+	{		
+		if (!skip)
+		{
+			LowMemExit();
 	
-		oslStartDrawing();
+			oslStartDrawing();
 		
-		oslClearScreen(RGB(0,0,0));
+			oslClearScreen(RGB(0,0,0));
 		
-		controls();	
+			controls();	
 
-		oslDrawImageXY(wifibg, 0, 0);
-		
-		if (DARK == 0)
-			oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
-		else
-			oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
+			oslDrawImageXY(wifibg, 0, 0);
+			
+			if (DARK == 0)
+				oslIntraFontSetStyle(Roboto, fontSize, BLACK, 0, INTRAFONT_ALIGN_LEFT);
+			else
+				oslIntraFontSetStyle(Roboto, fontSize, LITEGRAY, 0, INTRAFONT_ALIGN_LEFT);
 
-		if (enabled)
-		{
-			sprintf(buffer, "%s", configs[selectedConfig].name);
-    		oslDrawStringf(10, wifi_y+28, configs[selectedConfig].name);
-			oslDrawStringf(10, 206, "%s", lang_settingsWifi[language][2]);
-        }
+			if (enabled)
+			{
+				sprintf(buffer, "%s", configs[selectedConfig].name);
+				oslDrawStringf(10, wifi_y+28, configs[selectedConfig].name);
+				oslDrawStringf(10, 206, "%s", lang_settingsWifi[language][2]);
+			}
 		
-		oslDrawStringf(10, 220, Settings_message);
+			oslDrawStringf(10, 220, Settings_message);
+	
+			switchStatus(3);
+			navbarButtons(2);
+			battery(330,2,0);
+			digitaltime(381,4,0,hrTime);
+			androidQuickSettings();
+			volumeController();
+		
+			if (osl_keys->released.cross)
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				connectToAP(selectedConfig + 1);
+			}
+			else if (osl_keys->released.up)
+			{
+				if (++selectedConfig >= numconfigs)
+					selectedConfig = numconfigs - 1;
+			} 
+			else if (osl_keys->released.down)
+			{
+				if (--selectedConfig < 0)
+					selectedConfig = 0;
+			}
+		
+			oslDrawImage(cursor);
+		
+			if (osl_keys->pressed.square)
+			{
+				powermenu();
+			}
+		
+			if (osl_keys->pressed.L)
+			{
+				oslPlaySound(Lock, 1);  
+				lockscreen();
+			}
+		
+			if (osl_keys->pressed.circle)
+			{	
+				oslDeleteImage(wifibg);	
+				oslDeleteImage(offswitch);	
+				oslDeleteImage(onswitch);
+				settingsMenu();
+			}	
 
-		switchStatus(3);
-		navbarButtons(2);
-		battery(330,2,0);
-		digitaltime(381,4,0,hrTime);
-		androidQuickSettings();
-		volumeController();
+			if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(wifibg);	
+				oslDeleteImage(offswitch);	
+				oslDeleteImage(onswitch);
+				settingsMenu();
+			}
 		
-		if (osl_keys->released.cross)
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			connectToAP(selectedConfig + 1);
-        }
-		else if (osl_keys->released.up)
-		{
-			if (++selectedConfig >= numconfigs)
-				selectedConfig = numconfigs - 1;
-        } 
-		else if (osl_keys->released.down)
-		{
-			 if (--selectedConfig < 0)
-				selectedConfig = 0;
-        }
-		
-		oslDrawImage(cursor);
-		
-		if (osl_keys->pressed.square)
-		{
-			powermenu();
-		}
-		
-		if (osl_keys->pressed.L)
-		{
-			oslPlaySound(Lock, 1);  
-			lockscreen();
-        }
-		
-		if (osl_keys->pressed.circle)
-		{	
-			oslDeleteImage(wifibg);	
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			settingsMenu();
-		}
+			if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
+			{
+				oslPlaySound(KeypressStandard, 1);  
+				oslDeleteImage(wifibg);	
+				oslDeleteImage(offswitch);	
+				oslDeleteImage(onswitch);
+				home();
+			}
 
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 157 && cursor->y <= 213) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(wifibg);	
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			settingsMenu();
-		}
+			if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
+			{	
+				oslPlaySound(KeypressStandard, 1);  
+				multitask();
+			}
 		
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 76 && cursor->y <= 155) && (osl_keys->pressed.cross))
-		{
-			oslPlaySound(KeypressStandard, 1);  
-			oslDeleteImage(wifibg);	
-			oslDeleteImage(offswitch);	
-			oslDeleteImage(onswitch);
-			home();
+			captureScreenshot();
 		}
-
-		if ((cursor->x  >= 444 && cursor->x  <= 480) && (cursor->y >= 19 && cursor->y <= 75) && (osl_keys->pressed.cross))
-		{	
-			oslPlaySound(KeypressStandard, 1);  
-			multitask();
-		}
-		
-		captureScreenshot();
-		
+	oslNetTerm();
 	oslEndDrawing(); 
     oslEndFrame(); 
-	oslSyncFrame();	
+	skip = oslSyncFrame();
 	}
-	oslNetTerm();
 }
 
 void developerMenu()
