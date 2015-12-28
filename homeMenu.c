@@ -623,7 +623,6 @@ void androidQuickSettings()
 {
 	int notif_up;
 	int notif_down;
-	int notif_enabled;
 	
 	int llimit = 20;
 	int rlimit = 420;
@@ -743,9 +742,7 @@ void androidQuickSettings()
 	{
 		controlX = rlimit;
 	}
-	
-	notif_enabled = 0;
-	
+
 	if (osl_pad.held.cross && cursor->x >= 0 && cursor->x <= 480 && cursor->y >= 0 && cursor->y <= 1) 
 	{
 		notif_down = 1;
@@ -787,10 +784,6 @@ void androidQuickSettings()
 		if (yLine2 >= 245)
 		{
 			yLine2 = 245;
-		}
-		if (yLine2 >= 200)
-		{
-			notif_enabled = 1;
 		}
 	}
 
@@ -851,9 +844,7 @@ void androidQuickSettings()
 	}
 	
 	if (notif_up == 1)
-	{		
-		notif_enabled = 0;
-		
+	{				
 		if (osl_pad.held.cross && osl_keys->analogY <= -50)
 		{
 			notif_y = notif_y-6;
